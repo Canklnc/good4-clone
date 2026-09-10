@@ -1,0 +1,61 @@
+*.iml
+.kotlin
+.gradle
+**/build/
+xcuserdata
+!src/**/build/
+local.properties
+.idea
+.DS_Store
+captures
+.externalNativeBuild
+.cxx
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+# Kotlin/Compose Multiplatform
+.konan/
+.kotlinc/
+.compose-cache/
+commonMain/dev/
+**/.cache/
+*.log
+
+# Android artifacts
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# Firebase config 
+**/google-services*.json
+**/GoogleService-Info.plist
+**/firebase-debug.json
+**/firebase.json
+firestore.rules
+keystore.properties
+
+# Gradle local and signing
+local.properties
+
+# JetBrains Fleet / VSCode
+.fleet/
+.vscode/
+.cursorrules
+AGENTS.md
+.agents/
+.skills/
+skills-lock.json
+.stitch/
+
+# CocoaPods
+iosApp/Pods/
+composeApp/*.podspec
+iosApp/iosApp.xcworkspace/
+!iosApp/iosApp.xcworkspace/contents.xcworkspacedata
+
+# Firebase iOS config variants
+**/GoogleService-Info*.plist

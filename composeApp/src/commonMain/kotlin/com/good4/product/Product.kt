@@ -1,0 +1,29 @@
+package com.good4.product
+
+import com.good4.core.util.AppEnvironment
+
+data class Product(
+    val id: Long,
+    val documentId: String,
+    val name: String,
+    val description: String,
+    val storeName: String,
+    val businessId: String,
+    val price: Int,
+    val originalPrice: Int?,
+    val discountPrice: Int?,
+    val discountPercentage: Int?,
+    val imageUrl: String,
+    val address: String,
+    val addressUrl: String = "",
+    val pendingCount: Int = 0,
+    val dailyPendingLimit: Int? = null,
+    val isDonation: Boolean = false,
+    val totalDelivered: Int = 0,
+    val totalSuspended: Int = 0,
+    val createdAt: Long? = null
+)
+
+fun Product.isVisibleToPublicUsers(): Boolean {
+    return AppEnvironment.isDebug || !name.trim().equals("test", ignoreCase = true)
+}

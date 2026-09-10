@@ -1,0 +1,453 @@
+package com.good4.core.presentation.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.good4.core.presentation.ErrorRed
+import com.good4.core.presentation.SurfaceDefault
+import com.good4.core.presentation.TextPrimary
+import com.good4.core.presentation.TextSecondary
+import com.good4.core.util.singleClick
+import good4.composeapp.generated.resources.Res
+import good4.composeapp.generated.resources.business_name
+import good4.composeapp.generated.resources.daily_pending_limit
+import good4.composeapp.generated.resources.daily_pending_limit_placeholder
+import good4.composeapp.generated.resources.delete_account_cancel_button
+import good4.composeapp.generated.resources.description
+import good4.composeapp.generated.resources.discount_price_placeholder
+import good4.composeapp.generated.resources.discounted_price
+import good4.composeapp.generated.resources.donation_product_description
+import good4.composeapp.generated.resources.donation_product_title
+import good4.composeapp.generated.resources.original_price
+import good4.composeapp.generated.resources.original_price_placeholder
+import good4.composeapp.generated.resources.product_delete_confirm_button
+import good4.composeapp.generated.resources.product_delete_confirm_message
+import good4.composeapp.generated.resources.product_delete_confirm_title
+import good4.composeapp.generated.resources.product_description_placeholder
+import good4.composeapp.generated.resources.product_form_discard_confirm
+import good4.composeapp.generated.resources.product_form_discard_message
+import good4.composeapp.generated.resources.product_form_discard_title
+import good4.composeapp.generated.resources.product_name
+import good4.composeapp.generated.resources.product_name_placeholder
+import org.jetbrains.compose.resources.stringResource
+
+data class SelectOption(
+    val id: String,
+    val label: String
+)
+
+@Composable
+fun ProductFormFields(
+    title: String,
+    submitLabel: String,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+    isSubmitting: Boolean = false,
+    isDeleting: Boolean = false,
+    dismissLabel: String? = null,
+    onDismiss: (() -> Unit)? = null,
+    deleteLabel: String? = null,
+    onDelete: (() -> Unit)? = null,
+    submitButtonColor: Color,
+    submitButtonDisabledColor: Color = submitButtonColor.copy(alpha = 0.5f),
+    errorMessage: String? = null,
+    showDonationOption: Boolean = false,
+    isDonationProduct: Boolean = false,
+    onDonationProductChange: (Boolean) -> Unit = {},
+    showBusinessSelector: Boolean = false,
+    businessOptions: List<SelectOption> = emptyList(),
+    selectedBusinessId: String? = null,
+    onBusinessSelect: (String) -> Unit = {},
+    productName: String,
+    onProductNameChange: (String) -> Unit,
+    productDescription: String,
+    onProductDescriptionChange: (String) -> Unit,
+    originalPrice: String,
+    onOriginalPriceChange: (String) -> Unit,
+    discountPrice: String,
+    onDiscountPriceChange: (String) -> Unit,
+    dailyPendingLimit: String,
+    onDailyPendingLimitChange: (String) -> Unit,
+    currentRemoteImageUrl: String,
+    pendingProductImageBytes: ByteArray?,
+    onPendingProductImageChange: (ByteArray?) -> Unit,
+    isImageUploading: Boolean = false,
+    onImagePickerError: (String) -> Unit = {}
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val onSubmitClick = remember(onSubmit) { singleClick(onClick = onSubmit) }
+    val onDeleteClick = remember(onDelete) { singleClick { onDelete?.invoke() } }
+    val isDonationMode = isDonationProduct
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        Text(
+            text = title,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextPrimary
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (showDonationOption) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(Res.string.donation_product_title),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = TextPrimary
+                )
+                Switch(
+                    checked = isDonationProduct,
+                    onCheckedChange = onDonationProductChange
+                )
+            }
+
+            if (isDonationMode) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.donation_product_description),
+                        fontSize = 12.sp,
+                        color = TextSecondary
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        if (showBusinessSelector) {
+            Text(
+                text = stringResource(Res.string.business_name),
+                fontSize = 14.sp,
+                color = TextSecondary,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            Box {
+                OutlinedTextField(
+                    value = businessOptions.find { it.id == selectedBusinessId }?.label.orEmpty(),
+                    onValueChange = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = true },
+                    enabled = false,
+                    placeholder = { Text(stringResource(Res.string.business_name)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        disabledTextColor = TextPrimary,
+                        disabledBorderColor = TextSecondary,
+                        disabledPlaceholderColor = TextSecondary
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    businessOptions.forEach { business ->
+                        DropdownMenuItem(
+                            text = { Text(business.label) },
+                            onClick = {
+                                onBusinessSelect(business.id)
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        OutlinedTextField(
+            value = productName,
+            onValueChange = onProductNameChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(Res.string.product_name)) },
+            placeholder = { Text(stringResource(Res.string.product_name_placeholder)) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = TextPrimary,
+                focusedLabelColor = TextPrimary,
+                cursorColor = TextPrimary
+            ),
+            shape = RoundedCornerShape(12.dp)
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = productDescription,
+            onValueChange = onProductDescriptionChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(Res.string.description)) },
+            placeholder = { Text(stringResource(Res.string.product_description_placeholder)) },
+            minLines = 3,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = TextPrimary,
+                focusedLabelColor = TextPrimary,
+                cursorColor = TextPrimary
+            ),
+            shape = RoundedCornerShape(12.dp)
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        if (!isDonationMode) {
+            OutlinedTextField(
+                value = originalPrice,
+                onValueChange = onOriginalPriceChange,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(Res.string.original_price)) },
+                placeholder = { Text(stringResource(Res.string.original_price_placeholder)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = TextPrimary,
+                    focusedLabelColor = TextPrimary,
+                    cursorColor = TextPrimary
+                ),
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = discountPrice,
+                onValueChange = onDiscountPriceChange,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(Res.string.discounted_price)) },
+                placeholder = { Text(stringResource(Res.string.discount_price_placeholder)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = TextPrimary,
+                    focusedLabelColor = TextPrimary,
+                    cursorColor = TextPrimary
+                ),
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        if (isDonationMode) {
+            OutlinedTextField(
+                value = dailyPendingLimit,
+                onValueChange = onDailyPendingLimitChange,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(Res.string.daily_pending_limit)) },
+                placeholder = { Text(stringResource(Res.string.daily_pending_limit_placeholder)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = TextPrimary,
+                    focusedLabelColor = TextPrimary,
+                    cursorColor = TextPrimary
+                ),
+                shape = RoundedCornerShape(12.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        ProductImagePicker(
+            modifier = Modifier.fillMaxWidth(),
+            currentRemoteImageUrl = currentRemoteImageUrl,
+            pendingImageBytes = pendingProductImageBytes,
+            isUploading = isImageUploading,
+            onPendingImageChange = onPendingProductImageChange,
+            onError = onImagePickerError
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        errorMessage?.let { message ->
+            Text(
+                text = message,
+                color = MaterialTheme.colorScheme.error,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+
+        if (deleteLabel != null && onDelete != null) {
+            OutlinedButton(
+                onClick = onDeleteClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                enabled = !isSubmitting && !isDeleting,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = ErrorRed,
+                    disabledContentColor = ErrorRed.copy(alpha = 0.5f)
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                ProductSubmitButtonContent(
+                    isSubmitting = isDeleting,
+                    submitLabel = deleteLabel
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        if (dismissLabel != null && onDismiss != null) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    onClick = onDismiss,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    enabled = !isSubmitting && !isDeleting,
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        text = dismissLabel,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                Button(
+                    onClick = onSubmitClick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    enabled = !isSubmitting && !isDeleting,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = submitButtonColor,
+                        disabledContainerColor = submitButtonDisabledColor
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    ProductSubmitButtonContent(
+                        isSubmitting = isSubmitting,
+                        submitLabel = submitLabel
+                    )
+                }
+            }
+        } else {
+            Button(
+                onClick = onSubmitClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                enabled = !isSubmitting && !isDeleting,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = submitButtonColor,
+                    disabledContainerColor = submitButtonDisabledColor
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                ProductSubmitButtonContent(
+                    isSubmitting = isSubmitting,
+                    submitLabel = submitLabel
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun ProductSubmitButtonContent(
+    isSubmitting: Boolean,
+    submitLabel: String
+) {
+    if (isSubmitting) {
+        CircularProgressIndicator(
+            modifier = Modifier.padding(4.dp),
+            color = SurfaceDefault,
+            strokeWidth = 2.dp
+        )
+    } else {
+        Text(
+            text = submitLabel,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+}
+
+@Composable
+fun ProductFormDiscardConfirmDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    Good4ConfirmDialog(
+        title = stringResource(Res.string.product_form_discard_title),
+        message = stringResource(Res.string.product_form_discard_message),
+        confirmLabel = stringResource(Res.string.product_form_discard_confirm),
+        dismissLabel = stringResource(Res.string.delete_account_cancel_button),
+        onConfirm = onConfirm,
+        onDismiss = onDismiss,
+        confirmColor = ErrorRed
+    )
+}
+
+@Composable
+fun ProductDeleteConfirmDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    enabled: Boolean = true
+) {
+    Good4ConfirmDialog(
+        title = stringResource(Res.string.product_delete_confirm_title),
+        message = stringResource(Res.string.product_delete_confirm_message),
+        confirmLabel = stringResource(Res.string.product_delete_confirm_button),
+        dismissLabel = stringResource(Res.string.delete_account_cancel_button),
+        onConfirm = onConfirm,
+        onDismiss = onDismiss,
+        confirmColor = ErrorRed,
+        enabled = enabled
+    )
+}

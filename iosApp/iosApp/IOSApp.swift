@@ -1,6 +1,5 @@
 import SwiftUI
 import FirebaseCore
-import FirebaseAppCheck
 import FirebaseFirestore
 import FirebaseCrashlytics
 
@@ -12,7 +11,6 @@ struct IOSApp: App {
         #if DEBUG
         FirebaseConfiguration.shared.setLoggerLevel(.debug)
         #endif
-        AppCheck.setAppCheckProviderFactory(Good4AppCheckProviderFactory())
         FirebaseApp.configure()
         Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         Crashlytics.crashlytics().setCustomValue("ios", forKey: "platform")
@@ -40,16 +38,6 @@ struct IOSApp: App {
                 }
             }
         }
-    }
-}
-
-private final class Good4AppCheckProviderFactory: NSObject, AppCheckProviderFactory {
-    func createProvider(with app: FirebaseApp) -> AppCheckProvider? {
-        #if DEBUG
-        return AppCheckDebugProvider(app: app)
-        #else
-        return AppAttestProvider(app: app)
-        #endif
     }
 }
 

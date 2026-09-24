@@ -6,7 +6,5 @@
     <array>
         <string>webcredentials:good4tr.com</string>
     </array>
-    <key>com.apple.developer.devicecheck.appattest-environment</key>
-    <string>production</string>
 </dict>
 </plist>

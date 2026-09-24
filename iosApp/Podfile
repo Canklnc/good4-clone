@@ -10,7 +10,6 @@ target 'iosApp' do
   pod 'ComposeApp', :path => '../composeApp'
   pod 'FirebaseAnalytics'
   pod 'Firebase/Auth'
-  pod 'Firebase/AppCheck'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Firebase/Crashlytics'

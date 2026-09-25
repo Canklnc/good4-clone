@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.auth.presentation.register.RegisterScreenContentContainer
+import com.good4.auth.presentation.register.student.PrivacyNoticeLink
 import com.good4.auth.presentation.register.student.TermsCheckbox
 import com.good4.core.presentation.BorderMuted
 import com.good4.core.presentation.ErrorRed
@@ -352,6 +353,9 @@ fun BusinessRegisterScreen(
                     isChecked = state.isTermsAccepted,
                     onToggle = { onAction(BusinessRegisterAction.OnToggleTermsAccepted) }
                 )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                PrivacyNoticeLink()
 
                 Spacer(modifier = Modifier.height(8.dp))
 

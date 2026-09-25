@@ -424,10 +424,9 @@
 
     <!-- Terms -->
     <string name="terms_of_service">Üyelik Sözleşmesi</string>
-    <string name="terms_accept_middle">'ni ve </string>
-    <string name="privacy_policy">Gizlilik Politikası</string>
-    <string name="terms_accept_suffix">'nı okudum ve kabul ediyorum.</string>
-    <string name="error_terms_not_accepted">Devam etmek için Üyelik Sözleşmesi ve Gizlilik Politikası'nı kabul edin.</string>
+    <string name="terms_accept_suffix">'ni okudum ve kabul ediyorum.</string>
+    <string name="privacy_notice_link">Kişisel verileriniz hakkında KVKK Aydınlatma Metni ve Gizlilik Politikası'nı inceleyin.</string>
+    <string name="error_terms_not_accepted">Devam etmek için Üyelik Sözleşmesi'ni kabul edin.</string>
     <string name="session_restore_title">Oturumun yeniden bağlanması bekleniyor</string>
     <string name="session_restore_retry">Tekrar Dene</string>
 </resources>

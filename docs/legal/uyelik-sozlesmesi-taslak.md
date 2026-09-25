@@ -1,15 +1,15 @@
 # Good4 Üyelik ve Kullanım Sözleşmesi — TASLAK
 
-> Hukuki inceleme ve işletmeci onayı bekleyen çalışma metnidir. Uygulamada kullanıcıya kabul ettirilmek veya yayımlanmak üzere henüz onaylanmamıştır. Yürürlük tarihi, resmî ticari unvan ve iletişim bilgileri doğrulanmalıdır.
+> Hukuki inceleme ve işletmeci onayı bekleyen çalışma metnidir. Uygulamada kullanıcıya kabul ettirilmek veya yayımlanmak üzere henüz onaylanmamıştır. Yürürlük tarihi ve hizmet sağlayıcının kimlik/iletişim bilgileri doğrulanmalıdır.
 
-**İşletmeci:** Good4 hizmetinin işletmecisi, mevcut gizlilik politikasında “Ahmetcan Kılınç Şahıs Şirketi” olarak belirtilen kişi/işletmedir. Bu unvan yayımdan önce ticaret ve vergi kayıtlarıyla doğrulanacaktır.  
+**İşletmeci:** Ahmetcan Kılınç (gerçek kişi).  
 **Adres:** Ahatlı Mah. 3174 Sk. No: 6 İç Kapı No: 9, Kepez / Antalya  
 **İletişim:** cannklnc7@gmail.com  
 **Sürüm / yürürlük tarihi:** [Onay sonrası doldurulacak]
 
 ## 1. Kapsam ve taraflar
 
-Bu sözleşme, Good4 mobil uygulaması ve bağlantılı web hizmetleri üzerinden hesap açan öğrenciler, destekçiler, işletme temsilcileri ve topluluk temsilcileri ile İşletmeci arasındaki platform kullanım koşullarını düzenler. Bir işletmenin reklam yayınına ilişkin bedel, süre ve yerleşim gibi ticari koşullar bu metinle belirlenmez; taraflar bunları ayrıca yazılı olarak kararlaştırır.
+Bu sözleşme, Good4 mobil uygulaması ve bağlantılı web hizmetleri üzerinden hesap açan öğrenciler, işletme temsilcileri ve topluluk temsilcileri ile İşletmeci arasındaki platform kullanım koşullarını düzenler. Bir işletmenin reklam yayınına ilişkin bedel, süre ve yerleşim gibi ticari koşullar bu metinle belirlenmez; taraflar bunları ayrıca yazılı olarak kararlaştırır.
 
 ## 2. Good4'ün sunduğu hizmet
 
@@ -47,7 +47,7 @@ Good4, hizmet değişikliklerini ve sözleşme güncellemelerini kullanıcıya u
 
 ## Yayımdan önce doğrulanacaklar
 
-- Resmî ticari unvan, vergi bilgileri ve tebligat adresi.
+- Hizmet sağlayıcının adı, vergi/işletme bilgileri ve tebligat adresinin güncelliği.
 - Hesap türlerinin ve Good4'ün gerçekten sunduğu işlevlerin son sürümle uyumu.
 - Uygulama içi şikâyet/engelleme ve hesap silme akışlarının metinle uyumu.
 - Reklam satış ve iptal/iade modelinin ayrı ticari teklifte açıklanması.

@@ -94,12 +94,11 @@ import good4.composeapp.generated.resources.password_confirm
 import good4.composeapp.generated.resources.password_required
 import good4.composeapp.generated.resources.password_visibility_hide
 import good4.composeapp.generated.resources.password_visibility_show
-import good4.composeapp.generated.resources.privacy_policy
+import good4.composeapp.generated.resources.privacy_notice_link
 import good4.composeapp.generated.resources.register
 import good4.composeapp.generated.resources.required_fields
 import good4.composeapp.generated.resources.student_email_edu_hint
 import good4.composeapp.generated.resources.student_registration
-import good4.composeapp.generated.resources.terms_accept_middle
 import good4.composeapp.generated.resources.terms_accept_suffix
 import good4.composeapp.generated.resources.terms_of_service
 import good4.composeapp.generated.resources.university
@@ -309,6 +308,9 @@ fun StudentRegisterScreen(
                     onToggle = { onAction(StudentRegisterAction.OnToggleTermsAccepted) }
                 )
 
+                Spacer(modifier = Modifier.height(4.dp))
+                PrivacyNoticeLink()
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 state.errorMessage?.let { error ->
@@ -502,8 +504,6 @@ internal fun TermsCheckbox(
     modifier: Modifier = Modifier
 ) {
     val termsText = stringResource(Res.string.terms_of_service)
-    val middle = stringResource(Res.string.terms_accept_middle)
-    val privacyText = stringResource(Res.string.privacy_policy)
     val suffix = stringResource(Res.string.terms_accept_suffix)
 
     val annotatedText = buildAnnotatedString {
@@ -516,17 +516,6 @@ internal fun TermsCheckbox(
             )
         ) {
             append(termsText)
-        }
-        append(middle)
-        withLink(
-            LinkAnnotation.Url(
-                url = LegalLinks.PRIVACY,
-                styles = TextLinkStyles(
-                    style = SpanStyle(color = DeepGreen, textDecoration = TextDecoration.Underline)
-                )
-            )
-        ) {
-            append(privacyText)
         }
         append(suffix)
     }
@@ -551,6 +540,34 @@ internal fun TermsCheckbox(
                 .padding(end = 8.dp)
         )
     }
+}
+
+@Composable
+internal fun PrivacyNoticeLink(modifier: Modifier = Modifier) {
+    val noticeText = stringResource(Res.string.privacy_notice_link)
+    val annotatedText = buildAnnotatedString {
+        withLink(
+            LinkAnnotation.Url(
+                url = LegalLinks.PRIVACY,
+                styles = TextLinkStyles(
+                    style = SpanStyle(color = DeepGreen, textDecoration = TextDecoration.Underline)
+                )
+            )
+        ) {
+            append(noticeText)
+        }
+    }
+
+    Text(
+        text = annotatedText,
+        style = androidx.compose.ui.text.TextStyle(
+            fontSize = 13.sp,
+            color = TextSecondary
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 56.dp, end = 8.dp)
+    )
 }
 
 @Composable

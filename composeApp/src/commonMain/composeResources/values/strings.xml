@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Good4</string>
-    <string name="app_tagline">Öğrenciler ve işletmeler arasında köprü kurarak, herkes için fayda sağlayan bir ekosistem oluşturuyoruz.</string>
+    <string name="app_tagline">Etkinliklerden öğrenci fırsatlarına, kampüs hizmetlerinden günlük ihtiyaçlarına kadar hepsi Good4’da.</string>
     <string name="back">Geri</string>
     <string name="or">veya</string>
     <string name="loading">Yükleniyor…</string>
@@ -19,7 +19,7 @@
     <string name="login">Giriş Yap</string>
     <string name="edu_email_login">Edu mail ile giriş yap</string>
     <string name="edu_email_login_divider">edu mail ile giriş</string>
-    <string name="login_welcome_title">Good4'a hoş geldiniz</string>
+    <string name="login_welcome_title">Kampüs hayatını kolaylaştıran, her gün kullandığın şeylerin tek bir uygulamada olduğunu düşün.</string>
     <string name="edu_email_register">Edu mail ile kaydol</string>
     <string name="edu_email_helper">Üniversitenizin edu.tr uzantılı öğrenci e-postasını kullanın.</string>
     <string name="no_account">Hesabınız yok mu?</string>

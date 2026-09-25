@@ -187,16 +187,16 @@ fun LoginScreen(
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(56.dp))
+                Spacer(modifier = Modifier.height(36.dp))
 
                 AuthLogoBadge()
 
-                Spacer(modifier = Modifier.height(22.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
                     text = stringResource(Res.string.login_welcome_title),
-                    fontSize = 26.sp,
-                    lineHeight = 32.sp,
+                    fontSize = 21.sp,
+                    lineHeight = 27.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = TextPrimary,
                     textAlign = TextAlign.Center
@@ -213,7 +213,7 @@ fun LoginScreen(
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
 
-                Spacer(modifier = Modifier.height(28.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 AuthCard {
                     if (state.isLegalAcknowledgementRequired) {

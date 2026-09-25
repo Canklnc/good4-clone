@@ -658,8 +658,8 @@ private fun HomeQuickActions(
             icon = Icons.Outlined.ShoppingCart,
             accent = Color(0xFF8CB7ED),
             onClick = onReservationsClick
-        )
-    )
+        ).takeIf { config.ReleaseFeatures.suspendedMeals }
+    ).filterNotNull()
 
     Column(
         modifier = Modifier

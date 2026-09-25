@@ -24,6 +24,9 @@ sealed class Route {
 
     @Serializable
     data object SessionRestore : Route()
+
+    @Serializable
+    data object WebPanelNotice : Route()
     
     @Serializable
     data object StudentHome : Route()

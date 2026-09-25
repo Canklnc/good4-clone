@@ -209,6 +209,12 @@ fun Good4NavGraph(
             )
         }
 
+        composable<Route.WebPanelNotice> {
+            com.good4.auth.presentation.webpanel.WebPanelNoticeScreen(
+                onSignedOut = { navController.navigateToLogin() }
+            )
+        }
+
         // Admin Routes
         composable<Route.AdminHome> {
             AdminHomeScreenRoot(

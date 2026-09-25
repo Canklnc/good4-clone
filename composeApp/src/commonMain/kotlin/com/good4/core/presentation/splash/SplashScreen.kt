@@ -27,7 +27,7 @@ fun SplashScreenRoot(
         startDestination?.let { destination ->
             when (destination) {
                 Route.Login -> onNavigateToLogin()
-                Route.AdminHome, Route.BusinessHome, Route.StudentHome -> {
+                Route.AdminHome, Route.BusinessHome, Route.StudentHome, Route.WebPanelNotice -> {
                     userRole?.let { role ->
                         onNavigateToHome(role)
                     } ?: onNavigateToLogin()

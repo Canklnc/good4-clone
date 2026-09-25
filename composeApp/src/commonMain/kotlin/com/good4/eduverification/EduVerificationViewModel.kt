@@ -76,7 +76,7 @@ class EduVerificationViewModel(
         if (snapshot.isSending || snapshot.resendSeconds > 0) return
         val email = snapshot.email.trim()
         if (!email.lowercase().endsWith(".edu.tr") && !email.lowercase().endsWith("@edu.tr")) {
-            _state.update { it.copy(errorMessage = "Geçerli bir .edu.tr e-posta adresi gir.") }
+            _state.update { it.copy(errorMessage = "Geçerli bir .edu.tr e-posta adresi girin.") }
             return
         }
         viewModelScope.launch {
@@ -123,8 +123,8 @@ class EduVerificationViewModel(
                     }
                     is EduCodeConfirmResult.InvalidCode ->
                         "Kod hatalı. Kalan deneme hakkı: ${result.attemptsLeft}"
-                    EduCodeConfirmResult.Expired -> "Kodun süresi doldu. Yeni kod iste."
-                    EduCodeConfirmResult.TooManyAttempts -> "Çok fazla hatalı deneme yapıldı. Yeni kod iste."
+                    EduCodeConfirmResult.Expired -> "Kodun süresi doldu. Yeni kod isteyin."
+                    EduCodeConfirmResult.TooManyAttempts -> "Çok fazla hatalı deneme yapıldı. Yeni kod isteyin."
                 }
                 _state.update { it.copy(isConfirming = false, errorMessage = message) }
             } catch (cancelled: CancellationException) {

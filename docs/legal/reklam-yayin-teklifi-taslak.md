@@ -18,7 +18,7 @@
 - İptal, erteleme ve iade: [Açık koşullar]
 - Varsa özel gösterim/erişim taahhüdü: [Yoksa “garanti verilmez”]
 
-Reklamveren tasarımı Good4'e iletir; görselin yayınlanması yalnızca Good4 yöneticisinin içerik ve teknik kontrolünden sonra gerçekleşir. Reklamveren tasarım, marka, fotoğraf, metin ve yönlendirme bağlantısı için gerekli hak ve izinlere sahip olduğunu; iddiaların doğru ve mevzuata uygun olduğunu beyan eder. Good4 hukuka, mağaza kurallarına veya platform koşullarına aykırı içerikleri reddedebilir ya da yayından kaldırabilir. Taraflar yayının hangi aşamada ve hangi nedenle kaldırıldığında ücretin nasıl ele alınacağını yukarıdaki iptal/iade bölümünde açıkça belirler.
+Reklamveren tasarımı Good4'a iletir; görselin yayınlanması yalnızca Good4 yöneticisinin içerik ve teknik kontrolünden sonra gerçekleşir. Reklamveren tasarım, marka, fotoğraf, metin ve yönlendirme bağlantısı için gerekli hak ve izinlere sahip olduğunu; iddiaların doğru ve mevzuata uygun olduğunu beyan eder. Good4 hukuka, mağaza kurallarına veya platform koşullarına aykırı içerikleri reddedebilir ya da yayından kaldırabilir. Taraflar yayının hangi aşamada ve hangi nedenle kaldırıldığında ücretin nasıl ele alınacağını yukarıdaki iptal/iade bölümünde açıkça belirler.
 
 **Reklamveren onayı:** [Ad, unvan, imza veya doğrulanabilir elektronik onay]  
 **Good4 onayı:** [Ad, unvan, imza veya doğrulanabilir elektronik onay]

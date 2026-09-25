@@ -6,7 +6,7 @@
 
 ## 1. Taraflar ve sözleşmenin konusu
 
-İşbu Üyelik ve Kullanım Sözleşmesi (“Sözleşme”), Good4 mobil uygulaması ve Good4 ile bağlantılı çevrim içi hizmetlerin sağlayıcısı **Ahmetcan Kılınç** (“Good4”) ile Good4’te hesap oluşturan veya yetkili hesabıyla hizmetlerden yararlanan kişi (“Kullanıcı”) arasında kurulur.
+İşbu Üyelik ve Kullanım Sözleşmesi (“Sözleşme”), Good4 mobil uygulaması ve Good4 ile bağlantılı çevrim içi hizmetlerin sağlayıcısı **Ahmetcan Kılınç** (“Good4”) ile Good4’ta hesap oluşturan veya yetkili hesabıyla hizmetlerden yararlanan kişi (“Kullanıcı”) arasında kurulur.
 
 **Hizmet sağlayıcısı:** Ahmetcan Kılınç  
 **Adres:** Ahatlı Mah. 3174 Sk. No: 6 İç Kapı No: 9, Kepez / Antalya  
@@ -22,7 +22,7 @@ Good4, açıkça belirtilmediği sürece herhangi bir üniversitenin resmî uygu
 
 ## 3. Hesap ve kullanıcı yükümlülükleri
 
-Kullanıcı, hesap oluştururken doğru ve güncel bilgi vermeyi; hesabı yalnızca kendisi veya yetkili olduğu kişi ya da kuruluş adına kullanmayı; hesap bilgilerini korumayı ve yetkisiz kullanım şüphesini Good4’e bildirmeyi kabul eder.
+Kullanıcı, hesap oluştururken doğru ve güncel bilgi vermeyi; hesabı yalnızca kendisi veya yetkili olduğu kişi ya da kuruluş adına kullanmayı; hesap bilgilerini korumayı ve yetkisiz kullanım şüphesini Good4’a bildirmeyi kabul eder.
 
 İşletme veya öğrenci topluluğu adına işlem yapan Kullanıcı, ilgili kuruluşu temsil etmeye ve içerik yayımlamaya yetkili olduğunu beyan eder. Good4, rol veya yetki doğrulaması için gerekli bilgi ya da belgeleri isteyebilir.
 
@@ -30,9 +30,9 @@ Kullanıcı, hesabını veya Good4 hizmetlerini hukuka aykırı amaçla kullanam
 
 ## 4. Kullanıcı içerikleri ve yasaklı davranışlar
 
-İşletme veya topluluk temsilcilerinin Good4’e eklediği ad, metin, logo, fotoğraf, afiş, etkinlik, kampanya ve benzeri materyaller “Kullanıcı İçeriği” sayılır. İçeriği sağlayan Kullanıcı, içeriği sunmaya ve Good4’te yayımlamaya yetkili olduğunu; içeriğin doğru, yürürlükteki mevzuata uygun ve üçüncü kişilerin haklarını ihlal etmeyen nitelikte olduğunu kabul eder.
+İşletme veya topluluk temsilcilerinin Good4’a eklediği ad, metin, logo, fotoğraf, afiş, etkinlik, kampanya ve benzeri materyaller “Kullanıcı İçeriği” sayılır. İçeriği sağlayan Kullanıcı, içeriği sunmaya ve Good4’ta yayımlamaya yetkili olduğunu; içeriğin doğru, yürürlükteki mevzuata uygun ve üçüncü kişilerin haklarını ihlal etmeyen nitelikte olduğunu kabul eder.
 
-Good4’te aşağıdaki içerik ve davranışlara izin verilmez:
+Good4’ta aşağıdaki içerik ve davranışlara izin verilmez:
 
 - tehdit, taciz, zorbalık, şantaj, nefret söylemi veya kişileri hedef gösterme;
 - hukuka aykırı, müstehcen ya da çocukların güvenliğini tehlikeye düşüren içerik;
@@ -45,9 +45,9 @@ Kullanıcı, içeriğinde kişisel veri veya üçüncü kişilere ait görsel ve
 
 ## 5. Kullanıcı İçerikleri için kullanım izni
 
-Kullanıcı İçeriği üzerindeki haklar, ilgili hak sahiplerinde kalır. İçeriği Good4’e gönderen Kullanıcı, içeriğin hizmet kapsamında barındırılması, teknik olarak işlenmesi, gerekli boyut veya biçime dönüştürülmesi ve Good4 uygulaması ya da bağlantılı hizmetlerde gösterilmesi için Good4’e münhasır olmayan, bedelsiz ve hizmetin sunulmasıyla sınırlı bir kullanım izni verir.
+Kullanıcı İçeriği üzerindeki haklar, ilgili hak sahiplerinde kalır. İçeriği Good4’a gönderen Kullanıcı, içeriğin hizmet kapsamında barındırılması, teknik olarak işlenmesi, gerekli boyut veya biçime dönüştürülmesi ve Good4 uygulaması ya da bağlantılı hizmetlerde gösterilmesi için Good4’a münhasır olmayan, bedelsiz ve hizmetin sunulmasıyla sınırlı bir kullanım izni verir.
 
-Bu izin, içeriğin hizmette yayımlandığı süre ve içeriğin kaldırılmasının teknik olarak tamamlanması için gerekli süre boyunca geçerlidir. Good4, içeriği hizmetin sunulması dışındaki bağımsız bir reklam veya başka bir amaçla kullanmak için gerektiğinde ayrıca hukuki dayanak ya da izin sağlar. Kullanıcı, içeriği kaldırmak veya düzeltmek için Good4’e başvurabilir; kanuni saklama yükümlülükleri saklıdır.
+Bu izin, içeriğin hizmette yayımlandığı süre ve içeriğin kaldırılmasının teknik olarak tamamlanması için gerekli süre boyunca geçerlidir. Good4, içeriği hizmetin sunulması dışındaki bağımsız bir reklam veya başka bir amaçla kullanmak için gerektiğinde ayrıca hukuki dayanak ya da izin sağlar. Kullanıcı, içeriği kaldırmak veya düzeltmek için Good4’a başvurabilir; kanuni saklama yükümlülükleri saklıdır.
 
 ## 6. İçerik inceleme ve bildirim
 
@@ -57,25 +57,25 @@ Good4, her içeriğin yayımlanmadan önce inceleneceğini taahhüt etmez. Uygun
 
 ## 7. Etkinlikler
 
-Good4, etkinliklerin duyurulmasına, etkinlik kaydı alınmasına ve katılımın QR kod veya benzeri yöntemlerle doğrulanmasına yönelik işlevler sunabilir. Etkinlik sayfasında Good4’ün organizatör olduğu açıkça belirtilmedikçe etkinliğin düzenlenmesi, içeriği, güvenliği, yeri, zamanı, iptali ve katılım koşulları ilgili organizatörün sorumluluğundadır.
+Good4, etkinliklerin duyurulmasına, etkinlik kaydı alınmasına ve katılımın QR kod veya benzeri yöntemlerle doğrulanmasına yönelik işlevler sunabilir. Etkinlik sayfasında Good4’un organizatör olduğu açıkça belirtilmedikçe etkinliğin düzenlenmesi, içeriği, güvenliği, yeri, zamanı, iptali ve katılım koşulları ilgili organizatörün sorumluluğundadır.
 
 Etkinlik kaydı veya QR kod, ilgili etkinlikte kayıt ya da katılım doğrulaması amacıyla kullanılır; etkinlik sayfasında açıkça belirtilmediği sürece resmî kimlik veya katılım belgesi niteliğinde değildir.
 
 ## 8. İşletmeler, kampanyalar ve rezervasyonlar
 
-Good4’te üçüncü taraf işletmelerin tanıtımları, kampanyaları, kuponları veya rezervasyon işlevleri yer alabilir. Kampanyanın ve kuponun geçerlilik süresi ile kullanım koşulları, ilgili işletmenin sunduğu açıklamalara göre belirlenir. Rezervasyonun kesinleşip kesinleşmediği, Good4 ekranında veya ilgili işletmenin Kullanıcıya gönderdiği bildirimde açıklanır.
+Good4’ta üçüncü taraf işletmelerin tanıtımları, kampanyaları, kuponları veya rezervasyon işlevleri yer alabilir. Kampanyanın ve kuponun geçerlilik süresi ile kullanım koşulları, ilgili işletmenin sunduğu açıklamalara göre belirlenir. Rezervasyonun kesinleşip kesinleşmediği, Good4 ekranında veya ilgili işletmenin Kullanıcıya gönderdiği bildirimde açıklanır.
 
-Good4’ün ilgili işlemde satıcı veya hizmet sağlayıcı olduğu açıkça belirtilmedikçe, işletmenin sunduğu mal veya hizmete ilişkin işlem Kullanıcı ile ilgili işletme arasındadır. Bu hüküm, Good4’ün kendi rolünden veya yürürlükteki mevzuattan doğan yükümlülüklerini ya da Kullanıcının emredici tüketici haklarını ortadan kaldırmaz veya sınırlandırmaz.
+Good4’un ilgili işlemde satıcı veya hizmet sağlayıcı olduğu açıkça belirtilmedikçe, işletmenin sunduğu mal veya hizmete ilişkin işlem Kullanıcı ile ilgili işletme arasındadır. Bu hüküm, Good4’un kendi rolünden veya yürürlükteki mevzuattan doğan yükümlülüklerini ya da Kullanıcının emredici tüketici haklarını ortadan kaldırmaz veya sınırlandırmaz.
 
 İşletmelere sunulan ücretli reklam veya tanıtım hizmetlerinin bedel, yayın süresi, faturalandırma ve diğer ticari koşulları ayrıca yapılacak yazılı anlaşmada belirlenir. Bu Sözleşme tek başına ücretli reklam siparişi oluşturmaz.
 
-## 9. Good4’e ait haklar
+## 9. Good4’a ait haklar
 
-Good4 yazılımı, arayüzü, tasarımları, markası, logosu ve Good4 tarafından oluşturulan içerikler üzerindeki haklar Good4’e veya ilgili hak sahiplerine aittir. Kullanıcıya yalnızca hizmeti bu Sözleşmeye uygun biçimde kullanma hakkı verilir. Kullanıcı, Good4’ü veya bileşenlerini hukuka aykırı şekilde kopyalayamaz, tersine mühendislik yapamaz, güvenlik önlemlerini aşamaz ya da yetkisiz erişim sağlamaya çalışamaz.
+Good4 yazılımı, arayüzü, tasarımları, markası, logosu ve Good4 tarafından oluşturulan içerikler üzerindeki haklar Good4’a veya ilgili hak sahiplerine aittir. Kullanıcıya yalnızca hizmeti bu Sözleşmeye uygun biçimde kullanma hakkı verilir. Kullanıcı, Good4’u veya bileşenlerini hukuka aykırı şekilde kopyalayamaz, tersine mühendislik yapamaz, güvenlik önlemlerini aşamaz ya da yetkisiz erişim sağlamaya çalışamaz.
 
 ## 10. Hizmetin kullanılabilirliği ve değişiklikler
 
-Good4, güvenlik, bakım, teknik gereklilikler veya hizmetin geliştirilmesi nedeniyle uygulamanın özelliklerini değiştirebilir. Teknik arıza, bakım, bağlantılı hizmetlerde kesinti veya Good4’ün kontrolü dışındaki nedenlerle hizmete geçici olarak erişilemeyebilir. Good4, hizmetin sürekliliğini sağlamak için makul çaba gösterir; kesintisiz veya hatasız çalışma taahhüdünde bulunmaz.
+Good4, güvenlik, bakım, teknik gereklilikler veya hizmetin geliştirilmesi nedeniyle uygulamanın özelliklerini değiştirebilir. Teknik arıza, bakım, bağlantılı hizmetlerde kesinti veya Good4’un kontrolü dışındaki nedenlerle hizmete geçici olarak erişilemeyebilir. Good4, hizmetin sürekliliğini sağlamak için makul çaba gösterir; kesintisiz veya hatasız çalışma taahhüdünde bulunmaz.
 
 Kullanıcının hak veya yükümlülüklerini önemli ölçüde etkileyen değişiklikler uygun kanallardan duyurulur. Değişikliğin niteliği veya mevzuat gerektiriyorsa Kullanıcıdan güncel Sözleşme için yeniden kabul alınır.
 
@@ -83,7 +83,7 @@ Kullanıcının hak veya yükümlülüklerini önemli ölçüde etkileyen deği�
 
 Kullanıcının bu Sözleşmeyi ciddi veya tekrarlanan biçimde ihlal etmesi, başkalarının güvenliğini tehlikeye atması, yetkisiz temsil veya hesap kullanımı, yanıltıcı içerik ya da hizmet güvenliğini bozma hâllerinde Good4, ihlalin niteliğiyle orantılı olarak ilgili içeriği veya hesabın bazı işlevlerini geçici ya da kalıcı biçimde kısıtlayabilir. Hukuken sakınca bulunmadığı ve mümkün olduğu ölçüde Kullanıcıya gerekçe bildirilir. Kullanıcı, kısıtlama hakkında **cannklnc7@gmail.com** adresinden inceleme talep edebilir.
 
-Kullanıcı Good4’ü kullanmayı bırakabilir ve hesabının silinmesini aşağıdaki 12. maddeye göre talep edebilir. Sözleşmenin sona ermesi, daha önce doğmuş hak ve yükümlülükleri veya kanunen devam etmesi gereken yükümlülükleri ortadan kaldırmaz.
+Kullanıcı Good4’u kullanmayı bırakabilir ve hesabının silinmesini aşağıdaki 12. maddeye göre talep edebilir. Sözleşmenin sona ermesi, daha önce doğmuş hak ve yükümlülükleri veya kanunen devam etmesi gereken yükümlülükleri ortadan kaldırmaz.
 
 ## 12. Hesap silme ve veriler
 
@@ -93,7 +93,7 @@ Hesap ve kişisel veriler, Good4 KVKK Aydınlatma Metni ve Gizlilik Politikası 
 
 ## 13. Kişisel veriler ve gizlilik
 
-Good4’ün kişisel verileri hangi amaçlarla ve nasıl işlediğine ilişkin açıklamalar **[Good4 KVKK Aydınlatma Metni ve Gizlilik Politikası](https://good4tr-v2.web.app/gizlilik)** sayfasında yer alır. Kullanıcı, kişisel verilerle ilgili hak ve başvurularını bu metinde belirtilen yöntemle iletebilir.
+Good4’un kişisel verileri hangi amaçlarla ve nasıl işlediğine ilişkin açıklamalar **[Good4 KVKK Aydınlatma Metni ve Gizlilik Politikası](https://good4tr-v2.web.app/gizlilik)** sayfasında yer alır. Kullanıcı, kişisel verilerle ilgili hak ve başvurularını bu metinde belirtilen yöntemle iletebilir.
 
 Bu Sözleşmenin kabulü, tek başına kişisel verilerin işlenmesi için açık rıza, pazarlama iletisi izni veya KVKK kapsamındaki aydınlatmanın yerine geçmez. Açık rıza ya da ticari ileti izninin gerektiği durumlarda bunlar Sözleşmeden ayrı olarak ve ilgili amaçla sınırlı biçimde alınır.
 

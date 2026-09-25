@@ -42,7 +42,7 @@ class EduVerificationRepository(
                 verified = result.data.eduVerified == true && !result.data.eduEmail.isNullOrBlank(),
                 email = result.data.eduEmail
             )
-            is Result.Error -> error("Doğrulama durumu alınamadı. Bağlantını kontrol edip tekrar dene.")
+            is Result.Error -> error("Doğrulama durumu alınamadı. Bağlantınızı kontrol edip tekrar deneyin.")
         }
     }
 
@@ -70,14 +70,14 @@ class EduVerificationRepository(
 }
 
 internal fun eduVerificationErrorMessage(error: Throwable): String = when (error.message) {
-    "EDU_EMAIL_REQUIRED", "EDU_EMAIL_INVALID" -> "Geçerli bir .edu.tr e-posta adresi gir."
+    "EDU_EMAIL_REQUIRED", "EDU_EMAIL_INVALID" -> "Geçerli bir .edu.tr e-posta adresi girin."
     "EDU_EMAIL_IN_USE" -> "Bu .edu.tr adresi başka bir Good4 hesabıyla doğrulanmış."
-    "EDU_CODE_RESEND_TOO_SOON" -> "Yeni kod istemeden önce biraz bekle."
-    "EDU_CODE_SEND_LIMIT" -> "Çok fazla kod istendi. Bir saat sonra tekrar dene."
+    "EDU_CODE_RESEND_TOO_SOON" -> "Yeni kod istemeden önce biraz bekleyin."
+    "EDU_CODE_SEND_LIMIT" -> "Çok fazla kod istendi. Bir saat sonra tekrar deneyin."
     "EDU_CODE_FORMAT_INVALID" -> "Kod 6 haneli olmalı."
-    "EDU_CODE_NOT_REQUESTED" -> "Önce doğrulama kodu iste."
+    "EDU_CODE_NOT_REQUESTED" -> "Önce doğrulama kodu isteyin."
     "ROLE_NOT_ALLOWED" -> "Bu doğrulama yalnızca öğrenci hesapları için."
-    "ACCOUNT_NOT_ACTIVE" -> "Hesabın henüz aktif değil."
+    "ACCOUNT_NOT_ACTIVE" -> "Hesabınız henüz aktif değil."
     else -> error.message?.takeIf { it.any(Char::isLowerCase) }
-        ?: "İşlem tamamlanamadı. Bağlantını kontrol edip tekrar dene."
+        ?: "İşlem tamamlanamadı. Bağlantınızı kontrol edip tekrar deneyin."
 }

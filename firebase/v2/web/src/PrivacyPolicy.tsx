@@ -63,7 +63,7 @@ const sections: PrivacySection[] = [
   {
     title: "2. İşlenen veriler, amaçlar ve hukuki sebepler",
     paragraphs: [
-      "Aşağıdaki bilgiler, Good4'te kullandığınız hesap türüne ve tercih ettiğiniz özelliklere göre işlenir. Her veri, yalnızca ilgili olduğu amaç için ve tabloda belirtilen hukuki işleme şartına dayanılarak kullanılır; bir satırdaki bütün hukuki sebepler her işlem için birlikte uygulanmaz.",
+      "Aşağıdaki bilgiler, Good4'ta kullandığınız hesap türüne ve tercih ettiğiniz özelliklere göre işlenir. Her veri, yalnızca ilgili olduğu amaç için ve tabloda belirtilen hukuki işleme şartına dayanılarak kullanılır; bir satırdaki bütün hukuki sebepler her işlem için birlikte uygulanmaz.",
     ],
     dataGroups: processingGroups,
   },
@@ -145,7 +145,7 @@ export default function PrivacyPolicy() {
           <p className="privacy-eyebrow">Kişisel verileriniz</p>
           <h1>KVKK Aydınlatma Metni ve Gizlilik Politikası</h1>
           <p>
-            Good4'ün hangi kişisel verileri hangi amaçlarla kullandığını, kimlerle
+            Good4'un hangi kişisel verileri hangi amaçlarla kullandığını, kimlerle
             paylaşabildiğini ve KVKK kapsamındaki haklarınızı burada bulabilirsiniz.
           </p>
           <time dateTime="2026-09-24">Son güncelleme: 24 Eylül 2026</time>

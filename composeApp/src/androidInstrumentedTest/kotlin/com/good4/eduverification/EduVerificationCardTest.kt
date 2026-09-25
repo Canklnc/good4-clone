@@ -40,10 +40,10 @@ class EduVerificationCardTest {
             }
         } }
 
-        compose.onNodeWithText(".edu.tr e-posta adresin").assertDoesNotExist()
+        compose.onNodeWithText(".edu.tr e-posta adresiniz").assertDoesNotExist()
         compose.onNodeWithText("Edu mailimi aktif ederek Askıda Yemek'ten faydalanmak istiyorum").performClick()
         compose.onNodeWithText("Doğrulama kodu gönder").assertIsNotEnabled()
-        compose.onNodeWithText(".edu.tr e-posta adresin").performTextInput("can@ogr.akdeniz.edu.tr")
+        compose.onNodeWithText(".edu.tr e-posta adresiniz").performTextInput("can@ogr.akdeniz.edu.tr")
         compose.onNodeWithText("Doğrulama kodu gönder").assertIsEnabled().performClick()
         assert(sentEmail == "can@ogr.akdeniz.edu.tr")
 
@@ -63,13 +63,13 @@ class EduVerificationCardTest {
                         isLoading = false,
                         optedIn = true,
                         email = "can@gmail.com",
-                        errorMessage = "Geçerli bir .edu.tr e-posta adresi gir."
+                        errorMessage = "Geçerli bir .edu.tr e-posta adresi girin."
                     ),
                     onOptInChange = {}, onEmailChange = {}, onSendCode = {},
                     onCodeChange = {}, onConfirmCode = {}, onChangeEmail = {}
                 )
             }
         } }
-        compose.onNodeWithText("Geçerli bir .edu.tr e-posta adresi gir.").assertExists()
+        compose.onNodeWithText("Geçerli bir .edu.tr e-posta adresi girin.").assertExists()
     }
 }

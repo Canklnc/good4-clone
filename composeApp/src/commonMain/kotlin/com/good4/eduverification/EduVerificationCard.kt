@@ -81,7 +81,7 @@ fun EduVerificationCard(
                 )
             }
             Text(
-                "Rezervasyon yapıp kod alabilmek için üniversite (.edu.tr) e-posta adresini doğrulaman gerekiyor.",
+                "Rezervasyon yapıp kod alabilmek için üniversite (.edu.tr) e-posta adresinizi doğrulamanız gerekiyor.",
                 fontSize = 13.sp,
                 lineHeight = 18.sp,
                 color = TextSecondary
@@ -113,7 +113,7 @@ fun EduVerificationCard(
                     value = state.email,
                     onValueChange = onEmailChange,
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(".edu.tr e-posta adresin") },
+                    label = { Text(".edu.tr e-posta adresiniz") },
                     placeholder = { Text("ad.soyad@ogr.akdeniz.edu.tr") },
                     singleLine = true,
                     enabled = !state.isSending,
@@ -138,7 +138,7 @@ fun EduVerificationCard(
 
             state.codeSentTo?.let { sentTo ->
                 Text(
-                    "6 haneli kod $sentTo adresine gönderildi. Gelen kutunda yoksa gereksiz (spam) klasörüne de bak.",
+                    "6 haneli kod $sentTo adresine gönderildi. Gelen kutunuzda yoksa gereksiz (spam) klasörüne de bakın.",
                     fontSize = 13.sp,
                     lineHeight = 18.sp,
                     color = TextSecondary
@@ -193,7 +193,7 @@ fun EduVerifiedBadge(email: String?, modifier: Modifier = Modifier) {
         Icon(Icons.Outlined.Verified, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(16.dp))
         Spacer(Modifier.width(6.dp))
         Text(
-            if (email.isNullOrBlank()) "Üniversite e-postan doğrulandı" else "$email doğrulandı",
+            if (email.isNullOrBlank()) "Üniversite e-postanız doğrulandı" else "$email doğrulandı",
             fontSize = 12.sp,
             color = TextSecondary
         )

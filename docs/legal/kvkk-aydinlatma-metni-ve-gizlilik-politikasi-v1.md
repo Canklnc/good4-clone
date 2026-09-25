@@ -15,7 +15,7 @@ Good4 mobil uygulaması ve Good4 V2 web hizmetleri kapsamında kişisel verileri
 
 ## 2. İşlenen veriler, amaçlar ve hukuki sebepler
 
-Veriler, Good4'te kullandığınız hesap türüne ve tercih ettiğiniz özelliklere göre işlenir. Aşağıdaki hukuki sebeplerden yalnızca ilgili işleme faaliyeti için geçerli olan kullanılır; bir satırdaki bütün hukuki sebepler her işlem için birlikte uygulanmaz.
+Veriler, Good4'ta kullandığınız hesap türüne ve tercih ettiğiniz özelliklere göre işlenir. Aşağıdaki hukuki sebeplerden yalnızca ilgili işleme faaliyeti için geçerli olan kullanılır; bir satırdaki bütün hukuki sebepler her işlem için birlikte uygulanmaz.
 
 | Veri kategorisi ve örnekler | İşleme amaçları | KVKK kapsamındaki hukuki sebep |
 | --- | --- | --- |
@@ -30,7 +30,7 @@ Google ile girişte kimlik doğrulaması için gereken tanımlayıcılar ve Goog
 
 ## 3. Verileri nasıl elde ediyoruz?
 
-Veriler; kayıt ve profil alanlarına sizin tarafınızdan girilmesi, Good4'ü kullanmanız, destek veya geri bildirim göndermeniz ve Google ile giriş seçeneğini kullanmanız yoluyla elde edilir. Uygulama ve altyapı sağlayıcıları hizmet sırasında oturum, bağlantı, cihaz ve güvenlik kayıtları oluşturabilir. Hedeflenen Good4 V2 mobil paketlerinde uygulama analitiği ve çökme tanılama SDK'ları bulunmaz. İsteğe bağlı profil alanlarının doldurulmaması, ilgili alanı gerektiren özellikleri etkileyebilir.
+Veriler; kayıt ve profil alanlarına sizin tarafınızdan girilmesi, Good4'u kullanmanız, destek veya geri bildirim göndermeniz ve Google ile giriş seçeneğini kullanmanız yoluyla elde edilir. Uygulama ve altyapı sağlayıcıları hizmet sırasında oturum, bağlantı, cihaz ve güvenlik kayıtları oluşturabilir. Hedeflenen Good4 V2 mobil paketlerinde uygulama analitiği ve çökme tanılama SDK'ları bulunmaz. İsteğe bağlı profil alanlarının doldurulmaması, ilgili alanı gerektiren özellikleri etkileyebilir.
 
 ## 4. Alıcı grupları ve paylaşım amaçları
 

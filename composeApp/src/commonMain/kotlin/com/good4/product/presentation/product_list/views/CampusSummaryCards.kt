@@ -22,6 +22,8 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -31,36 +33,72 @@ import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.akdeniz_campus_weather
 import org.jetbrains.compose.resources.painterResource
 
-@Composable
-internal fun CampusSummaryCards(
-    diningMenuState: AkdenizDiningMenuState
-) {
-    var temperature by remember { mutableStateOf("—") }
-    var weatherLabel by remember { mutableStateOf("Yükleniyor…") }
-    LaunchedEffect(Unit) {
+private data class CampusWeather(val temperature: String, val label: String)
+
+// Process-wide so returning to the home tab reuses the last reading instead of
+// opening a new HTTP client and showing "Yükleniyor…" on every visit.
+private object CampusWeatherCache {
+    private const val MAX_AGE_MILLIS = 15 * 60 * 1000L
+    private val mutex = Mutex()
+    private var fetchedAtMillis = 0L
+    var latest: CampusWeather? = null
+        private set
+
+    /** Returns a fresh reading, or the last good one when the refresh fails. */
+    suspend fun load(): CampusWeather? = mutex.withLock {
+        val now = Clock.System.now().toEpochMilliseconds()
+        if (latest != null && now - fetchedAtMillis < MAX_AGE_MILLIS) return@withLock latest
+        fetch()?.let {
+            latest = it
+            fetchedAtMillis = now
+        }
+        latest
+    }
+
+    private suspend fun fetch(): CampusWeather? {
         val client = HttpClient { install(HttpTimeout) { requestTimeoutMillis = 10_000 } }
-        try {
+        return try {
             // Central Antalya campus; no device location permission is needed.
             val response = client.get("https://api.open-meteo.com/v1/forecast?latitude=36.898&longitude=30.651&current=temperature_2m,weather_code&timezone=Europe%2FIstanbul")
             check(response.status.value in 200..299)
             val current = Json.parseToJsonElement(response.bodyAsText()).jsonObject.getValue("current").jsonObject
-            temperature = "${current.getValue("temperature_2m").jsonPrimitive.double.roundToInt()}°"
-            weatherLabel = when (current.getValue("weather_code").jsonPrimitive.int) {
-                0 -> "Açık"
-                1, 2 -> "Parçalı bulutlu"
-                3 -> "Bulutlu"
-                45, 48 -> "Sisli"
-                in 51..67, in 80..82 -> "Yağmurlu"
-                in 71..77, 85, 86 -> "Karlı"
-                95, 96, 99 -> "Gök gürültülü"
-                else -> "Hava durumu"
-            }
+            CampusWeather(
+                temperature = "${current.getValue("temperature_2m").jsonPrimitive.double.roundToInt()}°",
+                label = when (current.getValue("weather_code").jsonPrimitive.int) {
+                    0 -> "Açık"
+                    1, 2 -> "Parçalı bulutlu"
+                    3 -> "Bulutlu"
+                    45, 48 -> "Sisli"
+                    in 51..67, in 80..82 -> "Yağmurlu"
+                    in 71..77, 85, 86 -> "Karlı"
+                    95, 96, 99 -> "Gök gürültülü"
+                    else -> "Hava durumu"
+                }
+            )
         } catch (cancelled: CancellationException) {
             throw cancelled
         } catch (_: Exception) {
-            weatherLabel = "Şu an alınamıyor"
+            null
         } finally {
             client.close()
+        }
+    }
+}
+
+@Composable
+internal fun CampusSummaryCards(
+    diningMenuState: AkdenizDiningMenuState
+) {
+    val cachedWeather = CampusWeatherCache.latest
+    var temperature by remember { mutableStateOf(cachedWeather?.temperature ?: "—") }
+    var weatherLabel by remember { mutableStateOf(cachedWeather?.label ?: "Yükleniyor…") }
+    LaunchedEffect(Unit) {
+        val weather = CampusWeatherCache.load()
+        if (weather != null) {
+            temperature = weather.temperature
+            weatherLabel = weather.label
+        } else {
+            weatherLabel = "Şu an alınamıyor"
         }
     }
     val today = Clock.System.now().toLocalDateTime(TimeZone.of("Europe/Istanbul")).date.toString()

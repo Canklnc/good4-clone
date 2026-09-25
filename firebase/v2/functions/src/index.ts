@@ -33,6 +33,7 @@ import { submitFeedbackService } from "./feedback.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
 import { eraseAccountData } from "./accountDeletion.js";
 import { confirmEduVerificationService, requestEduVerificationService } from "./eduVerification.js";
+import { recordLegalAcknowledgementsService } from "./legalAcknowledgements.js";
 
 const callableOptions = {
   region: "europe-west1",
@@ -253,6 +254,11 @@ export const ensureStudentProfile = onCall(callableOptions, async (request) => {
     displayName: authUser.displayName,
     providers: authUser.providerData.map((provider) => provider.providerId),
   }, request.data ?? {});
+});
+
+export const recordLegalAcknowledgements = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return recordLegalAcknowledgementsService(db, uid, request.data ?? {});
 });
 
 export const requestEduVerification = onCall(callableOptions, async (request) => {

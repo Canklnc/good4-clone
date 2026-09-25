@@ -22,7 +22,9 @@ class UserRepository(
 ) {
     suspend fun ensureV2StudentProfile(
         displayName: String? = null,
-        university: String? = null
+        university: String? = null,
+        userAgreementAccepted: Boolean = false,
+        kvkkNoticeAcknowledged: Boolean = false
     ): Result<Unit, Error> {
         return try {
             callV2Function(
@@ -30,11 +32,28 @@ class UserRepository(
                 buildJsonObject {
                     displayName?.takeIf { it.isNotBlank() }?.let { put("displayName", it.trim()) }
                     university?.takeIf { it.isNotBlank() }?.let { put("university", it.trim()) }
+                    put("userAgreementAccepted", userAgreementAccepted)
+                    put("kvkkNoticeAcknowledged", kvkkNoticeAcknowledged)
                 }
             )
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(NetworkError(e.message ?: "Öğrenci profili oluşturulamadı"))
+        }
+    }
+
+    suspend fun recordV2LegalAcknowledgements(): Result<Unit, Error> {
+        return try {
+            callV2Function(
+                "recordLegalAcknowledgements",
+                buildJsonObject {
+                    put("userAgreementAccepted", true)
+                    put("kvkkNoticeAcknowledged", true)
+                }
+            )
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(NetworkError(e.message ?: "Hukuki kayıtlar kaydedilemedi"))
         }
     }
 

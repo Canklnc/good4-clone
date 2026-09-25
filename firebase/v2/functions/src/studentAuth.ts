@@ -1,6 +1,10 @@
 import { FieldValue, type Firestore } from "firebase-admin/firestore";
 import { HttpsError } from "firebase-functions/v2/https";
 import { eduEmailClaimPath, isEduEmail } from "./eduVerification.js";
+import {
+  createLegalAcknowledgements,
+  requireLegalAcknowledgements,
+} from "./legalAcknowledgements.js";
 
 export type StudentIdentity = {
   uid: string;
@@ -13,6 +17,8 @@ export type StudentIdentity = {
 export type StudentProfileInput = {
   displayName?: unknown;
   university?: unknown;
+  userAgreementAccepted?: unknown;
+  kvkkNoticeAcknowledged?: unknown;
 };
 
 export async function ensureStudentProfileService(
@@ -85,6 +91,7 @@ export async function ensureStudentProfileService(
     if (isPassword && !hasEduEmail) {
       throw new HttpsError("permission-denied", "EDU_EMAIL_REQUIRED");
     }
+    requireLegalAcknowledgements(input);
 
     const fallbackName = email.split("@")[0] ?? "Öğrenci";
     const displayName = (requestedName || identity.displayName?.trim() || fallbackName).slice(0, 120);
@@ -95,6 +102,7 @@ export async function ensureStudentProfileService(
       role: "student",
       status,
       university: requestedUniversity.slice(0, 160),
+      legalAcknowledgements: createLegalAcknowledgements(),
       ...(status === "active" ? eduFields : {}),
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),

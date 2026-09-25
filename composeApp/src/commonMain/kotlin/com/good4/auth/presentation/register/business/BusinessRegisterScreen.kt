@@ -47,8 +47,7 @@ import com.good4.auth.presentation.components.AuthPrimaryButton
 import com.good4.auth.presentation.components.AuthSection
 import com.good4.auth.presentation.components.authTextFieldColors
 import com.good4.auth.presentation.register.RegisterScreenContentContainer
-import com.good4.auth.presentation.register.student.PrivacyNoticeLink
-import com.good4.auth.presentation.register.student.TermsCheckbox
+import com.good4.auth.presentation.register.RegistrationLegalAcknowledgements
 import com.good4.core.presentation.BorderMuted
 import com.good4.core.presentation.ErrorRed
 import com.good4.core.presentation.PistachioGreen
@@ -339,13 +338,14 @@ fun BusinessRegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            TermsCheckbox(
-                isChecked = state.isTermsAccepted,
-                onToggle = { onAction(BusinessRegisterAction.OnToggleTermsAccepted) }
+            RegistrationLegalAcknowledgements(
+                userAgreementAccepted = state.isTermsAccepted,
+                kvkkNoticeAcknowledged = state.isKvkkNoticeAcknowledged,
+                onUserAgreementToggle = { onAction(BusinessRegisterAction.OnToggleTermsAccepted) },
+                onKvkkNoticeToggle = {
+                    onAction(BusinessRegisterAction.OnToggleKvkkNoticeAcknowledged)
+                }
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-            PrivacyNoticeLink()
 
             state.errorMessage?.let { error ->
                 AuthErrorBanner(

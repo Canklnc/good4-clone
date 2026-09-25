@@ -11,6 +11,7 @@ beforeEach(async () => {
       "users", "organizations", "events", "campaignClaims", "campaignCodes",
       "redemptions", "feedbackSubmissions", "auditLogs", "legacyTestRedemptions",
       "communities", "codes", "orders", "businesses", "community_access",
+      "eduEmailClaims", "eduVerifications", "mail",
     ].map((collection) => db.recursiveDelete(db.collection(collection))),
     ...["communities", "community_coupon_codes", "community_access", "users"].map((collection) =>
       legacyTestDb.recursiveDelete(legacyTestDb.collection(collection))),
@@ -54,6 +55,9 @@ test("deletes personal records and removes account identifiers from retained V2 
     db.doc("campaignCodes/ABC12345").set({ studentId: uid }),
     db.doc("redemptions/ABC12345").set({ studentId: uid, redeemedBy: uid }),
     db.doc("feedbackSubmissions/feedback-1").set({ userId: uid, userEmail: "delete@example.com" }),
+    db.doc(`eduVerifications/${uid}`).set({ email: "delete@example.edu.tr", codeHash: "hashed" }),
+    db.doc("eduEmailClaims/claim-1").set({ uid }),
+    db.doc("mail/verification-1").set({ uid, to: ["delete@example.edu.tr"] }),
     db.doc("legacyTestRedemptions/123456").set({ legacyStudentId: uid, redeemedBy: uid }),
     db.doc("auditLogs/member-assigned").set({
       actorUid: "admin-1",
@@ -62,6 +66,13 @@ test("deletes personal records and removes account identifiers from retained V2 
       metadata: { userId: uid, organizationId: "community-1" },
     }),
     db.doc("auditLogs/account-action").set({ actorUid: uid, action: "event.created" }),
+    db.doc("auditLogs/edu-verified").set({
+      actorUid: uid,
+      action: "eduEmail.verified",
+      targetType: "user",
+      targetId: uid,
+      metadata: { domain: "example.edu.tr" },
+    }),
     legacyTestDb.doc("communities/community-1/entries/coupon-1/claims/delete-me").set({ userId: uid }),
     legacyTestDb.doc("community_coupon_codes/111111").set({ userId: uid, status: "pending" }),
     legacyTestDb.doc("community_coupon_codes/222222").set({ userId: uid, status: "used" }),
@@ -96,9 +107,13 @@ test("deletes personal records and removes account identifiers from retained V2 
   assert.equal((await db.doc("redemptions/ABC12345").get()).get("studentId"), "deleted-account");
   assert.equal((await db.doc("redemptions/ABC12345").get()).get("redeemedBy"), "deleted-account");
   assert.equal((await db.doc("feedbackSubmissions/feedback-1").get()).exists, false);
+  assert.equal((await db.doc(`eduVerifications/${uid}`).get()).exists, false);
+  assert.equal((await db.doc("eduEmailClaims/claim-1").get()).exists, false);
+  assert.equal((await db.doc("mail/verification-1").get()).exists, false);
   assert.equal((await db.doc("legacyTestRedemptions/123456").get()).get("legacyStudentId"), "deleted-account");
   assert.equal((await db.doc("legacyTestRedemptions/123456").get()).get("redeemedBy"), "deleted-account");
   assert.equal((await db.doc("auditLogs/account-action").get()).get("actorUid"), "deleted-account");
+  assert.equal((await db.doc("auditLogs/edu-verified").get()).get("targetId"), "deleted-account");
   assert.equal((await db.doc("auditLogs/member-assigned").get()).get("metadata.userId"), "deleted-account");
   assert.equal((await db.doc("auditLogs/member-assigned").get()).get("targetId"), "community-1:deleted-account");
   assert.equal((await legacyTestDb.doc("communities/community-1/entries/coupon-1/claims/delete-me").get()).exists, false);

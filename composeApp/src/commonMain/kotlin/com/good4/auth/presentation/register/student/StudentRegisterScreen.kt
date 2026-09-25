@@ -25,8 +25,6 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -47,10 +45,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -58,8 +52,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -72,6 +64,7 @@ import com.good4.auth.presentation.components.AuthPrimaryButton
 import com.good4.auth.presentation.components.AuthSection
 import com.good4.auth.presentation.components.authTextFieldColors
 import com.good4.auth.presentation.register.RegisterScreenContentContainer
+import com.good4.auth.presentation.register.RegistrationLegalAcknowledgements
 import com.good4.core.presentation.DeepGreen
 import com.good4.core.presentation.ErrorRed
 import com.good4.core.presentation.SurfaceDefault
@@ -82,7 +75,6 @@ import com.good4.core.presentation.components.Good4TopBar
 import com.good4.core.presentation.components.StandardButtonHeight
 import com.good4.core.presentation.components.StandardButtonLoadingIndicatorSize
 import com.good4.core.util.singleClick
-import config.LegalLinks
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.back
 import good4.composeapp.generated.resources.education_level
@@ -103,7 +95,6 @@ import good4.composeapp.generated.resources.password_confirm
 import good4.composeapp.generated.resources.password_required
 import good4.composeapp.generated.resources.password_visibility_hide
 import good4.composeapp.generated.resources.password_visibility_show
-import good4.composeapp.generated.resources.privacy_notice_link
 import good4.composeapp.generated.resources.register
 import good4.composeapp.generated.resources.register_section_education
 import good4.composeapp.generated.resources.register_section_password
@@ -113,8 +104,6 @@ import good4.composeapp.generated.resources.student_email_edu_hint
 import good4.composeapp.generated.resources.student_register_subtitle
 import good4.composeapp.generated.resources.student_register_title
 import good4.composeapp.generated.resources.student_registration
-import good4.composeapp.generated.resources.terms_accept_suffix
-import good4.composeapp.generated.resources.terms_of_service
 import good4.composeapp.generated.resources.university
 import good4.composeapp.generated.resources.university_dropdown_empty
 import good4.composeapp.generated.resources.university_placeholder
@@ -321,13 +310,14 @@ fun StudentRegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            TermsCheckbox(
-                isChecked = state.isTermsAccepted,
-                onToggle = { onAction(StudentRegisterAction.OnToggleTermsAccepted) }
+            RegistrationLegalAcknowledgements(
+                userAgreementAccepted = state.isTermsAccepted,
+                kvkkNoticeAcknowledged = state.isKvkkNoticeAcknowledged,
+                onUserAgreementToggle = { onAction(StudentRegisterAction.OnToggleTermsAccepted) },
+                onKvkkNoticeToggle = {
+                    onAction(StudentRegisterAction.OnToggleKvkkNoticeAcknowledged)
+                }
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-            PrivacyNoticeLink()
 
             state.errorMessage?.let { error ->
                 AuthErrorBanner(
@@ -482,79 +472,6 @@ private fun SelectionDropdown(
             }
         }
     }
-}
-
-@Composable
-internal fun TermsCheckbox(
-    isChecked: Boolean,
-    onToggle: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val termsText = stringResource(Res.string.terms_of_service)
-    val suffix = stringResource(Res.string.terms_accept_suffix)
-
-    val annotatedText = buildAnnotatedString {
-        withLink(
-            LinkAnnotation.Url(
-                url = LegalLinks.TERMS,
-                styles = TextLinkStyles(
-                    style = SpanStyle(color = AuthAccent, textDecoration = TextDecoration.Underline, fontWeight = FontWeight.Medium)
-                )
-            )
-        ) {
-            append(termsText)
-        }
-        append(suffix)
-    }
-
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.Top
-    ) {
-        Checkbox(
-            checked = isChecked,
-            onCheckedChange = { onToggle() },
-            colors = CheckboxDefaults.colors(checkedColor = AuthAccent)
-        )
-        Text(
-            text = annotatedText,
-            style = androidx.compose.ui.text.TextStyle(
-                fontSize = 13.sp,
-                color = TextSecondary
-            ),
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(end = 8.dp)
-        )
-    }
-}
-
-@Composable
-internal fun PrivacyNoticeLink(modifier: Modifier = Modifier) {
-    val noticeText = stringResource(Res.string.privacy_notice_link)
-    val annotatedText = buildAnnotatedString {
-        withLink(
-            LinkAnnotation.Url(
-                url = LegalLinks.PRIVACY,
-                styles = TextLinkStyles(
-                    style = SpanStyle(color = AuthAccent, textDecoration = TextDecoration.Underline, fontWeight = FontWeight.Medium)
-                )
-            )
-        ) {
-            append(noticeText)
-        }
-    }
-
-    Text(
-        text = annotatedText,
-        style = androidx.compose.ui.text.TextStyle(
-            fontSize = 13.sp,
-            color = TextSecondary
-        ),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 56.dp, end = 8.dp)
-    )
 }
 
 @Preview

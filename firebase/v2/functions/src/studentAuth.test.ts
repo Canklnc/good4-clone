@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
+import { Timestamp } from "firebase-admin/firestore";
 import { db, legacyTestDb } from "./firebase.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
 
@@ -18,6 +19,9 @@ test("verified Google user gets an active student profile", async () => {
     emailVerified: true,
     displayName: "  Google Öğrenci  ",
     providers: ["google.com"],
+  }, {
+    userAgreementAccepted: true,
+    kvkkNoticeAcknowledged: true,
   });
   const stored = await db.doc("users/google-student").get();
   assert.deepEqual(result, { created: true, role: "student", status: "active" });
@@ -25,6 +29,12 @@ test("verified Google user gets an active student profile", async () => {
   assert.equal(stored.get("displayName"), "Google Öğrenci");
   assert.equal(stored.get("role"), "student");
   assert.equal(stored.get("status"), "active");
+  assert.equal(stored.get("legalAcknowledgements.kvkkNotice.version"), "1.0");
+  assert.equal(stored.get("legalAcknowledgements.userAgreement.version"), "1.0");
+  assert.equal(stored.get("legalAcknowledgements.privacyPolicy.version"), "1.3");
+  assert.ok(stored.get("legalAcknowledgements.kvkkNotice.acknowledgedAt") instanceof Timestamp);
+  assert.ok(stored.get("legalAcknowledgements.userAgreement.acceptedAt") instanceof Timestamp);
+  assert.ok(stored.get("legalAcknowledgements.privacyPolicy.presentedAt") instanceof Timestamp);
 });
 
 test("existing privileged profile is never overwritten", async () => {
@@ -49,6 +59,8 @@ test("edu password user is pending until email verification, then becomes active
   }, {
     displayName: "Edu Öğrenci",
     university: "Akdeniz Üniversitesi",
+    userAgreementAccepted: true,
+    kvkkNoticeAcknowledged: true,
   });
   assert.deepEqual(pending, {
     created: true,
@@ -82,4 +94,20 @@ test("non-edu password and unverified Google identities are rejected", async () 
     emailVerified: false,
     providers: ["google.com"],
   }));
+});
+
+test("new student profile requires both legal selections", async () => {
+  await assert.rejects(() => ensureStudentProfileService(db, {
+    uid: "student-without-legal-selections",
+    email: "student@ogr.akdeniz.edu.tr",
+    emailVerified: false,
+    providers: ["password"],
+  }, {
+    userAgreementAccepted: true,
+    kvkkNoticeAcknowledged: false,
+  }), /LEGAL_ACKNOWLEDGEMENTS_REQUIRED/);
+  assert.equal(
+    (await db.doc("users/student-without-legal-selections").get()).exists,
+    false,
+  );
 });

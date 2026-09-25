@@ -107,6 +107,8 @@ async function removeOrphanCheckin(database: Firestore, checkinRef: DocumentRefe
 async function removeAccountAuditReferences(database: Firestore, uid: string): Promise<void> {
   await replaceMatchingField(database,
     database.collection("auditLogs").where("actorUid", "==", uid), "actorUid");
+  await replaceMatchingField(database,
+    database.collection("auditLogs").where("targetId", "==", uid), "targetId");
 
   while (true) {
     const page = await database.collection("auditLogs")

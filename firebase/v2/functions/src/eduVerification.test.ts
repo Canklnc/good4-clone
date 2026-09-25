@@ -121,6 +121,9 @@ test("a verified .edu.tr sign-in counts as a verified university address", async
     email: "Ada@Akdeniz.edu.tr",
     emailVerified: true,
     providers: ["google.com"],
+  }, {
+    userAgreementAccepted: true,
+    kvkkNoticeAcknowledged: true,
   });
   const user = await db.doc("users/edu-google").get();
   assert.equal(user.get("eduVerified"), true);
@@ -134,6 +137,9 @@ test("a Gmail sign-in stays a student without suspended-meal eligibility", async
     email: "ada@gmail.com",
     emailVerified: true,
     providers: ["google.com"],
+  }, {
+    userAgreementAccepted: true,
+    kvkkNoticeAcknowledged: true,
   });
   const user = await db.doc("users/plain-google").get();
   assert.equal(user.get("status"), "active");

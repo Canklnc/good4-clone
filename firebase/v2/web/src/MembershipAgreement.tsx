@@ -149,6 +149,7 @@ export default function MembershipAgreement() {
         </a>
         <nav className="legal-header-links" aria-label="Yasal sayfalar">
           <a href="/gizlilik">KVKK ve Gizlilik</a>
+          <a href="/gizlilik-politikasi">Gizlilik Politikası</a>
           <a className="privacy-home-link" href="https://good4tr.com">Ana sayfa</a>
         </nav>
       </header>
@@ -211,6 +212,7 @@ export default function MembershipAgreement() {
 
       <footer className="privacy-footer">
         <span>© 2026 Good4</span>
+        <a href="/hesabimi-sil">Hesap silme</a>
         <a href="mailto:cannklnc7@gmail.com">İletişim</a>
       </footer>
     </div>

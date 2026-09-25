@@ -72,6 +72,7 @@ import com.good4.auth.presentation.components.AuthLogoBadge
 import com.good4.auth.presentation.components.AuthPrimaryButton
 import com.good4.auth.presentation.components.AuthSecondaryButton
 import com.good4.auth.presentation.components.authTextFieldColors
+import com.good4.auth.presentation.register.RegistrationLegalAcknowledgements
 import com.good4.core.presentation.AppBackground
 import com.good4.core.presentation.DeepGreen
 import com.good4.core.presentation.ErrorSnackbar
@@ -98,6 +99,9 @@ import good4.composeapp.generated.resources.error_resend_wait_seconds
 import good4.composeapp.generated.resources.forgot_password
 import good4.composeapp.generated.resources.login
 import good4.composeapp.generated.resources.login_welcome_title
+import good4.composeapp.generated.resources.legal_registration_cancel
+import good4.composeapp.generated.resources.legal_registration_continue
+import good4.composeapp.generated.resources.legal_registration_intro
 import good4.composeapp.generated.resources.no_account
 import good4.composeapp.generated.resources.or
 import good4.composeapp.generated.resources.password
@@ -155,6 +159,8 @@ fun LoginScreen(
     val onLoginClick = remember { singleClick { onAction(LoginAction.OnLoginClick) } }
     val onForgotPasswordClick =
         remember { singleClick { onAction(LoginAction.OnForgotPasswordClick) } }
+    val onCompleteLegalRegistrationClick =
+        remember { singleClick { onAction(LoginAction.OnCompleteLegalRegistration) } }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val isEmailNotVerifiedError =
         (state.errorMessage as? com.good4.core.presentation.UiText.StringResourceId)?.id ==
@@ -210,7 +216,43 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(28.dp))
 
                 AuthCard {
-                    if (googleOnlyLogin) {
+                    if (state.isLegalAcknowledgementRequired) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Text(
+                                text = stringResource(Res.string.legal_registration_intro),
+                                color = TextSecondary,
+                                fontSize = 14.sp,
+                                lineHeight = 20.sp
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            RegistrationLegalAcknowledgements(
+                                userAgreementAccepted = state.isUserAgreementAccepted,
+                                kvkkNoticeAcknowledged = state.isKvkkNoticeAcknowledged,
+                                onUserAgreementToggle = {
+                                    onAction(LoginAction.OnToggleUserAgreementAccepted)
+                                },
+                                onKvkkNoticeToggle = {
+                                    onAction(LoginAction.OnToggleKvkkNoticeAcknowledged)
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            AuthPrimaryButton(
+                                text = stringResource(Res.string.legal_registration_continue),
+                                onClick = onCompleteLegalRegistrationClick,
+                                loading = state.isLoading
+                            )
+                            TextButton(
+                                onClick = { onAction(LoginAction.OnCancelLegalRegistration) },
+                                enabled = !state.isLoading,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = stringResource(Res.string.legal_registration_cancel),
+                                    color = TextSecondary
+                                )
+                            }
+                        }
+                    } else if (googleOnlyLogin) {
                         GoogleSignInButton(
                             enabled = !state.isLoading,
                             onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
@@ -273,7 +315,7 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                Row(
+                if (!state.isLegalAcknowledgementRequired) Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -298,7 +340,7 @@ fun LoginScreen(
                     }
                 }
 
-                if (googleOnlyLogin) {
+                if (googleOnlyLogin && !state.isLegalAcknowledgementRequired) {
                     AuthFootnote(
                         text = stringResource(Res.string.edu_email_helper),
                         modifier = Modifier.padding(horizontal = 16.dp)

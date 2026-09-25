@@ -134,6 +134,15 @@ class StudentRegisterViewModel(
                 }
             }
 
+            is StudentRegisterAction.OnToggleKvkkNoticeAcknowledged -> {
+                _state.update {
+                    it.copy(
+                        isKvkkNoticeAcknowledged = !it.isKvkkNoticeAcknowledged,
+                        errorMessage = null
+                    )
+                }
+            }
+
             is StudentRegisterAction.OnRegisterClick -> register()
             is StudentRegisterAction.OnClearError -> {
                 _state.update { it.copy(errorMessage = null) }
@@ -197,7 +206,7 @@ class StudentRegisterViewModel(
             }
             return
         }
-        if (!state.isTermsAccepted) {
+        if (!state.isTermsAccepted || !state.isKvkkNoticeAcknowledged) {
             _state.update {
                 it.copy(errorMessage = UiText.StringResourceId(Res.string.error_terms_not_accepted))
             }
@@ -217,7 +226,9 @@ class StudentRegisterViewModel(
                         when (
                             userRepository.ensureV2StudentProfile(
                                 displayName = state.fullName,
-                                university = state.university
+                                university = state.university,
+                                userAgreementAccepted = state.isTermsAccepted,
+                                kvkkNoticeAcknowledged = state.isKvkkNoticeAcknowledged
                             )
                         ) {
                             is Result.Success -> {

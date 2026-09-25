@@ -135,6 +135,7 @@ export default function PrivacyPolicy() {
           <span>Good4</span>
         </a>
         <nav className="legal-header-links" aria-label="Yasal sayfalar">
+          <a href="/gizlilik-politikasi">Gizlilik Politikası</a>
           <a href="/uyelik-sozlesmesi">Üyelik Sözleşmesi</a>
           <a className="privacy-home-link" href="https://good4tr.com">Ana sayfa</a>
         </nav>
@@ -188,6 +189,8 @@ export default function PrivacyPolicy() {
 
       <footer className="privacy-footer">
         <span>© 2026 Good4</span>
+        <a href="/hesabimi-sil">Hesap silme</a>
+        <a href="/gizlilik-politikasi">Gizlilik Politikası</a>
         <a href="/uyelik-sozlesmesi">Üyelik Sözleşmesi</a>
         <a href="mailto:cannklnc7@gmail.com">İletişim</a>
       </footer>

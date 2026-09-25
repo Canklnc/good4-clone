@@ -408,10 +408,10 @@
     <string name="akdeniz_menu_top_up">Yemekhane Kartına TL Yükle</string>
 
     <!-- Terms -->
-    <string name="terms_of_service">Üyelik Sözleşmesi</string>
-    <string name="terms_accept_suffix">'ni okudum ve kabul ediyorum.</string>
-    <string name="privacy_notice_link">Kişisel verileriniz hakkında KVKK Aydınlatma Metni ve Gizlilik Politikası'nı inceleyin.</string>
-    <string name="error_terms_not_accepted">Devam etmek için Üyelik Sözleşmesi'ni kabul edin.</string>
+    <string name="error_terms_not_accepted">Devam etmek için Kullanıcı Sözleşmesi ve Aydınlatma Metni hakkındaki seçimlerinizi tamamlayın.</string>
+    <string name="legal_registration_intro">Good4 hesabınızı oluşturmak için aşağıdaki iki belge hakkındaki seçiminizi tamamlayın.</string>
+    <string name="legal_registration_continue">Kayıt ol ve devam et</string>
+    <string name="legal_registration_cancel">Vazgeç</string>
     <string name="session_restore_title">Oturumun yeniden bağlanması bekleniyor</string>
     <string name="session_restore_retry">Tekrar Dene</string>
 </resources>

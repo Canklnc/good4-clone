@@ -24,6 +24,7 @@ import good4.composeapp.generated.resources.error_email_required
 import good4.composeapp.generated.resources.error_network_connection
 import good4.composeapp.generated.resources.error_password_required
 import good4.composeapp.generated.resources.error_please_register
+import good4.composeapp.generated.resources.error_terms_not_accepted
 import good4.composeapp.generated.resources.error_supporter_role_unavailable
 import good4.composeapp.generated.resources.error_resend_wait_seconds
 import good4.composeapp.generated.resources.error_unknown
@@ -44,6 +45,8 @@ class LoginViewModel(
     val state = _state.asStateFlow()
 
     private val passwordResetCooldown = CooldownTimer(viewModelScope)
+    private var pendingLegalRegistrationUid: String? = null
+    private var pendingLegalRegistrationEmailVerified = false
 
     fun onAction(action: LoginAction) {
         when (action) {
@@ -74,6 +77,21 @@ class LoginViewModel(
             is LoginAction.OnTogglePasswordVisibility -> {
                 _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
             }
+
+            is LoginAction.OnToggleUserAgreementAccepted -> {
+                _state.update {
+                    it.copy(isUserAgreementAccepted = !it.isUserAgreementAccepted, errorMessage = null)
+                }
+            }
+
+            is LoginAction.OnToggleKvkkNoticeAcknowledged -> {
+                _state.update {
+                    it.copy(isKvkkNoticeAcknowledged = !it.isKvkkNoticeAcknowledged, errorMessage = null)
+                }
+            }
+
+            is LoginAction.OnCompleteLegalRegistration -> completeLegalRegistration()
+            is LoginAction.OnCancelLegalRegistration -> cancelLegalRegistration()
 
             is LoginAction.OnLoginClick -> login()
             is LoginAction.OnClearError -> {
@@ -123,9 +141,25 @@ class LoginViewModel(
                     val userId = result.data.uid
 
                     if (AppEnvironment.firebaseBackend == FirebaseBackend.V2) {
-                        when (userRepository.ensureV2StudentProfile()) {
+                        when (val profileResult = userRepository.ensureV2StudentProfile()) {
                             is Result.Success -> Unit
                             is Result.Error -> {
+                                val errorDetail = (profileResult.error as? NetworkError)?.message.orEmpty()
+                                if (errorDetail.contains("LEGAL_ACKNOWLEDGEMENTS_REQUIRED")) {
+                                    pendingLegalRegistrationUid = userId
+                                    pendingLegalRegistrationEmailVerified = authUser.isEmailVerified
+                                    _state.update {
+                                        it.copy(
+                                            isLoading = false,
+                                            isLegalAcknowledgementRequired = true,
+                                            isUserAgreementAccepted = false,
+                                            isKvkkNoticeAcknowledged = false,
+                                            errorMessage = null,
+                                            infoMessage = null
+                                        )
+                                    }
+                                    return@launch
+                                }
                                 _state.update {
                                     it.copy(
                                         isLoading = false,
@@ -211,6 +245,116 @@ class LoginViewModel(
                         )
                     }
                 }
+            }
+        }
+    }
+
+    private fun completeLegalRegistration() {
+        val currentState = _state.value
+        if (currentState.isLoading) return
+        if (!currentState.isUserAgreementAccepted || !currentState.isKvkkNoticeAcknowledged) {
+            _state.update {
+                it.copy(errorMessage = UiText.StringResourceId(Res.string.error_terms_not_accepted))
+            }
+            return
+        }
+        val uid = pendingLegalRegistrationUid
+        if (uid == null) {
+            _state.update {
+                it.copy(
+                    isLegalAcknowledgementRequired = false,
+                    errorMessage = UiText.DynamicString("Oturum sona erdi. Lütfen yeniden giriş yapın.")
+                )
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true, errorMessage = null) }
+            when (userRepository.ensureV2StudentProfile(
+                userAgreementAccepted = true,
+                kvkkNoticeAcknowledged = true
+            )) {
+                is Result.Success -> {
+                    when (val userResult = userRepository.getUser(uid)) {
+                        is Result.Success -> {
+                            val user = userResult.data
+                            startupSessionCache.cacheStartupSession(
+                                uid = uid,
+                                role = user.role,
+                                isUserVerified = user.verified,
+                                isAuthEmailVerified = pendingLegalRegistrationEmailVerified
+                            )
+                            if (shouldCheckEmailVerificationFor(user.role)
+                                && !pendingLegalRegistrationEmailVerified
+                            ) {
+                                pendingLegalRegistrationUid = null
+                                authRepository.sendEmailVerification()
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        isLegalAcknowledgementRequired = false,
+                                        isEmailVerificationRequired = true,
+                                        errorMessage = null
+                                    )
+                                }
+                            } else {
+                                pendingLegalRegistrationUid = null
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        isLegalAcknowledgementRequired = false,
+                                        isLoginSuccess = true,
+                                        userRole = user.role,
+                                        errorMessage = null
+                                    )
+                                }
+                            }
+                        }
+
+                        is Result.Error -> {
+                            authRepository.signOut()
+                            pendingLegalRegistrationUid = null
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    isLegalAcknowledgementRequired = false,
+                                    isUserAgreementAccepted = false,
+                                    isKvkkNoticeAcknowledged = false,
+                                    errorMessage = userResult.error.toUserFetchErrorUiText()
+                                )
+                            }
+                        }
+                    }
+                }
+
+                is Result.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = UiText.DynamicString(
+                                "Kayıt tamamlanamadı. Lütfen yeniden deneyin."
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun cancelLegalRegistration() {
+        viewModelScope.launch {
+            authRepository.signOut()
+            pendingLegalRegistrationUid = null
+            pendingLegalRegistrationEmailVerified = false
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    isLegalAcknowledgementRequired = false,
+                    isUserAgreementAccepted = false,
+                    isKvkkNoticeAcknowledged = false,
+                    errorMessage = null
+                )
             }
         }
     }

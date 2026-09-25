@@ -642,6 +642,21 @@ export async function saveDiningMenuService(
   }
   days.sort((left, right) => left.date.localeCompare(right.date));
 
+  return writeDiningMenu(database, legacyTestDatabase, { weekLabel, weekStart, weekEnd, days }, actorUid);
+}
+
+/**
+ * Stores an already validated weekly menu, mirrors it to the legacy app and records it in the audit log.
+ * Shared by the admin panel and the scheduled SKS import.
+ */
+export async function writeDiningMenu(
+  database: Firestore,
+  legacyTestDatabase: Firestore,
+  menu: { weekLabel: string; weekStart: string; weekEnd: string; days: DiningMenuDay[] },
+  actorUid: string,
+  extraFields: Record<string, unknown> = {},
+): Promise<DiningMenuSummary> {
+  const { weekLabel, weekStart, weekEnd, days } = menu;
   const menuRef = database.doc("app_config/akdeniz_dining_menu");
   await menuRef.set({
     weekLabel,
@@ -650,6 +665,7 @@ export async function saveDiningMenuService(
     days,
     updatedAt: FieldValue.serverTimestamp(),
     updatedBy: actorUid,
+    ...extraFields,
   });
   await mirrorDiningMenuToLegacy(legacyTestDatabase, { weekLabel, weekStart, weekEnd, days, updatedAt: null }, actorUid);
   await database.collection("auditLogs").add({

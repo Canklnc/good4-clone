@@ -35,6 +35,7 @@ import { submitFeedbackService } from "./feedback.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
 import { eraseAccountData } from "./accountDeletion.js";
 import { refreshCampusWeatherService } from "./weather.js";
+import { importSksDiningMenuService } from "./diningMenuImport.js";
 import { confirmEduVerificationService, requestEduVerificationService } from "./eduVerification.js";
 import { recordLegalAcknowledgementsService } from "./legalAcknowledgements.js";
 
@@ -313,4 +314,35 @@ export const refreshCampusWeather = onSchedule({
   retryCount: 1,
 }, async () => {
   await refreshCampusWeatherService(db);
+});
+
+// SKS posts next week's lunch menu as an image on Friday afternoons and sometimes corrects it later,
+// so the page is checked twice each weekday; an unchanged image is skipped before any OCR runs.
+export const importSksDiningMenu = onSchedule({
+  schedule: "30 7,19 * * 1-5",
+  timeZone: "Europe/Istanbul",
+  region: "europe-west1",
+  memory: "1GiB",
+  timeoutSeconds: 120,
+  retryCount: 1,
+}, async () => {
+  const { recognizeMenuImage } = await import("./diningMenuOcr.js");
+  await importSksDiningMenuService(db, legacyTestDb, {
+    fetchText: async (url) => {
+      const response = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+      if (!response.ok) throw new Error(`SKS_PAGE_${response.status}`);
+      return response.text();
+    },
+    fetchImage: async (url) => {
+      // The published menu is ~1 MB; refuse anything far larger before it reaches OCR memory.
+      const maxBytes = 15 * 1024 * 1024;
+      const response = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+      if (!response.ok) throw new Error(`SKS_IMAGE_${response.status}`);
+      if (Number(response.headers.get("content-length") ?? 0) > maxBytes) throw new Error("SKS_IMAGE_TOO_LARGE");
+      const image = Buffer.from(await response.arrayBuffer());
+      if (image.length > maxBytes) throw new Error("SKS_IMAGE_TOO_LARGE");
+      return image;
+    },
+    recognize: recognizeMenuImage,
+  });
 });

@@ -106,7 +106,7 @@ internal object AgricultureSchedules {
             Row(
                 year = parts[1].toIntOrNull() ?: return@mapNotNull null,
                 entry = ScheduleEntry(
-                    day = ScheduleDay.valueOf(parts[0]),
+                    day = parseDay(parts[0]) ?: return@mapNotNull null,
                     startTime = parts[2],
                     endTime = parts[3],
                     courseCode = "",
@@ -120,6 +120,18 @@ internal object AgricultureSchedules {
             )
         }
         .toList()
+
+    // The source rows use the Turkish day names printed in the faculty PDF.
+    private val turkishDays = mapOf(
+        "PAZARTESİ" to ScheduleDay.MONDAY,
+        "SALI" to ScheduleDay.TUESDAY,
+        "ÇARŞAMBA" to ScheduleDay.WEDNESDAY,
+        "PERŞEMBE" to ScheduleDay.THURSDAY,
+        "CUMA" to ScheduleDay.FRIDAY
+    )
+
+    private fun parseDay(value: String): ScheduleDay? =
+        turkishDays[value.trim()] ?: ScheduleDay.entries.firstOrNull { it.name == value.trim() }
 
     private fun expand(entry: ScheduleEntry): List<ScheduleEntry> =
         classPeriods

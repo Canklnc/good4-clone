@@ -1271,19 +1271,19 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = COMPUTER_ENGINEERING_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "CSE 101T", "Computer Programming I (1/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "Amfi 4"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "CSE 181", "Natural Sciences (1/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "CSE 105", "Introduction to Computer Science", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "Amfi 1"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "10:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Hukuk Fak. Amfi 5"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "14:20", "CSE 181", "Natural Sciences (2/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "16:20", "TDB 101", "Turkish Language I (Şb 2 – BM)", "Öğr. Gör. Ömer Bahadır İLTER", "Amfi 1"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "10:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Amfi 3 / Hukuk Fak. Amfi 5"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "14:20", "FİZ 175", "Physics I Laboratory (Grup 1)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "16:20", "FİZ 175", "Physics I Laboratory (Grup 2)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "10:20", "FİZ 173", "Physics I", "Prof. Dr. Yasemin KÜÇÜK", "Amfi 4"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "CSE 101T", "Computer Programming I (1/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "Amfi 4"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "CSE 181", "Natural Sciences (1/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "CSE 105", "Introduction to Computer Science", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "Amfi 1"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Hukuk Fak. Amfi 5"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "CSE 181", "Natural Sciences (2/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "TDB 101", "Turkish Language I (Şb 2 – BM)", "Öğr. Gör. Ömer Bahadır İLTER", "Amfi 1"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Amfi 3 / Hukuk Fak. Amfi 5"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "FİZ 175", "Physics I Laboratory (Grup 1)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "FİZ 175", "Physics I Laboratory (Grup 2)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "FİZ 173", "Physics I", "Prof. Dr. Yasemin KÜÇÜK", "Amfi 4"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "CSE 101T", "Computer Programming I (2/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "Amfi 4"),
-            programEntry(ScheduleDay.FRIDAY, "08:30", "09:20", "CSE 101L", "Computer Programming I Lab (Şb 1)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2"),
-            programEntry(ScheduleDay.FRIDAY, "10:30", "11:20", "CSE 101L", "Computer Programming I Lab (Şb 2)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2")
+            programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "CSE 101L", "Computer Programming I Lab (Şb 1)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2"),
+            programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "CSE 101L", "Computer Programming I Lab (Şb 2)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2")
         )
     )
 
@@ -1295,17 +1295,17 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = COMPUTER_ENGINEERING_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I (Şb 1)", "Öğr. Gör. Dr. Nurdan ÇETİNKAYA", "BB01"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "CSE 221", "Discrete Mathematics I", "Dr. Öğr. Üyesi Murat AK", "D206"),
-            programEntry(ScheduleDay.TUESDAY, "10:30", "11:20", "CSE 211", "Digital Design Lab (Şb 1-2)", "Arş. Gör. Dr. Erdinç TÜRK", "D204"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "14:20", "CSE 203", "Object-Oriented Analysis and Design", "Prof. Dr. Ümit Deniz ULUŞAR", "Amfi 4"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "16:20", "CSE 211", "Digital Design", "Arş. Gör. Dr. Erdinç TÜRK", "Amfi 1"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "10:20", "CSE 201", "Data Structures", "Arş. Gör. Dr. Taha Yiğit ALKAN", "Amfi 1"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "10:20", "CSE 213", "Microcontroller Programming", "Prof. Dr. Alper BİLGE", "D206"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "CSE 201", "Data Structures Lab (Şb 1)", "Arş. Gör. Dr. Taha Yiğit ALKAN", "YLab1 + YLab2"),
-            programEntry(ScheduleDay.THURSDAY, "15:30", "16:20", "CSE 201", "Data Structures Lab (Şb 2)", "Arş. Gör. Dr. Taha Yiğit ALKAN", "YLab1 + YLab2"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "14:20", "CSE 213", "Microcontroller Programming Lab (Şb 1)", "Prof. Dr. Alper BİLGE", "YLab1"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "15:20", "CSE 213", "Microcontroller Programming Lab (Şb 2)", "Prof. Dr. Alper BİLGE", "YLab1")
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I (Şb 1)", "Öğr. Gör. Dr. Nurdan ÇETİNKAYA", "BB01"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "17:20", "CSE 221", "Discrete Mathematics I", "Dr. Öğr. Üyesi Murat AK", "D206"),
+            programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "CSE 211", "Digital Design Lab (Şb 1-2)", "Arş. Gör. Dr. Erdinç TÜRK", "D204"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "CSE 203", "Object-Oriented Analysis and Design", "Prof. Dr. Ümit Deniz ULUŞAR", "Amfi 4"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "CSE 201", "Data Structures", "Arş. Gör. Dr. Taha Yiğit ALKAN", "Amfi 1"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "CSE 211", "Digital Design", "Arş. Gör. Dr. Erdinç TÜRK", "Amfi 1"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "CSE 213", "Microcontroller Programming", "Prof. Dr. Alper BİLGE", "D206"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "CSE 201", "Data Structures Lab (Şb 1)", "Arş. Gör. Dr. Taha Yiğit ALKAN", "YLab1 + YLab2"),
+            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "CSE 201", "Data Structures Lab (Şb 2)", "Arş. Gör. Dr. Taha Yiğit ALKAN", "YLab1 + YLab2"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "15:20", "CSE 213", "Microcontroller Programming Lab (Şb 1)", "Prof. Dr. Alper BİLGE", "YLab1"),
+            programEntry(ScheduleDay.FRIDAY, "15:30", "16:20", "CSE 213", "Microcontroller Programming Lab (Şb 2)", "Prof. Dr. Alper BİLGE", "YLab1")
         )
     )
 
@@ -1321,15 +1321,15 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "09:30", "10:20", "CSE 301", "Algorithms Lab (Şb 2)", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "YLab1"),
             programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "CSE 301", "Algorithms Lab (Şb 3)", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "YLab1"),
             programEntry(ScheduleDay.MONDAY, "11:30", "12:20", "CSE 301", "Algorithms Lab (Şb 4)", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "YLab1"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "CSE 303", "Fundamentals of Operating Systems (1/2)", "Doç. Dr. Taner DANIŞMAN", "D205"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "CSE 341", "Fundamentals of System Administration (1/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "D205"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "09:20", "CSE 377", "Game Programming", "Doç. Dr. Alper ÖZCAN", "D206"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "14:20", "CSE 381", "Principles of User Interface Design", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "YLab1"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "09:20", "CSE 301", "Algorithms", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "Amfi 2"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "14:20", "CSE 303", "Fundamentals of Operating Systems (2/2)", "Doç. Dr. Taner DANIŞMAN", "D205"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "16:20", "CSE 341", "Fundamentals of System Administration (2/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "D205"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "CSE 351", "Design Patterns", "Prof. Dr. Alper BİLGE", "D206"),
-            programEntry(ScheduleDay.FRIDAY, "08:30", "09:20", "CSE 321", "Statistical Inference and Computation", "Prof. Dr. Alper BİLGE", "D206")
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "CSE 303", "Fundamentals of Operating Systems (1/2)", "Doç. Dr. Taner DANIŞMAN", "D205"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "CSE 341", "Fundamentals of System Administration (1/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "D205"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "CSE 377", "Game Programming", "Doç. Dr. Alper ÖZCAN", "D206"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "CSE 381", "Principles of User Interface Design", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "YLab1"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "CSE 301", "Algorithms", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "Amfi 2"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "CSE 303", "Fundamentals of Operating Systems (2/2)", "Doç. Dr. Taner DANIŞMAN", "D205"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "CSE 341", "Fundamentals of System Administration (2/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "D205"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "17:20", "CSE 351", "Design Patterns", "Prof. Dr. Alper BİLGE", "D205"),
+            programEntry(ScheduleDay.FRIDAY, "08:30", "12:20", "CSE 321", "Statistical Inference and Computation", "Prof. Dr. Alper BİLGE", "D206")
         )
     )
 
@@ -1341,21 +1341,21 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = COMPUTER_ENGINEERING_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "10:20", "CSE 435", "Formal Languages and Automata", "Dr. Öğr. Üyesi Murat AK", "D206"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "CSE 425", "Network Security (1/2)", "Arş. Gör. Dr. Manolya ATALAY", "YLab2"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "CSE 409", "Intro. to Natural Language Processing (1/2)", "Prof. Dr. Melih GÜNAY", "D204"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "CSE 427", "Wireless Sensor Networks (1/2)", "Arş. Gör. Dr. Manolya ATALAY", "YLab2"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "09:20", "CSE 413", "Optimization Theory and Applications", "Arş. Gör. Dr. Taha Yiğit ALKAN", "D205"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "14:20", "CSE 481", "Engineering Economics", "Doç. Dr. Alper ÖZCAN", "D206"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "11:20", "CSE 439", "Distributed and Parallel Computing (1/2)", "Doç. Dr. Taner DANIŞMAN", "D206"),
-            programEntry(ScheduleDay.THURSDAY, "08:30", "09:20", "CSE 445", "Deep Learning", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "D205"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "CSE 427", "Wireless Sensor Networks (2/2)", "Arş. Gör. Dr. Manolya ATALAY", "D205"),
-            programEntry(ScheduleDay.THURSDAY, "15:30", "16:20", "CSE 409", "Intro. to Natural Language Processing (2/2)", "Prof. Dr. Melih GÜNAY", "D206"),
-            programEntry(ScheduleDay.FRIDAY, "08:30", "09:20", "CSE 439", "Distributed and Parallel Computing (2/2)", "Doç. Dr. Taner DANIŞMAN", "D206"),
-            programEntry(ScheduleDay.FRIDAY, "10:30", "11:20", "CSE 483", "Entrepreneurship", "Prof. Dr. Ümit Deniz ULUŞAR", "D205"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "14:20", "CSE 415", "Fundamentals of Cloud Computing", "Arş. Gör. Dr. Taha Yiğit ALKAN", "Amfi 2"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "14:20", "CSE 433", "Advanced Mobile Programming", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "D206"),
-            programEntry(ScheduleDay.FRIDAY, "15:30", "16:20", "CSE 425", "Network Security (2/2)", "Arş. Gör. Dr. Manolya ATALAY", "D205")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "CSE 435", "Formal Languages and Automata", "Dr. Öğr. Üyesi Murat AK", "D206"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "CSE 425", "Network Security (1/2)", "Arş. Gör. Dr. Manolya ATALAY", "YLab2"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "CSE 409", "Intro. to Natural Language Processing (1/2)", "Prof. Dr. Melih GÜNAY", "D204"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "CSE 427", "Wireless Sensor Networks (1/2)", "Arş. Gör. Dr. Manolya ATALAY", "YLab2"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "CSE 413", "Optimization Theory and Applications", "Arş. Gör. Dr. Taha Yiğit ALKAN", "D205"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "CSE 481", "Engineering Economics", "Doç. Dr. Alper ÖZCAN", "D206"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "CSE 409", "Intro. to Natural Language Processing (2/2)", "Prof. Dr. Melih GÜNAY", "D206"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "CSE 439", "Distributed and Parallel Computing (1/2)", "Doç. Dr. Taner DANIŞMAN", "D206"),
+            programEntry(ScheduleDay.THURSDAY, "08:30", "12:20", "CSE 445", "Deep Learning", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "D205"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "CSE 427", "Wireless Sensor Networks (2/2)", "Arş. Gör. Dr. Manolya ATALAY", "D206"),
+            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "CSE 425", "Network Security (2/2)", "Arş. Gör. Dr. Manolya ATALAY", "D206"),
+            programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "CSE 439", "Distributed and Parallel Computing (2/2)", "Doç. Dr. Taner DANIŞMAN", "D206"),
+            programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "CSE 483", "Entrepreneurship", "Prof. Dr. Ümit Deniz ULUŞAR", "D205"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "18:20", "CSE 415", "Fundamentals of Cloud Computing", "Arş. Gör. Dr. Taha Yiğit ALKAN", "Amfi 2"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "18:20", "CSE 433", "Advanced Mobile Programming", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "D206")
         )
     )
 
@@ -1367,19 +1367,19 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = AI_DATA_ENGINEERING_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "CSE 101T", "Computer Programming I (1/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "Amfi 4"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "CSE 181", "Natural Sciences (1/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "AIE 105", "Introduction to AI and Data Engineering", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "Amfi 1"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "10:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Fen Fak."),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "14:20", "CSE 181", "Natural Sciences (2/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "10:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Amfi 3"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "14:20", "FİZ 175", "Physics I Laboratory (Grup 1)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "16:20", "FİZ 175", "Physics I Laboratory (Grup 2)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "10:20", "FİZ 173", "Physics I", "Prof. Dr. Yasemin KÜÇÜK", "Amfi 4"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "CSE 101T", "Computer Programming I (1/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "Amfi 4"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "CSE 181", "Natural Sciences (1/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "AIE 105", "Introduction to AI and Data Engineering", "Dr. Öğr. Üyesi Mustafa Berkay YILMAZ", "Amfi 1"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Fen Fak."),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "CSE 181", "Natural Sciences (2/2)", "Prof. Dr. Melih GÜNAY", "Amfi 1"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "MAT 151", "Mathematics I", "Prof. Dr. Mehmet CENKCİ", "Amfi 3"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "FİZ 175", "Physics I Laboratory (Grup 1)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "FİZ 175", "Physics I Laboratory (Grup 2)", "Prof. Dr. Yasemin KÜÇÜK", "Fen Fak. Lab"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "FİZ 173", "Physics I", "Prof. Dr. Yasemin KÜÇÜK", "Amfi 4"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "CSE 101T", "Computer Programming I (2/2)", "Dr. Öğr. Üyesi Joseph William LEDET", "Amfi 4"),
-            programEntry(ScheduleDay.THURSDAY, "15:30", "16:20", "TDB 101", "Turkish Language I (Şb 5 – YZVM)", "Türk Dili Bölüm Başkanlığı", "Amfi 1"),
-            programEntry(ScheduleDay.FRIDAY, "08:30", "09:20", "CSE 101L", "Computer Programming I Lab (Şb 1)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2"),
-            programEntry(ScheduleDay.FRIDAY, "10:30", "11:20", "CSE 101L", "Computer Programming I Lab (Şb 2)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2")
+            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "TDB 101", "Turkish Language I (Şb 5 – YZVM)", "Türk Dili Bölüm Başkanlığı", "Amfi 1"),
+            programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "CSE 101L", "Computer Programming I Lab (Şb 1)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2"),
+            programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "CSE 101L", "Computer Programming I Lab (Şb 2)", "Dr. Öğr. Üyesi Joseph William LEDET", "YLab1 + YLab2")
         )
     )
 
@@ -1391,14 +1391,14 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = AI_DATA_ENGINEERING_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I (Şb 2)", "Öğr. Gör. Dr. Koray ERGİN", "BB04"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "CSE 221", "Discrete Mathematics I", "Dr. Öğr. Üyesi Murat AK", "D206"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "10:20", "CSE 201", "Data Structures", "Prof. Dr. Ümit Deniz ULUŞAR", "Amfi 1"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "10:20", "AIE 205", "Fundamentals of Data Science", "Doç. Dr. Taner DANIŞMAN", "YLab1"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "CSE 201", "Data Structures Lab (Şb 1)", "Prof. Dr. Ümit Deniz ULUŞAR", "YLab1 + YLab2"),
-            programEntry(ScheduleDay.THURSDAY, "15:30", "16:20", "CSE 201", "Data Structures Lab (Şb 2)", "Prof. Dr. Ümit Deniz ULUŞAR", "YLab1 + YLab2"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "14:20", "CSE 203", "Object-Oriented Analysis and Design", "Prof. Dr. Ümit Deniz ULUŞAR", "Amfi 4"),
-            programEntry(ScheduleDay.FRIDAY, "08:30", "09:20", "CSE 321", "Statistical Inference and Computation", "Prof. Dr. Alper BİLGE", "D206")
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I (Şb 2)", "Öğr. Gör. Dr. Koray ERGİN", "BB04"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "17:20", "CSE 221", "Discrete Mathematics I", "Dr. Öğr. Üyesi Murat AK", "D206"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "CSE 203", "Object-Oriented Analysis and Design", "Prof. Dr. Ümit Deniz ULUŞAR", "Amfi 4"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "CSE 201", "Data Structures", "Prof. Dr. Ümit Deniz ULUŞAR", "Amfi 1"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "AIE 205", "Fundamentals of Data Science", "Doç. Dr. Taner DANIŞMAN", "YLab1"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "CSE 201", "Data Structures Lab (Şb 1)", "Prof. Dr. Ümit Deniz ULUŞAR", "YLab1 + YLab2"),
+            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "CSE 201", "Data Structures Lab (Şb 2)", "Prof. Dr. Ümit Deniz ULUŞAR", "YLab1 + YLab2"),
+            programEntry(ScheduleDay.FRIDAY, "08:30", "12:20", "CSE 321", "Statistical Inference and Computation", "Prof. Dr. Alper BİLGE", "D206")
         )
     )
 
@@ -1414,14 +1414,14 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "09:30", "10:20", "CSE 301", "Algorithms Lab (Şb 2)", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "YLab1"),
             programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "CSE 301", "Algorithms Lab (Şb 3)", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "YLab1"),
             programEntry(ScheduleDay.MONDAY, "11:30", "12:20", "CSE 301", "Algorithms Lab (Şb 4)", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "YLab1"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "CSE 409", "Intro. to Natural Language Processing (1/2)", "Prof. Dr. Melih GÜNAY", "D204"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "09:20", "CSE 413", "Optimization Theory and Applications", "Arş. Gör. Dr. Taha Yiğit ALKAN", "D205"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "16:20", "CSE 409", "Intro. to Natural Language Processing (2/2)", "Prof. Dr. Melih GÜNAY", "D206"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "09:20", "CSE 301", "Algorithms", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "Amfi 2"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "14:20", "AIE 335", "Data Pipelines and Infrastructure (2. blok)", "Arş. Gör. Dr. Erdinç TÜRK", "D206"),
-            programEntry(ScheduleDay.THURSDAY, "08:30", "09:20", "CSE 445", "Deep Learning", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "D205"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "AIE 335", "Data Pipelines and Infrastructure", "Arş. Gör. Dr. Erdinç TÜRK", "BB01"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "14:20", "CSE 415", "Fundamentals of Cloud Computing", "Arş. Gör. Dr. Taha Yiğit ALKAN", "D205")
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "CSE 409", "Intro. to Natural Language Processing (1/2)", "Prof. Dr. Melih GÜNAY", "D204"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "CSE 413", "Optimization Theory and Applications", "Arş. Gör. Dr. Taha Yiğit ALKAN", "D205"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "CSE 409", "Intro. to Natural Language Processing (2/2)", "Prof. Dr. Melih GÜNAY", "D206"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "CSE 301", "Algorithms", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "Amfi 2"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "AIE 335", "Data Pipelines and Infrastructure (2. blok)", "Arş. Gör. Dr. Erdinç TÜRK", "D206"),
+            programEntry(ScheduleDay.THURSDAY, "08:30", "12:20", "CSE 445", "Deep Learning", "Dr. Öğr. Üyesi Hüseyin Gökhan AKÇAY", "D205"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "AIE 335", "Data Pipelines and Infrastructure", "Arş. Gör. Dr. Erdinç TÜRK", "BB01"),
+            programEntry(ScheduleDay.FRIDAY, "13:30", "17:20", "CSE 415", "Fundamentals of Cloud Computing", "Arş. Gör. Dr. Taha Yiğit ALKAN", "D205")
         )
     )
 
@@ -1432,7 +1432,8 @@ object ClassSchedules {
         updatedAt = "Yayımlanmış Google Sheets",
         sourcePage = 1,
         sourceUrl = AI_DATA_ENGINEERING_SOURCE_URL,
-        entries = emptyList()
+        entries = emptyList(),
+        sourceWarning = "Yapay Zeka ve Veri Mühendisliği programında henüz 4. sınıf bulunmuyor; bölümün yayımladığı programda yalnızca 1-3. sınıflar yer alıyor."
     )
 
     // Mühendislik Fakültesi 2026-2027 güz dönemi bölüm programları.
@@ -3646,12 +3647,13 @@ object ClassSchedules {
             AGRICULTURE_FACULTY -> AgricultureSchedules.schedulesFor(department) ?: return null
             else -> return null
         }
+        // A saved class year can outlive a faculty switch (e.g. 5. Sınıf outside dentistry), so never index blindly.
         return when (classYear) {
-            FIRST_YEAR -> schedules[0]
-            SECOND_YEAR -> schedules[1]
-            THIRD_YEAR -> schedules[2]
-            FOURTH_YEAR -> schedules[3]
-            FIFTH_YEAR -> schedules[4]
+            FIRST_YEAR -> schedules.getOrNull(0)
+            SECOND_YEAR -> schedules.getOrNull(1)
+            THIRD_YEAR -> schedules.getOrNull(2)
+            FOURTH_YEAR -> schedules.getOrNull(3)
+            FIFTH_YEAR -> schedules.getOrNull(4)
             else -> null
         }
     }

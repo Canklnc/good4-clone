@@ -559,6 +559,10 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             "V2MembershipDto" -> decodeV2MembershipDto(document) as T
             "V2EventDto" -> decodeV2EventDto(document) as T
             "V2EventRegistrationDto" -> decodeV2EventRegistrationDto(document) as T
+            "EduStatusDto" -> com.good4.eduverification.EduStatusDto(
+                eduEmail = document.getOrNull("eduEmail"),
+                eduVerified = document.getOrNull("eduVerified")
+            ) as T
             else -> document.data(serializerFor(clazz))
         }
     }

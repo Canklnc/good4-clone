@@ -58,6 +58,7 @@ val commonModule = module {
     single { AkdenizDiningMenuRepository(get<FirestoreRepository>()) }
     single { AcademicCalendarRepository(get<FirestoreRepository>()) }
     single { FeedbackRepository(get<FirestoreRepository>(), get<AuthRepository>()) }
+    single { com.good4.eduverification.EduVerificationRepository(get<FirestoreRepository>(), get<AuthRepository>()) }
 
     viewModel { LoginViewModel(get<AuthRepository>(), get<UserRepository>(), get<StartupSessionCache>()) }
     viewModel {
@@ -149,6 +150,7 @@ val commonModule = module {
     viewModel { AcademicCalendarViewModel(get<AcademicCalendarRepository>()) }
     viewModel { ClassScheduleViewModel(get<AuthRepository>(), get<UserRepository>()) }
     viewModel { FeedbackViewModel(get<FeedbackRepository>()) }
+    viewModel { com.good4.eduverification.EduVerificationViewModel(get()) }
     viewModel {
         AccountSettingsViewModel(
             get<AuthRepository>(),

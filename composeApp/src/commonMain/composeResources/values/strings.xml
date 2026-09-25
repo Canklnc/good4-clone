@@ -19,12 +19,12 @@
     <string name="login">Giriş Yap</string>
     <string name="edu_email_login">Edu mail ile giriş yap</string>
     <string name="edu_email_login_divider">edu mail ile giriş</string>
-    <string name="login_welcome_title">Good4'e hoş geldin</string>
+    <string name="login_welcome_title">Good4'a hoş geldiniz</string>
     <string name="edu_email_register">Edu mail ile kaydol</string>
     <string name="edu_email_helper">Üniversitenizin edu.tr uzantılı öğrenci e-postasını kullanın.</string>
     <string name="no_account">Hesabın yok mu?</string>
     <string name="register_options_title">Kayıt Türü</string>
-    <string name="register_options_heading">Good4'e nasıl katılmak istersin?</string>
+    <string name="register_options_heading">Good4'a nasıl katılmak istersin?</string>
     <string name="register_options_description">Hesap türünü seç, sana uygun kayıt adımlarına geçelim.</string>
     <string name="student_register">Öğrenciyim</string>
     <string name="student_register_description">Üniversite (.edu.tr) e-postanla kayıt ol, kampüs avantajlarından yararlan.</string>

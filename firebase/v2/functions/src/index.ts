@@ -47,6 +47,8 @@ export const createOrganization = onCall(callableOptions, async (request) => {
 
 export const assignOrganizationMember = onCall(callableOptions, async (request) => {
   const uid = requireAuthenticatedUid(request.auth?.uid);
+  // Check the caller before touching Firebase Auth so non-admins cannot probe user IDs.
+  await requireGood4Admin(db, uid);
   const userId = typeof request.data?.userId === "string" ? request.data.userId : "";
   const authUser = userId ? await getAuth().getUser(userId) : null;
   return assignOrganizationMemberService(db, uid, {

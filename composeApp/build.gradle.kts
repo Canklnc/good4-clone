@@ -11,7 +11,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.google.services)
-    alias(libs.plugins.firebase.crashlytics)
 }
 
 kotlin {
@@ -191,6 +190,4 @@ dependencies {
     debugImplementation(compose.uiTooling)
     debugImplementation(libs.firebase.appcheck.debug)
     "prodImplementation"(platform(libs.firebase.bom))
-    "prodImplementation"(libs.firebase.analytics.ktx)
-    "prodImplementation"(libs.firebase.crashlytics.ktx)
 }

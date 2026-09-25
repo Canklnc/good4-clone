@@ -1,7 +1,6 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
-import FirebaseCrashlytics
 import GoogleSignIn
 import ComposeApp
 import VisionKit
@@ -19,9 +18,6 @@ struct IOSApp: App {
         FirebaseApp.configure()
         GoogleSignInBridge.shared.launcher = NativeGoogleSignInLauncher()
         EventScannerBridge.shared.launcher = NativeEventScannerLauncher()
-        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
-        Crashlytics.crashlytics().setCustomValue("ios", forKey: "platform")
-        Crashlytics.crashlytics().log("IOSApp initialized")
         #if DEBUG
         Firestore.enableLogging(true)
         #endif

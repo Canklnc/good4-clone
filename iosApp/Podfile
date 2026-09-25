@@ -13,12 +13,10 @@ inhibit_all_warnings!
 
 target 'iosApp' do
   pod 'ComposeApp', :path => '../composeApp'
-  pod 'FirebaseAnalytics'
-  pod 'Firebase/Auth'
+  pod 'Firebase/Auth', '= 12.9.0'
   pod 'GoogleSignIn', '~> 10.0'
-  pod 'Firebase/Firestore'
-  pod 'Firebase/Storage'
-  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Firestore', '= 12.9.0'
+  pod 'Firebase/Storage', '= 12.9.0'
   pod 'MapLibre', '6.17.1'
 end
 

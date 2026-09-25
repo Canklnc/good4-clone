@@ -117,6 +117,15 @@ default FROM address:
 firebase ext:install firebase/firestore-send-email --project good4tr-v2
 ```
 
+## Campus weather
+
+`refreshCampusWeather` runs every 30 minutes (Cloud Scheduler, europe-west1),
+fetches the MET Norway Locationforecast for the Akdeniz campus and stores the
+current temperature and a Turkish label in `app_config/campus_weather`. The app
+only reads that document, so user devices never call the weather provider.
+MET Norway data is free for commercial use under CC BY 4.0; the home card shows
+"Veri: MET Norway" linking to their licensing page.
+
 ## Deployment
 
 Deploy only after authenticating the Firebase CLI and verifying the selected

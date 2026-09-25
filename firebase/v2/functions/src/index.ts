@@ -1,6 +1,7 @@
 import { getAuth } from "firebase-admin/auth";
 import { randomUUID } from "node:crypto";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
+import { onSchedule } from "firebase-functions/v2/scheduler";
 import {
   assignOrganizationMemberService,
   createCampaignService,
@@ -32,6 +33,7 @@ import { recordEventAttendanceService, setEventRegistrationService } from "./eve
 import { submitFeedbackService } from "./feedback.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
 import { eraseAccountData } from "./accountDeletion.js";
+import { refreshCampusWeatherService } from "./weather.js";
 import { confirmEduVerificationService, requestEduVerificationService } from "./eduVerification.js";
 import { recordLegalAcknowledgementsService } from "./legalAcknowledgements.js";
 
@@ -292,4 +294,17 @@ export const deleteMyAccount = onCall({
   }
 
   return { deleted: true };
+});
+
+// One request per half hour for the whole app keeps us well inside MET Norway's
+// fair-use terms and means user devices never contact the weather provider.
+export const refreshCampusWeather = onSchedule({
+  schedule: "every 30 minutes",
+  timeZone: "Europe/Istanbul",
+  region: "europe-west1",
+  memory: "256MiB",
+  timeoutSeconds: 60,
+  retryCount: 1,
+}, async () => {
+  await refreshCampusWeatherService(db);
 });

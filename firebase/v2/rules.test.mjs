@@ -315,3 +315,13 @@ test('students cannot mark their own .edu.tr address as verified or read verific
   await assertFails(getDoc(doc(db, 'eduEmailClaims/claim-1')));
   await assertFails(getDoc(doc(db, 'mail/mail-1')));
 });
+
+test('signed-in users can read campus weather but clients cannot write it', async () => {
+  await seed('users/student-1', { role: 'student', status: 'active' });
+  await seed('app_config/campus_weather', { temperature: 26, label: 'Açık', source: 'MET Norway' });
+  const studentDb = testEnv.authenticatedContext('student-1', { email_verified: true }).firestore();
+  const anonymousDb = testEnv.unauthenticatedContext().firestore();
+  await assertSucceeds(getDoc(doc(studentDb, 'app_config/campus_weather')));
+  await assertFails(getDoc(doc(anonymousDb, 'app_config/campus_weather')));
+  await assertFails(setDoc(doc(studentDb, 'app_config/campus_weather'), { temperature: 99 }));
+});

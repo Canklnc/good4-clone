@@ -12,11 +12,11 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 @Composable
-actual fun GoogleSignInButton(enabled: Boolean, onToken: (String, String?) -> Unit, onError: (String) -> Unit) {
+actual fun GoogleSignInButton(enabled: Boolean, loading: Boolean, onToken: (String, String?) -> Unit, onError: (String) -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var busy by remember { mutableStateOf(false) }
-    GoogleButtonContent(text = if (busy) "Google açılıyor…" else "Google ile devam et", enabled = enabled && !busy, onClick = {
+    GoogleButtonContent(text = if (busy) "Google açılıyor…" else "Google ile devam et", enabled = enabled && !busy, loading = loading, onClick = {
         scope.launch {
             busy = true
             try {

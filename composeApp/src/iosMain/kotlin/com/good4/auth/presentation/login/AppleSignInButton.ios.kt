@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,17 +22,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.good4.auth.presentation.components.AuthSigningInText
 
 @Composable
 actual fun AppleSignInButton(
     enabled: Boolean,
+    loading: Boolean,
     onCredential: (idToken: String, rawNonce: String) -> Unit,
     onError: (String) -> Unit
 ) {
     var busy by remember { mutableStateOf(false) }
 
     Button(
-        enabled = enabled && !busy,
+        enabled = enabled && !busy && !loading,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 12.dp)
@@ -38,8 +42,8 @@ actual fun AppleSignInButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Black,
             contentColor = Color.White,
-            disabledContainerColor = Color.Black.copy(alpha = 0.5f),
-            disabledContentColor = Color.White.copy(alpha = 0.7f)
+            disabledContainerColor = if (loading) Color.Black else Color.Black.copy(alpha = 0.5f),
+            disabledContentColor = if (loading) Color.White else Color.White.copy(alpha = 0.7f)
         ),
         shape = RoundedCornerShape(12.dp),
         onClick = {
@@ -62,9 +66,17 @@ actual fun AppleSignInButton(
         }
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(text = "", fontSize = 22.sp)
+            if (loading) {
+                CircularProgressIndicator(Modifier.size(18.dp), color = Color.White, strokeWidth = 2.dp)
+            } else {
+                Text(text = "", fontSize = 22.sp)
+            }
             Text(
-                text = if (busy) "Apple açılıyor…" else "Apple ile devam et",
+                text = when {
+                    loading -> AuthSigningInText
+                    busy -> "Apple açılıyor…"
+                    else -> "Apple ile devam et"
+                },
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold
             )

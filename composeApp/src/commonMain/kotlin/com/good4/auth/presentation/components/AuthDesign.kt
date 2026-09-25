@@ -195,31 +195,48 @@ internal fun AuthSecondaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    loading: Boolean = false,
     leading: (@Composable () -> Unit)? = null
 ) {
     OutlinedButton(
         onClick = onClick,
         modifier = modifier.fillMaxWidth().height(AuthButtonHeight),
-        enabled = enabled,
+        enabled = enabled && !loading,
         shape = AuthFieldShape,
         border = BorderStroke(1.dp, BorderMuted),
-        colors = ButtonDefaults.outlinedButtonColors(containerColor = SurfaceDefault, contentColor = TextPrimary)
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = SurfaceDefault,
+            contentColor = TextPrimary,
+            disabledContainerColor = if (loading) SurfaceDefault else Color.Transparent
+        )
     ) {
-        if (leading != null) {
+        if (loading) {
+            CircularProgressIndicator(Modifier.size(18.dp), color = TextPrimary, strokeWidth = 2.dp)
+            Spacer(Modifier.width(10.dp))
+        } else if (leading != null) {
             leading()
             Spacer(Modifier.width(10.dp))
         }
-        Text(text, fontSize = 15.sp, fontWeight = FontWeight.Medium, color = TextPrimary)
+        Text(
+            text = if (loading) AuthSigningInText else text,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium,
+            color = TextPrimary
+        )
     }
 }
 
+/** Shown on a sign-in button while the account is being signed in after the provider sheet closes. */
+const val AuthSigningInText = "Giriş yapılıyor…"
+
 /** Shared look for the platform Google buttons; the platforms only own the sign-in call. */
 @Composable
-fun GoogleButtonContent(text: String, enabled: Boolean, onClick: () -> Unit) {
+fun GoogleButtonContent(text: String, enabled: Boolean, loading: Boolean = false, onClick: () -> Unit) {
     AuthSecondaryButton(
         text = text,
         onClick = onClick,
         enabled = enabled,
+        loading = loading,
         leading = { GoogleGMark(Modifier.size(20.dp)) }
     )
 }

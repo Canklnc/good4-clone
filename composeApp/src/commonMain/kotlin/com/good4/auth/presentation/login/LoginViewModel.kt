@@ -144,8 +144,14 @@ class LoginViewModel(
             return
         }
 
+        val federatedSignIn = when {
+            googleIdToken != null -> FederatedSignIn.Google
+            appleIdToken != null -> FederatedSignIn.Apple
+            else -> null
+        }
+
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, errorMessage = null) }
+            _state.update { it.copy(isLoading = true, federatedSignIn = federatedSignIn, errorMessage = null) }
 
             val authResult = when {
                 googleIdToken != null -> authRepository.signInWithGoogleToken(googleIdToken, googleAccessToken)
@@ -290,7 +296,7 @@ class LoginViewModel(
         }
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, errorMessage = null) }
+            _state.update { it.copy(isLoading = true, federatedSignIn = null, errorMessage = null) }
             when (userRepository.ensureV2StudentProfile(
                 userAgreementAccepted = true,
                 kvkkNoticeAcknowledged = true
@@ -409,7 +415,7 @@ class LoginViewModel(
         }
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, errorMessage = null, infoMessage = null) }
+            _state.update { it.copy(isLoading = true, federatedSignIn = null, errorMessage = null, infoMessage = null) }
 
             when (val result = authRepository.sendPasswordResetEmail(email)) {
                 is Result.Success -> {

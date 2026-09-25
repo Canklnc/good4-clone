@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 @Composable
 expect fun AppleSignInButton(
     enabled: Boolean,
+    loading: Boolean,
     onCredential: (idToken: String, rawNonce: String) -> Unit,
     onError: (String) -> Unit
 )

@@ -255,11 +255,13 @@ fun LoginScreen(
                     } else if (googleOnlyLogin) {
                         GoogleSignInButton(
                             enabled = !state.isLoading,
+                            loading = state.isLoading && state.federatedSignIn == FederatedSignIn.Google,
                             onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
                             onError = { onAction(LoginAction.OnGoogleError(it)) }
                         )
                         AppleSignInButton(
                             enabled = !state.isLoading,
+                            loading = state.isLoading && state.federatedSignIn == FederatedSignIn.Apple,
                             onCredential = { idToken, rawNonce ->
                                 onAction(LoginAction.OnAppleCredential(idToken, rawNonce))
                             },
@@ -314,11 +316,13 @@ fun LoginScreen(
 
                         GoogleSignInButton(
                             enabled = !state.isLoading,
+                            loading = state.isLoading && state.federatedSignIn == FederatedSignIn.Google,
                             onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
                             onError = { onAction(LoginAction.OnGoogleError(it)) }
                         )
                         AppleSignInButton(
                             enabled = !state.isLoading,
+                            loading = state.isLoading && state.federatedSignIn == FederatedSignIn.Apple,
                             onCredential = { idToken, rawNonce ->
                                 onAction(LoginAction.OnAppleCredential(idToken, rawNonce))
                             },

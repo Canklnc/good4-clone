@@ -1,8 +1,6 @@
 package com.good4.auth.presentation.register
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import com.good4.core.presentation.AppBackground
+import com.good4.auth.presentation.components.AuthBackdrop
 
 @Composable
 internal fun RegisterScreenContentContainer(
@@ -27,21 +25,20 @@ internal fun RegisterScreenContentContainer(
 ) {
     val focusManager = LocalFocusManager.current
 
-    Box(
+    AuthBackdrop(
         modifier = modifier
-            .fillMaxSize()
-            .background(AppBackground)
             .padding(paddingValues)
             .imePadding()
             .pointerInput(Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus(force = true) })
-            }
+            },
+        belowTopBar = true
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             content = content
         )

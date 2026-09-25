@@ -1,15 +1,12 @@
 package com.good4.auth.presentation.login
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
+import com.good4.auth.presentation.components.GoogleButtonContent
 
 @Composable
 actual fun GoogleSignInButton(enabled: Boolean, onToken: (String, String?) -> Unit, onError: (String) -> Unit) {
     var busy by remember { mutableStateOf(false) }
-    OutlinedButton(enabled = enabled && !busy, modifier = Modifier.fillMaxWidth(), onClick = {
+    GoogleButtonContent(text = if (busy) "Google açılıyor…" else "Google ile devam et", enabled = enabled && !busy, onClick = {
         val launcher = GoogleSignInBridge.launcher
         if (launcher == null) onError("Google ile giriş henüz etkinleştirilmedi. Lütfen Good4 ekibiyle iletişime geçin.")
         else {
@@ -22,5 +19,5 @@ actual fun GoogleSignInButton(enabled: Boolean, onToken: (String, String?) -> Un
                 }
             })
         }
-    }) { Text(if (busy) "Google açılıyor…" else "Google ile devam et") }
+    })
 }

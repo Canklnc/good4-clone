@@ -12,10 +12,7 @@ import com.good4.core.domain.NetworkError
 import com.good4.core.domain.Result
 import com.good4.core.util.FirebaseDebugLogger
 import com.good4.dining.data.dto.AkdenizDiningMenuDto
-import com.good4.order.data.dto.OrderDto
-import com.good4.order.data.dto.OrderItemDto
 import com.good4.product.data.dto.ProductDto
-import com.good4.supportactivity.data.dto.SupportActivityDto
 import com.good4.user.data.dto.UserDto
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.Direction
@@ -534,9 +531,6 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
         "HomeBannerDto" to HomeBannerDto.serializer(),
         "AcademicCalendarEventDto" to AcademicCalendarEventDto.serializer(),
         "UniversitiesConfigDto" to UniversitiesConfigDto.serializer(),
-        "OrderDto" to OrderDto.serializer(),
-        "OrderItemDto" to OrderItemDto.serializer(),
-        "SupportActivityDto" to SupportActivityDto.serializer(),
         "AkdenizDiningMenuDto" to AkdenizDiningMenuDto.serializer(),
         "FeedbackSubmissionDto" to com.good4.feedback.FeedbackSubmissionDto.serializer()
     )
@@ -561,8 +555,6 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             "UserDto" -> decodeUserDto(document) as T
             "ProductDto" -> decodeProductDto(document) as T
             "CodeDto" -> decodeCodeDto(document) as T
-            "OrderDto" -> decodeOrderDto(document) as T
-            "SupportActivityDto" -> decodeSupportActivityDto(document) as T
             "V2OrganizationDto" -> decodeV2OrganizationDto(document) as T
             "V2MembershipDto" -> decodeV2MembershipDto(document) as T
             "V2EventDto" -> decodeV2EventDto(document) as T
@@ -627,78 +619,6 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             createdAt = document.getEpochSeconds("createdAt"),
             expiresAt = document.getEpochSeconds("expiresAt"),
             usedAt = document.getEpochSeconds("usedAt")
-        )
-    }
-
-    private fun decodeOrderDto(document: DocumentSnapshot): OrderDto {
-        val itemsList = decodeOrderItems(document)
-
-        return OrderDto(
-            businessId = document.getOrNull("businessId"),
-            businessName = document.getOrNull("businessName"),
-            code = document.getOrNull("code"),
-            createdAt = document.getEpochSeconds("createdAt"),
-            expiresAt = document.getEpochSeconds("expiresAt"),
-            grandTotal = document.getAsDouble("grandTotal"),
-            totalAmount = document.getAsDouble("totalAmount"),
-            platformDonation = document.getAsDouble("platformDonation"),
-            status = document.getOrNull("status"),
-            supporterId = document.getOrNull("supporterId"),
-            supporterName = document.getOrNull("supporterName"),
-            items = itemsList
-        )
-    }
-
-    private fun decodeOrderItems(document: DocumentSnapshot): List<OrderItemDto>? {
-        val typedItems = try {
-            document.getOrNull<List<OrderItemDto>>("items")
-        } catch (_: Exception) {
-            null
-        }
-        if (!typedItems.isNullOrEmpty()) return typedItems
-
-        val rawItems = try {
-            document.getOrNull<List<*>>("items")
-        } catch (_: Exception) {
-            null
-        } ?: return typedItems
-
-        return rawItems.mapNotNull { item ->
-            when (item) {
-                is OrderItemDto -> item
-                is Map<*, *> -> mapToOrderItemDto(item)
-                else -> null
-            }
-        }
-    }
-
-    private fun mapToOrderItemDto(map: Map<*, *>): OrderItemDto {
-        return OrderItemDto(
-            businessId = map["businessId"] as? String,
-            businessName = map["businessName"] as? String,
-            productId = map["productId"] as? String,
-            productName = map["productName"] as? String,
-            quantity = toIntOrNull(map["quantity"]),
-            unitPrice = toDoubleOrNull(map["unitPrice"]),
-            totalPrice = toDoubleOrNull(map["totalPrice"])
-        )
-    }
-
-    private fun decodeSupportActivityDto(document: DocumentSnapshot): SupportActivityDto {
-        return SupportActivityDto(
-            createdAt = document.getEpochSeconds("createdAt"),
-            creatorId = document.getOrNull("creatorId"),
-            currentCount = document.getAsInt("currentCount"),
-            description = document.getOrNull("description"),
-            endDate = document.getEpochSeconds("endDate"),
-            shareId = document.getOrNull("shareId"),
-            shareLink = document.getOrNull("shareLink"),
-            startDate = document.getEpochSeconds("startDate"),
-            status = document.getOrNull("status"),
-            targetBusinessId = document.getOrNull("targetBusinessId"),
-            targetCount = document.getAsInt("targetCount"),
-            title = document.getOrNull("title"),
-            type = document.getOrNull("type")
         )
     }
 

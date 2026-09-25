@@ -41,6 +41,7 @@ data class UserDto(
     val createdAt: Long? = null,
     @SerialName("updatedAt")
     val updatedAt: Long? = null,
+    // Legacy supporter totals: kept so profile writes do not drop historical values.
     @SerialName("totalDonations")
     val totalDonations: Int? = null,
     @SerialName("totalMeals")

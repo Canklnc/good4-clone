@@ -42,14 +42,11 @@ class AppConfigRepository(
             is Result.Success -> {
                 val dto = result.data
                 val expirationMinutes = dto.reservationExpirationMinutes ?: AppDefaults.RESERVATION_EXPIRATION_MINUTES
-                val supporterOrderCodeExpirationMinutes = dto.supporterOrderCodeExpirationMinutes
-                    ?: AppDefaults.SUPPORTER_ORDER_CODE_EXPIRATION_MINUTES
                 val studentWeeklyCredit = dto.studentWeeklyCredit
                     ?: AppConfig.DEFAULT.studentWeeklyCredit
 
                 _config.value = AppConfig(
                     reservationExpirationDuration = expirationMinutes.minutes,
-                    supporterOrderCodeExpirationDuration = supporterOrderCodeExpirationMinutes.minutes,
                     studentWeeklyCredit = studentWeeklyCredit
                 )
             }
@@ -106,10 +103,6 @@ class AppConfigRepository(
 
     fun getExpirationDuration(): kotlin.time.Duration {
         return _config.value.reservationExpirationDuration
-    }
-
-    fun getSupporterOrderCodeExpirationDuration(): kotlin.time.Duration {
-        return _config.value.supporterOrderCodeExpirationDuration
     }
 
     fun getStudentWeeklyCredit(): Int {

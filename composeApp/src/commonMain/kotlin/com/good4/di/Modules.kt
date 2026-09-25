@@ -31,13 +31,11 @@ import com.good4.dining.data.repository.AkdenizDiningMenuRepository
 import com.good4.dining.presentation.AkdenizDiningMenuViewModel
 import com.good4.feedback.FeedbackRepository
 import com.good4.feedback.FeedbackViewModel
-import com.good4.order.data.repository.OrderRepository
 import com.good4.product.data.repository.FirestoreProductRepository
 import com.good4.product.presentation.product_list.ProductListViewModel
 import com.good4.schedule.presentation.ClassScheduleViewModel
 import com.good4.student.presentation.profile.StudentProfileViewModel
 import com.good4.student.presentation.reservations.StudentReservationsViewModel
-import com.good4.supportactivity.data.repository.SupportActivityRepository
 import com.good4.user.data.repository.UserRepository
 import com.good4.user.presentation.accountsettings.AccountSettingsViewModel
 import org.koin.core.module.dsl.viewModel
@@ -57,8 +55,6 @@ val commonModule = module {
     single { FirestoreProductRepository(get<FirestoreRepository>(), get<FirestoreBusinessRepository>()) }
     single { CampaignRepository(get<FirestoreRepository>()) }
     single { CodeRepository(get<FirestoreRepository>(), get<FirestoreBusinessRepository>(), get<FirestoreProductRepository>(), get<AppConfigRepository>()) }
-    single { SupportActivityRepository(get<FirestoreRepository>()) }
-    single { OrderRepository(get<FirestoreRepository>()) }
     single { AkdenizDiningMenuRepository(get<FirestoreRepository>()) }
     single { AcademicCalendarRepository(get<FirestoreRepository>()) }
     single { FeedbackRepository(get<FirestoreRepository>(), get<AuthRepository>()) }
@@ -110,11 +106,10 @@ val commonModule = module {
             get<AuthRepository>(),
             get<FirestoreBusinessRepository>(),
             get<CodeRepository>(),
-            get<FirestoreProductRepository>(),
-            get<OrderRepository>()
+            get<FirestoreProductRepository>()
         )
     }
-    viewModel { VerifyCodeViewModel(get<AuthRepository>(), get<FirestoreBusinessRepository>(), get<CodeRepository>(), get<FirestoreProductRepository>(), get<OrderRepository>(), get<UserRepository>(), get()) }
+    viewModel { VerifyCodeViewModel(get<AuthRepository>(), get<FirestoreBusinessRepository>(), get<CodeRepository>(), get<FirestoreProductRepository>(), get()) }
     viewModel {
         BusinessProductsViewModel(
             get<AuthRepository>(),

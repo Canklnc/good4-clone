@@ -220,20 +220,6 @@ class UserRepository(
         }
     }
 
-    suspend fun incrementUserDonations(userId: String, meals: Int): Result<Unit, Error> {
-        return when (val result = getUserDto(userId)) {
-            is Result.Success -> {
-                val dto = result.data
-                val updated = dto.copy(
-                    totalDonations = (dto.totalDonations ?: 0) + 1,
-                    totalMeals = (dto.totalMeals ?: 0) + meals
-                )
-                updateUser(userId, updated)
-            }
-            is Result.Error -> result
-        }
-    }
-
     suspend fun incrementUserCredit(userId: String): Result<Unit, Error> {
         return when (val result = getUserDto(userId)) {
             is Result.Success -> {
@@ -305,8 +291,6 @@ private fun UserDto.toUser(userId: String): User {
         weeklyCreditOverride = weeklyCreditOverride,
         lastCreditResetAt = lastCreditResetAt?.let { Instant.fromEpochSeconds(it) },
         registrationDate = registrationDate?.let { Instant.fromEpochSeconds(it) },
-        createdAt = createdAt?.let { Instant.fromEpochSeconds(it) },
-        totalDonations = totalDonations ?: 0,
-        totalMeals = totalMeals ?: 0
+        createdAt = createdAt?.let { Instant.fromEpochSeconds(it) }
     )
 }

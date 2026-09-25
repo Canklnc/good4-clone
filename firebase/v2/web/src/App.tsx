@@ -106,6 +106,7 @@ type AdminFeedback = {
   status: string;
   environment: "v2" | "legacyTest";
   createdAt: string | null;
+  report: { communityId: string; entryId: string; kind: "event" | "coupon" } | null;
 };
 type DiningMenuDay = {
   date: string;
@@ -192,6 +193,10 @@ const reviewLegacyCoupon = httpsCallable<
   { communityId: string; entryId: string; decision: "approve" | "reject" },
   { status: "published" | "cancelled" }
 >(functions, "reviewLegacyCoupon");
+const moderateContentReport = httpsCallable<
+  { feedbackId: string; decision: "dismiss" | "remove" },
+  { status: "dismissed" | "resolved" }
+>(functions, "moderateContentReport");
 const saveDiningMenu = httpsCallable<{
   weekLabel: string;
   weekStart: string;
@@ -1529,6 +1534,24 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
     }
   }
 
+  async function handleContentReport(item: AdminFeedback, decision: "dismiss" | "remove") {
+    if (!item.report || !item.id.startsWith("v2:")) return;
+    if (decision === "remove" && !window.confirm(`“${item.subject}” bildirimindeki içeriği yayından kaldırmak istiyor musunuz?`)) return;
+    setReviewing(item.id);
+    setError("");
+    setNotice("");
+    try {
+      await moderateContentReport({ feedbackId: item.id.slice(3), decision });
+      setNotice(decision === "remove" ? "İçerik yayından kaldırıldı; bildirim sonuçlandırıldı." : "Bildirim incelendi.");
+      await refresh(false);
+    } catch (requestError) {
+      setError(functionErrorMessage(requestError));
+      await refresh(false);
+    } finally {
+      setReviewing("");
+    }
+  }
+
   async function handleCreateBusiness(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setCreatingBusiness(true);
@@ -1813,7 +1836,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
           {data && (
             <div className="admin-summary" aria-label="Yönetim özeti">
               <div><strong>{data.pendingCoupons.length}</strong><span>Bekleyen kupon</span></div>
-              <div><strong>{data.feedback.length}</strong><span>Geri bildirim</span></div>
+              <div><strong>{data.feedback.filter((item) => item.report && item.status === "new").length}</strong><span>Açık içerik bildirimi</span></div>
               <div><strong>{data.businesses.length}</strong><span>Aktif işletme</span></div>
               <div><strong>{data.communities.length}</strong><span>Aktif topluluk</span></div>
             </div>
@@ -1828,7 +1851,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
           <button className={tab === "ads" ? "active" : ""} onClick={() => setTab("ads")}>Ana Sayfa Reklamı</button>
           <button className={tab === "calendar" ? "active" : ""} onClick={() => setTab("calendar")}>Akademik Takvim</button>
           <button className={tab === "feedback" ? "active" : ""} onClick={() => setTab("feedback")}>
-            Geri Bildirimler {data && <span>{data.feedback.length}</span>}
+            Bildirimler ve geri bildirimler {data && <span>{data.feedback.filter((item) => item.report && item.status === "new").length}</span>}
           </button>
           <button className={tab === "businesses" ? "active" : ""} onClick={() => setTab("businesses")}>İşletmeler</button>
           <button className={tab === "communities" ? "active" : ""} onClick={() => setTab("communities")}>Topluluklar</button>
@@ -2077,14 +2100,14 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
         {!loading && data && tab === "feedback" && (
           <section className="admin-section" aria-labelledby="feedback-title">
             <div className="section-title-row">
-              <div><h2 id="feedback-title">Geri Bildirimler</h2><p>Mobil uygulamadan gönderilen son 100 kayıt.</p></div>
+              <div><h2 id="feedback-title">Bildirimler ve geri bildirimler</h2><p>İçerik bildirimlerini inceleyin; uygunsuz içeriği yayından kaldırın.</p></div>
               <button className="quiet-button" onClick={() => void refresh(false)}>Yenile</button>
             </div>
             {data.feedback.length === 0 ? (
               <div className="admin-card empty-state"><h3>Henüz geri bildirim yok</h3><p>Öğrencilerin gönderdiği mesajlar burada görünecek.</p></div>
             ) : (
               <div className="feedback-list">
-                {data.feedback.map((item) => (
+                {[...data.feedback].sort((left, right) => Number(Boolean(right.report && right.status === "new")) - Number(Boolean(left.report && left.status === "new"))).map((item) => (
                   <article className="admin-card feedback-card" key={item.id}>
                     <div className="feedback-card__header">
                       <div>
@@ -2094,10 +2117,24 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
                       <time>{formatAdminDate(item.createdAt)}</time>
                     </div>
                     <p className="feedback-message">{item.message}</p>
+                    {item.report && (
+                      <div className="coupon-tags">
+                        <span>{item.report.kind === "event" ? "Etkinlik bildirimi" : "Kupon bildirimi"}</span>
+                        <span>Durum: {item.status === "new" ? "İnceleme bekliyor" : item.status === "resolved" ? "İçerik kaldırıldı" : "İncelendi"}</span>
+                      </div>
+                    )}
                     <div className="feedback-sender">
                       <strong>{item.userDisplayName || "Good4 kullanıcısı"}</strong>
                       <span>{item.userEmail || item.userId}</span>
                     </div>
+                    {item.report && item.status === "new" && (
+                      <div className="review-actions">
+                        <button className="quiet-button" disabled={reviewing === item.id} onClick={() => void handleContentReport(item, "dismiss")}>İncelendi, işlem yok</button>
+                        <button className="danger-button" disabled={reviewing === item.id} onClick={() => void handleContentReport(item, "remove")}>
+                          {reviewing === item.id ? "İşleniyor…" : "İçeriği yayından kaldır"}
+                        </button>
+                      </div>
+                    )}
                   </article>
                 ))}
               </div>

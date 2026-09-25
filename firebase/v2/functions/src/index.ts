@@ -18,6 +18,7 @@ import {
   getAdminDashboardService,
   getPortalContextService,
   requireGood4Admin,
+  moderateContentReportService,
   reviewLegacyCouponService,
   saveDiningMenuService,
   saveHomeBannerService,
@@ -145,6 +146,11 @@ export const getAdminDashboard = onCall(callableOptions, async (request) => {
 export const reviewLegacyCoupon = onCall(callableOptions, async (request) => {
   const uid = requireAuthenticatedUid(request.auth?.uid);
   return reviewLegacyCouponService(db, legacyTestDb, uid, request.data);
+});
+
+export const moderateContentReport = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return moderateContentReportService(db, legacyTestDb, uid, request.data ?? {});
 });
 
 export const saveDiningMenu = onCall(callableOptions, async (request) => {

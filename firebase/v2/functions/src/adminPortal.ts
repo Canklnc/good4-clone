@@ -72,6 +72,7 @@ export interface FeedbackSummary {
   status: string;
   environment: "v2" | "legacyTest";
   createdAt: string | null;
+  report: { communityId: string; entryId: string; kind: "event" | "coupon" } | null;
 }
 
 export interface DiningMenuDay {
@@ -473,6 +474,14 @@ export async function getAdminDashboardService(
     status: String(document.get("status") ?? "new"),
     environment,
     createdAt: timestampIso(document.get("createdAt")),
+    report: document.get("source") === "contentReport"
+      && ["event", "coupon"].includes(String(document.get("report.kind") ?? ""))
+      ? {
+          communityId: String(document.get("report.communityId") ?? ""),
+          entryId: String(document.get("report.entryId") ?? ""),
+          kind: document.get("report.kind") as "event" | "coupon",
+        }
+      : null,
   })).sort((a, b) => (b.createdAt ?? "").localeCompare(a.createdAt ?? ""));
 
   const result = {
@@ -654,6 +663,91 @@ export async function saveDiningMenuService(
 
   const saved = await menuRef.get();
   return diningMenuFromDocument(saved) ?? { weekLabel, weekStart, weekEnd, days, updatedAt: null };
+}
+
+export async function moderateContentReportService(
+  database: Firestore,
+  legacyTestDatabase: Firestore,
+  actorUid: string,
+  input: { feedbackId: unknown; decision: unknown },
+): Promise<{ status: "dismissed" | "resolved" }> {
+  await requireGood4Admin(database, actorUid);
+  const feedbackId = safeDocumentId(input.feedbackId, "feedbackId");
+  if (input.decision !== "dismiss" && input.decision !== "remove") {
+    throw new HttpsError("invalid-argument", "REPORT_DECISION_INVALID");
+  }
+  const feedbackRef = database.doc(`feedbackSubmissions/${feedbackId}`);
+  const feedback = await feedbackRef.get();
+  if (!feedback.exists || feedback.get("source") !== "contentReport") {
+    throw new HttpsError("not-found", "CONTENT_REPORT_NOT_FOUND");
+  }
+  if (feedback.get("status") !== "new") {
+    throw new HttpsError("failed-precondition", "CONTENT_REPORT_ALREADY_REVIEWED");
+  }
+  const status = input.decision === "remove" ? "resolved" : "dismissed";
+  const report = feedback.get("report") as Record<string, unknown> | undefined;
+  const communityId = safeDocumentId(report?.communityId, "communityId");
+  const entryId = safeDocumentId(report?.entryId, "entryId");
+  const kind = report?.kind;
+  if (kind !== "event" && kind !== "coupon") {
+    throw new HttpsError("failed-precondition", "CONTENT_REPORT_TARGET_INVALID");
+  }
+
+  if (input.decision === "remove" && kind === "event") {
+    const eventRef = database.doc(`events/${entryId}`);
+    await database.runTransaction(async (transaction) => {
+      const currentFeedback = await transaction.get(feedbackRef);
+      const event = await transaction.get(eventRef);
+      if (currentFeedback.get("status") !== "new") {
+        throw new HttpsError("failed-precondition", "CONTENT_REPORT_ALREADY_REVIEWED");
+      }
+      if (!event.exists || event.get("organizationId") !== communityId) {
+        throw new HttpsError("not-found", "REPORTED_EVENT_NOT_FOUND");
+      }
+      transaction.update(eventRef, { status: "cancelled", updatedAt: FieldValue.serverTimestamp() });
+      transaction.update(feedbackRef, {
+        status, reviewedAt: FieldValue.serverTimestamp(), reviewedBy: actorUid, resolution: "contentRemoved",
+      });
+      transaction.create(database.collection("auditLogs").doc(), {
+        action: "contentReport.contentRemoved", actorUid, targetType: "event", targetId: entryId,
+        metadata: { communityId, feedbackId }, createdAt: FieldValue.serverTimestamp(),
+      });
+    });
+    return { status };
+  }
+
+  if (input.decision === "remove" && kind === "coupon") {
+    const community = await database.doc(`organizations/${communityId}`).get();
+    const legacyId = String(community.get("legacyTestCommunityId") ?? "");
+    if (!community.exists || community.get("type") !== "community" || !/^[A-Za-z0-9_-]{1,128}$/.test(legacyId)) {
+      throw new HttpsError("not-found", "REPORTED_COMMUNITY_NOT_FOUND");
+    }
+    const entryRef = legacyTestDatabase.doc(`communities/${legacyId}/entries/${entryId}`);
+    await legacyTestDatabase.runTransaction(async (transaction) => {
+      const entry = await transaction.get(entryRef);
+      if (!entry.exists || entry.get("kind") !== "coupon") {
+        throw new HttpsError("not-found", "REPORTED_COUPON_NOT_FOUND");
+      }
+      transaction.update(entryRef, { status: "cancelled" });
+    });
+  }
+
+  await database.runTransaction(async (transaction) => {
+    const currentFeedback = await transaction.get(feedbackRef);
+    if (currentFeedback.get("status") !== "new") {
+      throw new HttpsError("failed-precondition", "CONTENT_REPORT_ALREADY_REVIEWED");
+    }
+    transaction.update(feedbackRef, {
+      status, reviewedAt: FieldValue.serverTimestamp(), reviewedBy: actorUid,
+      resolution: input.decision === "remove" ? "contentRemoved" : "dismissed",
+    });
+    transaction.create(database.collection("auditLogs").doc(), {
+      action: input.decision === "remove" ? "contentReport.contentRemoved" : "contentReport.dismissed",
+      actorUid, targetType: kind, targetId: entryId,
+      metadata: { communityId, feedbackId }, createdAt: FieldValue.serverTimestamp(),
+    });
+  });
+  return { status };
 }
 
 export async function reviewLegacyCouponService(

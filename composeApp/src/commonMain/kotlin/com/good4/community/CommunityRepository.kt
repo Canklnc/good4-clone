@@ -133,7 +133,12 @@ class CommunityRepository(
             appendLine("İçerik: ${entry.data.title} (${entry.data.kind}, ${entry.id})")
             if (details.isNotBlank()) appendLine("Açıklama: ${details.trim()}")
         }.take(2000)
-        feedback.submit(subject, message)
+        feedback.submit(
+            subject, message,
+            reportCommunityId = community.id,
+            reportEntryId = entry.id,
+            reportEntryKind = entry.data.kind
+        )
     }
 
     suspend fun list(): List<Community> {

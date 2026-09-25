@@ -25,6 +25,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Save
@@ -44,6 +45,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -55,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -74,6 +77,7 @@ import com.good4.core.presentation.components.ProfileDeleteAccountButton
 import com.good4.core.presentation.components.ProfileSectionCard
 import com.good4.core.presentation.components.StandardButtonHeight
 import com.good4.core.presentation.components.StandardButtonLoadingIndicatorSize
+import config.LegalLinks
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.account_settings_account_management_title
 import good4.composeapp.generated.resources.account_settings_business_name_label
@@ -106,6 +110,7 @@ fun AccountSettingsScreen(
     val errorText = state.errorMessage?.asString()
     val infoText = state.infoMessage?.asString()
     val themeController = LocalThemeController.current
+    val uriHandler = LocalUriHandler.current
 
     val universityOptions = listOf("Akdeniz Üniversitesi")
     val facultyOptions = listOf(
@@ -509,6 +514,24 @@ fun AccountSettingsScreen(
                             Text(text = stringResource(Res.string.account_settings_reset_password_button))
                         }
                     }
+                }
+            }
+
+            ProfileSectionCard(verticalSpacing = 14.dp) {
+                AccountSettingsSectionHeader(
+                    icon = Icons.Filled.Info,
+                    title = "Yasal belgeler",
+                    subtitle = "Sözleşme ve gizlilik bilgilerini görüntüle."
+                )
+                HorizontalDivider(color = BorderMuted.copy(alpha = 0.45f))
+                TextButton(onClick = { uriHandler.openUri(LegalLinks.TERMS) }) {
+                    Text("Üyelik ve Kullanım Sözleşmesi")
+                }
+                TextButton(onClick = { uriHandler.openUri(LegalLinks.PRIVACY_POLICY) }) {
+                    Text("Gizlilik Politikası")
+                }
+                TextButton(onClick = { uriHandler.openUri(LegalLinks.PRIVACY) }) {
+                    Text("KVKK Aydınlatma Metni")
                 }
             }
 

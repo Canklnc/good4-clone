@@ -28,7 +28,13 @@ class FeedbackRepository(
     private val store: FirestoreRepository,
     private val auth: AuthRepository
 ) {
-    suspend fun submit(subject: String, message: String) {
+    suspend fun submit(
+        subject: String,
+        message: String,
+        reportCommunityId: String? = null,
+        reportEntryId: String? = null,
+        reportEntryKind: String? = null
+    ) {
         val normalizedSubject = subject.trim()
         val normalizedMessage = message.trim()
         require(normalizedSubject.length in 3..120) { "Konu 3–120 karakter olmalıdır." }
@@ -39,6 +45,11 @@ class FeedbackRepository(
             callV2Function("submitFeedback", buildJsonObject {
                 put("subject", normalizedSubject)
                 put("message", normalizedMessage)
+                if (reportCommunityId != null && reportEntryId != null && reportEntryKind != null) {
+                    put("reportCommunityId", reportCommunityId)
+                    put("reportEntryId", reportEntryId)
+                    put("reportEntryKind", reportEntryKind)
+                }
             })
             return
         }

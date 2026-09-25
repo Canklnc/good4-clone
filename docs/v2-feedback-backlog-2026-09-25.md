@@ -4,7 +4,7 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
 
 ## Hatalar
 
-- [ ] **Günün menüsü çalışmıyor (otomatik aktarım yazıldı, deploy bekliyor).** Kafeterya / günün menüsü ekranı veri göstermiyor. Kaynağı (Firestore, scraper, function) kontrol et.
+- [x] **Günün menüsü çalışmıyor (otomatik aktarım 25.09'da deploy edildi; ilk çalışma 28.09 07:30).** Kafeterya / günün menüsü ekranı veri göstermiyor. Kaynağı (Firestore, scraper, function) kontrol et.
   - 25.09 inceleme: Uygulama `app_config/akdeniz_dining_menu` belgesini okuyor ve sadece bu haftanın menüsünü gösteriyor. Canlıdaki belge en son 18.09'da, 14–18 Eylül haftası için güncellenmiş (14–17 Eylül'de günde 1 yemek var, deneme verisi gibi). Bu hafta menü girilmediği için kutucuk "Bugün için menü yayınlanmadı" gösteriyor.
   - Menü sadece yönetim panelinden (`saveDiningMenu`) elle giriliyor; otomatik aktarım yok. Koddaki 7–11 Eylül yedek menüsü artık hiçbir haftaya denk gelmiyor.
   - Ana sayfadaki "Günün Menüsü" kutucuğu dokunulabilir değil. Haftalık menü bileşeni `AkdenizDiningMenuCard` yazılmış ama hiçbir yerde kullanılmıyor.
@@ -18,7 +18,7 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
 - [x] **Ders programı bazı bölümlerde çöküyor.** (Düzeltildi; ayrıntı aşağıdaki maddede.) Bazı bölümler seçildiğinde uygulama crash oluyor. Hangi bölümlerde olduğunu bul, crash logunu al, eksik veya beklenmedik alanlara karşı ayrıştırmayı sağlamlaştır.
 - [ ] **Login / register ekranında klavye açılırken bug var.** Klavye açılırken yerleşim bozuluyor (alanlar kayıyor, kapanıyor ya da zıplıyor olabilir). Tekrar üret; iOS'ta ime/klavye inset ve scroll davranışını düzelt.
 
-- [ ] **Apple ile giriş hata veriyor (login / register).** Sign in with Apple akışı login ve register ekranlarında başarısız oluyor.
+- [x] **Apple ile giriş hata veriyor (login / register).** (Kullanıcı Firebase'de Apple sağlayıcısını açtı; giriş çalışıyor.) Sign in with Apple akışı login ve register ekranlarında başarısız oluyor.
   - 25.09 inceleme: V2 build'inin imzasında `com.apple.developer.applesignin` var. Bundle ID `com.good4.iosApp.v2`, `good4tr-v2` projesinde kayıtlı ve `GoogleService-Info` doğru. `ensureStudentProfile` Cloud Function loglarında 20.09'dan beri hata ya da çağrı kaydı yok.
   - Gerçek hata nedeni yutuluyor: `FirebaseAuthRepositoryIOS.signInWithAppleToken` exception'ı loglamadan genel mesaj dönüyor, `IOSApp.swift` içindeki `didCompleteWithError` da `NSError` kodunu loglamıyor.
   - Teşhis için geçici loglar eklendi, neden bulunduktan sonra kaldırıldı.
@@ -27,11 +27,13 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
   - Çözüm (Firebase Console): Authentication > Sign-in method > Apple'ı etkinleştir. Hesap silmede Apple token iptali (`revokeToken`) de çalışsın diye OAuth code flow alanlarına Apple Team ID, Key ID ve Sign in with Apple private key'i gir.
   - 25.09 Codex güncellemesi: Kullanıcı onayıyla Apple sağlayıcısı etkinleştirildi ve Firebase Authentication'da yeni Apple kullanıcısı oluştu. Yasal onay/profil oluşturma ve hesap silme testi bekliyor; OAuth code flow anahtarları henüz girilmedi.
   - Uyarı: Kotlin/Native'de `NSLog("%@", kotlinString)` gibi argümanlı çağrı uygulamayı çökertiyor (EXC_BREAKPOINT). Mevcut `Logger` kullanılmalı.
-- [ ] **Firestore izin hataları (cihaz logu, 25.09).** Öğrenci oturumu açıkken şu okumalar `Missing or insufficient permissions` (kod 7) ile reddediliyor:
+- [x] **Firestore izin hataları (cihaz logu, 25.09).** Öğrenci oturumu açıkken şu okumalar `Missing or insufficient permissions` (kod 7) ile reddediliyor:
+  - Düzeltildi (cihazda doğrulanmadı): `app_config/global` / `universities` ve `codes`, V2'ye taşınmamış eski rezervasyon sisteminin verileri (`LEGACY_DEPENDENCIES.md`). Kurallar bilinçli olarak kapalı. V2'de `AppConfigRepository` ve `CodeRepository` bu sorguları artık yapmıyor; varsayılan ayar ve boş sonuç dönüyor. Kurallar gevşetilmedi.
   - `app_config/global` belgesi (`getDocument`, açılışta).
   - `codes` koleksiyonu: `userId == uid` ve `status == pending` sorgusu, `userId == uid` + `createdAt desc` + `limit 10` sorgusu ve `userId` ile id sorgusu.
   - Yapılacak: `firebase/v2/firestore.rules` ile istemcinin yaptığı sorguları karşılaştır. Kural sorguyu kapsamıyorsa kuralı ya da sorguyu düzelt; `codes` V2'de artık kullanılmıyorsa istemci çağrısını kaldır. Kural testlerini güncelle.
-- [ ] **Topluluk üyelik belgesi bulunamıyor.** `organizations/kadin-girisimciler-toplulugu/members/{uid}` için `getDocument` "not found" dönüyor. Kullanıcı üye değilse bu beklenen bir durum olabilir; öyleyse hata olarak loglanmamalı. Değilse üyelik verisini kontrol et. Firebase Console > Authentication > Sign-in method > Apple sağlayıcısının açık olduğunu kontrol et. Ekranda görünen hata metnini ve cihaz logunu al.
+- [x] **Topluluk üyelik belgesi bulunamıyor.** `organizations/kadin-girisimciler-toplulugu/members/{uid}` için `getDocument` "not found" dönüyor. Kullanıcı üye değilse bu beklenen bir durum olabilir; öyleyse hata olarak loglanmamalı. Değilse üyelik verisini kontrol et. Firebase Console > Authentication > Sign-in method > Apple sağlayıcısının açık olduğunu kontrol et. Ekranda görünen hata metnini ve cihaz logunu al.
+  - Düzeltildi: `CommunityRepository.access()` her öğrenci için bütün toplulukları listeleyip her birinin üyelik belgesini okuyordu (N+1 sorgu, profil, ayarlar ve topluluklar ekranında). Artık önce `users/{uid}.role` okunuyor; rol `communityManager`, `communityStaff` ya da `good4Admin` değilse tarama yapılmıyor. Rol okunamazsa eski taramaya dönülüyor.
 
 - [x] **Ders programı bazı bölümlerde çöküyor (düzeltildi).** Ziraat Fakültesi verisindeki Türkçe gün adları (`PAZARTESİ`…) `ScheduleDay.valueOf` ile ayrıştırılınca çöküyordu; ayrıca 5. sınıf seçiliyken başka fakülteye geçmek liste sınırı dışına çıkıyordu. 80 bölüm × tüm sınıflar (321 kombinasyon) çökmeden açılıyor.
 - [x] **Bilgisayar Mühendisliği ve Yapay Zeka ve Veri Mühendisliği programları (düzeltildi).** Google Sheets aktarımı sadece ilk saati almıştı; bazı dersler yanlış gün ve derslikteydi. Kaynaktan yeniden üretildi.
@@ -39,7 +41,7 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
 
 ## İyileştirmeler
 
-- [ ] **Ders programı ilk açılışta bölüm seçimine yönlendirsin.** Fakülte, bölüm veya sınıf seçilmemişse Ders Programı açılınca öğrenci Hesap Ayarları'ndaki akademik seçime gönderilsin; kaydedince programa dönsün.
+- [x] **Ders programı ilk açılışta bölüm seçimine yönlendirsin.** Fakülte, bölüm veya sınıf seçilmemişse Ders Programı açılınca öğrenci Hesap Ayarları'ndaki akademik seçime gönderilsin; kaydedince programa dönsün.
 
 - [ ] **Apple/Google girişinde bekleme geri bildirimi (düzeltildi, test bekliyor).** Apple sayfası kapandıktan sonra Firebase girişi ve profil kontrolü sürerken buton yalnızca griye dönüyordu. Artık butonda dönen gösterge ve "Giriş yapılıyor…" yazısı çıkıyor (`LoginState.federatedSignIn`).
 

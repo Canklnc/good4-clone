@@ -19,6 +19,13 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class FirebaseAuthRepository : AuthRepository {
+    override suspend fun signInWithAppleToken(
+        idToken: String,
+        rawNonce: String
+    ): Result<AuthUser, AuthError> = Result.Error(
+        AuthError.Unknown("Apple ile giriş yalnızca iOS cihazlarda kullanılabilir.")
+    )
+
     override suspend fun signInWithGoogleToken(idToken: String, accessToken: String?): Result<AuthUser, AuthError> = try {
         val user = firebaseAuth.signInWithCredential(com.google.firebase.auth.GoogleAuthProvider.getCredential(idToken, null)).await().user
         if (user == null) Result.Error(AuthError.UserNotFound) else Result.Success(user.toAuthUser())

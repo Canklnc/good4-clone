@@ -258,6 +258,13 @@ fun LoginScreen(
                             onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
                             onError = { onAction(LoginAction.OnGoogleError(it)) }
                         )
+                        AppleSignInButton(
+                            enabled = !state.isLoading,
+                            onCredential = { idToken, rawNonce ->
+                                onAction(LoginAction.OnAppleCredential(idToken, rawNonce))
+                            },
+                            onError = { onAction(LoginAction.OnAppleError(it)) }
+                        )
 
                         Spacer(modifier = Modifier.height(12.dp))
 
@@ -309,6 +316,13 @@ fun LoginScreen(
                             enabled = !state.isLoading,
                             onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
                             onError = { onAction(LoginAction.OnGoogleError(it)) }
+                        )
+                        AppleSignInButton(
+                            enabled = !state.isLoading,
+                            onCredential = { idToken, rawNonce ->
+                                onAction(LoginAction.OnAppleCredential(idToken, rawNonce))
+                            },
+                            onError = { onAction(LoginAction.OnAppleError(it)) }
                         )
                     }
                 }

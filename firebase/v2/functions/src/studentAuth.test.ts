@@ -37,6 +37,24 @@ test("verified Google user gets an active student profile", async () => {
   assert.ok(stored.get("legalAcknowledgements.privacyPolicy.presentedAt") instanceof Timestamp);
 });
 
+test("verified Apple user gets an active student profile", async () => {
+  const result = await ensureStudentProfileService(db, {
+    uid: "apple-student",
+    email: "student@privaterelay.appleid.com",
+    emailVerified: true,
+    providers: ["apple.com"],
+  }, {
+    userAgreementAccepted: true,
+    kvkkNoticeAcknowledged: true,
+  });
+  const stored = await db.doc("users/apple-student").get();
+  assert.deepEqual(result, { created: true, role: "student", status: "active" });
+  assert.equal(stored.get("email"), "student@privaterelay.appleid.com");
+  assert.equal(stored.get("role"), "student");
+  assert.equal(stored.get("status"), "active");
+  assert.notEqual(stored.get("eduVerified"), true);
+});
+
 test("existing privileged profile is never overwritten", async () => {
   await db.doc("users/manager").set({ role: "communityManager", status: "active" });
   const result = await ensureStudentProfileService(db, {

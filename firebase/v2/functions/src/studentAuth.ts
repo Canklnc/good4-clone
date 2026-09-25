@@ -31,8 +31,9 @@ export async function ensureStudentProfileService(
     throw new HttpsError("failed-precondition", "EMAIL_REQUIRED");
   }
   const isGoogle = identity.providers.includes("google.com");
+  const isApple = identity.providers.includes("apple.com");
   const isPassword = identity.providers.includes("password");
-  if (!isGoogle && !isPassword) {
+  if (!isGoogle && !isApple && !isPassword) {
     throw new HttpsError("permission-denied", "SUPPORTED_SIGN_IN_REQUIRED");
   }
 
@@ -85,7 +86,7 @@ export async function ensureStudentProfileService(
       };
     }
 
-    if (isGoogle && !identity.emailVerified) {
+    if ((isGoogle || isApple) && !identity.emailVerified) {
       throw new HttpsError("failed-precondition", "VERIFIED_EMAIL_REQUIRED");
     }
     if (isPassword && !hasEduEmail) {

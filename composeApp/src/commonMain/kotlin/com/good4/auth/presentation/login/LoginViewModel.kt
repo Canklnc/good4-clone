@@ -52,6 +52,11 @@ class LoginViewModel(
         when (action) {
             is LoginAction.OnGoogleToken -> login(action.token, action.accessToken)
             is LoginAction.OnGoogleError -> _state.update { it.copy(errorMessage = UiText.DynamicString(action.message)) }
+            is LoginAction.OnAppleCredential -> login(
+                appleIdToken = action.idToken,
+                appleRawNonce = action.rawNonce
+            )
+            is LoginAction.OnAppleError -> _state.update { it.copy(errorMessage = UiText.DynamicString(action.message)) }
             is LoginAction.OnEmailChange -> {
                 _state.update {
                     it.copy(
@@ -109,7 +114,12 @@ class LoginViewModel(
         }
     }
 
-    private fun login(googleIdToken: String? = null, googleAccessToken: String? = null) {
+    private fun login(
+        googleIdToken: String? = null,
+        googleAccessToken: String? = null,
+        appleIdToken: String? = null,
+        appleRawNonce: String? = null
+    ) {
         val state = _state.value
 
         if (state.isLoading) {
@@ -119,13 +129,15 @@ class LoginViewModel(
         val email = state.email.normalizeForEmail()
         val password = state.password
 
-        if (googleIdToken == null && email.isBlank()) {
+        val isFederatedLogin = googleIdToken != null || appleIdToken != null
+
+        if (!isFederatedLogin && email.isBlank()) {
             _state.update {
                 it.copy(errorMessage = UiText.StringResourceId(Res.string.error_email_required))
             }
             return
         }
-        if (googleIdToken == null && password.isBlank()) {
+        if (!isFederatedLogin && password.isBlank()) {
             _state.update {
                 it.copy(errorMessage = UiText.StringResourceId(Res.string.error_password_required))
             }
@@ -135,7 +147,15 @@ class LoginViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, errorMessage = null) }
 
-            when (val result = if (googleIdToken == null) authRepository.signIn(email, password) else authRepository.signInWithGoogleToken(googleIdToken, googleAccessToken)) {
+            val authResult = when {
+                googleIdToken != null -> authRepository.signInWithGoogleToken(googleIdToken, googleAccessToken)
+                appleIdToken != null && appleRawNonce != null -> {
+                    authRepository.signInWithAppleToken(appleIdToken, appleRawNonce)
+                }
+                else -> authRepository.signIn(email, password)
+            }
+
+            when (val result = authResult) {
                 is Result.Success -> {
                     val authUser = result.data
                     val userId = result.data.uid
@@ -228,7 +248,7 @@ class LoginViewModel(
                             _state.update {
                                 it.copy(
                                     isLoading = false,
-                                    errorMessage = if (googleIdToken != null) UiText.DynamicString("Bu Google hesabıyla eşleşen Good4 kaydı bulunamadı veya kayda erişilemedi. Topluluk yöneticisiyseniz Good4 ekibiyle iletişime geçin.") else userResult.error.toUserFetchErrorUiText()
+                                    errorMessage = if (isFederatedLogin) UiText.DynamicString("Bu hesapla eşleşen Good4 kaydı bulunamadı veya kayda erişilemedi. Topluluk yöneticisiyseniz Good4 ekibiyle iletişime geçin.") else userResult.error.toUserFetchErrorUiText()
                                 )
                             }
                             startupSessionCache.clear(userId)

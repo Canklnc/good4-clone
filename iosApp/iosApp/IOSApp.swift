@@ -6,6 +6,9 @@ import ComposeApp
 import VisionKit
 import Vision
 import AVFoundation
+import AuthenticationServices
+import CryptoKit
+import Security
 
 @main
 struct IOSApp: App {
@@ -17,6 +20,7 @@ struct IOSApp: App {
         #endif
         FirebaseApp.configure()
         GoogleSignInBridge.shared.launcher = NativeGoogleSignInLauncher()
+        AppleSignInBridge.shared.launcher = NativeAppleSignInLauncher()
         EventScannerBridge.shared.launcher = NativeEventScannerLauncher()
         #if DEBUG
         Firestore.enableLogging(true)
@@ -46,7 +50,8 @@ struct IOSApp: App {
 }
 
 private final class NativeGoogleSignInLauncher: NSObject, GoogleSignInLauncher {
-    func launch(completion: GoogleSignInCallback) {
+    func launch(completion_: GoogleSignInCallback) {
+        let completion = completion_
         guard let clientID = FirebaseApp.app()?.options.clientID,
               let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
               var presenter = scene.windows.first(where: { $0.isKeyWindow })?.rootViewController else {
@@ -73,8 +78,99 @@ private final class NativeGoogleSignInLauncher: NSObject, GoogleSignInLauncher {
     }
 }
 
+private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher,
+    ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    private var completion: AppleSignInCallback?
+    private var rawNonce: String?
+
+    func launch(completion: AppleSignInCallback) {
+        guard self.completion == nil else { return }
+        guard let nonce = Self.makeNonce() else {
+            completion.complete(idToken: nil, rawNonce: nil, error: "Apple ile giriş başlatılamadı. Tekrar deneyin.")
+            return
+        }
+
+        self.completion = completion
+        rawNonce = nonce
+
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = Self.sha256(nonce)
+
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        let scene = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first { $0.activationState == .foregroundActive }
+        return scene?.windows.first(where: { $0.isKeyWindow }) ?? ASPresentationAnchor()
+    }
+
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+              let tokenData = credential.identityToken,
+              let idToken = String(data: tokenData, encoding: .utf8),
+              let nonce = rawNonce else {
+            finish(idToken: nil, rawNonce: nil, error: "Apple kimliği doğrulanamadı. Tekrar deneyin.")
+            return
+        }
+        finish(idToken: idToken, rawNonce: nonce, error: nil)
+    }
+
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithError error: any Swift.Error
+    ) {
+        let nsError = error as NSError
+        if nsError.domain == ASAuthorizationError.errorDomain,
+           nsError.code == ASAuthorizationError.canceled.rawValue {
+            finish(idToken: nil, rawNonce: nil, error: nil)
+        } else {
+            finish(idToken: nil, rawNonce: nil, error: "Apple ile giriş tamamlanamadı. Tekrar deneyin.")
+        }
+    }
+
+    private func finish(idToken: String?, rawNonce: String?, error: String?) {
+        let callback = completion
+        completion = nil
+        self.rawNonce = nil
+        callback?.complete(idToken: idToken, rawNonce: rawNonce, error: error)
+    }
+
+    private static func sha256(_ value: String) -> String {
+        SHA256.hash(data: Data(value.utf8)).map { String(format: "%02x", $0) }.joined()
+    }
+
+    private static func makeNonce(length: Int = 32) -> String? {
+        precondition(length > 0)
+        let characters = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var bytes = [UInt8](repeating: 0, count: 16)
+
+        while result.count < length {
+            let byteCount = bytes.count
+            let status = bytes.withUnsafeMutableBytes {
+                SecRandomCopyBytes(kSecRandomDefault, byteCount, $0.baseAddress!)
+            }
+            guard status == errSecSuccess else { return nil }
+            for byte in bytes where result.count < length && byte < characters.count {
+                result.append(characters[Int(byte)])
+            }
+        }
+        return result
+    }
+}
+
 private final class NativeEventScannerLauncher: NSObject, EventScannerLauncher {
-    func launch(completion_ completion: EventScannerCallback) {
+    func launch(completion__: EventScannerCallback) {
+        let completion = completion__
         guard DataScannerViewController.isSupported else {
             completion.complete(value: nil, error: "Bu cihazda kamera taraması desteklenmiyor. Simülatörde manuel giriş kullanabilirsiniz.")
             return

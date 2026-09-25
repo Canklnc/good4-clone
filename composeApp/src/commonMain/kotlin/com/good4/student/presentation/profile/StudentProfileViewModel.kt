@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.good4.auth.data.repository.AuthRepository
 import com.good4.auth.domain.AuthError
+import com.good4.community.CommunityRepository
 import com.good4.core.domain.Result
 import com.good4.core.presentation.UiText
 import com.good4.user.data.repository.UserRepository
@@ -20,7 +21,8 @@ import kotlinx.coroutines.launch
 
 class StudentProfileViewModel(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val communityRepository: CommunityRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(StudentProfileState())
@@ -46,10 +48,21 @@ class StudentProfileViewModel(
             when (val result = userRepository.getUser(userId)) {
                 is Result.Success -> {
                     hasLoadedOnce = true
+                    val managedCommunity = runCatching {
+                        val access = communityRepository.access()
+                        if (access.active) {
+                            communityRepository.list().firstOrNull { it.id in access.communityIds }
+                        } else {
+                            null
+                        }
+                    }.getOrNull()
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            user = result.data
+                            user = result.data,
+                            isCommunityManager = managedCommunity != null,
+                            communityName = managedCommunity?.data?.name.orEmpty(),
+                            communityUniversity = managedCommunity?.data?.university.orEmpty()
                         )
                     }
                 }

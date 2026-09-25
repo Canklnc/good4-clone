@@ -22,12 +22,17 @@ import com.good4.auth.presentation.verify_email.EmailVerificationScreenRoot
 import com.good4.auth.presentation.verify_email.EmailVerificationViewModel
 import com.good4.business.presentation.home.BusinessHomeScreenRoot
 import com.good4.business.presentation.profile.BusinessProfileScreen
+import com.good4.calendar.AcademicCalendarScreen
 import com.good4.core.presentation.sessionrestore.SessionRestoreScreenRoot
 import com.good4.core.presentation.sessionrestore.SessionRestoreViewModel
 import com.good4.core.presentation.splash.SplashScreenRoot
 import com.good4.core.presentation.splash.SplashViewModel
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import com.good4.student.presentation.home.StudentHomeScreenRoot
+import com.good4.notification.NotificationsScreen
 import com.good4.student.presentation.profile.StudentProfileScreen
+import com.good4.schedule.presentation.ClassScheduleScreen
 import com.good4.supporter.presentation.home.SupporterHomeScreenRoot
 import com.good4.supporter.presentation.ordercode.SupporterOrderCodeScreenRoot
 import com.good4.supporter.presentation.ordercode.SupporterOrderCodeViewModel
@@ -106,7 +111,11 @@ fun Good4NavGraph(
                     navController.navigateToHome(userRole)
                 },
                 onNavigateToRegisterOptions = {
-                    navController.navigate(Route.RegisterOptions)
+                    if (AppEnvironment.firebaseBackend == FirebaseBackend.V2) {
+                        navController.navigate(Route.StudentRegister)
+                    } else {
+                        navController.navigate(Route.RegisterOptions)
+                    }
                 },
                 onNavigateToEmailVerification = {
                     navController.navigate(Route.EmailVerification)
@@ -173,8 +182,29 @@ fun Good4NavGraph(
             StudentHomeScreenRoot(
                 onNavigateToProfile = {
                     navController.navigate(Route.StudentProfile)
+                },
+                onNavigateToNotifications = {
+                    navController.navigate(Route.Notifications)
+                },
+                onNavigateToCalendar = {
+                    navController.navigate(Route.AcademicCalendar)
+                },
+                onNavigateToClassSchedule = {
+                    navController.navigate(Route.ClassSchedule)
                 }
             )
+        }
+
+        composable<Route.AcademicCalendar> {
+            AcademicCalendarScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable<Route.ClassSchedule> {
+            ClassScheduleScreen(onBackClick = { navController.popBackStack() })
+        }
+
+        composable<Route.Notifications> {
+            NotificationsScreen(onBack = { navController.popBackStack() })
         }
 
         // Business Routes

@@ -16,18 +16,26 @@ import com.good4.business.presentation.dashboard.BusinessDashboardViewModel
 import com.good4.business.presentation.products.BusinessProductsViewModel
 import com.good4.business.presentation.profile.BusinessProfileViewModel
 import com.good4.business.presentation.verify.VerifyCodeViewModel
+import com.good4.calendar.AcademicCalendarRepository
+import com.good4.calendar.AcademicCalendarViewModel
 import com.good4.campaign.data.repository.CampaignRepository
 import com.good4.code.data.repository.CodeRepository
 import com.good4.config.data.repository.AppConfigRepository
+import com.good4.community.CommunityRepository
 import com.good4.core.data.local.StartupSessionCache
 import com.good4.core.data.repository.FirestoreRepository
 import com.good4.core.data.repository.FirestoreRepositoryImpl
 import com.good4.core.data.repository.ProductImageUploadRepository
 import com.good4.core.presentation.sessionrestore.SessionRestoreViewModel
 import com.good4.core.presentation.splash.SplashViewModel
+import com.good4.dining.data.repository.AkdenizDiningMenuRepository
+import com.good4.dining.presentation.AkdenizDiningMenuViewModel
+import com.good4.feedback.FeedbackRepository
+import com.good4.feedback.FeedbackViewModel
 import com.good4.order.data.repository.OrderRepository
 import com.good4.product.data.repository.FirestoreProductRepository
 import com.good4.product.presentation.product_list.ProductListViewModel
+import com.good4.schedule.presentation.ClassScheduleViewModel
 import com.good4.student.presentation.profile.StudentProfileViewModel
 import com.good4.student.presentation.reservations.StudentReservationsViewModel
 import com.good4.supportactivity.data.repository.SupportActivityRepository
@@ -44,6 +52,8 @@ import org.koin.dsl.module
 expect val platformModule: org.koin.core.module.Module
 
 val commonModule = module {
+    single { com.good4.community.CommunityRepository(get(), get(), get()) }
+    viewModel { com.good4.community.CommunityViewModel(get()) }
     single<FirestoreRepository> { FirestoreRepositoryImpl() }
 
     single { AppConfigRepository(get<FirestoreRepository>()) }
@@ -55,6 +65,9 @@ val commonModule = module {
     single { CodeRepository(get<FirestoreRepository>(), get<FirestoreBusinessRepository>(), get<FirestoreProductRepository>(), get<AppConfigRepository>()) }
     single { SupportActivityRepository(get<FirestoreRepository>()) }
     single { OrderRepository(get<FirestoreRepository>()) }
+    single { AkdenizDiningMenuRepository(get<FirestoreRepository>()) }
+    single { AcademicCalendarRepository(get<FirestoreRepository>()) }
+    single { FeedbackRepository(get<FirestoreRepository>(), get<AuthRepository>()) }
 
     viewModel { LoginViewModel(get<AuthRepository>(), get<UserRepository>(), get<StartupSessionCache>()) }
     viewModel {
@@ -82,7 +95,13 @@ val commonModule = module {
         )
     }
     viewModel { ProductListViewModel(get<FirestoreProductRepository>(), get<CodeRepository>(), get<AuthRepository>(), get<AppConfigRepository>(), get<UserRepository>()) }
-    viewModel { StudentProfileViewModel(get<AuthRepository>(), get<UserRepository>()) }
+    viewModel {
+        StudentProfileViewModel(
+            get<AuthRepository>(),
+            get<UserRepository>(),
+            get<CommunityRepository>()
+        )
+    }
     viewModel {
         StudentReservationsViewModel(
             get<AuthRepository>(),
@@ -102,7 +121,7 @@ val commonModule = module {
             get<OrderRepository>()
         )
     }
-    viewModel { VerifyCodeViewModel(get<AuthRepository>(), get<FirestoreBusinessRepository>(), get<CodeRepository>(), get<FirestoreProductRepository>(), get<OrderRepository>(), get<UserRepository>()) }
+    viewModel { VerifyCodeViewModel(get<AuthRepository>(), get<FirestoreBusinessRepository>(), get<CodeRepository>(), get<FirestoreProductRepository>(), get<OrderRepository>(), get<UserRepository>(), get()) }
     viewModel {
         BusinessProductsViewModel(
             get<AuthRepository>(),
@@ -150,12 +169,17 @@ val commonModule = module {
     }
     viewModel { SupporterOrderCodeViewModel(get<OrderRepository>(), get<FirestoreBusinessRepository>()) }
     viewModel { SupporterProfileViewModel(get<AuthRepository>(), get<UserRepository>()) }
+    viewModel { AkdenizDiningMenuViewModel(get<AkdenizDiningMenuRepository>()) }
+    viewModel { AcademicCalendarViewModel(get<AcademicCalendarRepository>()) }
+    viewModel { ClassScheduleViewModel(get<AuthRepository>(), get<UserRepository>()) }
+    viewModel { FeedbackViewModel(get<FeedbackRepository>()) }
     viewModel {
         AccountSettingsViewModel(
             get<AuthRepository>(),
             get<UserRepository>(),
             get<FirestoreBusinessRepository>(),
-            get<AppConfigRepository>()
+            get<AppConfigRepository>(),
+            get<CommunityRepository>()
         )
     }
 }

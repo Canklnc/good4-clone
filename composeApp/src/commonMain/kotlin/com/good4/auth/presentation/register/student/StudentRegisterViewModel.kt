@@ -9,6 +9,8 @@ import com.good4.core.data.local.StartupSessionCache
 import com.good4.core.data.local.cacheStartupSession
 import com.good4.core.domain.Result
 import com.good4.core.presentation.UiText
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import com.good4.core.util.normalizeForEmail
 import com.good4.core.util.normalizePersonalNameInput
 import com.good4.core.util.validateStudentEmail
@@ -210,6 +212,40 @@ class StudentRegisterViewModel(
                     val userId = authResult.data.uid
                     val nowSecs = Clock.System.now().epochSeconds
                     val weeklyCredit = configRepository.getStudentWeeklyCredit()
+
+                    if (AppEnvironment.firebaseBackend == FirebaseBackend.V2) {
+                        when (
+                            userRepository.ensureV2StudentProfile(
+                                displayName = state.fullName,
+                                university = state.university
+                            )
+                        ) {
+                            is Result.Success -> {
+                                startupSessionCache.cacheStartupSession(
+                                    uid = userId,
+                                    role = UserRole.STUDENT,
+                                    isUserVerified = false,
+                                    isAuthEmailVerified = authResult.data.isEmailVerified
+                                )
+                                authRepository.sendEmailVerification()
+                                _state.update {
+                                    it.copy(isLoading = false, isRegisterSuccess = true)
+                                }
+                            }
+
+                            is Result.Error -> {
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = UiText.StringResourceId(
+                                            Res.string.error_register_profile_save_failed
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                        return@launch
+                    }
 
                     val userDto = UserDto(
                         email = email,

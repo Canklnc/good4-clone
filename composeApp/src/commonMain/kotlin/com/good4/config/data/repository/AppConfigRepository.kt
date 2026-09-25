@@ -1,9 +1,11 @@
 package com.good4.config.data.repository
 
 import com.good4.config.data.dto.AppConfigDto
+import com.good4.config.data.dto.HomeBannerDto
 import com.good4.config.data.dto.UniversitiesConfigDto
 import com.good4.config.domain.AppConfig
 import com.good4.config.domain.AppDefaults
+import com.good4.config.domain.HomeBanner
 import com.good4.core.data.repository.FirestoreRepository
 import com.good4.core.domain.Result
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,6 +76,31 @@ class AppConfigRepository(
             is Result.Error -> {
                 _universities.value = universitiesFallback
             }
+        }
+    }
+
+    suspend fun getActiveHomeBanner(today: String): HomeBanner? {
+        return when (val result = firestoreRepository.getDocument(
+            collectionPath = "app_config",
+            documentId = "home_banner",
+            clazz = HomeBannerDto::class
+        )) {
+            is Result.Success -> {
+                val banner = result.data
+                val imageUrl = banner.imageUrl.orEmpty()
+                val startsOn = banner.startsOn.orEmpty()
+                val endsOn = banner.endsOn.orEmpty()
+                if (banner.active != true || imageUrl.isBlank() || startsOn.isBlank() || endsOn.isBlank()
+                    || today < startsOn || today > endsOn
+                ) null else HomeBanner(
+                    imageUrl = imageUrl,
+                    advertiserName = banner.advertiserName.orEmpty(),
+                    targetUrl = banner.targetUrl.orEmpty(),
+                    startsOn = startsOn,
+                    endsOn = endsOn
+                )
+            }
+            is Result.Error -> null
         }
     }
 

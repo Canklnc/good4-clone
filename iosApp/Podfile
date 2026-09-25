@@ -3,6 +3,11 @@ platform :ios, '16.0'
 
 install! 'cocoapods', :deterministic_uuids => false
 
+project 'iosApp.xcodeproj',
+  'Debug' => :debug,
+  'DebugV2' => :debug,
+  'Release' => :release
+
 use_frameworks!
 inhibit_all_warnings!
 
@@ -10,9 +15,11 @@ target 'iosApp' do
   pod 'ComposeApp', :path => '../composeApp'
   pod 'FirebaseAnalytics'
   pod 'Firebase/Auth'
+  pod 'GoogleSignIn', '~> 10.0'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Firebase/Crashlytics'
+  pod 'MapLibre', '6.17.1'
 end
 
 post_install do |installer|
@@ -37,7 +44,7 @@ post_install do |installer|
     aggregate_target.user_project.targets.each do |target|
       target.build_phases.each do |build_phase|
         next unless build_phase.respond_to?(:name)
-        next unless build_phase.name == '[CP-User] Build ComposeApp'
+        next unless ['[CP-User] Build ComposeApp', '[CP] Copy Pods Resources'].include?(build_phase.name)
         build_phase.always_out_of_date = '1'
       end
     end

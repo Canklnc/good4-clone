@@ -38,7 +38,10 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
@@ -66,6 +69,8 @@ import com.good4.core.presentation.TextSecondary
 import com.good4.core.presentation.components.Good4Scaffold
 import com.good4.core.presentation.components.StandardButtonHeight
 import com.good4.core.presentation.components.StandardButtonLoadingIndicatorSize
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import com.good4.core.util.singleClick
 import com.good4.user.domain.UserRole
 import good4.composeapp.generated.resources.Res
@@ -74,6 +79,9 @@ import good4.composeapp.generated.resources.app_tagline
 import good4.composeapp.generated.resources.dismiss
 import good4.composeapp.generated.resources.email
 import good4.composeapp.generated.resources.email_placeholder
+import good4.composeapp.generated.resources.edu_email_helper
+import good4.composeapp.generated.resources.edu_email_login
+import good4.composeapp.generated.resources.edu_email_register
 import good4.composeapp.generated.resources.error_email_not_verified
 import good4.composeapp.generated.resources.error_resend_wait_seconds
 import good4.composeapp.generated.resources.forgot_password
@@ -141,6 +149,8 @@ fun LoginScreen(
     val isEmailNotVerifiedError =
         (state.errorMessage as? com.good4.core.presentation.UiText.StringResourceId)?.id ==
             Res.string.error_email_not_verified
+    val googleOnlyLogin = AppEnvironment.firebaseBackend == FirebaseBackend.V2
+    var showEduLogin by rememberSaveable { mutableStateOf(false) }
 
     Good4Scaffold(
         modifier = modifier,
@@ -183,7 +193,42 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                OutlinedTextField(
+                if (googleOnlyLogin) {
+                    GoogleSignInButton(
+                        enabled = !state.isLoading,
+                        onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
+                        onError = { onAction(LoginAction.OnGoogleError(it)) }
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    if (!showEduLogin) {
+                        Button(
+                            onClick = { showEduLogin = true },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(StandardButtonHeight),
+                            enabled = !state.isLoading,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = DeepGreen,
+                                contentColor = SurfaceDefault
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.edu_email_login),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                    }
+                }
+
+                if (!googleOnlyLogin || showEduLogin) {
+                    if (googleOnlyLogin) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                    OutlinedTextField(
                     value = state.email,
                     onValueChange = { onAction(LoginAction.OnEmailChange(it)) },
                     modifier = Modifier
@@ -307,7 +352,9 @@ fun LoginScreen(
                     enabled = !state.isLoading,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = TextPrimary,
-                        disabledContainerColor = TextPrimary.copy(alpha = 0.5f)
+                        contentColor = SurfaceDefault,
+                        disabledContainerColor = TextPrimary.copy(alpha = 0.5f),
+                        disabledContentColor = SurfaceDefault.copy(alpha = 0.7f)
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -326,57 +373,92 @@ fun LoginScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(1.dp)
-                            .background(TextSecondary.copy(alpha = 0.3f))
-                    )
-                    Text(
-                        text = stringResource(Res.string.or),
-                        color = TextSecondary,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(1.dp)
-                            .background(TextSecondary.copy(alpha = 0.3f))
+                if (!googleOnlyLogin) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    GoogleSignInButton(
+                        enabled = !state.isLoading,
+                        onToken = { token, accessToken -> onAction(LoginAction.OnGoogleToken(token, accessToken)) },
+                        onError = { onAction(LoginAction.OnGoogleError(it)) }
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                if (!googleOnlyLogin) {
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = stringResource(Res.string.no_account),
-                    color = TextSecondary,
-                    fontSize = 14.sp
-                )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(1.dp)
+                                .background(TextSecondary.copy(alpha = 0.3f))
+                        )
+                        Text(
+                            text = stringResource(Res.string.or),
+                            color = TextSecondary,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(1.dp)
+                                .background(TextSecondary.copy(alpha = 0.3f))
+                        )
+                    }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
-                    onClick = { onAction(LoginAction.OnStudentRegisterClick) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(StandardButtonHeight),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = DeepGreen
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
                     Text(
-                        text = stringResource(Res.string.register),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        text = stringResource(Res.string.no_account),
+                        color = TextSecondary,
+                        fontSize = 14.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Button(
+                        onClick = { onAction(LoginAction.OnStudentRegisterClick) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(StandardButtonHeight),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = DeepGreen
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.register),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                } else {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    TextButton(
+                        onClick = { onAction(LoginAction.OnStudentRegisterClick) },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !state.isLoading
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.edu_email_register),
+                            color = DeepGreen,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+
+                    Text(
+                        text = stringResource(Res.string.edu_email_helper),
+                        color = TextSecondary,
+                        fontSize = 13.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
 

@@ -3,17 +3,39 @@ package com.good4.user.data.repository
 import com.good4.config.data.repository.AppConfigRepository
 import com.good4.core.data.repository.FirestoreRepository
 import com.good4.core.domain.Error
+import com.good4.core.domain.NetworkError
 import com.good4.core.domain.Result
 import com.good4.core.domain.ValidationError
+import com.good4.core.network.callV2Function
 import com.good4.user.User
 import com.good4.user.data.dto.UserDto
 import com.good4.user.domain.UserRole
 import kotlinx.datetime.Instant
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 class UserRepository(
     private val firestoreRepository: FirestoreRepository,
     private val configRepository: AppConfigRepository
 ) {
+    suspend fun ensureV2StudentProfile(
+        displayName: String? = null,
+        university: String? = null
+    ): Result<Unit, Error> {
+        return try {
+            callV2Function(
+                "ensureStudentProfile",
+                buildJsonObject {
+                    displayName?.takeIf { it.isNotBlank() }?.let { put("displayName", it.trim()) }
+                    university?.takeIf { it.isNotBlank() }?.let { put("university", it.trim()) }
+                }
+            )
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(NetworkError(e.message ?: "Öğrenci profili oluşturulamadı"))
+        }
+    }
+
     suspend fun createUser(userId: String, userDto: UserDto): Result<Unit, Error> {
         return firestoreRepository.updateDocument("users", userId, userDto)
     }
@@ -39,23 +61,35 @@ class UserRepository(
         fullName: String,
         phoneNumber: String?,
         university: String? = null,
+        faculty: String? = null,
         major: String? = null,
+        classYear: String? = null,
         educationLevel: String? = null
     ): Result<Unit, Error> {
-        return when (val result = getUserDto(userId)) {
-            is Result.Success -> {
-                val updatedDto = result.data.copy(
-                    fullName = fullName.trim(),
-                    phoneNumber = phoneNumber?.trim().orEmpty().ifBlank { null },
-                    university = university?.trim().orEmpty().ifBlank { null },
-                    major = major?.trim().orEmpty().ifBlank { null },
-                    educationLevel = educationLevel?.trim().orEmpty().ifBlank { null }
-                )
-                updateUser(userId, updatedDto)
-            }
-
-            is Result.Error -> result
+        val name = fullName.trim()
+        val fields = mutableMapOf<String, Any?>(
+            "displayName" to name,
+            "fullName" to name
+        )
+        if (phoneNumber != null) {
+            fields["phoneNumber"] = phoneNumber.trim().ifBlank { null }
         }
+        if (university != null) {
+            fields["university"] = university.trim().ifBlank { null }
+        }
+        if (faculty != null) {
+            fields["faculty"] = faculty.trim().ifBlank { null }
+        }
+        if (major != null) {
+            fields["major"] = major.trim().ifBlank { null }
+        }
+        if (classYear != null) {
+            fields["classYear"] = classYear.trim().ifBlank { null }
+        }
+        if (educationLevel != null) {
+            fields["educationLevel"] = educationLevel.trim().ifBlank { null }
+        }
+        return firestoreRepository.updateFields("users", userId, fields)
     }
 
     suspend fun updateStudentWeeklyCreditOverride(
@@ -246,12 +280,14 @@ private fun UserDto.toUser(userId: String): User {
     return User(
         id = userId,
         email = email ?: "",
-        fullName = fullName ?: "",
+        fullName = displayName ?: fullName ?: "",
         phoneNumber = phoneNumber,
         role = UserRole.fromValue(role),
-        verified = verified ?: false,
+        verified = status == "active" || verified == true,
         university = university,
+        faculty = faculty,
         major = major,
+        classYear = classYear,
         educationLevel = educationLevel,
         credit = credit,
         weeklyCreditOverride = weeklyCreditOverride,

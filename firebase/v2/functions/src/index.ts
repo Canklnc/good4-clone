@@ -1,0 +1,252 @@
+import { getAuth } from "firebase-admin/auth";
+import { randomUUID } from "node:crypto";
+import { HttpsError, onCall } from "firebase-functions/v2/https";
+import {
+  assignOrganizationMemberService,
+  createCampaignService,
+  createOrganizationService,
+} from "./admin.js";
+import {
+  issueCampaignCodeService,
+  redeemCampaignCodeService,
+} from "./campaigns.js";
+import { getBusinessContextService } from "./business.js";
+import { db, legacyTestDb, storageBucket } from "./firebase.js";
+import { redeemLegacyCouponService } from "./legacyCoupons.js";
+import {
+  getAdminDashboardService,
+  getPortalContextService,
+  requireGood4Admin,
+  reviewLegacyCouponService,
+  saveDiningMenuService,
+  saveHomeBannerService,
+  saveAcademicCalendarEventService,
+} from "./adminPortal.js";
+import { requireAuthenticatedUid, requireNonEmptyString } from "./shared.js";
+import {
+  cancelCommunityPortalEntryService,
+  getCommunityPortalDashboardService,
+  saveCommunityPortalEntryService,
+} from "./communityPortal.js";
+import { recordEventAttendanceService, setEventRegistrationService } from "./events.js";
+import { submitFeedbackService } from "./feedback.js";
+import { ensureStudentProfileService } from "./studentAuth.js";
+
+const callableOptions = {
+  region: "europe-west1",
+  memory: "256MiB" as const,
+  timeoutSeconds: 30,
+  maxInstances: 20,
+};
+
+export const createOrganization = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return createOrganizationService(db, uid, request.data);
+});
+
+export const assignOrganizationMember = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  const userId = typeof request.data?.userId === "string" ? request.data.userId : "";
+  const authUser = userId ? await getAuth().getUser(userId) : null;
+  return assignOrganizationMemberService(db, uid, {
+    ...request.data,
+    email: authUser?.email ?? "",
+    displayName: authUser?.displayName ?? "",
+  });
+});
+
+export const assignOrganizationMemberByEmail = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  await requireGood4Admin(db, uid);
+  const email = requireNonEmptyString(request.data?.email, "email", 320).toLowerCase();
+  if (!/^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/.test(email)) {
+    throw new HttpsError("invalid-argument", "EMAIL_INVALID");
+  }
+  const displayName = typeof request.data?.displayName === "string"
+    ? request.data.displayName.trim().slice(0, 120)
+    : "";
+  const temporaryPassword = typeof request.data?.temporaryPassword === "string"
+    ? request.data.temporaryPassword
+    : "";
+  let authUser;
+  let created = false;
+  try {
+    authUser = await getAuth().getUserByEmail(email);
+  } catch (error) {
+    if ((error as { code?: string }).code !== "auth/user-not-found") throw error;
+    if (temporaryPassword.length < 12) {
+      throw new HttpsError("invalid-argument", "TEMPORARY_PASSWORD_REQUIRED");
+    }
+    authUser = await getAuth().createUser({
+      email,
+      password: temporaryPassword,
+      displayName: displayName || undefined,
+    });
+    created = true;
+  }
+
+  try {
+    const result = await assignOrganizationMemberService(db, uid, {
+      organizationId: request.data?.organizationId,
+      userId: authUser.uid,
+      email: authUser.email ?? email,
+      displayName: displayName || authUser.displayName || "",
+      role: request.data?.role,
+    });
+    return { ...result, created };
+  } catch (error) {
+    if (created) await getAuth().deleteUser(authUser.uid).catch(() => undefined);
+    throw error;
+  }
+});
+
+export const createCampaign = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return createCampaignService(db, uid, request.data);
+});
+
+export const issueCampaignCode = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return issueCampaignCodeService(db, uid, request.data);
+});
+
+export const redeemCampaignCode = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return redeemCampaignCodeService(db, uid, request.data);
+});
+
+export const redeemLegacyTestCoupon = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return redeemLegacyCouponService(db, legacyTestDb, uid, request.data);
+});
+
+export const getBusinessContext = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return getBusinessContextService(db, uid);
+});
+
+export const getPortalContext = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return getPortalContextService(db, uid);
+});
+
+export const getAdminDashboard = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return getAdminDashboardService(db, legacyTestDb, uid);
+});
+
+export const reviewLegacyCoupon = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return reviewLegacyCouponService(db, legacyTestDb, uid, request.data);
+});
+
+export const saveDiningMenu = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return saveDiningMenuService(db, legacyTestDb, uid, request.data ?? {});
+});
+
+export const saveHomeBanner = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return saveHomeBannerService(db, legacyTestDb, uid, request.data ?? {});
+});
+
+export const saveAcademicCalendarEvent = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return saveAcademicCalendarEventService(db, uid, request.data ?? {});
+});
+
+export const uploadHomeBannerImage = onCall({
+  ...callableOptions,
+  memory: "512MiB",
+  timeoutSeconds: 60,
+}, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  await requireGood4Admin(db, uid);
+
+  const contentType = request.data?.contentType;
+  const extensions: Record<string, string> = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp",
+  };
+  if (typeof contentType !== "string" || !extensions[contentType]) {
+    throw new HttpsError("invalid-argument", "BANNER_IMAGE_TYPE_INVALID");
+  }
+
+  const encoded = request.data?.base64;
+  const maxEncodedLength = Math.ceil((5 * 1024 * 1024) / 3) * 4;
+  if (typeof encoded !== "string" || encoded.length === 0 || encoded.length > maxEncodedLength
+      || encoded.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)) {
+    throw new HttpsError("invalid-argument", "BANNER_IMAGE_INVALID");
+  }
+  const bytes = Buffer.from(encoded, "base64");
+  if (bytes.length === 0 || bytes.length > 5 * 1024 * 1024) {
+    throw new HttpsError("invalid-argument", "BANNER_IMAGE_SIZE_INVALID");
+  }
+  const signaturesMatch = contentType === "image/jpeg"
+    ? bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff
+    : contentType === "image/png"
+      ? bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))
+      : bytes.subarray(0, 4).toString("ascii") === "RIFF"
+        && bytes.subarray(8, 12).toString("ascii") === "WEBP";
+  if (!signaturesMatch) {
+    throw new HttpsError("invalid-argument", "BANNER_IMAGE_CONTENT_INVALID");
+  }
+
+  const extension = extensions[contentType];
+  const objectName = `home-banners/current.${extension}`;
+  const downloadToken = randomUUID();
+  await storageBucket.file(objectName).save(bytes, {
+    resumable: false,
+    metadata: {
+      contentType,
+      cacheControl: "public,max-age=3600",
+      metadata: { firebaseStorageDownloadTokens: downloadToken },
+    },
+  });
+  return {
+    imageUrl: `https://firebasestorage.googleapis.com/v0/b/${storageBucket.name}/o/${encodeURIComponent(objectName)}?alt=media&token=${downloadToken}`,
+  };
+});
+
+export const getCommunityPortalDashboard = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return getCommunityPortalDashboardService(db, legacyTestDb, uid);
+});
+
+export const saveCommunityPortalEntry = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return saveCommunityPortalEntryService(db, legacyTestDb, uid, request.data ?? {});
+});
+
+export const cancelCommunityPortalEntry = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return cancelCommunityPortalEntryService(db, legacyTestDb, uid, request.data);
+});
+
+export const setEventRegistration = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return setEventRegistrationService(db, uid, request.data);
+});
+
+export const recordEventAttendance = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return recordEventAttendanceService(db, uid, request.data);
+});
+
+export const submitFeedback = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return submitFeedbackService(db, uid, request.data ?? {});
+});
+
+export const ensureStudentProfile = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  const authUser = await getAuth().getUser(uid);
+  return ensureStudentProfileService(db, {
+    uid,
+    email: authUser.email,
+    emailVerified: authUser.emailVerified,
+    displayName: authUser.displayName,
+    providers: authUser.providerData.map((provider) => provider.providerId),
+  }, request.data ?? {});
+});

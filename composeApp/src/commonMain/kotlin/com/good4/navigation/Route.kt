@@ -29,10 +29,19 @@ sealed class Route {
     data object StudentHome : Route()
 
     @Serializable
+    data object AcademicCalendar : Route()
+
+    @Serializable
+    data object ClassSchedule : Route()
+
+    @Serializable
     data object StudentProfile : Route()
 
     @Serializable
     data object StudentAccountSettings : Route()
+
+    @Serializable
+    data object Notifications : Route()
     
     @Serializable
     data class ProductDetail(val productId: String) : Route()

@@ -1,0 +1,226 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userExists(uid) {
+      return exists(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function userData(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data;
+    }
+
+    function currentUserIsActive() {
+      return signedIn()
+        && userExists(request.auth.uid)
+        && userData(request.auth.uid).status == 'active';
+    }
+
+    function isGood4Admin() {
+      return currentUserIsActive()
+        && userData(request.auth.uid).role == 'good4Admin';
+    }
+
+    function membershipExists(organizationId, uid) {
+      return exists(/databases/$(database)/documents/organizations/$(organizationId)/members/$(uid));
+    }
+
+    function membershipData(organizationId, uid) {
+      return get(/databases/$(database)/documents/organizations/$(organizationId)/members/$(uid)).data;
+    }
+
+    function isActiveOrganizationMember(organizationId) {
+      return currentUserIsActive()
+        && membershipExists(organizationId, request.auth.uid)
+        && membershipData(organizationId, request.auth.uid).status == 'active';
+    }
+
+    function hasOrganizationRole(organizationId, roles) {
+      return isActiveOrganizationMember(organizationId)
+        && membershipData(organizationId, request.auth.uid).role in roles;
+    }
+
+    function optionalString(data, fieldName, maxLength) {
+      return data.get(fieldName, null) == null
+        || (data.get(fieldName, null) is string
+          && data.get(fieldName, null).size() <= maxLength);
+    }
+
+    function canManageOrganizationMembers(organizationId) {
+      return isGood4Admin()
+        || hasOrganizationRole(organizationId, ['owner', 'manager']);
+    }
+
+    function validStudentProfile(data) {
+      return data.keys().hasAll([
+          'email', 'displayName', 'role', 'status', 'university',
+          'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'email', 'displayName', 'role', 'status', 'university',
+          'createdAt', 'updatedAt'
+        ])
+        && data.email is string
+        && data.email == request.auth.token.email
+        && data.displayName is string
+        && data.displayName.size() <= 120
+        && data.role == 'student'
+        && data.status == 'active'
+        && data.university is string
+        && data.university.size() <= 160
+        && data.createdAt == request.time
+        && data.updatedAt == request.time;
+    }
+
+    match /users/{userId} {
+      allow get: if signedIn() && (request.auth.uid == userId || isGood4Admin());
+      allow list: if isGood4Admin();
+
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.auth.token.email_verified == true
+        && validStudentProfile(request.resource.data);
+
+      allow update: if currentUserIsActive()
+        && request.auth.uid == userId
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly([
+            'displayName', 'fullName', 'phoneNumber', 'university',
+            'faculty', 'major', 'classYear', 'educationLevel', 'updatedAt'
+          ])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 120
+        && optionalString(request.resource.data, 'fullName', 120)
+        && optionalString(request.resource.data, 'phoneNumber', 40)
+        && optionalString(request.resource.data, 'university', 160)
+        && optionalString(request.resource.data, 'faculty', 160)
+        && optionalString(request.resource.data, 'major', 160)
+        && optionalString(request.resource.data, 'classYear', 40)
+        && optionalString(request.resource.data, 'educationLevel', 80)
+        && (
+          request.resource.data.updatedAt == request.time
+          || request.resource.data.updatedAt == resource.data.updatedAt
+        );
+
+      allow delete: if false;
+    }
+
+    match /organizations/{organizationId} {
+      allow get, list: if isGood4Admin()
+        || isActiveOrganizationMember(organizationId)
+        || (signedIn()
+          && resource.data.status == 'active'
+          && resource.data.type in ['business', 'community']);
+      allow create, update, delete: if false;
+
+      match /members/{memberId} {
+        allow get: if signedIn()
+          && (request.auth.uid == memberId
+            || canManageOrganizationMembers(organizationId));
+        allow list: if canManageOrganizationMembers(organizationId);
+        allow create, update, delete: if false;
+      }
+
+      match /followers/{userId} {
+        allow get: if signedIn()
+          && (request.auth.uid == userId
+            || isActiveOrganizationMember(organizationId)
+            || isGood4Admin());
+        allow list: if isActiveOrganizationMember(organizationId) || isGood4Admin();
+        allow create: if currentUserIsActive()
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(['userId', 'followedAt'])
+          && request.resource.data.userId == userId
+          && request.resource.data.followedAt == request.time;
+        allow update: if false;
+        allow delete: if currentUserIsActive() && request.auth.uid == userId;
+      }
+    }
+
+    match /campaigns/{campaignId} {
+      allow get, list: if isGood4Admin()
+        || isActiveOrganizationMember(resource.data.organizationId)
+        || (signedIn() && resource.data.status == 'published');
+      allow create, update, delete: if false;
+    }
+
+    match /campaignCodes/{codeId} {
+      allow get: if currentUserIsActive()
+        && (resource.data.studentId == request.auth.uid || isGood4Admin());
+      allow list: if false;
+      allow create, update, delete: if false;
+    }
+
+    match /redemptions/{redemptionId} {
+      allow get, list: if isGood4Admin()
+        || (currentUserIsActive() && resource.data.studentId == request.auth.uid)
+        || isActiveOrganizationMember(resource.data.organizationId);
+      allow create, update, delete: if false;
+    }
+
+    match /events/{eventId} {
+      allow get, list: if isGood4Admin()
+        || isActiveOrganizationMember(resource.data.organizationId)
+        || (signedIn() && resource.data.status == 'published');
+      allow create, update, delete: if false;
+
+      match /registrations/{registrationId} {
+        allow get: if signedIn()
+          && (resource.data.userId == request.auth.uid
+            || isGood4Admin()
+            || isActiveOrganizationMember(
+              get(/databases/$(database)/documents/events/$(eventId)).data.organizationId
+            ));
+        allow list: if (currentUserIsActive() && resource.data.userId == request.auth.uid)
+          || isGood4Admin()
+          || isActiveOrganizationMember(
+            get(/databases/$(database)/documents/events/$(eventId)).data.organizationId
+          );
+        allow create, update, delete: if false;
+      }
+
+      match /checkins/{registrationId} {
+        allow get: if signedIn()
+          && (resource.data.userId == request.auth.uid
+            || isGood4Admin()
+            || isActiveOrganizationMember(
+              get(/databases/$(database)/documents/events/$(eventId)).data.organizationId
+            ));
+        allow list: if (currentUserIsActive() && resource.data.userId == request.auth.uid)
+          || isGood4Admin()
+          || isActiveOrganizationMember(
+            get(/databases/$(database)/documents/events/$(eventId)).data.organizationId
+          );
+        allow create, update, delete: if false;
+      }
+    }
+
+    match /system/{documentId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /app_config/{documentId} {
+      allow get: if signedIn() && documentId in ['akdeniz_dining_menu', 'home_banner'];
+      allow list, create, update, delete: if false;
+    }
+
+    match /academic_calendar_events/{eventId} {
+      allow get, list: if signedIn() && resource.data.active == true;
+      allow create, update, delete: if false;
+    }
+
+    match /auditLogs/{logId} {
+      allow read: if isGood4Admin();
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

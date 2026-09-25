@@ -7,6 +7,8 @@ import com.good4.auth.domain.AuthError
 import com.good4.community.CommunityRepository
 import com.good4.core.domain.Result
 import com.good4.core.presentation.UiText
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import com.good4.user.data.repository.UserRepository
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.error_delete_account_failed
@@ -113,7 +115,7 @@ class StudentProfileViewModel(
 
             _state.update { it.copy(isDeleting = true, deleteErrorMessage = null) }
 
-            when (val deleteUserResult = userRepository.deleteUser(userId)) {
+            when (val deleteUserResult = userRepository.deleteAccount(userId)) {
                 is Result.Error -> {
                     _state.update {
                         it.copy(
@@ -124,6 +126,17 @@ class StudentProfileViewModel(
                     return@launch
                 }
                 is Result.Success -> Unit
+            }
+
+            if (AppEnvironment.firebaseBackend == FirebaseBackend.V2) {
+                _state.update {
+                    it.copy(
+                        isDeleting = false,
+                        isDeleteDialogVisible = false,
+                        isAccountDeleted = true
+                    )
+                }
+                return@launch
             }
 
             when (val deleteAuthResult = authRepository.deleteCurrentUser()) {

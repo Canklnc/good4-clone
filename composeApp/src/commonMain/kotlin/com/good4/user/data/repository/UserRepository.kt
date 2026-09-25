@@ -7,6 +7,8 @@ import com.good4.core.domain.NetworkError
 import com.good4.core.domain.Result
 import com.good4.core.domain.ValidationError
 import com.good4.core.network.callV2Function
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import com.good4.user.User
 import com.good4.user.data.dto.UserDto
 import com.good4.user.domain.UserRole
@@ -178,6 +180,16 @@ class UserRepository(
 
     suspend fun deleteUser(userId: String): Result<Unit, Error> {
         return firestoreRepository.deleteDocument("users", userId)
+    }
+
+    suspend fun deleteAccount(userId: String): Result<Unit, Error> {
+        if (AppEnvironment.firebaseBackend != FirebaseBackend.V2) return deleteUser(userId)
+        return try {
+            callV2Function("deleteMyAccount", buildJsonObject {})
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(NetworkError(e.message ?: "Hesap ve ilişkili veriler silinemedi"))
+        }
     }
 
     suspend fun markUserVerified(userId: String): Result<Unit, Error> {

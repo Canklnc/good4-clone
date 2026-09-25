@@ -31,6 +31,7 @@ import {
 import { recordEventAttendanceService, setEventRegistrationService } from "./events.js";
 import { submitFeedbackService } from "./feedback.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
+import { eraseAccountData } from "./accountDeletion.js";
 
 const callableOptions = {
   region: "europe-west1",
@@ -249,4 +250,27 @@ export const ensureStudentProfile = onCall(callableOptions, async (request) => {
     displayName: authUser.displayName,
     providers: authUser.providerData.map((provider) => provider.providerId),
   }, request.data ?? {});
+});
+
+export const deleteMyAccount = onCall({
+  ...callableOptions,
+  memory: "512MiB",
+  timeoutSeconds: 540,
+}, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  let email: string | null = null;
+  try {
+    email = (await getAuth().getUser(uid)).email ?? null;
+  } catch (error) {
+    if ((error as { code?: string }).code !== "auth/user-not-found") throw error;
+  }
+  await eraseAccountData(db, legacyTestDb, uid, email);
+
+  try {
+    await getAuth().deleteUser(uid);
+  } catch (error) {
+    if ((error as { code?: string }).code !== "auth/user-not-found") throw error;
+  }
+
+  return { deleted: true };
 });

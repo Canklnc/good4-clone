@@ -1,6 +1,7 @@
 package com.good4.user.data.repository
 
 import com.good4.config.data.repository.AppConfigRepository
+import com.good4.auth.data.repository.revokeAppleTokenIfNeeded
 import com.good4.core.data.repository.FirestoreRepository
 import com.good4.core.domain.Error
 import com.good4.core.domain.NetworkError
@@ -204,6 +205,7 @@ class UserRepository(
     suspend fun deleteAccount(userId: String): Result<Unit, Error> {
         if (AppEnvironment.firebaseBackend != FirebaseBackend.V2) return deleteUser(userId)
         return try {
+            revokeAppleTokenIfNeeded()
             callV2Function("deleteMyAccount", buildJsonObject {})
             Result.Success(Unit)
         } catch (e: Exception) {

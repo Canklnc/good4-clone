@@ -1,6 +1,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseAuth
 import GoogleSignIn
 import ComposeApp
 import VisionKit
@@ -20,7 +21,9 @@ struct IOSApp: App {
         #endif
         FirebaseApp.configure()
         GoogleSignInBridge.shared.launcher = NativeGoogleSignInLauncher()
-        AppleSignInBridge.shared.launcher = NativeAppleSignInLauncher()
+        let appleLauncher = NativeAppleSignInLauncher()
+        AppleSignInBridge.shared.launcher = appleLauncher
+        AppleTokenRevocationBridge.shared.launcher = appleLauncher
         EventScannerBridge.shared.launcher = NativeEventScannerLauncher()
         #if DEBUG
         Firestore.enableLogging(true)
@@ -78,13 +81,17 @@ private final class NativeGoogleSignInLauncher: NSObject, GoogleSignInLauncher {
     }
 }
 
-private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher,
+private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher, AppleTokenRevocationLauncher,
     ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     private var completion: AppleSignInCallback?
+    private var revocationCompletion: AppleTokenRevocationCallback?
     private var rawNonce: String?
 
     func launch(completion: AppleSignInCallback) {
-        guard self.completion == nil else { return }
+        guard self.completion == nil && revocationCompletion == nil else {
+            completion.complete(idToken: nil, rawNonce: nil, error: "Apple işlemi zaten sürüyor.")
+            return
+        }
         guard let nonce = Self.makeNonce() else {
             completion.complete(idToken: nil, rawNonce: nil, error: "Apple ile giriş başlatılamadı. Tekrar deneyin.")
             return
@@ -93,6 +100,33 @@ private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher,
         self.completion = completion
         rawNonce = nonce
 
+        performAuthorization(nonce: nonce)
+    }
+
+    func revokeIfNeeded(completion: AppleTokenRevocationCallback) {
+        guard let user = Auth.auth().currentUser else {
+            completion.complete(error: "Oturum sona erdi. Lütfen yeniden giriş yapın.")
+            return
+        }
+        guard user.providerData.contains(where: { $0.providerID == "apple.com" }) else {
+            completion.complete(error: nil)
+            return
+        }
+        guard self.completion == nil && revocationCompletion == nil else {
+            completion.complete(error: "Apple işlemi zaten sürüyor.")
+            return
+        }
+        guard let nonce = Self.makeNonce() else {
+            completion.complete(error: "Apple hesap silme doğrulaması başlatılamadı.")
+            return
+        }
+
+        revocationCompletion = completion
+        rawNonce = nonce
+        performAuthorization(nonce: nonce)
+    }
+
+    private func performAuthorization(nonce: String) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
         request.nonce = Self.sha256(nonce)
@@ -114,6 +148,23 @@ private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher,
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
+        if revocationCompletion != nil {
+            guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                  let codeData = credential.authorizationCode,
+                  let code = String(data: codeData, encoding: .utf8) else {
+                finishRevocation(error: "Apple yetki kodu alınamadı. Hesap silinmedi.")
+                return
+            }
+            Task {
+                do {
+                    try await Auth.auth().revokeToken(withAuthorizationCode: code)
+                    finishRevocation(error: nil)
+                } catch {
+                    finishRevocation(error: "Apple bağlantısı kaldırılamadı. Hesap silinmedi; lütfen yeniden deneyin.")
+                }
+            }
+            return
+        }
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
               let tokenData = credential.identityToken,
               let idToken = String(data: tokenData, encoding: .utf8),
@@ -129,6 +180,14 @@ private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher,
         didCompleteWithError error: any Swift.Error
     ) {
         let nsError = error as NSError
+        if revocationCompletion != nil {
+            let message = nsError.domain == ASAuthorizationError.errorDomain &&
+                nsError.code == ASAuthorizationError.canceled.rawValue
+                ? "Apple doğrulaması iptal edildi. Hesap silinmedi."
+                : "Apple doğrulaması tamamlanamadı. Hesap silinmedi."
+            finishRevocation(error: message)
+            return
+        }
         if nsError.domain == ASAuthorizationError.errorDomain,
            nsError.code == ASAuthorizationError.canceled.rawValue {
             finish(idToken: nil, rawNonce: nil, error: nil)
@@ -142,6 +201,13 @@ private final class NativeAppleSignInLauncher: NSObject, AppleSignInLauncher,
         completion = nil
         self.rawNonce = nil
         callback?.complete(idToken: idToken, rawNonce: rawNonce, error: error)
+    }
+
+    private func finishRevocation(error: String?) {
+        let callback = revocationCompletion
+        revocationCompletion = nil
+        rawNonce = nil
+        callback?.complete(error: error)
     }
 
     private static func sha256(_ value: String) -> String {

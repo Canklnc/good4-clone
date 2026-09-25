@@ -61,3 +61,13 @@ iosApp/iosApp.xcworkspace/
 
 # Firebase iOS config variants
 **/GoogleService-Info*.plist
+
+# Build outputs, local caches and scratch material
+*.tsbuildinfo
+**/.firebase/
+/tmp/
+/output/
+
+# Finder duplicate copies ("file 2.ext")
+* 2
+* 2.*

@@ -44,6 +44,9 @@ data class V2OrganizationDto(
 data class V2MembershipDto(val userId: String = "", val role: String = "", val status: String = "")
 
 @Serializable
+data class V2UserRoleDto(val role: String = "")
+
+@Serializable
 data class V2EventDto(
     val organizationId: String = "", val title: String = "", val description: String = "",
     val startsAt: Long = 0, val endsAt: Long = 0, val timezone: String = "Europe/Istanbul",
@@ -160,6 +163,12 @@ class CommunityRepository(
         val user = auth.currentUser ?: return CommunityAccessDto()
         if (!user.isEmailVerified) return CommunityAccessDto()
         if (isV2) {
+            // Only these roles can hold a community membership, so ordinary students skip the
+            // per-organization membership reads. If the role cannot be read, fall back to the scan.
+            val role = (store.getDocument("users", user.uid, V2UserRoleDto::class) as? Result.Success)?.data?.role
+            if (role != null && role !in listOf("communityManager", "communityStaff", "good4Admin")) {
+                return CommunityAccessDto()
+            }
             val organizations = list()
             val managed = organizations.mapNotNull { organization ->
                 val member = store.getDocument(

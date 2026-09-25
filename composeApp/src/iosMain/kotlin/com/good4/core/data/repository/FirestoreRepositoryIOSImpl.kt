@@ -520,6 +520,7 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
         "CommunityCouponCodeDto" to com.good4.community.CommunityCouponCodeDto.serializer(),
         "V2OrganizationDto" to com.good4.community.V2OrganizationDto.serializer(),
         "V2MembershipDto" to com.good4.community.V2MembershipDto.serializer(),
+        "V2UserRoleDto" to com.good4.community.V2UserRoleDto.serializer(),
         "V2EventDto" to com.good4.community.V2EventDto.serializer(),
         "V2EventRegistrationDto" to com.good4.community.V2EventRegistrationDto.serializer(),
         "ProductDto" to ProductDto.serializer(),
@@ -557,6 +558,7 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             "CodeDto" -> decodeCodeDto(document) as T
             "V2OrganizationDto" -> decodeV2OrganizationDto(document) as T
             "V2MembershipDto" -> decodeV2MembershipDto(document) as T
+            "V2UserRoleDto" -> com.good4.community.V2UserRoleDto(role = document.getOrNull("role") ?: "") as T
             "V2EventDto" -> decodeV2EventDto(document) as T
             "V2EventRegistrationDto" -> decodeV2EventRegistrationDto(document) as T
             "CampusWeatherDto" -> com.good4.weather.CampusWeatherDto(

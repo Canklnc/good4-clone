@@ -37,7 +37,8 @@ are implemented.
 - `createOrganization`: Good4 admin creates a business or community
 - `assignOrganizationMember`: Good4 admin assigns an owner, manager, or staff member
 - `createCampaign`: Good4 admin creates a draft or published campaign
-- `issueCampaignCode`: a student receives one short-lived code per campaign
+- `issueCampaignCode`: a student with a verified `.edu.tr` address receives one short-lived code per campaign
+- `requestEduVerification` / `confirmEduVerification`: a student proves a `.edu.tr` address with a six-digit e-mailed code
 - `redeemCampaignCode`: unlimited business staff members manually redeem a code
 - `getBusinessContext`: an authenticated business user receives only their own business context
 - `getCommunityPortalDashboard`: a community manager receives their linked Good4Test community, entries and live attendance totals
@@ -91,6 +92,29 @@ npm install
 npm run test:rules
 npm run test:functions
 npm run test:web
+```
+
+## University e-mail verification
+
+Suspended meals (`issueCampaignCode`) require `users/{uid}.eduVerified == true`.
+Students get there in one of two ways:
+
+- signing in with a verified `.edu.tr` address (`ensureStudentProfile` marks it), or
+- entering a `.edu.tr` address on the Askıda Yemek screen and confirming the
+  six-digit code sent to it (`requestEduVerification` → `confirmEduVerification`).
+
+Codes are stored only as SHA-256 hashes in `eduVerifications/{uid}`, expire
+after 10 minutes, allow 5 attempts, and can be resent once a minute and 5 times
+an hour. `eduEmailClaims/{sha256(email)}` keeps one address per account. None of
+these collections, nor `mail`, is readable by clients.
+
+The callable only queues the message in the `mail` collection. Delivery needs
+the **Trigger Email from Firestore** extension (`firebase/firestore-send-email`)
+installed on `good4tr-v2` with collection `mail`, an SMTP connection URI and a
+default FROM address:
+
+```sh
+firebase ext:install firebase/firestore-send-email --project good4tr-v2
 ```
 
 ## Deployment

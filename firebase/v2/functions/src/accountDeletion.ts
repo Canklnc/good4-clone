@@ -240,6 +240,9 @@ export async function eraseAccountData(
   await replaceMatchingField(database, database.collection("redemptions").where("studentId", "==", uid), "studentId");
   await replaceMatchingField(database, database.collection("redemptions").where("redeemedBy", "==", uid), "redeemedBy");
   await deleteMatchingDocuments(database, database.collection("feedbackSubmissions").where("userId", "==", uid));
+  await deleteMatchingDocuments(database, database.collection("eduEmailClaims").where("uid", "==", uid));
+  await deleteMatchingDocuments(database, database.collection("mail").where("uid", "==", uid));
+  await database.doc(`eduVerifications/${uid}`).delete();
 
   await replaceMatchingField(database, database.collection("events").where("createdBy", "==", uid), "createdBy");
   await replaceMatchingField(database, database.collection("campaigns").where("createdBy", "==", uid), "createdBy");

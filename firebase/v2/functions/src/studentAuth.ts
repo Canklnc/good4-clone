@@ -1,5 +1,6 @@
 import { FieldValue, type Firestore } from "firebase-admin/firestore";
 import { HttpsError } from "firebase-functions/v2/https";
+import { eduEmailClaimPath, isEduEmail } from "./eduVerification.js";
 
 export type StudentIdentity = {
   uid: string;
@@ -31,11 +32,26 @@ export async function ensureStudentProfileService(
 
   const requestedName = typeof input.displayName === "string" ? input.displayName.trim() : "";
   const requestedUniversity = typeof input.university === "string" ? input.university.trim() : "";
-  const isEduEmail = /@(?:[a-z0-9-]+\.)*edu\.tr$/i.test(email);
+  const hasEduEmail = isEduEmail(email);
 
   const userRef = database.doc(`users/${identity.uid}`);
+  // A verified .edu.tr sign-in address also unlocks suspended meals, as long as
+  // no other account has claimed that address through e-mail verification.
+  const claimRef = hasEduEmail && identity.emailVerified ? database.doc(eduEmailClaimPath(email)) : null;
   return database.runTransaction(async (transaction) => {
-    const existing = await transaction.get(userRef);
+    const [existing, claim] = await Promise.all([
+      transaction.get(userRef),
+      claimRef ? transaction.get(claimRef) : Promise.resolve(null),
+    ]);
+    const canClaimEduEmail = claimRef !== null && (!claim?.exists || claim.get("uid") === identity.uid);
+    const eduFields = canClaimEduEmail
+      ? { eduEmail: email, eduVerified: true, eduVerifiedAt: FieldValue.serverTimestamp() }
+      : {};
+    const claimEduEmail = () => {
+      if (claimRef && canClaimEduEmail && !claim?.exists) {
+        transaction.set(claimRef, { uid: identity.uid, verifiedAt: FieldValue.serverTimestamp() });
+      }
+    };
     if (existing.exists) {
       const existingRole = String(existing.get("role") ?? "student");
       const existingStatus = String(existing.get("status") ?? "active");
@@ -46,9 +62,15 @@ export async function ensureStudentProfileService(
       ) {
         transaction.update(userRef, {
           status: "active",
+          ...eduFields,
           updatedAt: FieldValue.serverTimestamp(),
         });
+        claimEduEmail();
         return { created: false, role: existingRole, status: "active" };
+      }
+      if (existingRole === "student" && canClaimEduEmail && existing.get("eduVerified") !== true) {
+        transaction.update(userRef, { ...eduFields, updatedAt: FieldValue.serverTimestamp() });
+        claimEduEmail();
       }
       return {
         created: false,
@@ -60,7 +82,7 @@ export async function ensureStudentProfileService(
     if (isGoogle && !identity.emailVerified) {
       throw new HttpsError("failed-precondition", "VERIFIED_EMAIL_REQUIRED");
     }
-    if (isPassword && !isEduEmail) {
+    if (isPassword && !hasEduEmail) {
       throw new HttpsError("permission-denied", "EDU_EMAIL_REQUIRED");
     }
 
@@ -73,9 +95,11 @@ export async function ensureStudentProfileService(
       role: "student",
       status,
       university: requestedUniversity.slice(0, 160),
+      ...(status === "active" ? eduFields : {}),
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     });
+    if (status === "active") claimEduEmail();
     return { created: true, role: "student", status };
   });
 }

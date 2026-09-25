@@ -30,8 +30,9 @@ after(async () => {
 async function seedBase(): Promise<void> {
   const now = Date.now();
   await Promise.all([
-    db.doc("users/student-1").set({ role: "student", status: "active" }),
-    db.doc("users/student-2").set({ role: "student", status: "active" }),
+    db.doc("users/student-1").set({ role: "student", status: "active", eduVerified: true, eduEmail: "one@ogr.akdeniz.edu.tr" }),
+    db.doc("users/student-2").set({ role: "student", status: "active", eduVerified: true, eduEmail: "two@ogr.akdeniz.edu.tr" }),
+    db.doc("users/gmail-student").set({ role: "student", status: "active", email: "someone@gmail.com" }),
     db.doc("users/business-1").set({ role: "businessStaff", status: "active" }),
     db.doc("users/outsider-1").set({ role: "businessStaff", status: "active" }),
     db.doc("organizations/business-org-1").set({
@@ -154,4 +155,14 @@ test("expired codes cannot be redeemed", async () => {
   assert.equal(result.outcome, "expired");
   const code = await db.doc("campaignCodes/ABC23456").get();
   assert.equal(code.get("status"), "expired");
+});
+
+test("students without a verified .edu.tr address cannot issue suspended-meal codes", async () => {
+  await seedBase();
+  await assert.rejects(
+    issueCampaignCodeService(db, "gmail-student", { campaignId: "campaign-1" }),
+    (error: { message?: string }) => error.message === "EDU_VERIFICATION_REQUIRED",
+  );
+  const claims = await db.collection("campaignClaims").get();
+  assert.equal(claims.size, 0);
 });

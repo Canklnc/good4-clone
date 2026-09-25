@@ -291,3 +291,27 @@ test('clients cannot create event registrations or check-ins directly', async ()
 test('test harness is active', () => {
   assert.ok(testEnv);
 });
+
+test('students cannot mark their own .edu.tr address as verified or read verification data', async () => {
+  await seed('users/student-edu', {
+    email: 'student@gmail.com',
+    displayName: 'Student',
+    role: 'student',
+    status: 'active',
+    createdAt: 1,
+    updatedAt: 1,
+  });
+  await seed('eduVerifications/student-edu', { email: 'student@akdeniz.edu.tr', codeHash: 'x' });
+  await seed('eduEmailClaims/claim-1', { uid: 'student-edu' });
+  await seed('mail/mail-1', { to: ['student@akdeniz.edu.tr'], uid: 'student-edu' });
+
+  const db = testEnv.authenticatedContext('student-edu', { email: 'student@gmail.com', email_verified: true }).firestore();
+  await assertFails(setDoc(doc(db, 'users/student-edu'), {
+    eduEmail: 'student@akdeniz.edu.tr',
+    eduVerified: true,
+    updatedAt: serverTimestamp(),
+  }, { merge: true }));
+  await assertFails(getDoc(doc(db, 'eduVerifications/student-edu')));
+  await assertFails(getDoc(doc(db, 'eduEmailClaims/claim-1')));
+  await assertFails(getDoc(doc(db, 'mail/mail-1')));
+});

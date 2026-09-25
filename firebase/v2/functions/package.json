@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && node --test --test-concurrency=1 lib/campaigns.test.js lib/business.test.js lib/legacyCoupons.test.js lib/adminPortal.test.js lib/communityPortal.test.js lib/events.test.js lib/feedback.test.js lib/studentAuth.test.js lib/accountDeletion.test.js"
+    "test": "npm run build && node --test --test-concurrency=1 lib/campaigns.test.js lib/business.test.js lib/legacyCoupons.test.js lib/adminPortal.test.js lib/communityPortal.test.js lib/events.test.js lib/feedback.test.js lib/studentAuth.test.js lib/accountDeletion.test.js lib/eduVerification.test.js"
   },
   "dependencies": {
     "firebase-admin": "14.4.0",

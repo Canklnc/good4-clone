@@ -5,6 +5,7 @@ import {
   Timestamp,
 } from "firebase-admin/firestore";
 import { HttpsError } from "firebase-functions/v2/https";
+import { hasVerifiedEduEmail } from "./eduVerification.js";
 import { requireActiveActor, requireNonEmptyString } from "./shared.js";
 
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -59,6 +60,9 @@ export async function issueCampaignCodeService(
     try {
       return await database.runTransaction(async (transaction) => {
         await requireActiveActor(database, transaction, actorUid, ["student"]);
+        if (!hasVerifiedEduEmail(await transaction.get(database.doc(`users/${actorUid}`)))) {
+          throw new HttpsError("permission-denied", "EDU_VERIFICATION_REQUIRED");
+        }
         const campaignRef = database.doc(`campaigns/${campaignId}`);
         const claimRef = database.doc(`campaignClaims/${campaignId}_${actorUid}`);
         const [campaignSnapshot, claimSnapshot] = await Promise.all([

@@ -18,6 +18,7 @@ data class ClassScheduleState(
     val user: User? = null,
     val schedule: ClassSchedule? = null,
     val isProfileSelectionComplete: Boolean = false,
+    val isAcademicProfileMissing: Boolean = false,
     val errorMessage: String? = null
 )
 
@@ -27,6 +28,14 @@ class ClassScheduleViewModel(
 ) : ViewModel() {
     private val _state = MutableStateFlow(ClassScheduleState())
     val state = _state.asStateFlow()
+
+    /** The academic selection prompt opens by itself only once, so backing out of it does not loop. */
+    var hasPromptedAcademicSelection = false
+        private set
+
+    fun onAcademicSelectionPrompted() {
+        hasPromptedAcademicSelection = true
+    }
 
     init {
         refresh()
@@ -50,12 +59,15 @@ class ClassScheduleViewModel(
                         classYear = user.classYear
                     )
                     val hasCompleteSelection = selectedSchedule != null
+                    val isAcademicProfileMissing = listOf(user.faculty, user.major, user.classYear)
+                        .any { it.isNullOrBlank() }
                     _state.update {
                         it.copy(
                             isLoading = false,
                             user = user,
                             schedule = selectedSchedule ?: ClassSchedules.businessFirstYear,
-                            isProfileSelectionComplete = hasCompleteSelection
+                            isProfileSelectionComplete = hasCompleteSelection,
+                            isAcademicProfileMissing = isAcademicProfileMissing
                         )
                     }
                 }

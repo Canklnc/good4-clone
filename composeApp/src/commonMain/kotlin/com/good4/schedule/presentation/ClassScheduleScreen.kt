@@ -31,8 +31,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceCanvasWarm
@@ -66,6 +69,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun ClassScheduleScreen(
     onBackClick: () -> Unit,
+    onSelectAcademicProfile: () -> Unit,
     viewModel: ClassScheduleViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -78,6 +82,20 @@ fun ClassScheduleScreen(
     val schedule = state.schedule
     val availableSections = schedule?.entries.orEmpty().mapNotNull { it.section }.distinct()
     var selectedSection by rememberSaveable { mutableStateOf("Tümü") }
+    var hasResumedOnce by remember { mutableStateOf(false) }
+
+    // Picks up a faculty, department or class year saved in account settings on return.
+    LifecycleResumeEffect(Unit) {
+        if (hasResumedOnce) viewModel.refresh() else hasResumedOnce = true
+        onPauseOrDispose { }
+    }
+
+    LaunchedEffect(state.isLoading, state.isAcademicProfileMissing) {
+        if (!state.isLoading && state.isAcademicProfileMissing && !viewModel.hasPromptedAcademicSelection) {
+            viewModel.onAcademicSelectionPrompted()
+            onSelectAcademicProfile()
+        }
+    }
 
     Good4NestedScaffold(
         modifier = modifier,
@@ -104,7 +122,10 @@ fun ClassScheduleScreen(
                 schedule?.let { ScheduleHeader(it) }
             }
 
-            schedule?.sourceWarning?.let { warning ->
+            val emptyScheduleWarning = schedule
+                ?.takeIf { !state.isLoading && it.entries.isEmpty() && it.sourceWarning == null }
+                ?.let { "Bölümün yayımladığı programda ${it.classYear} için ders bulunmuyor." }
+            (schedule?.sourceWarning ?: emptyScheduleWarning)?.let { warning ->
                 item {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
@@ -121,19 +142,33 @@ fun ClassScheduleScreen(
                 }
             }
 
-            if (!state.isProfileSelectionComplete) {
+            if (!state.isLoading && !state.isProfileSelectionComplete) {
                 item {
                     Surface(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickableWithoutRipple(onSelectAcademicProfile),
                         color = Color(0xFFFFF4D6),
                         shape = RoundedCornerShape(16.dp)
                     ) {
-                        Text(
-                            text = "Profilinde fakülte, bölüm ve sınıf seçimi tamamlanmadığı için İşletme 1. sınıf programı gösteriliyor.",
-                            color = Color(0xFF765A10),
-                            fontSize = 13.sp,
-                            modifier = Modifier.padding(14.dp)
-                        )
+                        Column(modifier = Modifier.padding(14.dp)) {
+                            Text(
+                                text = if (state.isAcademicProfileMissing) {
+                                    "Fakülte, bölüm ve sınıf seçimin tamamlanmadığı için İşletme 1. sınıf programı gösteriliyor."
+                                } else {
+                                    "Seçtiğin bölüm ve sınıf için henüz program eklenmedi; İşletme 1. sınıf programı gösteriliyor."
+                                },
+                                color = Color(0xFF765A10),
+                                fontSize = 13.sp
+                            )
+                            Text(
+                                text = "Bölümünü ve sınıfını seç",
+                                color = Color(0xFF765A10),
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(top = 6.dp)
+                            )
+                        }
                     }
                 }
             }

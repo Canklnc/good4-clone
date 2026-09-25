@@ -41,7 +41,7 @@ sealed class Route {
     data object StudentProfile : Route()
 
     @Serializable
-    data object StudentAccountSettings : Route()
+    data class StudentAccountSettings(val academicSelectionPrompt: Boolean = false) : Route()
 
     @Serializable
     data object Notifications : Route()

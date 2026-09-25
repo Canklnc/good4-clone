@@ -43,6 +43,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -102,6 +103,8 @@ fun AccountSettingsScreen(
     mode: AccountSettingsMode,
     modifier: Modifier = Modifier,
     viewModel: AccountSettingsViewModel = koinViewModel(),
+    academicSelectionPrompt: Boolean = false,
+    onAcademicSelectionSaved: () -> Unit = {},
     onBackClick: () -> Unit,
     onLogout: () -> Unit
 ) {
@@ -256,6 +259,13 @@ fun AccountSettingsScreen(
         viewModel.refresh(mode)
     }
 
+    LaunchedEffect(state.profileSaveCount) {
+        val hasAcademicSelection = listOf(state.faculty, state.major, state.classYear).all(String::isNotBlank)
+        if (academicSelectionPrompt && state.profileSaveCount > 0 && hasAcademicSelection) {
+            onAcademicSelectionSaved()
+        }
+    }
+
     LaunchedEffect(errorText, infoText) {
         val message = errorText ?: infoText
         if (!message.isNullOrBlank()) {
@@ -390,6 +400,21 @@ fun AccountSettingsScreen(
                     )
 
                     if (!state.isCommunityManager) {
+                        if (academicSelectionPrompt) {
+                            Surface(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = Color(0xFFFFF4D6),
+                                shape = RoundedCornerShape(14.dp)
+                            ) {
+                                Text(
+                                    text = "Ders programını görmek için fakülte, bölüm ve sınıfını seçip kaydet.",
+                                    color = Color(0xFF765A10),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(12.dp)
+                                )
+                            }
+                        }
+
                         EditableSelectionField(
                             value = state.faculty,
                             label = "Fakülte",

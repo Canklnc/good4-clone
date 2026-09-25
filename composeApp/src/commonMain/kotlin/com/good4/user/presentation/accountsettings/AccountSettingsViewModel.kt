@@ -345,6 +345,7 @@ class AccountSettingsViewModel(
                     _state.update {
                         it.copy(
                             isSaving = false,
+                            profileSaveCount = it.profileSaveCount + 1,
                             infoMessage = UiText.StringResourceId(Res.string.account_settings_saved)
                         )
                     }

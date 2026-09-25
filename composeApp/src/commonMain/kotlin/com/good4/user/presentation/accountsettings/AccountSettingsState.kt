@@ -27,6 +27,7 @@ data class AccountSettingsState(
     val canResendPasswordReset: Boolean = true,
     val passwordResetCooldownSeconds: Int = 0,
     val showPhoneField: Boolean = false,
+    val profileSaveCount: Int = 0,
     val errorMessage: UiText? = null,
     val infoMessage: UiText? = null
 )

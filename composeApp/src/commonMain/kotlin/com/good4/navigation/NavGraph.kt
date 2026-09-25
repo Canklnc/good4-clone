@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.good4.admin.presentation.home.AdminHomeScreenRoot
 import com.good4.admin.presentation.profile.AdminProfileScreen
 import com.good4.auth.presentation.login.LoginScreenRoot
@@ -190,7 +191,12 @@ fun Good4NavGraph(
         }
 
         composable<Route.ClassSchedule> {
-            ClassScheduleScreen(onBackClick = { navController.popBackStack() })
+            ClassScheduleScreen(
+                onBackClick = { navController.popBackStack() },
+                onSelectAcademicProfile = {
+                    navController.navigate(Route.StudentAccountSettings(academicSelectionPrompt = true))
+                }
+            )
         }
 
         composable<Route.Notifications> {
@@ -229,14 +235,17 @@ fun Good4NavGraph(
                 onBackClick = { navController.popBackStack() },
                 onLogout = { navController.navigateToLogin() },
                 onOpenAccountSettings = {
-                    navController.navigate(Route.StudentAccountSettings)
+                    navController.navigate(Route.StudentAccountSettings())
                 }
             )
         }
 
-        composable<Route.StudentAccountSettings> {
+        composable<Route.StudentAccountSettings> { backStackEntry ->
+            val route = backStackEntry.toRoute<Route.StudentAccountSettings>()
             AccountSettingsScreen(
                 mode = AccountSettingsMode.STUDENT,
+                academicSelectionPrompt = route.academicSelectionPrompt,
+                onAcademicSelectionSaved = { navController.popBackStack() },
                 onBackClick = { navController.popBackStack() },
                 onLogout = { navController.navigateToLogin() }
             )

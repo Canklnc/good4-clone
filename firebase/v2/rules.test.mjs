@@ -57,11 +57,11 @@ test('unauthenticated users cannot read active organizations', async () => {
   await assertFails(getDoc(doc(db, 'organizations/community-1')));
 });
 
-test('verified students can create only their own student profile', async () => {
+test('clients cannot create user profiles directly', async () => {
   const auth = { email: 'student@example.com', email_verified: true };
   const db = testEnv.authenticatedContext('student-1', auth).firestore();
 
-  await assertSucceeds(setDoc(doc(db, 'users/student-1'), {
+  await assertFails(setDoc(doc(db, 'users/student-1'), {
     email: 'student@example.com',
     displayName: 'Student',
     role: 'student',

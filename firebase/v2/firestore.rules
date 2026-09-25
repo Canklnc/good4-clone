@@ -55,35 +55,13 @@ service cloud.firestore {
         || hasOrganizationRole(organizationId, ['owner', 'manager']);
     }
 
-    function validStudentProfile(data) {
-      return data.keys().hasAll([
-          'email', 'displayName', 'role', 'status', 'university',
-          'createdAt', 'updatedAt'
-        ])
-        && data.keys().hasOnly([
-          'email', 'displayName', 'role', 'status', 'university',
-          'createdAt', 'updatedAt'
-        ])
-        && data.email is string
-        && data.email == request.auth.token.email
-        && data.displayName is string
-        && data.displayName.size() <= 120
-        && data.role == 'student'
-        && data.status == 'active'
-        && data.university is string
-        && data.university.size() <= 160
-        && data.createdAt == request.time
-        && data.updatedAt == request.time;
-    }
-
     match /users/{userId} {
       allow get: if signedIn() && (request.auth.uid == userId || isGood4Admin());
       allow list: if isGood4Admin();
 
-      allow create: if signedIn()
-        && request.auth.uid == userId
-        && request.auth.token.email_verified == true
-        && validStudentProfile(request.resource.data);
+      // Profiles are created only by the ensureStudentProfile callable, which
+      // enforces the sign-in provider and university e-mail policy.
+      allow create: if false;
 
       allow update: if currentUserIsActive()
         && request.auth.uid == userId

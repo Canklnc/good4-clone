@@ -559,6 +559,12 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             "V2MembershipDto" -> decodeV2MembershipDto(document) as T
             "V2EventDto" -> decodeV2EventDto(document) as T
             "V2EventRegistrationDto" -> decodeV2EventRegistrationDto(document) as T
+            "CampusWeatherDto" -> com.good4.weather.CampusWeatherDto(
+                temperature = document.getAsDouble("temperature"),
+                label = document.getOrNull("label"),
+                source = document.getOrNull("source"),
+                updatedAtMillis = document.getOrNull<Long>("updatedAtMillis")
+            ) as T
             "EduStatusDto" -> com.good4.eduverification.EduStatusDto(
                 eduEmail = document.getOrNull("eduEmail"),
                 eduVerified = document.getOrNull("eduVerified")

@@ -56,6 +56,7 @@ val commonModule = module {
     single { CampaignRepository(get<FirestoreRepository>()) }
     single { CodeRepository(get<FirestoreRepository>(), get<FirestoreBusinessRepository>(), get<FirestoreProductRepository>(), get<AppConfigRepository>()) }
     single { AkdenizDiningMenuRepository(get<FirestoreRepository>()) }
+    single { com.good4.weather.CampusWeatherRepository(get<FirestoreRepository>()) }
     single { AcademicCalendarRepository(get<FirestoreRepository>()) }
     single { FeedbackRepository(get<FirestoreRepository>(), get<AuthRepository>()) }
     single { com.good4.eduverification.EduVerificationRepository(get<FirestoreRepository>(), get<AuthRepository>()) }

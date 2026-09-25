@@ -17,17 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.good4.core.presentation.*
 import com.good4.dining.presentation.AkdenizDiningMenuState
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
+import com.good4.weather.CampusWeatherRepository
+import org.koin.compose.koinInject
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.platform.LocalUriHandler
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.serialization.json.*
 import kotlin.math.roundToInt
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.akdeniz_campus_weather
@@ -36,52 +35,35 @@ import org.jetbrains.compose.resources.painterResource
 private data class CampusWeather(val temperature: String, val label: String)
 
 // Process-wide so returning to the home tab reuses the last reading instead of
-// opening a new HTTP client and showing "Yükleniyor…" on every visit.
+// hitting Firestore and showing "Yükleniyor…" on every visit.
 private object CampusWeatherCache {
     private const val MAX_AGE_MILLIS = 15 * 60 * 1000L
+    // The server refreshes every 30 minutes; anything older means the job is failing.
+    private const val STALE_AFTER_MILLIS = 3 * 60 * 60 * 1000L
     private val mutex = Mutex()
     private var fetchedAtMillis = 0L
     var latest: CampusWeather? = null
         private set
 
     /** Returns a fresh reading, or the last good one when the refresh fails. */
-    suspend fun load(): CampusWeather? = mutex.withLock {
+    suspend fun load(repository: CampusWeatherRepository): CampusWeather? = mutex.withLock {
         val now = Clock.System.now().toEpochMilliseconds()
         if (latest != null && now - fetchedAtMillis < MAX_AGE_MILLIS) return@withLock latest
-        fetch()?.let {
+        fetch(repository, now)?.let {
             latest = it
             fetchedAtMillis = now
         }
         latest
     }
 
-    private suspend fun fetch(): CampusWeather? {
-        val client = HttpClient { install(HttpTimeout) { requestTimeoutMillis = 10_000 } }
-        return try {
-            // Central Antalya campus; no device location permission is needed.
-            val response = client.get("https://api.open-meteo.com/v1/forecast?latitude=36.898&longitude=30.651&current=temperature_2m,weather_code&timezone=Europe%2FIstanbul")
-            check(response.status.value in 200..299)
-            val current = Json.parseToJsonElement(response.bodyAsText()).jsonObject.getValue("current").jsonObject
-            CampusWeather(
-                temperature = "${current.getValue("temperature_2m").jsonPrimitive.double.roundToInt()}°",
-                label = when (current.getValue("weather_code").jsonPrimitive.int) {
-                    0 -> "Açık"
-                    1, 2 -> "Parçalı bulutlu"
-                    3 -> "Bulutlu"
-                    45, 48 -> "Sisli"
-                    in 51..67, in 80..82 -> "Yağmurlu"
-                    in 71..77, 85, 86 -> "Karlı"
-                    95, 96, 99 -> "Gök gürültülü"
-                    else -> "Hava durumu"
-                }
-            )
-        } catch (cancelled: CancellationException) {
-            throw cancelled
-        } catch (_: Exception) {
-            null
-        } finally {
-            client.close()
-        }
+    private suspend fun fetch(repository: CampusWeatherRepository, now: Long): CampusWeather? = try {
+        repository.current()
+            ?.takeIf { it.temperature != null && now - (it.updatedAtMillis ?: 0L) < STALE_AFTER_MILLIS }
+            ?.let { CampusWeather("${it.temperature!!.roundToInt()}°", it.label ?: "Hava durumu") }
+    } catch (cancelled: CancellationException) {
+        throw cancelled
+    } catch (_: Exception) {
+        null
     }
 }
 
@@ -89,11 +71,13 @@ private object CampusWeatherCache {
 internal fun CampusSummaryCards(
     diningMenuState: AkdenizDiningMenuState
 ) {
+    val weatherRepository: CampusWeatherRepository = koinInject()
+    val uriHandler = LocalUriHandler.current
     val cachedWeather = CampusWeatherCache.latest
     var temperature by remember { mutableStateOf(cachedWeather?.temperature ?: "—") }
     var weatherLabel by remember { mutableStateOf(cachedWeather?.label ?: "Yükleniyor…") }
     LaunchedEffect(Unit) {
-        val weather = CampusWeatherCache.load()
+        val weather = CampusWeatherCache.load(weatherRepository)
         if (weather != null) {
             temperature = weather.temperature
             weatherLabel = weather.label
@@ -123,6 +107,16 @@ internal fun CampusSummaryCards(
                     Spacer(Modifier.weight(1f))
                     Text(temperature, fontSize = 34.sp, lineHeight = 36.sp, color = Color.White, fontWeight = FontWeight.Medium)
                     Text(weatherLabel, fontSize = 12.sp, lineHeight = 14.sp, color = Color.White)
+                    // CC BY 4.0 credit required by MET Norway; tapping opens their licence page.
+                    Text(
+                        "Veri: MET Norway",
+                        fontSize = 9.sp,
+                        lineHeight = 11.sp,
+                        color = Color.White.copy(alpha = 0.75f),
+                        modifier = Modifier.clickable {
+                            uriHandler.openUri("https://www.met.no/en/free-meteorological-data/Licensing-and-crediting")
+                        }
+                    )
                 }
             }
         }

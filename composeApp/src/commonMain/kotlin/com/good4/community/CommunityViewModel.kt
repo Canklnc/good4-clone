@@ -35,7 +35,11 @@ data class CommunityState(
     val registrationLoadingIds: Set<String> = emptySet(),
     val loading: Boolean = true,
     val saving: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val blockedCommunityIds: Set<String> = emptySet(),
+    val reportSending: Boolean = false,
+    val reportSentEntryId: String? = null,
+    val reportError: String? = null
 ) {
     val canManage: Boolean get() = access.active && selected?.id in access.communityIds
 }
@@ -59,7 +63,17 @@ class CommunityViewModel(private val repository: CommunityRepository, private va
                 val communities = repository.list()
                 val access = repository.access()
                 val businesses = repository.businesses()
-                mutable.update { it.copy(communities = communities, access = access, businesses = businesses, loading = false) }
+                val blocked = loadBlockedCommunityIds()
+                mutable.update {
+                    it.copy(
+                        // Managers always keep their own community, even if it was blocked earlier.
+                        communities = communities.filterNot { c -> c.id in blocked && c.id !in access.communityIds },
+                        blockedCommunityIds = blocked,
+                        access = access,
+                        businesses = businesses,
+                        loading = false
+                    )
+                }
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) { mutable.update { it.copy(loading = false, error = e.message) } }
         }
@@ -162,6 +176,44 @@ class CommunityViewModel(private val repository: CommunityRepository, private va
         }
     }
     fun clearError() { mutable.update { it.copy(error = null) } }
+
+    fun blockCommunity(community: Community) {
+        val blocked = mutable.value.blockedCommunityIds + community.id
+        saveBlockedCommunityIds(blocked)
+        back()
+        mutable.update { state ->
+            state.copy(
+                blockedCommunityIds = blocked,
+                communities = state.communities.filterNot { it.id == community.id },
+                featuredEvents = state.featuredEvents.filterNot { it.community.id == community.id }
+            )
+        }
+    }
+
+    fun unblockAllCommunities() {
+        saveBlockedCommunityIds(emptySet())
+        featuredEventsKey = null
+        load()
+    }
+
+    fun reportEntry(entry: CommunityEntry, reason: String, details: String) {
+        val community = mutable.value.selected ?: return
+        if (mutable.value.reportSending) return
+        viewModelScope.launch {
+            mutable.update { it.copy(reportSending = true, reportError = null, reportSentEntryId = null) }
+            try {
+                repository.reportContent(community, entry, reason, details)
+                mutable.update { it.copy(reportSending = false, reportSentEntryId = entry.id) }
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
+                mutable.update {
+                    it.copy(reportSending = false, reportError = e.message ?: "Bildirim gönderilemedi. Tekrar deneyin.")
+                }
+            }
+        }
+    }
+
+    fun clearReportStatus() { mutable.update { it.copy(reportSentEntryId = null, reportError = null) } }
     fun pauseUpdates() { updatesVisible = false; registrationJob?.cancel() }
     fun resumeUpdates() {
         updatesVisible = true

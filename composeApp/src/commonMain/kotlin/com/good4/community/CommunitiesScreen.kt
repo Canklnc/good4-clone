@@ -1,6 +1,7 @@
 package com.good4.community
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.LocationOn
@@ -73,6 +76,8 @@ fun CommunitiesScreen(
     var admissionEntry by remember { mutableStateOf<CommunityEntry?>(null) }
     var registeredOnly by remember { mutableStateOf(false) }
     var pendingFeaturedEvent by remember { mutableStateOf<CommunityFeaturedEvent?>(null) }
+    var reportTarget by remember { mutableStateOf<CommunityEntry?>(null) }
+    var pendingBlock by remember { mutableStateOf<Community?>(null) }
     val community = state.selected
     val managerView = state.canManage && !previewAsStudent
     var today by remember { mutableStateOf(currentCampusDate()) }
@@ -203,6 +208,20 @@ fun CommunitiesScreen(
                         }
                     )
                 }
+                if (state.blockedCommunityIds.isNotEmpty()) {
+                    item {
+                        TextButton(
+                            onClick = viewModel::unblockAllCommunities,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                "Engellediğiniz ${state.blockedCommunityIds.size} topluluğu yeniden göster",
+                                fontSize = 13.sp,
+                                color = TextSecondary
+                            )
+                        }
+                    }
+                }
                 if (!state.loading && state.error == null && filtered.isEmpty()) {
                     item {
                         EmptyCommunityContent(
@@ -251,7 +270,8 @@ fun CommunitiesScreen(
                             previewAsStudent = previewAsStudent,
                             isFollowing = state.isFollowing,
                             followLoading = state.followLoading,
-                            onFollowClick = viewModel::toggleFollow
+                            onFollowClick = viewModel::toggleFollow,
+                            onBlockClick = { pendingBlock = community }
                         )
                     }
                     if (previewAsStudent) {
@@ -407,7 +427,35 @@ fun CommunitiesScreen(
             onCreateCode = { viewModel.createCouponCode(entry) },
             onToggleRegistration = { viewModel.toggleRegistration(entry) },
             onShowTicket = { viewModel.showTicket(entry) },
-            onManageAttendees = { detail = null; viewModel.clearAdmissionMessage(); admissionEntry = entry }
+            onManageAttendees = { detail = null; viewModel.clearAdmissionMessage(); admissionEntry = entry },
+            onReport = { viewModel.clearReportStatus(); reportTarget = entry }
+        )
+    }
+    reportTarget?.let { entry ->
+        ReportContentDialog(
+            title = entry.data.title,
+            sending = state.reportSending,
+            sent = state.reportSentEntryId == entry.id,
+            error = state.reportError,
+            onDismiss = { if (!state.reportSending) { reportTarget = null; viewModel.clearReportStatus() } },
+            onSubmit = { reason, details -> viewModel.reportEntry(entry, reason, details) }
+        )
+    }
+    pendingBlock?.let { target ->
+        AlertDialog(
+            onDismissRequest = { pendingBlock = null },
+            title = { Text("Topluluğu engelle") },
+            text = {
+                Text("${target.data.name} topluluğunun etkinliklerini ve kuponlarını artık görmeyeceksiniz. Engeli Topluluklar listesinin altından kaldırabilirsiniz.")
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    pendingBlock = null
+                    detail = null
+                    viewModel.blockCommunity(target)
+                }) { Text("Engelle", color = ErrorRed) }
+            },
+            dismissButton = { TextButton(onClick = { pendingBlock = null }) { Text("Vazgeç") } }
         )
     }
     pendingRemoval?.let { entry ->
@@ -714,7 +762,8 @@ private fun CommunityDetailHeader(
     previewAsStudent: Boolean,
     isFollowing: Boolean,
     followLoading: Boolean,
-    onFollowClick: () -> Unit
+    onFollowClick: () -> Unit,
+    onBlockClick: (() -> Unit)? = null
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -783,6 +832,16 @@ private fun CommunityDetailHeader(
                 }
             ) {
                 Text(if (followLoading) "Kaydediliyor…" else if (isFollowing) "Takip ediliyor" else "Takip et", fontWeight = FontWeight.SemiBold)
+            }
+            if (!canManage && onBlockClick != null) {
+                TextButton(
+                    onClick = onBlockClick,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Icon(Icons.Outlined.Block, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text("Bu topluluğu engelle", fontSize = 13.sp, color = TextSecondary)
+                }
             }
             if (canManage && previewAsStudent) {
                 Text(
@@ -1266,7 +1325,8 @@ private fun CommunityEntryDetailDialog(
     onCreateCode: () -> Unit,
     onToggleRegistration: () -> Unit,
     onShowTicket: () -> Unit,
-    onManageAttendees: () -> Unit
+    onManageAttendees: () -> Unit,
+    onReport: (() -> Unit)? = null
 ) {
     val isCoupon = entry.data.kind == "coupon"
     val dateTime = listOf(entry.data.date, entry.data.time)
@@ -1459,10 +1519,92 @@ private fun CommunityEntryDetailDialog(
                         }
                     }
                 }
+                if (!canManage && onReport != null) {
+                    TextButton(
+                        onClick = onReport,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Icon(Icons.Outlined.Flag, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(16.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text("Bu içeriği bildir", fontSize = 13.sp, color = TextSecondary)
+                    }
+                }
                 error?.let { Text(it, fontSize = 13.sp, lineHeight = 18.sp, color = ErrorRed) }
             }
         }
     }
+}
+
+private val reportReasons = listOf(
+    "Uygunsuz veya rahatsız edici içerik",
+    "Yanıltıcı ya da sahte bilgi",
+    "Spam veya reklam",
+    "Taciz, nefret söylemi veya şiddet",
+    "Diğer"
+)
+
+@Composable
+private fun ReportContentDialog(
+    title: String,
+    sending: Boolean,
+    sent: Boolean,
+    error: String?,
+    onDismiss: () -> Unit,
+    onSubmit: (reason: String, details: String) -> Unit
+) {
+    var reason by remember { mutableStateOf<String?>(null) }
+    var details by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(if (sent) "Bildiriminiz alındı" else "İçeriği bildir") },
+        text = {
+            if (sent) {
+                Text("Teşekkürler. Good4 ekibi \"$title\" içeriğini inceleyecek ve gerekirse yayından kaldıracak.")
+            } else {
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text("\"$title\" için bir neden seçin.", fontSize = 14.sp, color = TextSecondary)
+                    reportReasons.forEach { option ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(10.dp))
+                                .clickable(enabled = !sending) { reason = option }
+                                .padding(vertical = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(selected = reason == option, onClick = { reason = option }, enabled = !sending)
+                            Text(option, fontSize = 14.sp, color = TextPrimary)
+                        }
+                    }
+                    OutlinedTextField(
+                        value = details,
+                        onValueChange = { details = it.take(500) },
+                        enabled = !sending,
+                        label = { Text("Açıklama (isteğe bağlı)") },
+                        modifier = Modifier.fillMaxWidth(),
+                        minLines = 2
+                    )
+                    error?.let { Text(it, fontSize = 13.sp, color = ErrorRed) }
+                }
+            }
+        },
+        confirmButton = {
+            if (sent) {
+                TextButton(onClick = onDismiss) { Text("Tamam") }
+            } else {
+                TextButton(
+                    onClick = { reason?.let { onSubmit(it, details) } },
+                    enabled = reason != null && !sending
+                ) { Text(if (sending) "Gönderiliyor…" else "Gönder") }
+            }
+        },
+        dismissButton = {
+            if (!sent) TextButton(onClick = onDismiss, enabled = !sending) { Text("Vazgeç") }
+        }
+    )
 }
 
 @Composable

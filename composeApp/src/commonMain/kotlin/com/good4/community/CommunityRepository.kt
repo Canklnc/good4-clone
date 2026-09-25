@@ -122,6 +122,19 @@ class CommunityRepository(
     private val businesses: FirestoreBusinessRepository? = null
 ) {
     private val isV2 get() = AppEnvironment.firebaseBackend == FirebaseBackend.V2
+    private val feedback by lazy { com.good4.feedback.FeedbackRepository(store, auth) }
+
+    /** Sends a content report to the Good4 team through the feedback inbox. */
+    suspend fun reportContent(community: Community, entry: CommunityEntry, reason: String, details: String) {
+        val subject = "İçerik bildirimi: ${entry.data.title}".take(120)
+        val message = buildString {
+            appendLine("Neden: $reason")
+            appendLine("Topluluk: ${community.data.name} (${community.id})")
+            appendLine("İçerik: ${entry.data.title} (${entry.data.kind}, ${entry.id})")
+            if (details.isNotBlank()) appendLine("Açıklama: ${details.trim()}")
+        }.take(2000)
+        feedback.submit(subject, message)
+    }
 
     suspend fun list(): List<Community> {
         if (isV2) return when (val result = store.queryCollectionWithMultipleConditions(

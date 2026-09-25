@@ -92,7 +92,6 @@ import com.good4.product.presentation.product_list.ProductListAction
 import com.good4.product.presentation.product_list.ProductListState
 import com.good4.product.presentation.product_list.ProductListViewModel
 import good4.composeapp.generated.resources.Res
-import good4.composeapp.generated.resources.good4_home_header_background
 import good4.composeapp.generated.resources.home_delivery_time
 import good4.composeapp.generated.resources.home_welcome_generic
 import good4.composeapp.generated.resources.home_welcome_title

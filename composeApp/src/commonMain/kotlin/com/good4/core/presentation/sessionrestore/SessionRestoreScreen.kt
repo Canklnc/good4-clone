@@ -40,7 +40,7 @@ fun SessionRestoreScreenRoot(
         when (state.targetRoute) {
             Route.Login -> onNavigateToLogin()
             Route.EmailVerification -> onNavigateToEmailVerification()
-            Route.AdminHome, Route.BusinessHome, Route.StudentHome, Route.SupporterHome -> {
+            Route.AdminHome, Route.BusinessHome, Route.StudentHome -> {
                 state.userRole?.let(onNavigateToHome)
             }
 

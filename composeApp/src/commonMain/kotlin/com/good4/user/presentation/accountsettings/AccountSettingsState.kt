@@ -34,6 +34,5 @@ data class AccountSettingsState(
 enum class AccountSettingsMode {
     STUDENT,
     BUSINESS,
-    SUPPORTER,
     ADMIN
 }

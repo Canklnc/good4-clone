@@ -17,12 +17,14 @@ import com.good4.core.util.FirebaseBackend
 import com.good4.core.util.normalizeForEmail
 import com.good4.core.util.validateEmail
 import com.good4.user.data.repository.UserRepository
+import com.good4.user.domain.UserRole
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.error_email_not_verified
 import good4.composeapp.generated.resources.error_email_required
 import good4.composeapp.generated.resources.error_network_connection
 import good4.composeapp.generated.resources.error_password_required
 import good4.composeapp.generated.resources.error_please_register
+import good4.composeapp.generated.resources.error_supporter_role_unavailable
 import good4.composeapp.generated.resources.error_resend_wait_seconds
 import good4.composeapp.generated.resources.error_unknown
 import good4.composeapp.generated.resources.error_user_not_found
@@ -83,8 +85,7 @@ class LoginViewModel(
             }
 
             is LoginAction.OnStudentRegisterClick,
-            is LoginAction.OnBusinessRegisterClick,
-            is LoginAction.OnSupporterRegisterClick -> Unit
+            is LoginAction.OnBusinessRegisterClick -> Unit
 
             is LoginAction.OnForgotPasswordClick -> sendPasswordResetEmail()
         }
@@ -142,6 +143,19 @@ class LoginViewModel(
                     when (val userResult = userRepository.getUser(userId)) {
                         is Result.Success -> {
                             val role = userResult.data.role
+                            if (role == UserRole.SUPPORTER) {
+                                startupSessionCache.clear(userId)
+                                authRepository.signOut()
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = UiText.StringResourceId(
+                                            Res.string.error_supporter_role_unavailable
+                                        )
+                                    )
+                                }
+                                return@launch
+                            }
                             val shouldCheckEmailVerification = shouldCheckEmailVerificationFor(role)
                             if (shouldCheckEmailVerification && !authUser.isEmailVerified) {
                                 startupSessionCache.cacheStartupSession(

@@ -66,7 +66,7 @@ import com.good4.order.domain.Order
 import com.good4.order.domain.OrderItem
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.enter_code
-import good4.composeapp.generated.resources.order_code_piece_suffix
+import good4.composeapp.generated.resources.item_quantity_suffix
 import good4.composeapp.generated.resources.verify_code
 import good4.composeapp.generated.resources.verify_code_business_loading
 import good4.composeapp.generated.resources.verify_code_button
@@ -352,7 +352,7 @@ private fun OrderConfirmCard(
     onCancel: () -> Unit
 ) {
     val currencySuffix = CurrencyConstants.TURKISH_LIRA_SYMBOL
-    val pieceSuffix = stringResource(Res.string.order_code_piece_suffix)
+    val pieceSuffix = stringResource(Res.string.item_quantity_suffix)
 
     Card(
         modifier = modifier.fillMaxWidth(),

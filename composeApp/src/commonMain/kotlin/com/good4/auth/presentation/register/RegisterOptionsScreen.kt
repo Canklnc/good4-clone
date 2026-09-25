@@ -39,7 +39,6 @@ import good4.composeapp.generated.resources.business_register
 import good4.composeapp.generated.resources.register_options_description
 import good4.composeapp.generated.resources.register_options_title
 import good4.composeapp.generated.resources.student_register
-import good4.composeapp.generated.resources.supporter_register
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -48,12 +47,10 @@ fun RegisterOptionsScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onNavigateToStudentRegister: () -> Unit,
-    onNavigateToBusinessRegister: () -> Unit,
-    onNavigateToSupporterRegister: () -> Unit
+    onNavigateToBusinessRegister: () -> Unit
 ) {
     val onStudentClick = remember { singleClick { onNavigateToStudentRegister() } }
     val onBusinessClick = remember { singleClick { onNavigateToBusinessRegister() } }
-    val onSupporterClick = remember { singleClick { onNavigateToSupporterRegister() } }
 
     Good4Scaffold(
         modifier = modifier,
@@ -122,25 +119,6 @@ fun RegisterOptionsScreen(
                         fontWeight = FontWeight.SemiBold
                     )
                 }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Button(
-                    onClick = onSupporterClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(StandardButtonHeight),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = DeepGreen.copy(alpha = 0.15f)
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(
-                        text = stringResource(Res.string.supporter_register),
-                        color = DeepGreen,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
             }
         }
     }
@@ -153,8 +131,7 @@ fun RegisterOptionsScreenPreview() {
         RegisterOptionsScreen(
             onBackClick = {},
             onNavigateToStudentRegister = {},
-            onNavigateToBusinessRegister = {},
-            onNavigateToSupporterRegister = {}
+            onNavigateToBusinessRegister = {}
         )
     }
 }

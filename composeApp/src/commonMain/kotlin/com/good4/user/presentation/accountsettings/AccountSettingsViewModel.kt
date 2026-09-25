@@ -106,8 +106,7 @@ class AccountSettingsViewModel(
                             classYear = user.classYear.orEmpty(),
                             educationLevel = user.educationLevel.orEmpty(),
                             email = user.email,
-                            showPhoneField = mode == AccountSettingsMode.SUPPORTER ||
-                                    user.phoneNumber?.isNotBlank() == true
+                            showPhoneField = user.phoneNumber?.isNotBlank() == true
                         )
                     }
                 }

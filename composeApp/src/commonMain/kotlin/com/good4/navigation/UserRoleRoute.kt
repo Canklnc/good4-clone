@@ -7,6 +7,7 @@ fun UserRole.toHomeRoute(): Route {
         UserRole.ADMIN -> Route.AdminHome
         UserRole.BUSINESS -> Route.BusinessHome
         UserRole.STUDENT -> Route.StudentHome
-        UserRole.SUPPORTER -> Route.SupporterHome
+        // Keep the legacy role readable, but send old supporter accounts back to login.
+        UserRole.SUPPORTER -> Route.Login
     }
 }

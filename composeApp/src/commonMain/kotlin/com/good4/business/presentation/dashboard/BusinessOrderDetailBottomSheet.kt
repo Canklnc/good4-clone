@@ -39,7 +39,7 @@ import com.good4.order.domain.OrderItem
 import com.good4.order.domain.OrderStatus
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.business_order_detail_title
-import good4.composeapp.generated.resources.order_code_piece_suffix
+import good4.composeapp.generated.resources.item_quantity_suffix
 import good4.composeapp.generated.resources.verify_code_order_cancel
 import good4.composeapp.generated.resources.verify_code_order_canceling
 import good4.composeapp.generated.resources.verify_code_order_items_label
@@ -102,7 +102,7 @@ private fun BusinessOrderDetailContent(
     onCancelOrder: () -> Unit
 ) {
     val currencySuffix = CurrencyConstants.TURKISH_LIRA_SYMBOL
-    val pieceSuffix = stringResource(Res.string.order_code_piece_suffix)
+    val pieceSuffix = stringResource(Res.string.item_quantity_suffix)
     val isPendingOrder = order.status == OrderStatus.PENDING
 
     Column(

@@ -9,7 +9,6 @@ sealed interface LoginAction {
     data object OnLoginClick : LoginAction
     data object OnStudentRegisterClick : LoginAction
     data object OnBusinessRegisterClick : LoginAction
-    data object OnSupporterRegisterClick : LoginAction
     data object OnForgotPasswordClick : LoginAction
     data object OnClearError : LoginAction
     data object OnClearInfo : LoginAction

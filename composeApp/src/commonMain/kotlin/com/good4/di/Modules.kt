@@ -9,7 +9,6 @@ import com.good4.auth.data.repository.AuthRepository
 import com.good4.auth.presentation.login.LoginViewModel
 import com.good4.auth.presentation.register.business.BusinessRegisterViewModel
 import com.good4.auth.presentation.register.student.StudentRegisterViewModel
-import com.good4.auth.presentation.register.supporter.SupporterRegisterViewModel
 import com.good4.auth.presentation.verify_email.EmailVerificationViewModel
 import com.good4.business.data.dto.FirestoreBusinessRepository
 import com.good4.business.presentation.dashboard.BusinessDashboardViewModel
@@ -39,11 +38,6 @@ import com.good4.schedule.presentation.ClassScheduleViewModel
 import com.good4.student.presentation.profile.StudentProfileViewModel
 import com.good4.student.presentation.reservations.StudentReservationsViewModel
 import com.good4.supportactivity.data.repository.SupportActivityRepository
-import com.good4.supporter.data.local.SupporterCartStorage
-import com.good4.supporter.presentation.cart.SupporterCartViewModel
-import com.good4.supporter.presentation.ordercode.SupporterOrderCodeViewModel
-import com.good4.supporter.presentation.products.SupporterProductListViewModel
-import com.good4.supporter.presentation.profile.SupporterProfileViewModel
 import com.good4.user.data.repository.UserRepository
 import com.good4.user.presentation.accountsettings.AccountSettingsViewModel
 import org.koin.core.module.dsl.viewModel
@@ -86,7 +80,6 @@ val commonModule = module {
             get<StartupSessionCache>()
         )
     }
-    viewModel { SupporterRegisterViewModel(get<AuthRepository>(), get<UserRepository>(), get<StartupSessionCache>()) }
     viewModel {
         EmailVerificationViewModel(
             get<AuthRepository>(),
@@ -157,18 +150,6 @@ val commonModule = module {
         )
     }
     viewModel { SessionRestoreViewModel(get<AuthRepository>(), get<UserRepository>(), get<StartupSessionCache>()) }
-    viewModel { SupporterProductListViewModel(get<FirestoreProductRepository>(), get<AuthRepository>(), get<UserRepository>()) }
-    viewModel {
-        SupporterCartViewModel(
-            get<AuthRepository>(),
-            get<UserRepository>(),
-            get<OrderRepository>(),
-            get<SupporterCartStorage>(),
-            get<AppConfigRepository>()
-        )
-    }
-    viewModel { SupporterOrderCodeViewModel(get<OrderRepository>(), get<FirestoreBusinessRepository>()) }
-    viewModel { SupporterProfileViewModel(get<AuthRepository>(), get<UserRepository>()) }
     viewModel { AkdenizDiningMenuViewModel(get<AkdenizDiningMenuRepository>()) }
     viewModel { AcademicCalendarViewModel(get<AcademicCalendarRepository>()) }
     viewModel { ClassScheduleViewModel(get<AuthRepository>(), get<UserRepository>()) }

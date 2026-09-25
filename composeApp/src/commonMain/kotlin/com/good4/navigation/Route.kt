@@ -63,19 +63,4 @@ sealed class Route {
 
     @Serializable
     data object AdminAccountSettings : Route()
-
-    @Serializable
-    data object SupporterRegister : Route()
-
-    @Serializable
-    data object SupporterHome : Route()
-
-    @Serializable
-    data object SupporterProfile : Route()
-
-    @Serializable
-    data object SupporterAccountSettings : Route()
-
-    @Serializable
-    data class SupporterOrderCode(val orderId: String) : Route()
 }

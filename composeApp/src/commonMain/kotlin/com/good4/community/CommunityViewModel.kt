@@ -2,6 +2,8 @@ package com.good4.community
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -15,6 +17,12 @@ data class CommunityState(
     val featuredEvents: List<CommunityFeaturedEvent> = emptyList(),
     val featuredEventsLoading: Boolean = false,
     val featuredEventsError: String? = null,
+    val selectedCategoryId: String = "",
+    val followedOnly: Boolean = false,
+    val followedCommunityIds: Set<String> = emptySet(),
+    val followingLoading: Boolean = false,
+    val followingLoaded: Boolean = false,
+    val followingError: String? = null,
     val selected: Community? = null,
     val entries: List<CommunityEntry> = emptyList(),
     val access: CommunityAccessDto = CommunityAccessDto(),
@@ -42,6 +50,9 @@ data class CommunityState(
     val reportError: String? = null
 ) {
     val canManage: Boolean get() = access.active && selected?.id in access.communityIds
+    val filteredFeaturedEvents: List<CommunityFeaturedEvent> get() = filterFeaturedCommunityEvents(
+        featuredEvents, selectedCategoryId, followedOnly, followedCommunityIds,
+    )
 }
 
 class CommunityViewModel(private val repository: CommunityRepository, private val admission: EventAdmissionGateway = NativeEventAdmissionGateway) : ViewModel() {
@@ -51,9 +62,68 @@ class CommunityViewModel(private val repository: CommunityRepository, private va
     private var registrationJob: Job? = null
     private var featuredEventsJob: Job? = null
     private var featuredEventsKey: String? = null
+    private var followingJob: Job? = null
+    private var followingUserId: String? = null
+    private var observedUserId = repository.currentUserId
     private var updatesVisible = false
 
-    init { load() }
+    init {
+        load()
+        viewModelScope.launch {
+            repository.authStateFlow.collect { user ->
+                if (user?.uid != observedUserId) {
+                    observedUserId = user?.uid
+                    loadingJob?.cancel()
+                    registrationJob?.cancel()
+                    featuredEventsJob?.cancel()
+                    followingJob?.cancel()
+                    featuredEventsKey = null
+                    followingUserId = null
+                    mutable.value = CommunityState(loading = user != null)
+                    if (user != null) load()
+                }
+            }
+        }
+    }
+
+    fun selectCategory(categoryId: String) {
+        if (categoryId.isNotEmpty() && categoryId != EventCategory.UNCATEGORIZED && EventCategory.fromId(categoryId) == null) return
+        mutable.update { it.copy(selectedCategoryId = categoryId) }
+    }
+
+    fun setFollowedOnly(selected: Boolean) {
+        mutable.update { it.copy(followedOnly = selected) }
+        if (selected) refreshFollowing()
+    }
+
+    fun refreshFollowing(force: Boolean = false) {
+        if (AppEnvironment.firebaseBackend != FirebaseBackend.V2) return
+        val uid = repository.currentUserId
+        if (uid == null) {
+            followingJob?.cancel()
+            followingUserId = null
+            mutable.update { it.copy(followedCommunityIds = emptySet(), followingLoaded = false, followingLoading = false, followingError = null) }
+            return
+        }
+        val snapshot = mutable.value
+        if (!force && followingUserId == uid && (snapshot.followingLoading || snapshot.followingLoaded)) return
+        followingUserId = uid
+        followingJob?.cancel()
+        mutable.update { it.copy(followingLoading = true, followingError = null) }
+        followingJob = viewModelScope.launch {
+            try {
+                val ids = repository.followingCommunityIds()
+                if (repository.currentUserId == uid) {
+                    mutable.update { it.copy(followedCommunityIds = ids, followingLoading = false, followingLoaded = true, followingError = null) }
+                }
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) {
+                if (repository.currentUserId == uid) {
+                    mutable.update { it.copy(followingLoading = false, followingLoaded = false, followingError = "Takip ettiğiniz topluluklar yüklenemedi.") }
+                }
+            }
+        }
+    }
 
     fun load() {
         loadingJob?.cancel()
@@ -81,6 +151,7 @@ class CommunityViewModel(private val repository: CommunityRepository, private va
 
     fun refreshFeaturedEvents(today: String, force: Boolean = false) {
         val snapshot = mutable.value
+        if (!snapshot.loading && snapshot.selected == null) refreshFollowing(force)
         if (snapshot.loading || snapshot.selected != null || snapshot.communities.isEmpty()) return
         val communityKey = snapshot.communities.joinToString("|") {
             "${it.id}:${it.data.name}:${it.data.logoUrl}"
@@ -283,13 +354,25 @@ class CommunityViewModel(private val repository: CommunityRepository, private va
         val community = mutable.value.selected ?: return
         if (mutable.value.followLoading) return
         val next = !mutable.value.isFollowing
+        val uid = repository.currentUserId
         viewModelScope.launch {
             mutable.update { it.copy(followLoading = true, error = null) }
             try {
                 repository.setFollowing(community.id, next)
-                mutable.update { it.copy(isFollowing = next, followLoading = false) }
+                if (repository.currentUserId == uid) {
+                    mutable.update { state -> state.copy(
+                        isFollowing = if (state.selected?.id == community.id) next else state.isFollowing,
+                        followLoading = false,
+                        followedCommunityIds = if (next) state.followedCommunityIds + community.id else state.followedCommunityIds - community.id,
+                    ) }
+                    refreshFollowing(force = true)
+                }
             } catch (e: CancellationException) { throw e }
-            catch (e: Exception) { mutable.update { it.copy(followLoading = false, error = e.message) } }
+            catch (_: Exception) {
+                if (repository.currentUserId == uid) {
+                    mutable.update { it.copy(followLoading = false, error = "Takip tercihi kaydedilemedi. Tekrar deneyin.") }
+                }
+            }
         }
     }
 

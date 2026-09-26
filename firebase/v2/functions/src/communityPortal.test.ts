@@ -59,14 +59,16 @@ test("community event writes only to the canonical V2 event collection", async (
   await db.doc("organizations/community-org").update({ legacyTestCommunityId: FieldValue.delete() });
   const created = await saveCommunityPortalEntryService(db, legacyTestDb, "manager-1", {
     kind: "event", title: "V2 Buluşması", description: "Tek kaynak", date: "2026-10-01",
-    time: "18:00", location: "Kampüs", capacity: 50,
+    time: "18:00", location: "Kampüs", capacity: 50, categoryId: "career-entrepreneurship",
   });
   assert.equal(created.status, "published");
   const event = await db.doc(`events/${created.entryId}`).get();
   assert.equal(event.get("organizationId"), "community-org");
+  assert.equal(event.get("categoryId"), "career-entrepreneurship");
   assert.ok(event.get("startsAt") instanceof Timestamp);
   assert.equal((await legacyTestDb.doc(`communities/demo-toplulugu/entries/${created.entryId}`).get()).exists, false);
   assert.equal((await getCommunityPortalDashboardService(db, legacyTestDb, "manager-1")).entries[0]?.id, created.entryId);
+  assert.equal((await getCommunityPortalDashboardService(db, legacyTestDb, "manager-1")).entries[0]?.categoryId, "career-entrepreneurship");
 });
 
 test("community manager can create a coupon and cancel it", async () => {

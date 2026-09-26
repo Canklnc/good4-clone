@@ -8,6 +8,7 @@ import {
 } from "firebase-admin/firestore";
 import { HttpsError } from "firebase-functions/v2/https";
 import { requireActiveActor, requireNonEmptyString } from "./shared.js";
+import { EVENT_CATEGORIES, type EventCategoryId } from "./eventCategories.js";
 
 export const EVENT_STATUSES = ["draft", "published", "cancelled", "completed"] as const;
 export type EventStatus = (typeof EVENT_STATUSES)[number];
@@ -74,6 +75,7 @@ export interface SaveEventInput {
   capacity?: unknown;
   status?: unknown;
   imageUrl?: unknown;
+  categoryId?: unknown;
 }
 
 export async function saveEventService(
@@ -92,6 +94,11 @@ export async function saveEventService(
   const location = requireNonEmptyString(input.location, "location", 200);
   const capacity = nonNegativeInteger(input.capacity ?? 0, "capacity");
   const status = eventStatus(input.status);
+  // Absence is accepted for older clients. Explicit empty/unknown values are invalid.
+  const categoryId = input.categoryId === undefined ? undefined : input.categoryId;
+  if (categoryId !== undefined && !EVENT_CATEGORIES.some((category) => category.id === categoryId)) {
+    throw new HttpsError("invalid-argument", "EVENT_CATEGORY_INVALID");
+  }
   const requestedImageUrl = typeof input.imageUrl === "string" ? input.imageUrl.trim() : null;
   if (requestedImageUrl && !requestedImageUrl.startsWith("https://")) {
     throw new HttpsError("invalid-argument", "IMAGE_URL_INVALID");
@@ -115,6 +122,7 @@ export async function saveEventService(
       throw new HttpsError("failed-precondition", "EVENT_NOT_EDITABLE");
     }
     const imageUrl = requestedImageUrl ?? String(current?.get("imageUrl") ?? "");
+    const savedCategoryId = categoryId ?? current?.get("categoryId");
     const auditRef = database.collection("auditLogs").doc();
     transaction.set(eventRef, {
       organizationId,
@@ -125,6 +133,7 @@ export async function saveEventService(
       timezone: "Europe/Istanbul",
       location,
       imageUrl,
+      ...(savedCategoryId !== undefined ? { categoryId: savedCategoryId as EventCategoryId } : {}),
       capacity,
       registrationCount: Number(current?.get("registrationCount") ?? 0),
       attendanceCount: Number(current?.get("attendanceCount") ?? 0),

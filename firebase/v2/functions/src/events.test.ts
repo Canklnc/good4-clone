@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { Timestamp } from "firebase-admin/firestore";
 import { db, legacyTestDb } from "./firebase.js";
-import { recordEventAttendanceService, setEventRegistrationService } from "./events.js";
+import { recordEventAttendanceService, saveEventService, setEventRegistrationService } from "./events.js";
+import { EVENT_CATEGORIES } from "./eventCategories.js";
 
 beforeEach(async () => {
   for (const collection of ["users", "organizations", "events", "auditLogs"]) {
@@ -24,6 +25,33 @@ beforeEach(async () => {
 
 after(async () => {
   await Promise.all([db.terminate(), legacyTestDb.terminate()]);
+});
+
+const eventInput = {
+  title: "Kategori testi", description: "Öğrenci etkinliği", date: "2026-10-01",
+  time: "18:00", location: "Kampüs", capacity: 10,
+};
+
+test("event categories are validated and preserved for older clients", async () => {
+  for (const category of EVENT_CATEGORIES) {
+    const created = await saveEventService(db, "manager-1", "community-org", { ...eventInput, categoryId: category.id });
+    await saveEventService(db, "manager-1", "community-org", { ...eventInput, eventId: created.eventId });
+    assert.equal((await db.doc(`events/${created.eventId}`).get()).get("categoryId"), category.id);
+  }
+  const legacy = await saveEventService(db, "manager-1", "community-org", eventInput);
+  assert.equal((await db.doc(`events/${legacy.eventId}`).get()).get("categoryId"), undefined);
+  await saveEventService(db, "manager-1", "community-org", { ...eventInput, eventId: legacy.eventId, categoryId: "technology" });
+  assert.equal((await db.doc(`events/${legacy.eventId}`).get()).get("categoryId"), "technology");
+  for (const categoryId of ["", "unknown", null, 1, ["technology"]]) {
+    await assert.rejects(saveEventService(db, "manager-1", "community-org", { ...eventInput, categoryId }), /EVENT_CATEGORY_INVALID/);
+  }
+});
+
+test("category updates cannot bypass manager and organization ownership checks", async () => {
+  await assert.rejects(saveEventService(db, "student-1", "community-org", { ...eventInput, categoryId: "technology" }));
+  await db.doc("events/event-1").update({ organizationId: "other-community", categoryId: "culture-arts" });
+  await assert.rejects(saveEventService(db, "manager-1", "community-org", { ...eventInput, eventId: "event-1", categoryId: "technology" }), /EVENT_NOT_FOUND/);
+  assert.equal((await db.doc("events/event-1").get()).get("categoryId"), "culture-arts");
 });
 
 test("capacity is enforced atomically for concurrent registrations", async () => {

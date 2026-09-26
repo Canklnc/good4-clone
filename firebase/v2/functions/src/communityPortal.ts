@@ -19,6 +19,7 @@ export interface CommunityPortalEntry {
   date: string;
   time: string;
   location: string;
+  categoryId: string;
   businessId: string;
   businessName: string;
   discountType: "percentage" | "fixed" | "freeItem";
@@ -126,6 +127,7 @@ export async function getCommunityPortalDashboardService(
       id: entry.id, kind: "event", title: String(entry.get("title") ?? ""),
       description: String(entry.get("description") ?? ""), date: dateTime.date, time: dateTime.time,
       location: String(entry.get("location") ?? ""), businessId: "", businessName: "",
+      categoryId: String(entry.get("categoryId") ?? ""),
       discountType: "percentage", discountValue: 0, capacity: integer(entry.get("capacity")), totalLimit: 0,
       status: entry.get("status") === "cancelled" ? "cancelled" : "published",
       registrationCount: integer(entry.get("registrationCount"), participants.length),
@@ -142,6 +144,7 @@ export async function getCommunityPortalDashboardService(
       id: entry.id, kind: "coupon", title: String(entry.get("title") ?? ""),
       description: String(entry.get("description") ?? ""), date: String(entry.get("date") ?? ""), time: "",
       location: String(entry.get("location") ?? ""), businessId, businessName: businessNames.get(businessId) ?? "",
+      categoryId: "",
       discountType, discountValue: integer(entry.get("discountValue")), capacity: 0,
       totalLimit: integer(entry.get("totalLimit")), status, registrationCount: 0, attendanceCount: 0, participants: [],
     };
@@ -174,6 +177,7 @@ export async function saveCommunityPortalEntryService(
       eventId: input.entryId, title: input.title, description: input.description,
       date: input.date, time: input.time, location: input.location, capacity: input.capacity,
       status: "published", imageUrl: input.imageUrl,
+      categoryId: input.categoryId,
     });
     return { entryId: result.eventId, status: "published" };
   }

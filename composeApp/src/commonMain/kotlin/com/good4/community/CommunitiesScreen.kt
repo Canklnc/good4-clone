@@ -48,6 +48,7 @@ import com.good4.core.presentation.components.Good4NestedScaffold
 import com.good4.core.presentation.components.Good4TopBar
 import com.good4.core.presentation.components.ProductImagePicker
 import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Instant
 import kotlinx.datetime.Clock
@@ -80,6 +81,8 @@ fun CommunitiesScreen(
     var pendingBlock by remember { mutableStateOf<Community?>(null) }
     val community = state.selected
     val managerView = state.canManage && !previewAsStudent
+    val isV2 = AppEnvironment.firebaseBackend == FirebaseBackend.V2
+    val featuredEvents = state.filteredFeaturedEvents
     var today by remember { mutableStateOf(currentCampusDate()) }
     LaunchedEffect(Unit) {
         while (true) {
@@ -148,16 +151,42 @@ fun CommunitiesScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (community == null) {
+                if (isV2) item(key = "community-event-filters") {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        EventCategorySelector(state.selectedCategoryId, true, !state.loading, viewModel::selectCategory)
+                        FilterChip(
+                            selected = state.followedOnly,
+                            onClick = { viewModel.setFollowedOnly(!state.followedOnly) },
+                            label = { Text("Takip ettiğim topluluklar") },
+                            leadingIcon = { Icon(Icons.Outlined.Groups, null, modifier = Modifier.size(18.dp)) },
+                        )
+                    }
+                }
                 item(key = "featured-community-events") {
-                    if (state.featuredEvents.isNotEmpty()) {
+                    if (state.followedOnly && (state.followingLoading || state.followingError != null || !state.followingLoaded)) {
+                        CommunityEventsBannerPlaceholder(
+                            loading = state.followingLoading,
+                            hasError = state.followingError != null,
+                            message = state.followingError ?: "Takip ettiğiniz topluluklar yükleniyor.",
+                            onRetry = { viewModel.refreshFollowing(force = true) },
+                        )
+                    } else if (featuredEvents.isNotEmpty()) {
                         FeaturedCommunityEventsCarousel(
-                            events = state.featuredEvents,
+                            events = featuredEvents,
                             onEventClick = { featured ->
                                 pendingFeaturedEvent = featured
                                 viewModel.select(featured.community)
                             }
                         )
-                    } else if (AppEnvironment.isDebug) {
+                    } else if ((state.selectedCategoryId.isNotEmpty() || state.followedOnly)
+                        && !state.featuredEventsLoading && state.featuredEventsError == null && !state.loading) {
+                        EmptyCommunityContent(
+                            title = "Filtrelere uygun etkinlik bulunamadı",
+                            subtitle = if (state.followedOnly && state.followedCommunityIds.isEmpty())
+                                "Takip ettiğin bir topluluk yok. Toplulukları keşfedip takip edebilirsin."
+                            else "Farklı bir kategori seçebilir veya filtreleri kaldırabilirsin.",
+                        )
+                    } else if (AppEnvironment.isDebug && state.selectedCategoryId.isEmpty() && !state.followedOnly) {
                         DemoCommunityEventsCarousel()
                     } else {
                         CommunityEventsBannerPlaceholder(
@@ -294,21 +323,25 @@ fun CommunitiesScreen(
                     )
                 }
                 if (!managerView && tab == 0) item {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(!registeredOnly, { registeredOnly = false }, label = { Text("Tüm etkinlikler") })
-                        FilterChip(registeredOnly, { registeredOnly = true }, label = { Text("Etkinlik kayıtlarım") })
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        if (isV2) EventCategorySelector(state.selectedCategoryId, true, !state.loading, viewModel::selectCategory)
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            FilterChip(!registeredOnly, { registeredOnly = false }, label = { Text("Tüm etkinlikler") })
+                            FilterChip(registeredOnly, { registeredOnly = true }, label = { Text("Etkinlik kayıtlarım") })
+                        }
                     }
                 }
                 val entries = state.entries.filter { entry ->
                     val kindMatches = entry.data.kind == (if (tab == 0) "event" else "coupon")
                     val visibilityMatches = if (managerView) true else entry.data.status == "published"
                     val registrationMatches = managerView || tab != 0 || !registeredOnly || entry.id in state.registeredEventIds
+                    val categoryMatches = managerView || tab != 0 || matchesEventCategory(entry.data.categoryId, state.selectedCategoryId)
                     val managerFilterMatches = !managerView || tab != 0 || when (eventFilter) {
                         0 -> entry.data.status == "published" && entry.data.date >= today
                         1 -> entry.data.status == "draft"
                         else -> entry.data.status == "cancelled" || (entry.data.status == "published" && entry.data.date < today)
                     }
-                    kindMatches && visibilityMatches && registrationMatches && managerFilterMatches
+                    kindMatches && visibilityMatches && registrationMatches && categoryMatches && managerFilterMatches
                 }.let { filtered ->
                     if (managerView && tab == 0 && eventFilter == 2) filtered.sortedByDescending { it.data.date + it.data.time }
                     else filtered
@@ -357,8 +390,8 @@ fun CommunitiesScreen(
                             else -> "Tamamlanan ve yayından kaldırılan etkinlikler burada tutulur."
                         }
                         EmptyCommunityContent(
-                            title = if (managerView && tab == 0) managerEventTitle else if (tab == 0) "Henüz etkinlik yok" else "Henüz kupon yok",
-                            subtitle = if (managerView && tab == 0) managerEventSubtitle else if (tab == 0) "Yeni etkinlikler burada görünecek." else "Topluluğun fırsatları burada yer alacak.",
+                            title = if (managerView && tab == 0) managerEventTitle else if (tab == 0 && (state.selectedCategoryId.isNotEmpty() || registeredOnly)) "Filtrelere uygun etkinlik bulunamadı" else if (tab == 0) "Henüz etkinlik yok" else "Henüz kupon yok",
+                            subtitle = if (managerView && tab == 0) managerEventSubtitle else if (tab == 0 && (state.selectedCategoryId.isNotEmpty() || registeredOnly)) "Kategori veya kayıt filtresini değiştirerek tekrar deneyebilirsin." else if (tab == 0) "Yeni etkinlikler burada görünecek." else "Topluluğun fırsatları burada yer alacak.",
                             coupon = tab == 1
                         )
                     }
@@ -615,7 +648,8 @@ private fun DemoCommunityEventCard(slide: DemoCommunitySlide, number: Int) {
 private fun CommunityEventsBannerPlaceholder(
     loading: Boolean,
     hasError: Boolean,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    message: String? = null,
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth().aspectRatio(12f / 5f),
@@ -642,7 +676,7 @@ private fun CommunityEventsBannerPlaceholder(
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = when {
+                    text = message ?: when {
                         hasError -> "Etkinlikler yüklenemedi."
                         loading -> "Yaklaşan etkinlikler yükleniyor."
                         else -> "Yaklaşan etkinlik afişleri burada gösterilir."
@@ -1391,6 +1425,9 @@ private fun CommunityEntryDetailDialog(
                     }
                 }
 
+                if (!isCoupon && AppEnvironment.firebaseBackend == FirebaseBackend.V2) {
+                    CommunityDetailInfoRow(icon = Icons.Outlined.LocalOffer, text = EventCategory.labelFor(entry.data.categoryId))
+                }
                 CommunityDetailInfoRow(
                     icon = Icons.Outlined.CalendarMonth,
                     text = dateTime
@@ -1662,6 +1699,7 @@ private fun EmptyCommunityContent(title: String, subtitle: String, coupon: Boole
 }
 
 internal fun validateCommunityEntry(entry: CommunityEntryDto): String? {
+    if (entry.kind == "event" && AppEnvironment.firebaseBackend == FirebaseBackend.V2 && EventCategory.fromId(entry.categoryId) == null) return "Etkinlik kategorisini seçin."
     if (entry.title.isBlank() || entry.description.isBlank() || entry.location.isBlank()) return "Başlık, açıklama ve ${if (entry.kind == "coupon") "işletme" else "konum"} alanlarını doldurun."
     if (runCatching { LocalDate.parse(entry.date) }.isFailure) return "Tarihi yıl-ay-gün biçiminde girin. Örnek: 2026-10-15"
     if (entry.kind == "event" && !Regex("([01][0-9]|2[0-3]):[0-5][0-9]").matches(entry.time)) return "Saati 14:30 biçiminde girin."
@@ -1692,6 +1730,9 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
             if (!preview) {
                 ProductImagePicker(currentRemoteImageUrl = draft.imageUrl, pendingImageBytes = image, isUploading = saving, onPendingImageChange = { image = it }, onError = { localError = it })
                 EditorField("Başlık", draft.title, saving) { draft = draft.copy(title = it) }
+                if (!coupon && AppEnvironment.firebaseBackend == FirebaseBackend.V2) {
+                    EventCategorySelector(draft.categoryId, false, !saving) { draft = draft.copy(categoryId = it) }
+                }
                 OutlinedButton(onClick = { datePicker = true }, enabled = !saving, modifier = Modifier.fillMaxWidth()) { Text((if (coupon) "Son kullanım tarihi: " else "Tarih: ") + draft.date.ifBlank { "Seç" }) }
                 if (!coupon) OutlinedButton(onClick = { timePicker = true }, enabled = !saving, modifier = Modifier.fillMaxWidth()) { Text("Saat: " + draft.time.ifBlank { "Seç" }) }
                 if (coupon) {
@@ -1727,6 +1768,7 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
                 EditorField(if (coupon) "Avantaj ve kullanım şartları" else "Açıklama", draft.description, saving, singleLine = false) { draft = draft.copy(description = it) }
             } else {
                 Text(draft.title, style = MaterialTheme.typography.titleLarge)
+                if (!coupon && AppEnvironment.firebaseBackend == FirebaseBackend.V2) Text(EventCategory.labelFor(draft.categoryId), color = PrimaryGreen)
                 Text("${draft.date} ${draft.time}"); Text(draft.location); Text(draft.description)
                 if (!coupon) Text(if (draft.capacity > 0) "Kontenjan: ${draft.capacity} kişi" else "Kontenjan: Sınırsız")
                 if (coupon) {
@@ -1747,7 +1789,11 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
             if (!coupon && !preview) {
                 OutlinedButton(
                     onClick = {
-                        localError = if (draft.title.isBlank()) "Taslak için en az etkinlik başlığını girin." else null
+                        localError = when {
+                            draft.title.isBlank() -> "Taslak için en az etkinlik başlığını girin."
+                            AppEnvironment.firebaseBackend == FirebaseBackend.V2 && EventCategory.fromId(draft.categoryId) == null -> "Etkinlik kategorisini seçin."
+                            else -> null
+                        }
                         if (localError == null) {
                             onSave(
                                 draft.copy(
@@ -1797,6 +1843,32 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
     if (timePicker) AlertDialog(onDismissRequest = { timePicker = false }, title = { Text("Saat seç") }, text = { TimeInput(timeState) }, confirmButton = {
         TextButton(onClick = { draft = draft.copy(time = "${timeState.hour.toString().padStart(2, '0')}:${timeState.minute.toString().padStart(2, '0')}"); timePicker = false }) { Text("Seç") }
     }, dismissButton = { TextButton(onClick = { timePicker = false }) { Text("Vazgeç") } })
+}
+
+@Composable
+internal fun EventCategorySelector(selectedId: String, filter: Boolean, enabled: Boolean, onSelect: (String) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    val label = when {
+        selectedId.isEmpty() -> if (filter) "Tümü" else "Seç"
+        else -> EventCategory.labelFor(selectedId)
+    }
+    Box(Modifier.fillMaxWidth()) {
+        OutlinedButton(
+            onClick = { expanded = true }, enabled = enabled,
+            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp),
+        ) {
+            Icon(Icons.Outlined.LocalOffer, null, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text("Kategori: $label")
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            if (filter) DropdownMenuItem(text = { Text("Tümü") }, onClick = { onSelect(""); expanded = false })
+            EventCategory.entries.forEach { category ->
+                DropdownMenuItem(text = { Text(category.label) }, onClick = { onSelect(category.id); expanded = false })
+            }
+            if (filter) DropdownMenuItem(text = { Text("Kategori belirtilmemiş") }, onClick = { onSelect(EventCategory.UNCATEGORIZED); expanded = false })
+        }
+    }
 }
 
 @Composable

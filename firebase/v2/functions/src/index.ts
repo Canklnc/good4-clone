@@ -31,6 +31,7 @@ import {
   saveCommunityPortalEntryService,
 } from "./communityPortal.js";
 import { recordEventAttendanceService, setEventRegistrationService } from "./events.js";
+import { getFollowingCommunityIdsService, setCommunityFollowingService } from "./communityFollowing.js";
 import { submitFeedbackService } from "./feedback.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
 import { eraseAccountData } from "./accountDeletion.js";
@@ -45,6 +46,18 @@ const callableOptions = {
   timeoutSeconds: 30,
   maxInstances: 20,
 };
+
+export const getFollowingCommunityIds = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return getFollowingCommunityIdsService(db, uid);
+});
+
+export const setCommunityFollowing = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return setCommunityFollowingService(db, uid, {
+    communityId: request.data?.communityId, following: request.data?.following,
+  });
+});
 
 export const createOrganization = onCall(callableOptions, async (request) => {
   const uid = requireAuthenticatedUid(request.auth?.uid);

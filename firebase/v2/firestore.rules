@@ -109,13 +109,8 @@ service cloud.firestore {
             || isActiveOrganizationMember(organizationId)
             || isGood4Admin());
         allow list: if isActiveOrganizationMember(organizationId) || isGood4Admin();
-        allow create: if currentUserIsActive()
-          && request.auth.uid == userId
-          && request.resource.data.keys().hasOnly(['userId', 'followedAt'])
-          && request.resource.data.userId == userId
-          && request.resource.data.followedAt == request.time;
-        allow update: if false;
-        allow delete: if currentUserIsActive() && request.auth.uid == userId;
+        // setCommunityFollowing owns the follower document and count in one transaction.
+        allow create, update, delete: if false;
       }
     }
 

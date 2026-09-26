@@ -47,9 +47,12 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
 
 - [x] **Bildirim ringindeki sarı nokta.** Öğrenci bildirimi görüldükten sonra ringin üstündeki sarı nokta kaybolmalı. Görüldü (okundu) durumu kaydedilmeli.
   - Düzeltildi (26.09, simülatörde doğrulandı): Zildeki nokta koşulsuz çiziliyordu. Bildirimler artık sabit kimlikli bir listede (`notification/NotificationInbox.kt`). Görülen kimlikler cihazda saklanıyor (iOS `NSUserDefaults`, Android `SharedPreferences`). Bildirimler ekranı açılınca hepsi görüldü sayılıyor, nokta kayboluyor ve uygulama yeniden açılınca geri gelmiyor. Yeni bildirim eklerken yeni bir `id` vermek yeterli.
-- [ ] **Topluluk etkinliklerine filtre.**
-  - Kategori filtresi eklenecek.
-  - "Takip ettiğim topluluklar" filtresi eklenecek. Seçilince yalnızca takip edilen toplulukların etkinlikleri listelenecek.
+- [ ] **Topluluk etkinliklerine filtre.** (26.09: Kullanıcı `events.categoryId`, sekiz sabit kategori, tek callable ile takip okuması ve V2 takip et/bırak işlemini onayladı. Kaynakta uygulandı; deploy yapılmadı.)
+  - 26.09 Codex tamamladı (commit/deploy edilmedi): 8 kategori (`events.categoryId`), "Takip ettiğim topluluklar" filtresi, tek sorguyla takip listesi, V2 takip et/bırak. Testler: kurallar 17/17, backend 65/65, filtreler 3/3; simülatörde doğrulandı. Canlıya geçiş için functions, indeks, kurallar ve mobil/web yayını gerekiyor. Rapor: `docs/handoff-community-filters-2026-09-26.md`.
+  - Kategori ve "Takip ettiğim topluluklar" filtreleri öğrenci Topluluklar ekranında birlikte, 10 etkinlik sınırından önce uygulanır. Topluluk detayında kategori ve mevcut kayıt filtresi birlikte çalışır. Kategorisiz eski etkinlikler korunur.
+  - Web/mobil etkinlik formlarında kategori seçimi; backend izin listesi ve eski istemcinin kategori göndermediği düzenlemelerde mevcut değeri koruma eklendi.
+  - `getFollowingCommunityIds` tek collection group sorgusuyla yalnızca oturum sahibinin kanonik takip kimliklerini döndürür. `setCommunityFollowing`, aktif kullanıcı/topluluk kontrolüyle takip belgesi ve sayacını aynı transaction içinde günceller. İstemcinin doğrudan takip yazmaları kapatıldı; toplu takip okumaları için yeni istemci kuralı açılmadı.
+  - Test ve devir: `docs/handoff-community-filters-2026-09-26.md`. Canlıya geçiş için functions, takip indeksi, kurallar ve istemci/panel yayını ayrıca gerekiyor.
 - [ ] **Ana sayfa kutucuklarını düzenleme ("Sayfanı Düzenle").** Kullanıcı ana sayfadaki menü kutucuklarını istediği gibi sıralayıp gösterip gizleyebilmeli.
   - Referans tasarım: [home-edit-reference-2026-09-25.webp](feedback-assets/home-edit-reference-2026-09-25.webp)
   - Referanstaki yapı: kırmızı başlık ("Sayfanı Düzenle", geri oku, sağda ayar ikonu). Her satırda renkli ikon kutusu, başlık ve sağda sürükleme tutamağı (≡) var. Bir ayırıcı çizgi listeyi ikiye bölüyor: üstte ana sayfada görünenler (Kafeterya, Kampüs Navigasyonu, Takvim, ODTUClass, Ders Bilgileri, ODTÜ Mail), altta gizli olanlar (METUFix, Ring Saatleri, Mediko, Kampüs Haberleri, Spor Rezervasyonu…).

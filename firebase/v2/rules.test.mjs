@@ -8,6 +8,8 @@ import {
 } from '@firebase/rules-unit-testing';
 import {
   collection,
+  collectionGroup,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -45,6 +47,32 @@ async function seed(path, value) {
     await setDoc(doc(context.firestore(), path), value);
   });
 }
+
+test('follower documents are self-readable but writable only through the callable', async () => {
+  await seed('users/student-1', { role: 'student', status: 'active' });
+  await seed('organizations/community-1', { type: 'community', status: 'active', followerCount: 1 });
+  await seed('organizations/community-1/followers/student-1', { userId: 'student-1', followedAt: 1 });
+  const db = testEnv.authenticatedContext('student-1').firestore();
+  const own = doc(db, 'organizations/community-1/followers/student-1');
+  await assertSucceeds(getDoc(own));
+  await assertFails(updateDoc(own, { followedAt: serverTimestamp() }));
+  await assertFails(deleteDoc(own));
+  await assertFails(setDoc(doc(db, 'organizations/community-2/followers/student-1'), { userId: 'student-1', followedAt: serverTimestamp() }));
+  await assertFails(updateDoc(doc(db, 'organizations/community-1'), { followerCount: 99 }));
+  await assertFails(getDocs(query(collectionGroup(db, 'followers'), where('userId', '==', 'student-1'))));
+  const other = testEnv.authenticatedContext('student-2').firestore();
+  await assertFails(getDoc(doc(other, 'organizations/community-1/followers/student-1')));
+  await assertFails(getDoc(doc(testEnv.unauthenticatedContext().firestore(), 'organizations/community-1/followers/student-1')));
+});
+
+test('event category cannot be written directly even by its manager', async () => {
+  await seed('users/manager-1', { role: 'communityManager', status: 'active' });
+  await seed('organizations/community-1/members/manager-1', { userId: 'manager-1', role: 'manager', status: 'active' });
+  await seed('events/category-event', { organizationId: 'community-1', status: 'published', categoryId: 'technology' });
+  const db = testEnv.authenticatedContext('manager-1').firestore();
+  await assertSucceeds(getDoc(doc(db, 'events/category-event')));
+  await assertFails(updateDoc(doc(db, 'events/category-event'), { categoryId: 'culture-arts' }));
+});
 
 test('unauthenticated users cannot read active organizations', async () => {
   await seed('organizations/community-1', {

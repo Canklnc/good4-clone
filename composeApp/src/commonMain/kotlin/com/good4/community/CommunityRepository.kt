@@ -15,6 +15,8 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonPrimitive
 import kotlin.random.Random
 import com.good4.user.data.dto.UserDto
 import kotlinx.coroutines.CancellationException
@@ -51,7 +53,8 @@ data class V2EventDto(
     val organizationId: String = "", val title: String = "", val description: String = "",
     val startsAt: Long = 0, val endsAt: Long = 0, val timezone: String = "Europe/Istanbul",
     val location: String = "", val imageUrl: String = "", val capacity: Int = 0,
-    val registrationCount: Int = 0, val attendanceCount: Int = 0, val status: String = "published"
+    val registrationCount: Int = 0, val attendanceCount: Int = 0, val status: String = "published",
+    val categoryId: String = ""
 )
 
 @Serializable
@@ -76,7 +79,8 @@ data class CommunityEntryDto(
     val capacity: Int = 0,
     val totalLimit: Int = 0,
     val perUserLimit: Int = 1,
-    val status: String = "published"
+    val status: String = "published",
+    val categoryId: String = ""
 )
 
 @Serializable
@@ -124,6 +128,8 @@ class CommunityRepository(
     private val auth: AuthRepository,
     private val businesses: FirestoreBusinessRepository? = null
 ) {
+    val currentUserId: String? get() = auth.currentUser?.uid
+    val authStateFlow get() = auth.authStateFlow
     private val isV2 get() = AppEnvironment.firebaseBackend == FirebaseBackend.V2
     private val feedback by lazy { com.good4.feedback.FeedbackRepository(store, auth) }
 
@@ -261,7 +267,6 @@ class CommunityRepository(
                 eventDate >= todayDate
             }
             .sortedWith(compareBy({ it.entry.data.date }, { it.entry.data.time }))
-            .take(10)
             .toList()
     }
 
@@ -280,7 +285,8 @@ class CommunityRepository(
             location = event.location,
             imageUrl = event.imageUrl,
             capacity = event.capacity,
-            status = event.status
+            status = event.status,
+            categoryId = event.categoryId
         ))
     }
 
@@ -297,6 +303,7 @@ class CommunityRepository(
                 put("kind", "event"); entryId?.let { put("entryId", it) }; put("title", entry.title)
                 put("description", entry.description); put("date", entry.date); put("time", entry.time)
                 put("location", entry.location); put("capacity", entry.capacity)
+                put("categoryId", entry.categoryId)
                 if (entry.imageUrl.isNotBlank()) put("imageUrl", entry.imageUrl)
             })
             return
@@ -332,9 +339,22 @@ class CommunityRepository(
         return store.getDocument("$root/$communityId/followers", userId, CommunityFollowDto::class) is Result.Success
     }
 
+    suspend fun followingCommunityIds(): Set<String> {
+        if (auth.currentUser == null) return emptySet()
+        check(isV2) { "Toplu takip filtresi yalnızca V2'de kullanılabilir." }
+        val response = callV2Function("getFollowingCommunityIds", buildJsonObject {})
+        val ids = response["communityIds"]?.jsonArray ?: error("Takip ettiğiniz topluluklar yüklenemedi.")
+        return ids.map { it.jsonPrimitive.content }.toSet()
+    }
+
     suspend fun setFollowing(communityId: String, following: Boolean) {
-        check(!isV2) { "V2 takip işlemi bu aşamada salt okunurdur." }
         val userId = auth.currentUser?.uid ?: error("Takip etmek için giriş yapmalısınız.")
+        if (isV2) {
+            callV2Function("setCommunityFollowing", buildJsonObject {
+                put("communityId", communityId); put("following", following)
+            })
+            return
+        }
         val result = if (following) {
             store.updateDocument(
                 "communities/$communityId/followers",

@@ -8,6 +8,9 @@ import {
 } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { auth, functions, getFirestoreDb } from "./firebase";
+import { EVENT_CATEGORIES } from "../../functions/src/eventCategories";
+
+const eventCategoryLabel = (id?: string) => EVENT_CATEGORIES.find((category) => category.id === id)?.label ?? "Kategori belirtilmemiş";
 import {
   BusinessAppShell,
   Button,
@@ -51,6 +54,7 @@ type CommunityEntry = {
   date: string;
   time: string;
   location: string;
+  categoryId?: string;
   businessId: string;
   businessName: string;
   discountType: "percentage" | "fixed" | "freeItem";
@@ -245,6 +249,7 @@ const saveCommunityPortalEntry = httpsCallable<{
   time?: string;
   location?: string;
   capacity?: number;
+  categoryId?: string;
   businessId?: string;
   discountType?: "percentage" | "fixed" | "freeItem";
   discountValue?: number;
@@ -336,6 +341,9 @@ function functionErrorMessage(error: unknown): string {
   }
   if (message.includes("COMMUNITY_MANAGER_REQUIRED")) {
     return "Bu işlem yalnızca topluluk yöneticisi tarafından yapılabilir.";
+  }
+  if (message.includes("EVENT_CATEGORY_INVALID")) {
+    return "Geçerli bir etkinlik kategorisi seçin.";
   }
   if (message.includes("DISCOUNT_VALUE_INVALID")) {
     return "İndirim değerini kontrol edin. Yüzde indirimi 1–100 arasında olmalıdır.";
@@ -819,6 +827,7 @@ function CommunityPanel({ user, context }: {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [capacity, setCapacity] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [businessId, setBusinessId] = useState("");
   const [discountType, setDiscountType] = useState<"percentage" | "fixed" | "freeItem">("percentage");
   const [discountValue, setDiscountValue] = useState("");
@@ -858,6 +867,7 @@ function CommunityPanel({ user, context }: {
     setTime("");
     setLocation("");
     setCapacity("");
+    setCategoryId("");
     setDiscountValue("");
     setTotalLimit("");
   }
@@ -872,6 +882,7 @@ function CommunityPanel({ user, context }: {
     setTime(entry.time);
     setLocation(entry.location);
     setCapacity(entry.capacity ? String(entry.capacity) : "");
+    setCategoryId(entry.categoryId ?? "");
     setBusinessId(entry.businessId || data?.businesses[0]?.id || "");
     setDiscountType(entry.discountType);
     setDiscountValue(entry.discountValue ? String(entry.discountValue) : "");
@@ -889,7 +900,7 @@ function CommunityPanel({ user, context }: {
         ...(editingId ? { entryId: editingId } : {}),
         kind, title: title.trim(), description: description.trim(), date,
         ...(kind === "event" ? {
-          time, location: location.trim(), capacity: Number.parseInt(capacity || "0", 10),
+          time, location: location.trim(), capacity: Number.parseInt(capacity || "0", 10), categoryId,
         } : {
           businessId, discountType,
           discountValue: discountType === "freeItem" ? 0 : Number.parseInt(discountValue || "0", 10),
@@ -1164,6 +1175,11 @@ function CommunityPanel({ user, context }: {
                     </div>
                     <label className="field-label" htmlFor="event-title">Etkinlik adı</label>
                     <input id="event-title" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Örn. Sürdürülebilir Kampüs Buluşması" required />
+                    <label className="field-label field-label-spaced" htmlFor="event-category">Kategori</label>
+                    <select id="event-category" value={categoryId} onChange={(event) => setCategoryId(event.target.value)} required>
+                      <option value="" disabled>Kategori seç</option>
+                      {EVENT_CATEGORIES.map((category) => <option key={category.id} value={category.id}>{category.label}</option>)}
+                    </select>
                     <label className="field-label field-label-spaced" htmlFor="event-description">Açıklama</label>
                     <textarea id="event-description" value={description} onChange={(event) => setDescription(event.target.value)} rows={5} placeholder="Etkinliğin içeriğini ve katılımcıları nelerin beklediğini anlat." required />
                   </Card>
@@ -1191,7 +1207,7 @@ function CommunityPanel({ user, context }: {
 
                   <div className="event-form-actions">
                     <Button type="button" variant="secondary" onClick={closeEventForm}>İptal</Button>
-                    <Button type="submit" variant="primary" disabled={saving || !title.trim() || !description.trim() || !date || !time || !location.trim()}>
+                    <Button type="submit" variant="primary" disabled={saving || !title.trim() || !description.trim() || !date || !time || !location.trim() || !EVENT_CATEGORIES.some((category) => category.id === categoryId)}>
                       {saving ? "Kaydediliyor…" : editingId ? "Değişiklikleri Kaydet" : "Etkinliği Oluştur"}
                     </Button>
                   </div>
@@ -1203,6 +1219,7 @@ function CommunityPanel({ user, context }: {
                     <h2>{title.trim() || "Etkinlik adı"}</h2>
                     <StatusBadge status={editingEvent?.status ?? "published"} />
                     <dl>
+                      <div><dt>Kategori</dt><dd>{categoryId ? eventCategoryLabel(categoryId) : "Henüz seçilmedi"}</dd></div>
                       <div><dt>Tarih ve saat</dt><dd>{date ? formatCommunityEventDate(date, time) : "Henüz seçilmedi"}</dd></div>
                       <div><dt>Konum</dt><dd>{location.trim() || "Henüz belirtilmedi"}</dd></div>
                       <div><dt>Kontenjan</dt><dd>{capacity && Number(capacity) > 0 ? `${capacity} kişi` : "Sınırsız"}</dd></div>
@@ -1244,6 +1261,7 @@ function CommunityPanel({ user, context }: {
                   <div><p className="section-label">Etkinlik açıklaması</p><h2>Genel bilgiler</h2></div>
                   <p>{selectedEvent.description}</p>
                   <dl>
+                    <div><dt>Kategori</dt><dd>{eventCategoryLabel(selectedEvent.categoryId)}</dd></div>
                     <div><dt>Tarih</dt><dd>{formatCommunityEventDate(selectedEvent.date, selectedEvent.time)}</dd></div>
                     <div><dt>Konum</dt><dd>{selectedEvent.location || "Belirtilmedi"}</dd></div>
                     <div><dt>Yayın durumu</dt><dd><StatusBadge status={selectedEvent.status} /></dd></div>

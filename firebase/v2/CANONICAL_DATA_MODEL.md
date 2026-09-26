@@ -13,15 +13,34 @@ This document is the Phase 1 contract for `good4tr-v2`. Persisted date/time fiel
 
 Communities and businesses are organization types, not separate canonical top-level collections. UI-specific views may call them “community” or “business”, but ownership and membership always resolve through `organizations`.
 
+Following is managed by the authenticated `setCommunityFollowing` callable. Its transaction checks the active actor, permits new follows only for active community organizations, writes a server timestamp, and updates `followerCount` only when the follow state changes. Users may leave an organization that was subsequently disabled or removed. Organizations without a counter initialize it from their existing followers on the first change. Direct client follower writes remain denied. `getFollowingCommunityIds` checks the active actor and runs one `followers` collection group query for their UID, returning only IDs from canonical `organizations/{id}/followers/{uid}` paths. No client collection group read permission is added; the client intersects these IDs with its already loaded active, unblocked communities. `followers.userId` needs the collection group index in `firestore.indexes.json`.
+
 ## Events, registration, and attendance
 
 | Domain / path | Document ID | Required fields | Optional fields / enums | Relations |
 |---|---|---|---|---|
-| `events/{eventId}` | Server-generated | `organizationId:string`, `title:string`, `description:string`, `startsAt:Timestamp`, `endsAt:Timestamp`, `timezone:string`, `location:string`, `capacity:number`, `registrationCount:number`, `attendanceCount:number`, `status:string`, `createdAt:Timestamp`, `createdBy:uid`, `updatedAt:Timestamp` | `imageUrl:string`; status `draft`, `published`, `cancelled`, `completed`; capacity `0` means unlimited | `organizationId -> organizations` |
+| `events/{eventId}` | Server-generated | `organizationId:string`, `title:string`, `description:string`, `startsAt:Timestamp`, `endsAt:Timestamp`, `timezone:string`, `location:string`, `capacity:number`, `registrationCount:number`, `attendanceCount:number`, `status:string`, `createdAt:Timestamp`, `createdBy:uid`, `updatedAt:Timestamp` | `imageUrl:string`, `categoryId:string`; status `draft`, `published`, `cancelled`, `completed`; capacity `0` means unlimited | `organizationId -> organizations` |
 | `events/{eventId}/registrations/{registrationId}` | Server-generated UUID | `eventId:string`, `organizationId:string`, `userId:uid`, `displayName:string`, `status:string`, `registeredAt:Timestamp`, `updatedAt:Timestamp` | status currently `registered` | event, organization, user |
 | `events/{eventId}/checkins/{registrationId}` | Same ID as registration | `eventId:string`, `organizationId:string`, `registrationId:string`, `userId:uid`, `checkedInBy:uid`, `checkedInAt:Timestamp`, `method:string` | method `qr`, `manual` | registration, event, user, gatekeeper |
 
 `events/{eventId}` is the sole V2 event model. `communities/{id}/entries/{id}` remains legacy-only and receives no new V2 event copy. Registration capacity and both QR/manual check-in are enforced by trusted transactions. The V2 QR payload is `good4:event:v2/{eventId}/{registrationId}`; the backend re-loads the event, registration, membership, and existing check-in instead of trusting client claims.
+
+### Event categories
+
+Categories belong to individual events, not organizations. The callable validates any supplied `categoryId` against this fixed list; new web/mobile forms require a choice. For older clients, an omitted field is accepted and the existing value is preserved on edits. Old events are not backfilled. Missing or unknown categories are displayed as “Kategori belirtilmemiş”, included in “Tümü”, and selectable through the presentation-only `uncategorized` filter (never a stored category).
+
+| `categoryId` | Display label |
+|---|---|
+| `academic-science` | Akademik ve Bilim |
+| `career-entrepreneurship` | Kariyer ve Girişimcilik |
+| `technology` | Teknoloji |
+| `culture-arts` | Kültür ve Sanat |
+| `sports-nature` | Spor ve Doğa |
+| `social-entertainment` | Sosyal ve Eğlence |
+| `volunteering` | Gönüllülük |
+| `other` | Diğer |
+
+The backend and web form share `functions/src/eventCategories.ts`; the mobile enum is `community/EventCategories.kt`. Event writes remain callable-only, with manager/membership/organization ownership checks. Student discovery applies category and followed-community filters before limiting the carousel to ten eligible events. Neither filter changes the community discovery search.
 
 ## Campaigns, claims, codes, and redemptions
 

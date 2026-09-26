@@ -561,6 +561,10 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             "V2UserRoleDto" -> com.good4.community.V2UserRoleDto(role = document.getOrNull("role") ?: "") as T
             "V2EventDto" -> decodeV2EventDto(document) as T
             "V2EventRegistrationDto" -> decodeV2EventRegistrationDto(document) as T
+            "CommunityFollowDto" -> com.good4.community.CommunityFollowDto(
+                userId = document.getOrNull("userId") ?: "",
+                followedAt = document.getEpochSeconds("followedAt") ?: 0,
+            ) as T
             "CampusWeatherDto" -> com.good4.weather.CampusWeatherDto(
                 temperature = document.getAsDouble("temperature"),
                 label = document.getOrNull("label"),
@@ -593,7 +597,8 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
         endsAt = document.getEpochSeconds("endsAt") ?: 0, timezone = document.getOrNull("timezone") ?: "Europe/Istanbul",
         location = document.getOrNull("location") ?: "", imageUrl = document.getOrNull("imageUrl") ?: "",
         capacity = document.getAsInt("capacity") ?: 0, registrationCount = document.getAsInt("registrationCount") ?: 0,
-        attendanceCount = document.getAsInt("attendanceCount") ?: 0, status = document.getOrNull("status") ?: "published"
+        attendanceCount = document.getAsInt("attendanceCount") ?: 0, status = document.getOrNull("status") ?: "published",
+        categoryId = document.getOrNull("categoryId") ?: ""
     )
 
     private fun decodeV2EventRegistrationDto(document: DocumentSnapshot) = com.good4.community.V2EventRegistrationDto(

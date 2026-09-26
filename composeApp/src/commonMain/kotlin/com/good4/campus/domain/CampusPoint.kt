@@ -12,6 +12,7 @@ enum class CampusPointCategory(val label: String) {
     FACULTY("Fakülte"),
     ACADEMIC_UNIT("Akademik Birim"),
     SERVICE_BUILDING("Hizmet Binası"),
+    DINING_HALL("Yemekhane"),
     BANK("Banka"),
     ATM("ATM"),
     SHOPPING("Çarşı"),
@@ -59,6 +60,12 @@ object CampusPoints {
 
     val serviceBuildings = listOf(
         CampusPoint("SKS Binası", CampusPointCategory.SERVICE_BUILDING, 36.89610228517866, 30.654907451070887)
+    )
+
+    val diningHalls = listOf(
+        CampusPoint("Merkezi Yemekhanesi", CampusPointCategory.DINING_HALL, 36.89531987664846, 30.65545530947255),
+        CampusPoint("Diş Hekimliği Yemekhanesi", CampusPointCategory.DINING_HALL, 36.89955814867246, 30.658798826662306),
+        CampusPoint("İlahiyat Yemekhanesi", CampusPointCategory.DINING_HALL, 36.89011977417819, 30.642257985803823)
     )
 
     val banks = listOf(
@@ -109,6 +116,6 @@ object CampusPoints {
         CampusPoint("Ahmet Hamdi Akseki Erkek Yurdu", CampusPointCategory.DORMITORY, 36.902998771446555, 30.6608312135052)
     )
 
-    val all = listOf(library) + faculties + academicUnits + serviceBuildings + banks + atms +
+    val all = listOf(library) + faculties + academicUnits + serviceBuildings + diningHalls + banks + atms +
         shoppingAreas + mosques + sportsAreas + dormitories
 }

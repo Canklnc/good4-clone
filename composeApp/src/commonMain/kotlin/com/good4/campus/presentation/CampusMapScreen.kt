@@ -17,6 +17,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocalAtm
 import androidx.compose.material.icons.outlined.LocalLibrary
 import androidx.compose.material.icons.outlined.Mosque
+import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.SportsSoccer
 import androidx.compose.material.icons.outlined.Storefront
@@ -55,6 +56,7 @@ import good4.composeapp.generated.resources.campus_academic_pin
 import good4.composeapp.generated.resources.campus_atm_pin
 import good4.composeapp.generated.resources.campus_bank_pin
 import good4.composeapp.generated.resources.campus_dormitory_pin
+import good4.composeapp.generated.resources.campus_dining_pin
 import good4.composeapp.generated.resources.campus_faculty_pin
 import good4.composeapp.generated.resources.campus_library_pin
 import good4.composeapp.generated.resources.campus_mosque_pin
@@ -89,6 +91,7 @@ private val ShoppingOrange = Color(0xFFE06B20)
 private val MosqueTeal = Color(0xFF168A86)
 private val SportsGreen = Color(0xFF2B8A4A)
 private val DormitoryPink = Color(0xFFC33C78)
+private val DiningBrown = Color(0xFF9C542C)
 
 @Composable
 fun CampusMapScreen(
@@ -100,6 +103,7 @@ fun CampusMapScreen(
     var facultiesVisible by rememberSaveable { mutableStateOf(true) }
     var academicUnitsVisible by rememberSaveable { mutableStateOf(true) }
     var serviceBuildingsVisible by rememberSaveable { mutableStateOf(true) }
+    var diningHallsVisible by rememberSaveable { mutableStateOf(true) }
     var banksVisible by rememberSaveable { mutableStateOf(true) }
     var atmsVisible by rememberSaveable { mutableStateOf(true) }
     var shoppingAreasVisible by rememberSaveable { mutableStateOf(true) }
@@ -111,6 +115,7 @@ fun CampusMapScreen(
     val facultyMarker = painterResource(Res.drawable.campus_faculty_pin)
     val academicMarker = painterResource(Res.drawable.campus_academic_pin)
     val serviceMarker = painterResource(Res.drawable.campus_services_pin)
+    val diningMarker = painterResource(Res.drawable.campus_dining_pin)
     val bankMarker = painterResource(Res.drawable.campus_bank_pin)
     val atmMarker = painterResource(Res.drawable.campus_atm_pin)
     val shoppingMarker = painterResource(Res.drawable.campus_shopping_pin)
@@ -121,6 +126,7 @@ fun CampusMapScreen(
     val facultiesGeoJson = CampusPoints.faculties.toGeoJson()
     val academicUnitsGeoJson = CampusPoints.academicUnits.toGeoJson()
     val serviceBuildingsGeoJson = CampusPoints.serviceBuildings.toGeoJson()
+    val diningHallsGeoJson = CampusPoints.diningHalls.toGeoJson()
     val banksGeoJson = CampusPoints.banks.toGeoJson()
     val atmsGeoJson = CampusPoints.atms.toGeoJson()
     val shoppingAreasGeoJson = CampusPoints.shoppingAreas.toGeoJson()
@@ -270,6 +276,38 @@ fun CampusMapScreen(
                         textFont = const(listOf("Noto Sans Regular")),
                         textSize = const(10.sp),
                         textColor = const(Color(0xFF0D5D5A)),
+                        textHaloColor = const(Color.White),
+                        textHaloWidth = const(1.5.dp),
+                        textAnchor = const(SymbolAnchor.Top),
+                        textOffset = offset(0.em, 0.45.em),
+                        textMaxWidth = const(13.em),
+                        textAllowOverlap = const(true),
+                        textIgnorePlacement = const(true)
+                    )
+                }
+                if (diningHallsVisible) {
+                    val diningHallsSource = rememberGeoJsonSource(
+                        id = "campus-dining-halls",
+                        data = GeoJsonData.JsonString(diningHallsGeoJson)
+                    )
+                    SymbolLayer(
+                        id = "campus-dining-hall-pins",
+                        source = diningHallsSource,
+                        iconImage = image(diningMarker),
+                        iconAnchor = const(SymbolAnchor.Bottom),
+                        iconAllowOverlap = const(true),
+                        onClick = { features ->
+                            selectedPoints = features.selectedCampusPoints()
+                            ClickResult.Consume
+                        }
+                    )
+                    SymbolLayer(
+                        id = "campus-dining-hall-labels",
+                        source = diningHallsSource,
+                        textField = format(span(feature.get("name").asString())),
+                        textFont = const(listOf("Noto Sans Regular")),
+                        textSize = const(10.sp),
+                        textColor = const(Color(0xFF65351C)),
                         textHaloColor = const(Color.White),
                         textHaloWidth = const(1.5.dp),
                         textAnchor = const(SymbolAnchor.Top),
@@ -435,6 +473,17 @@ fun CampusMapScreen(
                     icon = { Icon(Icons.Outlined.AccountBalance, contentDescription = null) }
                 )
                 CampusFilterChip(
+                    selected = diningHallsVisible,
+                    onClick = {
+                        diningHallsVisible = !diningHallsVisible
+                        if (!diningHallsVisible && selectedPoints.any { it.category == CampusPointCategory.DINING_HALL }) {
+                            selectedPoints = emptyList()
+                        }
+                    },
+                    label = "Yemekhaneler · ${CampusPoints.diningHalls.size}",
+                    icon = { Icon(Icons.Outlined.Restaurant, contentDescription = null) }
+                )
+                CampusFilterChip(
                     selected = banksVisible,
                     onClick = {
                         banksVisible = !banksVisible
@@ -571,6 +620,7 @@ private fun CampusPointInfoCard(
         CampusPointCategory.LIBRARY -> Icons.Outlined.LocalLibrary
         CampusPointCategory.FACULTY, CampusPointCategory.ACADEMIC_UNIT -> Icons.Outlined.School
         CampusPointCategory.SERVICE_BUILDING -> Icons.Outlined.AccountBalance
+        CampusPointCategory.DINING_HALL -> Icons.Outlined.Restaurant
         CampusPointCategory.BANK -> Icons.Outlined.AccountBalance
         CampusPointCategory.ATM -> Icons.Outlined.LocalAtm
         CampusPointCategory.SHOPPING -> Icons.Outlined.Storefront
@@ -583,6 +633,7 @@ private fun CampusPointInfoCard(
         CampusPointCategory.FACULTY -> FacultyBlue
         CampusPointCategory.ACADEMIC_UNIT -> AcademicPurple
         CampusPointCategory.SERVICE_BUILDING -> MosqueTeal
+        CampusPointCategory.DINING_HALL -> DiningBrown
         CampusPointCategory.BANK -> BankGold
         CampusPointCategory.ATM -> AtmRed
         CampusPointCategory.SHOPPING -> ShoppingOrange

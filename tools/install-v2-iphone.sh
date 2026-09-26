@@ -3,7 +3,7 @@ set -euo pipefail
 
 expected_source='/Users/cankilinc/Desktop/Good4/Good4 dev'
 expected_bundle='com.good4.iosApp.v2'
-device_id='00008120-001831543C42601E'
+device_id="${1:-00008120-001831543C42601E}"
 source_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 
 if [[ "$source_dir" != "$expected_source" ]]; then
@@ -23,6 +23,8 @@ build_args=(
     -scheme 'iosApp V2'
     -configuration DebugV2
     -destination "id=$device_id"
+    -allowProvisioningUpdates
+    -allowProvisioningDeviceRegistration
 )
 
 build_settings="$(xcodebuild "${build_args[@]}" -showBuildSettings -json)"

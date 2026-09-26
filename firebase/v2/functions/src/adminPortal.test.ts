@@ -150,6 +150,30 @@ test("Good4 admin publishes the home banner to V2 and legacy mobile environments
   assert.equal(dashboard.homeBanner?.endsOn, "2026-09-27");
 });
 
+test("slider banners 2-4 get their own documents and are not mirrored to the legacy app", async () => {
+  await seedAdmin();
+  await saveHomeBannerService(db, legacyTestDb, "admin-1", {
+    imageUrl: "https://firebasestorage.googleapis.com/slot-3.jpg",
+    advertiserName: "Kampüs Kitap",
+    startsOn: "2026-09-20",
+    endsOn: "2026-09-30",
+    active: true,
+    slot: 3,
+  });
+  assert.equal((await db.doc("app_config/home_banner_3").get()).get("advertiserName"), "Kampüs Kitap");
+  assert.equal((await db.doc("app_config/home_banner").get()).exists, false);
+  assert.equal((await legacyTestDb.doc("app_config/home_banner").get()).exists, false);
+  const dashboard = await getAdminDashboardService(db, legacyTestDb, "admin-1");
+  assert.equal(dashboard.homeBanners.length, 4);
+  assert.equal(dashboard.homeBanners[2]?.advertiserName, "Kampüs Kitap");
+  await assert.rejects(
+    () => saveHomeBannerService(db, legacyTestDb, "admin-1", {
+      imageUrl: "https://example.com/x.jpg", advertiserName: "X", startsOn: "2026-09-20", endsOn: "2026-09-30", slot: 5,
+    }),
+    (error: unknown) => error instanceof Error && error.message === "BANNER_SLOT_INVALID",
+  );
+});
+
 test("non-admin cannot save the weekly dining menu", async () => {
   await db.doc("users/student-1").set({ role: "student", status: "active" });
   await assert.rejects(

@@ -276,6 +276,16 @@ test('signed-in users can read a KYK menu day but clients cannot list or write t
   await assertFails(setDoc(doc(adminDb, 'kyk_menu_days/2026-10-02'), { date: '2026-10-02', breakfast: ['Çay'] }));
 });
 
+test('signed-in users can read the extra home slider banners but clients cannot write them', async () => {
+  await seed('users/student-1', { role: 'student', status: 'active' });
+  await seed('app_config/home_banner_4', { imageUrl: 'https://example.com/4.jpg', active: true });
+  const studentDb = testEnv.authenticatedContext('student-1').firestore();
+  await assertSucceeds(getDoc(doc(studentDb, 'app_config/home_banner_4')));
+  await assertFails(getDoc(doc(testEnv.unauthenticatedContext().firestore(), 'app_config/home_banner_4')));
+  await assertFails(getDoc(doc(studentDb, 'app_config/home_banner_5')));
+  await assertFails(setDoc(doc(studentDb, 'app_config/home_banner_2'), { imageUrl: 'https://example.com/x.jpg' }));
+});
+
 test('signed-in users can read the home banner but clients cannot write it', async () => {
   await seed('users/student-1', { role: 'student', status: 'active' });
   await seed('users/admin-1', { role: 'good4Admin', status: 'active' });

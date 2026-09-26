@@ -50,7 +50,7 @@ class ProductListViewModel(
     fun loadHomeBanner() {
         viewModelScope.launch {
             val today = Clock.System.todayIn(TimeZone.currentSystemDefault()).toString()
-            _state.update { it.copy(homeBanner = configRepository.getActiveHomeBanner(today)) }
+            _state.update { it.copy(homeBanners = configRepository.getActiveHomeBanners(today)) }
         }
     }
 

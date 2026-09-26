@@ -1,5 +1,8 @@
 package com.good4.product.presentation.product_list.views
 
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -236,8 +239,8 @@ fun ProductListScreen(
                             )
                         }
 
-                        state.homeBanner?.let { banner ->
-                            item { HomeAdvertisementBanner(banner) }
+                        if (state.homeBanners.isNotEmpty()) {
+                            item { HomeAdvertisementSlider(state.homeBanners) }
                         }
 
                         item {
@@ -448,6 +451,39 @@ private fun HomeSummaryCards(
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = TextPrimary
+                )
+            }
+        }
+    }
+}
+
+/** Up to four banners that slide horizontally and advance on their own until the user drags them. */
+@Composable
+private fun HomeAdvertisementSlider(banners: List<HomeBanner>) {
+    if (banners.size == 1) {
+        HomeAdvertisementBanner(banners.single())
+        return
+    }
+    val pagerState = rememberPagerState { banners.size }
+    val dragged by pagerState.interactionSource.collectIsDraggedAsState()
+    LaunchedEffect(pagerState.currentPage, dragged) {
+        if (dragged) return@LaunchedEffect
+        delay(5_000)
+        pagerState.animateScrollToPage((pagerState.currentPage + 1) % banners.size)
+    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        HorizontalPager(state = pagerState) { page ->
+            HomeAdvertisementBanner(banners[page])
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(bottom = 4.dp)) {
+            repeat(banners.size) { index ->
+                Box(
+                    Modifier
+                        .size(if (index == pagerState.currentPage) 8.dp else 6.dp)
+                        .background(
+                            if (index == pagerState.currentPage) PrimaryGreen else TextSecondary.copy(alpha = 0.3f),
+                            CircleShape
+                        )
                 )
             }
         }

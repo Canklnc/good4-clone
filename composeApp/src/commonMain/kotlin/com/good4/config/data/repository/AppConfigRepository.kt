@@ -1,5 +1,8 @@
 package com.good4.config.data.repository
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import com.good4.config.data.dto.AppConfigDto
 import com.good4.config.data.dto.HomeBannerDto
 import com.good4.config.data.dto.UniversitiesConfigDto
@@ -90,10 +93,17 @@ class AppConfigRepository(
         }
     }
 
-    suspend fun getActiveHomeBanner(today: String): HomeBanner? {
+    /** Active slider banners in slot order (home_banner, home_banner_2 … home_banner_4). */
+    suspend fun getActiveHomeBanners(today: String): List<HomeBanner> = coroutineScope {
+        HOME_BANNER_DOCUMENTS.map { documentId -> async { getActiveHomeBanner(documentId, today) } }
+            .awaitAll()
+            .filterNotNull()
+    }
+
+    private suspend fun getActiveHomeBanner(documentId: String, today: String): HomeBanner? {
         return when (val result = firestoreRepository.getDocument(
             collectionPath = "app_config",
-            documentId = "home_banner",
+            documentId = documentId,
             clazz = HomeBannerDto::class
         )) {
             is Result.Success -> {
@@ -135,3 +145,5 @@ class AppConfigRepository(
             .sortedBy { it.lowercase() }
     }
 }
+
+private val HOME_BANNER_DOCUMENTS = listOf("home_banner", "home_banner_2", "home_banner_3", "home_banner_4")

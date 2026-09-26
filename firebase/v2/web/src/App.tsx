@@ -157,6 +157,7 @@ type AdminDashboardData = {
   audits: AuditRow[];
   diningMenu: DiningMenu | null;
   homeBanner: HomeBanner | null;
+  homeBanners?: Array<HomeBanner | null>;
   calendarEvents: AcademicCalendarEvent[];
 };
 
@@ -225,10 +226,12 @@ const saveHomeBanner = httpsCallable<{
   startsOn: string;
   endsOn: string;
   active: boolean;
+  slot: number;
 }, HomeBanner>(functions, "saveHomeBanner");
 const uploadHomeBannerImage = httpsCallable<{
   base64: string;
   contentType: string;
+  slot: number;
 }, { imageUrl: string }>(functions, "uploadHomeBannerImage");
 const saveAcademicCalendarEvent = httpsCallable<{
   eventId?: string;
@@ -1517,6 +1520,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
   const [bannerStartsOn, setBannerStartsOn] = useState("");
   const [bannerEndsOn, setBannerEndsOn] = useState("");
   const [bannerActive, setBannerActive] = useState(true);
+  const [bannerSlot, setBannerSlot] = useState(1);
   const [savingBanner, setSavingBanner] = useState(false);
   const [calendarEditingId, setCalendarEditingId] = useState("");
   const [calendarTitle, setCalendarTitle] = useState("");
@@ -1541,11 +1545,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
       setMenuWeekStart(response.data.diningMenu?.weekStart ?? "");
       setMenuWeekEnd(response.data.diningMenu?.weekEnd ?? "");
       setMenuDays(diningDaysForForm(response.data.diningMenu));
-      setBannerAdvertiserName(response.data.homeBanner?.advertiserName ?? "");
-      setBannerTargetUrl(response.data.homeBanner?.targetUrl ?? "");
-      setBannerStartsOn(response.data.homeBanner?.startsOn ?? "");
-      setBannerEndsOn(response.data.homeBanner?.endsOn ?? "");
-      setBannerActive(response.data.homeBanner?.active ?? true);
+      fillBannerForm(bannerForSlot(response.data, bannerSlot));
     } catch (requestError) {
       setError(functionErrorMessage(requestError));
     } finally {
@@ -1840,13 +1840,36 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
     }
   }
 
+  function bannerForSlot(dashboard: AdminDashboardData | null, slot: number): HomeBanner | null {
+    if (!dashboard) return null;
+    return dashboard.homeBanners?.[slot - 1] ?? (slot === 1 ? dashboard.homeBanner : null);
+  }
+
+  function fillBannerForm(banner: HomeBanner | null) {
+    setBannerAdvertiserName(banner?.advertiserName ?? "");
+    setBannerTargetUrl(banner?.targetUrl ?? "");
+    setBannerStartsOn(banner?.startsOn ?? "");
+    setBannerEndsOn(banner?.endsOn ?? "");
+    setBannerActive(banner?.active ?? true);
+    setBannerFile(null);
+    setBannerPreviewUrl((current) => {
+      if (current) URL.revokeObjectURL(current);
+      return "";
+    });
+  }
+
+  function selectBannerSlot(slot: number) {
+    setBannerSlot(slot);
+    fillBannerForm(bannerForSlot(data, slot));
+  }
+
   async function handleSaveHomeBanner(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSavingBanner(true);
     setError("");
     setNotice("");
     try {
-      let imageUrl = data?.homeBanner?.imageUrl ?? "";
+      let imageUrl = bannerForSlot(data, bannerSlot)?.imageUrl ?? "";
       if (bannerFile) {
         if (bannerFile.size > 5 * 1024 * 1024) throw new Error("Görsel en fazla 5 MB olabilir.");
         if (!['image/jpeg', 'image/png', 'image/webp'].includes(bannerFile.type)) {
@@ -1859,6 +1882,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
         const uploaded = await uploadHomeBannerImage({
           base64: await readFileBase64(bannerFile),
           contentType: bannerFile.type,
+          slot: bannerSlot,
         });
         imageUrl = `${uploaded.data.imageUrl}&v=${Date.now()}`;
       }
@@ -1873,8 +1897,14 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
         startsOn: bannerStartsOn,
         endsOn: bannerEndsOn,
         active: bannerActive,
+        slot: bannerSlot,
       });
-      setData((current) => current ? { ...current, homeBanner: response.data } : current);
+      setData((current) => {
+        if (!current) return current;
+        const banners = [0, 1, 2, 3].map((index) => bannerForSlot(current, index + 1));
+        banners[bannerSlot - 1] = response.data;
+        return { ...current, homeBanners: banners, homeBanner: banners[0] };
+      });
       setBannerFile(null);
       setBannerPreviewUrl((current) => {
         if (current) URL.revokeObjectURL(current);
@@ -2216,15 +2246,25 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
           <section className="admin-section" aria-labelledby="home-banner-title">
             <div className="section-title-row">
               <div>
-                <h2 id="home-banner-title">Ana sayfa reklamı</h2>
-                <p>Yüklediğiniz reklam, öğrencilerin ana sayfasında hava durumu ve yemek kartlarının altında görünür.</p>
+                <h2 id="home-banner-title">Ana sayfa reklamları</h2>
+                <p>En fazla 4 reklam, öğrencilerin ana sayfasında hava durumu ve yemek kartlarının altında kayan bir slider'da görünür.</p>
               </div>
-              {data.homeBanner?.updatedAt && <small className="menu-updated-at">Son güncelleme: {formatAdminDate(data.homeBanner.updatedAt)}</small>}
+              {bannerForSlot(data, bannerSlot)?.updatedAt && <small className="menu-updated-at">Son güncelleme: {formatAdminDate(bannerForSlot(data, bannerSlot)!.updatedAt)}</small>}
             </div>
+            <nav className="admin-tabs" aria-label="Reklam alanları">
+              {[1, 2, 3, 4].map((slot) => {
+                const slotBanner = bannerForSlot(data, slot);
+                return (
+                  <button key={slot} type="button" className={bannerSlot === slot ? "active" : ""} onClick={() => selectBannerSlot(slot)}>
+                    {slot}. reklam {slotBanner?.imageUrl ? <span>{slotBanner.active ? "Yayında" : "Kapalı"}</span> : <span>Boş</span>}
+                  </button>
+                );
+              })}
+            </nav>
             <form className="admin-card home-banner-form" onSubmit={handleSaveHomeBanner}>
               <div className="home-banner-preview" aria-label="Reklam önizlemesi">
-                {(bannerPreviewUrl || data.homeBanner?.imageUrl) ? (
-                  <img src={bannerPreviewUrl || data.homeBanner?.imageUrl} alt="Ana sayfa reklam önizlemesi" />
+                {(bannerPreviewUrl || bannerForSlot(data, bannerSlot)?.imageUrl) ? (
+                  <img src={bannerPreviewUrl || bannerForSlot(data, bannerSlot)?.imageUrl} alt="Ana sayfa reklam önizlemesi" />
                 ) : (
                   <div><strong>1200 × 500 px</strong><span>Reklam önizlemesi burada görünecek</span></div>
                 )}
@@ -2266,7 +2306,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
               </div>
               <div className="dining-menu-actions">
                 <p>Tarih aralığı dışındayken reklam uygulamada otomatik olarak gizlenir.</p>
-                <button className="primary-button compact-button" disabled={savingBanner || !bannerAdvertiserName.trim() || !bannerStartsOn || !bannerEndsOn || (!bannerFile && !data.homeBanner?.imageUrl)}>
+                <button className="primary-button compact-button" disabled={savingBanner || !bannerAdvertiserName.trim() || !bannerStartsOn || !bannerEndsOn || (!bannerFile && !bannerForSlot(data, bannerSlot)?.imageUrl)}>
                   {savingBanner ? "Yayınlanıyor…" : "Reklamı kaydet"}
                 </button>
               </div>

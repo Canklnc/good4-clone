@@ -123,6 +123,8 @@ export interface AdminDashboardResult {
   audits: AuditSummary[];
   diningMenu: DiningMenuSummary | null;
   homeBanner: HomeBannerSummary | null;
+  /** All four slider slots in order; null where a slot was never saved. */
+  homeBanners: Array<HomeBannerSummary | null>;
   calendarEvents: AcademicCalendarEventSummary[];
 }
 
@@ -210,6 +212,21 @@ function diningMenuFromDocument(document: DocumentSnapshot): DiningMenuSummary |
     })),
     updatedAt: timestampIso(document.get("updatedAt")),
   };
+}
+
+export const HOME_BANNER_SLOTS = 4;
+
+/** Slot 1 keeps the original document so older app versions still find their banner. */
+export function homeBannerDocumentId(slot: number): string {
+  return slot === 1 ? "home_banner" : `home_banner_${slot}`;
+}
+
+export function requireBannerSlot(value: unknown): number {
+  if (value === undefined) return 1;
+  if (!Number.isInteger(value) || (value as number) < 1 || (value as number) > HOME_BANNER_SLOTS) {
+    throw new HttpsError("invalid-argument", "BANNER_SLOT_INVALID");
+  }
+  return value as number;
 }
 
 function homeBannerFromDocument(document: DocumentSnapshot): HomeBannerSummary | null {
@@ -375,6 +392,10 @@ export async function getAdminDashboardService(
   ]);
   const diningMenu = diningMenuFromDocument(diningMenuDocument);
   const homeBanner = homeBannerFromDocument(homeBannerDocument);
+  const extraBannerDocuments = await Promise.all(
+    [2, 3, 4].map((slot) => database.doc(`app_config/${homeBannerDocumentId(slot)}`).get()),
+  );
+  const homeBanners = [homeBanner, ...extraBannerDocuments.map(homeBannerFromDocument)];
   const calendarEvents = calendarEventsSnapshot.docs
     .map(calendarEventFromDocument)
     .sort((left, right) => left.startDate.localeCompare(right.startDate) || left.title.localeCompare(right.title, "tr"));
@@ -493,6 +514,7 @@ export async function getAdminDashboardService(
     audits,
     diningMenu,
     homeBanner,
+    homeBanners,
     calendarEvents,
   };
   console.info("[getAdminDashboard] Dashboard ready", {
@@ -580,9 +602,12 @@ export async function saveHomeBannerService(
     startsOn?: unknown;
     endsOn?: unknown;
     active?: unknown;
+    slot?: unknown;
   },
 ): Promise<HomeBannerSummary> {
   await requireGood4Admin(database, actorUid);
+  const slot = requireBannerSlot(input.slot);
+  const documentId = homeBannerDocumentId(slot);
   const imageUrl = requireNonEmptyString(input.imageUrl, "imageUrl", 2048);
   const advertiserName = requireNonEmptyString(input.advertiserName, "advertiserName", 80);
   const targetUrl = typeof input.targetUrl === "string" ? input.targetUrl.trim() : "";
@@ -595,7 +620,7 @@ export async function saveHomeBannerService(
     throw new HttpsError("invalid-argument", "BANNER_DATE_RANGE_INVALID");
   }
   const active = input.active !== false;
-  const bannerRef = database.doc("app_config/home_banner");
+  const bannerRef = database.doc(`app_config/${documentId}`);
   await bannerRef.set({
     imageUrl,
     advertiserName,
@@ -607,13 +632,14 @@ export async function saveHomeBannerService(
     updatedBy: actorUid,
   });
   const banner = { imageUrl, advertiserName, targetUrl, startsOn, endsOn, active, updatedAt: null };
-  await mirrorHomeBannerToLegacy(legacyTestDatabase, banner, actorUid);
+  // The legacy test app only knows one banner.
+  if (slot === 1) await mirrorHomeBannerToLegacy(legacyTestDatabase, banner, actorUid);
   await database.collection("auditLogs").add({
     action: active ? "homeBanner.published" : "homeBanner.unpublished",
     actorUid,
     targetType: "appConfig",
-    targetId: "home_banner",
-    metadata: { advertiserName, startsOn, endsOn, active },
+    targetId: documentId,
+    metadata: { advertiserName, startsOn, endsOn, active, slot },
     createdAt: FieldValue.serverTimestamp(),
   });
   const saved = await bannerRef.get();

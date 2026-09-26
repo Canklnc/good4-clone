@@ -23,6 +23,7 @@ import {
   reviewLegacyCouponService,
   saveDiningMenuService,
   saveHomeBannerService,
+  requireBannerSlot,
   saveAcademicCalendarEventService,
 } from "./adminPortal.js";
 import { requireAuthenticatedUid, requireNonEmptyString } from "./shared.js";
@@ -233,7 +234,9 @@ export const uploadHomeBannerImage = onCall({
   }
 
   const extension = extensions[contentType];
-  const objectName = `home-banners/current.${extension}`;
+  // Slot 1 keeps the original object name; slots 2-4 feed the home slider.
+  const slot = requireBannerSlot(request.data?.slot);
+  const objectName = slot === 1 ? `home-banners/current.${extension}` : `home-banners/slot-${slot}.${extension}`;
   const downloadToken = randomUUID();
   await storageBucket.file(objectName).save(bytes, {
     resumable: false,

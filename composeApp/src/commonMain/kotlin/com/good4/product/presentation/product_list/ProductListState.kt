@@ -17,7 +17,7 @@ data class ProductListState(
     val userName: String? = null,
     val remainingCredits: Int? = null,
     val deliveryTimeMinutes: Int? = null,
-    val homeBanner: HomeBanner? = null
+    val homeBanners: List<HomeBanner> = emptyList()
 )
 
 data class ReservationInfo(

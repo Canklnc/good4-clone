@@ -7,7 +7,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -524,7 +523,6 @@ private fun HomeAdvertisementBanner(
             .aspectRatio(2.5f)
             .clip(RoundedCornerShape(18.dp))
             .background(SurfaceMuted)
-            .border(1.dp, BorderMuted.copy(alpha = 0.45f), RoundedCornerShape(18.dp))
             .then(if (!isPlaceholder && banner.targetUrl.isNotBlank()) Modifier.clickable {
                 uriHandler.openUri(banner.targetUrl)
             } else Modifier)
@@ -571,31 +569,25 @@ private fun HomeAdvertisementBanner(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
-            Surface(
-                modifier = Modifier.align(Alignment.TopStart).padding(8.dp),
-                shape = RoundedCornerShape(6.dp),
-                color = Color.Black.copy(alpha = 0.58f)
+            // One small "Reklam ⓘ" tag keeps the disclosure and the info/report entry without covering the ad.
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(6.dp)
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(Color.Black.copy(alpha = 0.4f))
+                    .clickable(onClickLabel = "Reklam hakkında ve reklamı bildir") { showAdInfo = true }
+                    .padding(horizontal = 6.dp, vertical = 3.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(3.dp)
             ) {
-                Text(
-                    text = "Reklam",
-                    color = Color.White,
-                    fontSize = 10.sp,
-                    modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                Text(text = "Reklam", color = Color.White, fontSize = 9.sp, lineHeight = 11.sp)
+                Icon(
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(11.dp)
                 )
-            }
-            Surface(
-                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
-                shape = CircleShape,
-                color = Color.Black.copy(alpha = 0.58f)
-            ) {
-                IconButton(onClick = { showAdInfo = true }, modifier = Modifier.size(40.dp)) {
-                    Icon(
-                        imageVector = Icons.Outlined.Info,
-                        contentDescription = "Reklam hakkında ve reklamı bildir",
-                        tint = Color.White,
-                        modifier = Modifier.size(21.dp)
-                    )
-                }
             }
         }
     }

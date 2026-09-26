@@ -1,7 +1,6 @@
 package com.good4.dining.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -78,10 +77,12 @@ private fun AkdenizDiningMenuState.meals(): List<MealContent> {
     val weekend = runCatching { LocalDate.parse(loadedDate).dayOfWeek }.getOrNull()
         ?.let { it == DayOfWeek.SATURDAY || it == DayOfWeek.SUNDAY } ?: false
     val notPublished = if (isLoading) "Yükleniyor…" else "Bugün için yayınlanmadı"
+    // When today's KYK list is missing, the next published day is shown and labelled, never passed off as today.
+    val kykPlace = kykDayLabel?.let { "KYK · $it" } ?: "KYK"
     return listOf(
         MealContent(
-            DailyMeal.KYK_BREAKFAST, "Kahvaltı", "KYK", Icons.Outlined.BakeryDining,
-            kykToday?.breakfast.orEmpty(), notPublished
+            DailyMeal.KYK_BREAKFAST, "Kahvaltı", kykPlace, Icons.Outlined.BakeryDining,
+            kykDay?.breakfast.orEmpty(), notPublished
         ),
         MealContent(
             DailyMeal.CAFETERIA, "Öğle ve Akşam", "Merkezi Yemekhane", Icons.Outlined.Restaurant,
@@ -90,8 +91,8 @@ private fun AkdenizDiningMenuState.meals(): List<MealContent> {
             cafeteriaToday?.calories
         ),
         MealContent(
-            DailyMeal.KYK_DINNER, "Akşam Yemeği", "KYK", Icons.Outlined.DinnerDining,
-            kykToday?.dinner.orEmpty(), notPublished
+            DailyMeal.KYK_DINNER, "Akşam Yemeği", kykPlace, Icons.Outlined.DinnerDining,
+            kykDay?.dinner.orEmpty(), notPublished
         )
     )
 }
@@ -106,12 +107,6 @@ private fun mealForNow(): DailyMeal {
     }
 }
 
-/** Soup comes first on lunch and dinner lists, so the main course is the more telling headline. */
-private fun MealContent.headline(): Pair<String, List<String>> {
-    val mainIndex = if (meal == DailyMeal.KYK_BREAKFAST || items.size < 2) 0 else 1
-    return items[mainIndex] to items.filterIndexed { index, _ -> index != mainIndex }
-}
-
 /** Home screen widget: a vertical stack of the three meals, like an iOS Smart Stack. */
 @Composable
 fun DailyMenuWidget(
@@ -121,15 +116,19 @@ fun DailyMenuWidget(
 ) {
     val meals = state.meals()
     val pagerState = rememberPagerState(initialPage = mealForNow().ordinal) { meals.size }
-    Surface(modifier, shape = RoundedCornerShape(16.dp), color = SurfaceDefault, shadowElevation = 1.dp) {
+    // The tap lives on the surface, not inside the pager: on iOS a clickable within the pager page
+    // lost the first tap to the pager's scroll handling.
+    Surface(
+        onClick = { onMealClick(meals[pagerState.currentPage].meal) },
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp),
+        color = SurfaceDefault,
+        shadowElevation = 1.dp
+    ) {
         Box(Modifier.fillMaxSize()) {
             VerticalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
                 val content = meals[page]
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .clickable { onMealClick(content.meal) }
-                ) {
+                Box(Modifier.fillMaxSize()) {
                     Icon(
                         content.icon,
                         contentDescription = null,
@@ -138,7 +137,7 @@ fun DailyMenuWidget(
                     )
                     Column(
                         Modifier.padding(start = 12.dp, top = 12.dp, end = 20.dp, bottom = 10.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                        verticalArrangement = Arrangement.spacedBy(0.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(content.icon, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(17.dp))
@@ -146,13 +145,13 @@ fun DailyMenuWidget(
                             Text(content.title, fontSize = 14.sp, lineHeight = 17.sp, color = TextPrimary, fontWeight = FontWeight.Medium, maxLines = 1)
                         }
                         Text(content.place, fontSize = 10.5.sp, lineHeight = 13.sp, color = PrimaryGreen, fontWeight = FontWeight.Medium, maxLines = 1)
+                        Spacer(Modifier.height(2.dp))
                         if (content.items.isEmpty()) {
                             Text(content.emptyText, fontSize = 11.sp, lineHeight = 14.sp, color = TextSecondary, maxLines = 2)
                         } else {
-                            val (headline, rest) = content.headline()
-                            Text(headline, fontSize = 13.sp, lineHeight = 16.sp, color = TextPrimary, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                            if (rest.isNotEmpty()) {
-                                Text("+ " + rest.joinToString(", "), fontSize = 10.5.sp, lineHeight = 13.sp, color = TextSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            // The whole menu at a glance: one line per item, long alternatives are shortened.
+                            content.items.forEach { item ->
+                                Text(item, fontSize = 10.5.sp, lineHeight = 13.sp, color = TextPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                         }
                     }

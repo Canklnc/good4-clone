@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -25,9 +26,12 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.TimeZone
 import kotlin.math.roundToInt
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.akdeniz_campus_weather
+import good4.composeapp.generated.resources.akdeniz_campus_weather_night
 import org.jetbrains.compose.resources.painterResource
 
 private data class CampusWeather(val temperature: String, val label: String)
@@ -65,6 +69,18 @@ private object CampusWeatherCache {
     }
 }
 
+// Approximate Antalya sunrise and sunset per month (Turkey stays on UTC+3 all year), in minutes.
+private val AntalyaSunriseMinutes = intArrayOf(445, 430, 400, 365, 335, 325, 335, 355, 380, 400, 425, 445)
+private val AntalyaSunsetMinutes = intArrayOf(1055, 1085, 1110, 1135, 1160, 1180, 1180, 1155, 1120, 1085, 1055, 1045)
+
+/** True between sunset and sunrise in Antalya, when the evening campus photo is shown. */
+private fun isCampusNight(): Boolean {
+    val now = Clock.System.now().toLocalDateTime(TimeZone.of("Europe/Istanbul"))
+    val minutes = now.hour * 60 + now.minute
+    val month = now.monthNumber - 1
+    return minutes < AntalyaSunriseMinutes[month] || minutes >= AntalyaSunsetMinutes[month]
+}
+
 @Composable
 internal fun CampusSummaryCards(
     diningMenuState: AkdenizDiningMenuState,
@@ -89,10 +105,15 @@ internal fun CampusSummaryCards(
         Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 18.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Surface(Modifier.weight(1f).height(116.dp), shape = RoundedCornerShape(16.dp), color = PrimaryGreen, shadowElevation = 1.dp) {
+        Surface(Modifier.weight(1f).height(168.dp), shape = RoundedCornerShape(16.dp), color = PrimaryGreen, shadowElevation = 1.dp) {
             Box {
+                val night = isCampusNight()
                 Image(
-                    painter = painterResource(Res.drawable.akdeniz_campus_weather),
+                    painter = painterResource(
+                        if (night) Res.drawable.akdeniz_campus_weather_night else Res.drawable.akdeniz_campus_weather
+                    ),
+                    // The evening photo is tall; crop towards the bottom so the palm-lined road stays in view.
+                    alignment = if (night) BiasAlignment(0f, 0.8f) else Alignment.Center,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.matchParentSize()
@@ -120,7 +141,7 @@ internal fun CampusSummaryCards(
         DailyMenuWidget(
             state = diningMenuState,
             onMealClick = onDailyMenuClick,
-            modifier = Modifier.weight(1f).height(116.dp)
+            modifier = Modifier.weight(1f).height(168.dp)
         )
     }
 }

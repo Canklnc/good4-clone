@@ -27,14 +27,14 @@ class AkdenizDiningMenuViewModel(
         val today = todayInIstanbul()
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val kykToday = async { kykRepository.getDay(today) }
+            val kykDay = async { kykRepository.getDayOrNext(today) }
             val menu = when (val result = repository.getCurrentMenu()) {
                 is Result.Success -> result.data.takeIf { it.days.isNotEmpty() && it.isCurrentWeek() }
                 is Result.Error -> null
             }
             _state.value = AkdenizDiningMenuState(
                 menu = menu ?: currentWeekFallback(),
-                kykToday = kykToday.await(),
+                kykDay = kykDay.await(),
                 loadedDate = today,
                 isLoading = false
             )

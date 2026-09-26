@@ -477,7 +477,13 @@ private fun HomeSummaryCards(
 @Composable
 private fun HomeAdvertisementSlider(banners: List<HomeBanner>) {
     if (banners.size == 1) {
-        HomeAdvertisementBanner(banners.single(), Modifier.padding(horizontal = 12.dp, vertical = 6.dp))
+        // A lone banner keeps the strip's card size so the page looks the same with one ad or four.
+        BoxWithConstraints(Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
+            HomeAdvertisementBanner(
+                banners.single(),
+                Modifier.padding(start = 12.dp).width(maxWidth * 0.75f - 12.dp)
+            )
+        }
         return
     }
     val pagerState = rememberPagerState { banners.size }

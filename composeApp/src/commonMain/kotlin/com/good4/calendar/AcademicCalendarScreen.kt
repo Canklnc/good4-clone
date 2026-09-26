@@ -1,5 +1,6 @@
 package com.good4.calendar
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -30,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,8 +47,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceCanvasWarm
+import com.good4.core.presentation.SurfaceDefault
+import com.good4.core.presentation.PrimaryGreen
+import com.good4.core.presentation.BorderMuted
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
 import kotlinx.datetime.Clock
@@ -110,22 +114,22 @@ fun AcademicCalendarScreen(
                     faculties.forEach { item ->
                         Surface(
                             modifier = Modifier.clickable { faculty = item },
-                            color = if (faculty == item) PrimaryGreen else Color.White,
+                            color = if (faculty == item) MaterialTheme.colorScheme.primary else SurfaceDefault,
                             shape = RoundedCornerShape(50)
-                        ) { Text(item, modifier = Modifier.padding(horizontal = 14.dp, vertical = 9.dp), color = if (faculty == item) Color.White else TextPrimary, fontSize = 13.sp) }
+                        ) { Text(item, modifier = Modifier.padding(horizontal = 14.dp, vertical = 9.dp), color = if (faculty == item) MaterialTheme.colorScheme.onPrimary else TextPrimary, fontSize = 13.sp) }
                     }
                 }
             }
         }
         item {
-            Surface(modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(), color = Color.White, shape = RoundedCornerShape(24.dp), shadowElevation = 2.dp) {
+            Surface(modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(), color = SurfaceDefault, shape = RoundedCornerShape(24.dp), border = BorderStroke(1.dp, BorderMuted.copy(alpha = .45f)), shadowElevation = 2.dp) {
                 Column(modifier = Modifier.padding(vertical = 12.dp)) {
                     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = { val previous = first.plus(DatePeriod(months = -1)); month = previous.toString(); selectedDate = previous.toString() }) { Icon(Icons.Outlined.ChevronLeft, "Önceki ay") }
                         Text("${monthNames[first.monthNumber - 1]} ${first.year}", modifier = Modifier.weight(1f), textAlign = TextAlign.Center, color = TextPrimary, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         IconButton(onClick = { val next = first.plus(DatePeriod(months = 1)); month = next.toString(); selectedDate = next.toString() }) { Icon(Icons.Outlined.ChevronRight, "Sonraki ay") }
                     }
-                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)) { weekNames.forEachIndexed { index, name -> Text(name, modifier = Modifier.weight(1f), textAlign = TextAlign.Center, color = if (index == 6) Color(0xFFB54A4A) else TextSecondary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold) } }
+                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)) { weekNames.forEachIndexed { index, name -> Text(name, modifier = Modifier.weight(1f), textAlign = TextAlign.Center, color = if (index == 6) MaterialTheme.colorScheme.error else TextSecondary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold) } }
                     Spacer(Modifier.height(7.dp))
                     val leading = first.dayOfWeek.ordinal
                     val days = daysInMonth(first.year, first.monthNumber)
@@ -138,12 +142,12 @@ fun AcademicCalendarScreen(
                                     val hasEvents = visibleEvents.any { date in it.startDate..it.endDate }
                                     val selected = date == selectedDate
                                     Column(
-                                        modifier = Modifier.weight(1f).height(54.dp).clip(RoundedCornerShape(14.dp)).clickable { selectedDate = date }.background(if (selected) PrimaryGreen.copy(alpha = .12f) else Color.Transparent),
+                                        modifier = Modifier.weight(1f).height(54.dp).clip(RoundedCornerShape(14.dp)).clickable { selectedDate = date }.background(if (selected) MaterialTheme.colorScheme.primary.copy(alpha = .12f) else Color.Transparent),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         verticalArrangement = Arrangement.Center
                                     ) {
-                                        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(31.dp).background(if (selected) PrimaryGreen else Color.Transparent, CircleShape)) {
-                                            Text(day.toString(), color = if (selected) Color.White else TextPrimary, fontWeight = if (selected || date == today.toString()) FontWeight.Bold else FontWeight.Normal)
+                                        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(31.dp).background(if (selected) MaterialTheme.colorScheme.primary else Color.Transparent, CircleShape)) {
+                                            Text(day.toString(), color = if (selected) MaterialTheme.colorScheme.onPrimary else TextPrimary, fontWeight = if (selected || date == today.toString()) FontWeight.Bold else FontWeight.Normal)
                                         }
                                         if (hasEvents) Box(Modifier.padding(top = 3.dp).size(5.dp).background(Color(0xFF8D76E8), CircleShape)) else Spacer(Modifier.height(8.dp))
                                     }
@@ -159,7 +163,7 @@ fun AcademicCalendarScreen(
                 Text(formatDate(selectedDate), color = TextPrimary, fontSize = 19.sp, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(10.dp))
                 when {
-                    state.loading -> Box(Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = PrimaryGreen) }
+                    state.loading -> Box(Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
                     state.failed -> EmptyCalendarMessage("Takvim şu anda yüklenemedi.")
                     selectedEvents.isEmpty() -> EmptyCalendarMessage("Bu tarihte akademik takvim kaydı yok.")
                     else -> Column(verticalArrangement = Arrangement.spacedBy(10.dp)) { selectedEvents.forEach { CalendarEventCard(it) } }
@@ -170,19 +174,19 @@ fun AcademicCalendarScreen(
 }
 
 @Composable private fun CalendarEventCard(item: AcademicCalendarEvent) {
-    Surface(color = Color.White, shape = RoundedCornerShape(18.dp), shadowElevation = 1.dp) {
+    Surface(color = SurfaceDefault, shape = RoundedCornerShape(18.dp), border = BorderStroke(1.dp, BorderMuted.copy(alpha = .45f)), shadowElevation = 1.dp) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-            Text(item.faculty, color = PrimaryGreen, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            Text(item.faculty, color = MaterialTheme.colorScheme.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
             Text(item.title, color = TextPrimary, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 4.dp))
             if (item.startDate != item.endDate) Text("${formatDate(item.startDate)} – ${formatDate(item.endDate)}", color = TextSecondary, fontSize = 13.sp, modifier = Modifier.padding(top = 5.dp))
             if (item.description.isNotBlank()) {
                 Surface(
                     modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-                    color = PrimaryGreen.copy(alpha = .07f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = .07f),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-                        Text("Açıklama", color = PrimaryGreen, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Text("Açıklama", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                         Text(item.description, color = TextPrimary, fontSize = 14.sp, modifier = Modifier.padding(top = 4.dp))
                     }
                 }
@@ -191,6 +195,6 @@ fun AcademicCalendarScreen(
     }
 }
 
-@Composable private fun EmptyCalendarMessage(text: String) { Surface(color = Color.White, shape = RoundedCornerShape(18.dp)) { Text(text, modifier = Modifier.fillMaxWidth().padding(22.dp), textAlign = TextAlign.Center, color = TextSecondary) } }
+@Composable private fun EmptyCalendarMessage(text: String) { Surface(color = SurfaceDefault, shape = RoundedCornerShape(18.dp), border = BorderStroke(1.dp, BorderMuted.copy(alpha = .45f))) { Text(text, modifier = Modifier.fillMaxWidth().padding(22.dp), textAlign = TextAlign.Center, color = TextSecondary) } }
 private fun daysInMonth(year: Int, month: Int): Int = when (month) { 2 -> if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) 29 else 28; 4, 6, 9, 11 -> 30; else -> 31 }
 private fun formatDate(value: String): String = runCatching { val date = LocalDate.parse(value); "${date.dayOfMonth} ${monthNames[date.monthNumber - 1]} ${date.year}" }.getOrDefault(value)

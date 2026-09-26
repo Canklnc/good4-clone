@@ -27,19 +27,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.good4.core.presentation.ErrorRed
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
@@ -57,11 +55,11 @@ fun EduVerificationCard(
     modifier: Modifier = Modifier
 ) {
     val fieldColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = PrimaryGreen,
-        focusedLabelColor = PrimaryGreen,
-        cursorColor = PrimaryGreen
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        cursorColor = MaterialTheme.colorScheme.primary
     )
-    val buttonColors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen, contentColor = Color.White)
+    val buttonColors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
 
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -71,7 +69,7 @@ fun EduVerificationCard(
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Outlined.School, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(22.dp))
+                Icon(Icons.Outlined.School, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                 Spacer(Modifier.width(8.dp))
                 Text(
                     "Askıda Yemek üniversite öğrencilerine özel",
@@ -97,7 +95,7 @@ fun EduVerificationCard(
                     checked = state.optedIn,
                     onCheckedChange = null,
                     enabled = state.codeSentTo == null,
-                    colors = CheckboxDefaults.colors(checkedColor = PrimaryGreen)
+                    colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary)
                 )
                 Spacer(Modifier.width(4.dp))
                 Text(
@@ -129,7 +127,7 @@ fun EduVerificationCard(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     if (state.isSending) {
-                        CircularProgressIndicator(Modifier.size(20.dp), color = Color.White, strokeWidth = 2.dp)
+                        CircularProgressIndicator(Modifier.size(20.dp), color = MaterialTheme.colorScheme.primary, strokeWidth = 2.dp)
                     } else {
                         Text("Doğrulama kodu gönder", fontWeight = FontWeight.SemiBold)
                     }
@@ -162,26 +160,26 @@ fun EduVerificationCard(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     if (state.isConfirming) {
-                        CircularProgressIndicator(Modifier.size(20.dp), color = Color.White, strokeWidth = 2.dp)
+                        CircularProgressIndicator(Modifier.size(20.dp), color = MaterialTheme.colorScheme.primary, strokeWidth = 2.dp)
                     } else {
                         Text("Doğrula", fontWeight = FontWeight.SemiBold)
                     }
                 }
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     TextButton(onClick = onChangeEmail, enabled = !state.isConfirming) {
-                        Text("E-postayı değiştir", color = PrimaryGreen)
+                        Text("E-postayı değiştir", color = MaterialTheme.colorScheme.primary)
                     }
                     TextButton(onClick = onSendCode, enabled = state.resendSeconds == 0 && !state.isSending) {
                         Text(
                             if (state.resendSeconds > 0) "Tekrar gönder (${state.resendSeconds} sn)" else "Kodu tekrar gönder",
-                            color = if (state.resendSeconds > 0) TextSecondary else PrimaryGreen
+                            color = if (state.resendSeconds > 0) TextSecondary else MaterialTheme.colorScheme.primary
                         )
                     }
                 }
             }
 
             state.errorMessage?.let {
-                Text(it, fontSize = 13.sp, color = ErrorRed)
+                Text(it, fontSize = 13.sp, color = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -190,7 +188,7 @@ fun EduVerificationCard(
 @Composable
 fun EduVerifiedBadge(email: String?, modifier: Modifier = Modifier) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Icon(Icons.Outlined.Verified, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(16.dp))
+        Icon(Icons.Outlined.Verified, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
         Spacer(Modifier.width(6.dp))
         Text(
             if (email.isNullOrBlank()) "Üniversite e-postanız doğrulandı" else "$email doğrulandı",

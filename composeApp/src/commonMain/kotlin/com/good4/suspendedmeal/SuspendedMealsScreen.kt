@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.core.presentation.AppBackground
 import com.good4.core.presentation.PistachioGreen
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
@@ -91,7 +90,7 @@ fun SuspendedMealsScreen(
     ) { paddingValues ->
         Box(Modifier.fillMaxSize().background(AppBackground).padding(paddingValues)) {
             when {
-                eduState.isLoading -> CircularProgressIndicator(color = PrimaryGreen, modifier = Modifier.align(Alignment.Center))
+                eduState.isLoading -> CircularProgressIndicator(color = MaterialTheme.colorScheme.primary, modifier = Modifier.align(Alignment.Center))
                 !eduState.isVerified -> Column(
                     Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp)
                 ) {
@@ -110,7 +109,7 @@ fun SuspendedMealsScreen(
                     meal = state.meals.firstOrNull { it.id == state.activeCode?.mealId },
                     onDone = viewModel::dismissCode
                 )
-                state.isLoading -> CircularProgressIndicator(color = PrimaryGreen, modifier = Modifier.align(Alignment.Center))
+                state.isLoading -> CircularProgressIndicator(color = MaterialTheme.colorScheme.primary, modifier = Modifier.align(Alignment.Center))
                 state.loadError != null -> CenteredMessage(state.loadError!!, actionLabel = "Tekrar dene", onAction = viewModel::load)
                 state.meals.isEmpty() -> CenteredMessage(
                     "Şu an askıda yemek yok.\nYeni askıda yemekler eklendiğinde burada görünecek.",
@@ -144,12 +143,12 @@ private fun MealCard(meal: SuspendedMeal, requesting: Boolean, enabled: Boolean,
         Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Surface(shape = RoundedCornerShape(12.dp), color = PistachioGreen) {
-                    Icon(Icons.Outlined.Restaurant, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.padding(8.dp).size(20.dp))
+                    Icon(Icons.Outlined.Restaurant, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(8.dp).size(20.dp))
                 }
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
                     Text(meal.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = TextPrimary)
-                    Text(meal.businessName, style = MaterialTheme.typography.bodySmall, color = PrimaryGreen)
+                    Text(meal.businessName, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                 }
             }
             if (meal.description.isNotBlank()) {
@@ -169,9 +168,9 @@ private fun MealCard(meal: SuspendedMeal, requesting: Boolean, enabled: Boolean,
                 enabled = enabled,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                if (requesting) CircularProgressIndicator(color = SurfaceDefault, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+                if (requesting) CircularProgressIndicator(color = MaterialTheme.colorScheme.primary, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
                 else Text("Kodu al")
             }
         }
@@ -196,11 +195,11 @@ private fun CodeCard(code: ActiveMealCode, meal: SuspendedMeal?, onDone: () -> U
             Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 meal?.let {
                     Text(it.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = TextPrimary, textAlign = TextAlign.Center)
-                    Text(it.businessName, style = MaterialTheme.typography.bodyMedium, color = PrimaryGreen)
+                    Text(it.businessName, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
                 }
                 when {
                     code.redeemed -> {
-                        Icon(Icons.Outlined.CheckCircle, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(56.dp))
+                        Icon(Icons.Outlined.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(56.dp))
                         Text("Afiyet olsun!", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = TextPrimary)
                         Text("Kodun işletme tarafından kullanıldı.", color = TextSecondary, textAlign = TextAlign.Center)
                     }
@@ -221,14 +220,14 @@ private fun CodeCard(code: ActiveMealCode, meal: SuspendedMeal?, onDone: () -> U
                         Text(
                             "Geçerlilik: ${secondsLeft / 60}:${(secondsLeft % 60).toString().padStart(2, '0')}",
                             style = MaterialTheme.typography.titleMedium,
-                            color = PrimaryGreen
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
             }
         }
         Spacer(Modifier.height(16.dp))
-        TextButton(onClick = onDone) { Text(if (code.redeemed || secondsLeft == 0L) "Listeye dön" else "Kapat", color = PrimaryGreen) }
+        TextButton(onClick = onDone) { Text(if (code.redeemed || secondsLeft == 0L) "Listeye dön" else "Kapat", color = MaterialTheme.colorScheme.primary) }
     }
 }
 
@@ -237,7 +236,7 @@ private fun MessageBanner(message: String, onDismiss: () -> Unit) {
     Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp), color = PistachioGreen) {
         Row(Modifier.padding(start = 16.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(message, Modifier.weight(1f).padding(vertical = 12.dp), color = TextPrimary)
-            TextButton(onClick = onDismiss) { Text("Tamam", color = PrimaryGreen) }
+            TextButton(onClick = onDismiss) { Text("Tamam", color = MaterialTheme.colorScheme.primary) }
         }
     }
 }
@@ -250,7 +249,7 @@ private fun CenteredMessage(message: String, actionLabel: String, onAction: () -
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(message, color = TextSecondary, textAlign = TextAlign.Center)
-        TextButton(onClick = onAction) { Text(actionLabel, color = PrimaryGreen) }
+        TextButton(onClick = onAction) { Text(actionLabel, color = MaterialTheme.colorScheme.primary) }
     }
 }
 

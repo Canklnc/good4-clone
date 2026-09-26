@@ -404,7 +404,7 @@ fun CommunitiesScreen(
                             .padding(24.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(color = PrimaryGreen)
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -485,7 +485,7 @@ fun CommunitiesScreen(
                     pendingBlock = null
                     detail = null
                     viewModel.blockCommunity(target)
-                }) { Text("Engelle", color = ErrorRed) }
+                }) { Text("Engelle", color = MaterialTheme.colorScheme.error) }
             },
             dismissButton = { TextButton(onClick = { pendingBlock = null }) { Text("Vazgeç") } }
         )
@@ -539,7 +539,7 @@ private fun FeaturedCommunityEventsCarousel(
                             .width(if (index == currentPage) 18.dp else 6.dp)
                             .height(6.dp)
                             .clip(CircleShape)
-                            .background(if (index == currentPage) PrimaryGreen else BorderMuted)
+                            .background(if (index == currentPage) MaterialTheme.colorScheme.primary else BorderMuted)
                     )
                 }
             }
@@ -590,7 +590,7 @@ private fun DemoCommunityEventsCarousel() {
                         .width(if (index == currentPage) 18.dp else 6.dp)
                         .height(6.dp)
                         .clip(CircleShape)
-                        .background(if (index == currentPage) PrimaryGreen else BorderMuted)
+                        .background(if (index == currentPage) MaterialTheme.colorScheme.primary else BorderMuted)
                 )
             }
         }
@@ -664,7 +664,7 @@ private fun CommunityEventsBannerPlaceholder(
             Icon(
                 imageVector = Icons.Outlined.CalendarMonth,
                 contentDescription = null,
-                tint = PrimaryGreen,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(30.dp)
             )
             Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
@@ -684,7 +684,7 @@ private fun CommunityEventsBannerPlaceholder(
                     fontSize = 12.sp
                 )
                 if (hasError) {
-                    TextButton(onClick = onRetry) { Text("Tekrar dene", color = PrimaryGreen) }
+                    TextButton(onClick = onRetry) { Text("Tekrar dene", color = MaterialTheme.colorScheme.primary) }
                 }
             }
         }
@@ -734,7 +734,7 @@ private fun CommunitySearchField(query: String, onQueryChange: (String) -> Unit)
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = SurfaceDefault,
             unfocusedContainerColor = SurfaceDefault,
-            focusedBorderColor = PrimaryGreen,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedBorderColor = BorderMuted.copy(alpha = 0.35f)
         )
     )
@@ -823,7 +823,7 @@ private fun CommunityDetailHeader(
                     Icon(
                         Icons.Outlined.Groups,
                         contentDescription = null,
-                        tint = PrimaryGreen.copy(alpha = 0.35f),
+                        tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.35f),
                         modifier = Modifier.size(58.dp).align(Alignment.Center)
                     )
                 }
@@ -861,7 +861,7 @@ private fun CommunityDetailHeader(
                 colors = if (isFollowing) {
                     ButtonDefaults.buttonColors(containerColor = SurfaceMuted, contentColor = TextPrimary)
                 } else {
-                    ButtonDefaults.buttonColors(containerColor = PrimaryGreen, contentColor = androidx.compose.ui.graphics.Color.White)
+                    ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                 }
             ) {
                 Text(if (followLoading) "Kaydediliyor…" else if (isFollowing) "Takip ediliyor" else "Takip et", fontWeight = FontWeight.SemiBold)
@@ -911,15 +911,15 @@ private fun ManagerCommunityIdentity(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(3.dp)
             ) {
-                Text("YÖNETİCİ PANELİ", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = PrimaryGreen)
+                Text("YÖNETİCİ PANELİ", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                 Text(community.data.name, fontSize = 19.sp, lineHeight = 23.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary)
                 if (community.data.university.isNotBlank()) {
                     Text(community.data.university, fontSize = 13.sp, color = TextSecondary, maxLines = 1)
                 }
-                Text("Yönetim yetkin aktif", fontSize = 12.sp, color = PrimaryGreen)
+                Text("Yönetim yetkin aktif", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
             }
             IconButton(onClick = onEditProfile) {
-                Icon(Icons.Outlined.ManageAccounts, contentDescription = "Topluluk bilgilerini düzenle", tint = PrimaryGreen)
+                Icon(Icons.Outlined.ManageAccounts, contentDescription = "Topluluk bilgilerini düzenle", tint = MaterialTheme.colorScheme.primary)
             }
         }
     }
@@ -965,8 +965,8 @@ private fun CommunityManagementActions(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryGreen,
-                        contentColor = SurfaceDefault
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
                     Text("Etkinlik ekle")
@@ -975,8 +975,8 @@ private fun CommunityManagementActions(
                     onClick = onAddCoupon,
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = PrimaryGreen),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGreen.copy(alpha = 0.35f))
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.35f))
                 ) {
                     Text("Kupon ekle")
                 }
@@ -984,7 +984,7 @@ private fun CommunityManagementActions(
             TextButton(
                 onClick = onEditProfile,
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.textButtonColors(contentColor = PrimaryGreen)
+                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text("Topluluk bilgilerini düzenle")
             }
@@ -1005,7 +1005,7 @@ private fun StudentPreviewBanner(onReturnToManagement: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         color = PistachioGreen.copy(alpha = 0.55f),
-        border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGreen.copy(alpha = 0.25f))
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.25f))
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
@@ -1043,7 +1043,7 @@ private fun ManagerEventFilters(selected: Int, onSelected: (Int) -> Unit) {
 private fun ManagementStat(label: String, value: String, modifier: Modifier = Modifier) {
     Surface(modifier = modifier, shape = RoundedCornerShape(14.dp), color = PistachioGreen.copy(alpha = 0.42f)) {
         Column(Modifier.padding(horizontal = 8.dp, vertical = 13.dp), horizontalAlignment = Alignment.Start) {
-            Text(value, fontSize = 23.sp, fontWeight = FontWeight.Bold, color = PrimaryGreen)
+            Text(value, fontSize = 23.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             Text(label, fontSize = 11.sp, lineHeight = 14.sp, color = TextSecondary)
         }
     }
@@ -1076,7 +1076,7 @@ private fun CommunityTabs(selectedTab: Int, onTabSelected: (Int) -> Unit, manage
                             text = label,
                             fontSize = 14.sp,
                             fontWeight = if (selectedTab == index) FontWeight.SemiBold else FontWeight.Medium,
-                            color = if (selectedTab == index) PrimaryGreen else TextSecondary
+                            color = if (selectedTab == index) MaterialTheme.colorScheme.primary else TextSecondary
                         )
                     }
                 }
@@ -1130,7 +1130,7 @@ private fun CommunityEntryCard(
                             Icon(
                                 imageVector = if (entry.data.kind == "coupon") Icons.Outlined.LocalOffer else Icons.Outlined.CalendarMonth,
                                 contentDescription = null,
-                                tint = PrimaryGreen,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(22.dp)
                             )
                         }
@@ -1138,15 +1138,15 @@ private fun CommunityEntryCard(
                     Spacer(Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(entry.data.title, fontSize = 18.sp, lineHeight = 22.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary)
-                        Text("${entry.data.date} ${entry.data.time}".trim(), fontSize = 13.sp, lineHeight = 18.sp, color = PrimaryGreen)
+                        Text("${entry.data.date} ${entry.data.time}".trim(), fontSize = 13.sp, lineHeight = 18.sp, color = MaterialTheme.colorScheme.primary)
                     }
                     if (canManage) {
                         Surface(
                             shape = RoundedCornerShape(9.dp),
                             color = when (entry.data.status) {
-                                "published" -> PrimaryGreen.copy(alpha = 0.12f)
+                                "published" -> MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
                                 "draft" -> PistachioGreen
-                                else -> ErrorRed.copy(alpha = 0.10f)
+                                else -> MaterialTheme.colorScheme.error.copy(alpha = 0.10f)
                             }
                         ) {
                             Text(
@@ -1159,16 +1159,16 @@ private fun CommunityEntryCard(
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 5.dp),
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = if (entry.data.status == "cancelled") ErrorRed else PrimaryGreen
+                                color = if (entry.data.status == "cancelled") MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
                             )
                         }
                     }
                 }
                 if (entry.data.kind == "event" && registrationCount != null) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Outlined.Person, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(17.dp))
+                        Icon(Icons.Outlined.Person, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(17.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("$registrationCount kayıtlı · ${attendanceCount?.toString() ?: "…"} giriş yaptı", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = PrimaryGreen)
+                        Text("$registrationCount kayıtlı · ${attendanceCount?.toString() ?: "…"} giriş yaptı", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary)
                     }
                     if (entry.data.capacity > 0) {
                         Text(
@@ -1221,8 +1221,8 @@ private fun CommunityEntryCard(
                             onClick = onUnpublish,
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, ErrorRed.copy(alpha = 0.45f)),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = ErrorRed)
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.45f)),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                         ) {
                             Text(
                                 if (entry.data.status == "draft") "Taslağı kaldır" else "Yayından kaldır",
@@ -1299,7 +1299,7 @@ private fun EntryRemovalConfirmation(
                         enabled = !saving,
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(13.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = ErrorRed, contentColor = SurfaceDefault)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error, contentColor = MaterialTheme.colorScheme.onError)
                     ) {
                         Text(if (saving) "Kaldırılıyor…" else "Kaldır")
                     }
@@ -1322,7 +1322,7 @@ private fun StudentCouponCard(entry: CommunityEntry, onClick: () -> Unit) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Surface(modifier = Modifier.size(42.dp), shape = RoundedCornerShape(13.dp), color = PistachioGreen) {
                 Box(contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.LocalOffer, contentDescription = null, tint = PrimaryGreen)
+                    Icon(Icons.Outlined.LocalOffer, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 }
             }
             val advantage = when (entry.data.discountType) {
@@ -1331,11 +1331,11 @@ private fun StudentCouponCard(entry: CommunityEntry, onClick: () -> Unit) {
                 "freeItem" -> "Ücretsiz ürün"
                 else -> entry.data.title
             }
-            Text(advantage, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = PrimaryGreen)
+            Text(advantage, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             Text(entry.data.title, fontSize = 18.sp, lineHeight = 22.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary, maxLines = 2)
             Text(entry.data.location, fontSize = 13.sp, color = TextSecondary, maxLines = 1)
-            Text("Son gün: ${entry.data.date}", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = PrimaryGreen)
-            Text("Kuponu görüntüle", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = PrimaryGreen)
+            Text("Son gün: ${entry.data.date}", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary)
+            Text("Kuponu görüntüle", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
         }
     }
 }
@@ -1396,7 +1396,7 @@ private fun CommunityEntryDetailDialog(
                             Icon(
                                 imageVector = if (isCoupon) Icons.Outlined.LocalOffer else Icons.Outlined.CalendarMonth,
                                 contentDescription = null,
-                                tint = PrimaryGreen,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(23.dp)
                             )
                         }
@@ -1450,7 +1450,7 @@ private fun CommunityEntryDetailDialog(
                             enabled = !codeGenerating && entry.data.businessId.isNotBlank(),
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(14.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                         ) {
                             Text(if (codeGenerating) "Kod oluşturuluyor…" else "6 haneli kullanım kodu oluştur")
                         }
@@ -1461,8 +1461,8 @@ private fun CommunityEntryDetailDialog(
                         Surface(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
-                            color = PrimaryGreen.copy(alpha = 0.12f),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGreen.copy(alpha = 0.35f))
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.35f))
                         ) {
                             Column(
                                 modifier = Modifier.padding(16.dp),
@@ -1486,7 +1486,7 @@ private fun CommunityEntryDetailDialog(
                         shape = RoundedCornerShape(14.dp),
                         colors = if (registered) {
                             ButtonDefaults.buttonColors(containerColor = SurfaceMuted, contentColor = TextPrimary)
-                        } else ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
+                        } else ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                     ) {
                         Text(if (registrationLoading) "Kaydediliyor…" else if (registered) "Kaydımı iptal et" else "Etkinliğe kayıt ol")
                     }
@@ -1496,7 +1496,7 @@ private fun CommunityEntryDetailDialog(
                     Button(onClick = onManageAttendees, modifier = Modifier.fillMaxWidth()) { Text("Katılımcıları Yönet · QR giriş") }
                     Surface(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp), color = PistachioGreen.copy(alpha = 0.55f)) {
                         Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                            Text("${registrations.size} kişi kayıtlı", fontWeight = FontWeight.SemiBold, color = PrimaryGreen)
+                            Text("${registrations.size} kişi kayıtlı", fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             if (registrations.isEmpty()) {
                                 Text("Henüz katılımcı yok.", fontSize = 13.sp, color = TextSecondary)
                             } else {
@@ -1522,8 +1522,8 @@ private fun CommunityEntryDetailDialog(
                                 .height(46.dp),
                             shape = RoundedCornerShape(13.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = PrimaryGreen,
-                                contentColor = SurfaceDefault
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary
                             )
                         ) {
                             Text("Düzenle", fontWeight = FontWeight.Medium)
@@ -1537,10 +1537,10 @@ private fun CommunityEntryDetailDialog(
                             shape = RoundedCornerShape(13.dp),
                             border = androidx.compose.foundation.BorderStroke(
                                 1.dp,
-                                ErrorRed.copy(alpha = 0.45f)
+                                MaterialTheme.colorScheme.error.copy(alpha = 0.45f)
                             ),
                             colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = ErrorRed,
+                                contentColor = MaterialTheme.colorScheme.error,
                                 disabledContentColor = TextSecondary.copy(alpha = 0.5f)
                             ),
                             contentPadding = PaddingValues(horizontal = 8.dp)
@@ -1565,7 +1565,7 @@ private fun CommunityEntryDetailDialog(
                         Text("Bu içeriği bildir", fontSize = 13.sp, color = TextSecondary)
                     }
                 }
-                error?.let { Text(it, fontSize = 13.sp, lineHeight = 18.sp, color = ErrorRed) }
+                error?.let { Text(it, fontSize = 13.sp, lineHeight = 18.sp, color = MaterialTheme.colorScheme.error) }
             }
         }
     }
@@ -1623,7 +1623,7 @@ private fun ReportContentDialog(
                         modifier = Modifier.fillMaxWidth(),
                         minLines = 2
                     )
-                    error?.let { Text(it, fontSize = 13.sp, color = ErrorRed) }
+                    error?.let { Text(it, fontSize = 13.sp, color = MaterialTheme.colorScheme.error) }
                 }
             }
         },
@@ -1656,7 +1656,7 @@ private fun CommunityDetailInfoRow(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = PrimaryGreen,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(19.dp)
         )
         Text(
@@ -1673,7 +1673,7 @@ private fun CommunityDetailInfoRow(
 private fun CommunityLogo(url: String, size: androidx.compose.ui.unit.Dp = 60.dp) {
     Surface(shape = RoundedCornerShape(16.dp), color = PistachioGreen, modifier = Modifier.size(size)) {
         if (url.isNotBlank()) AsyncImage(url, null, contentScale = ContentScale.Crop)
-        else Box(contentAlignment = Alignment.Center) { Icon(Icons.Outlined.Groups, null, tint = PrimaryGreen, modifier = Modifier.size(size * 0.5f)) }
+        else Box(contentAlignment = Alignment.Center) { Icon(Icons.Outlined.Groups, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(size * 0.5f)) }
     }
 }
 
@@ -1689,7 +1689,7 @@ private fun EmptyCommunityContent(title: String, subtitle: String, coupon: Boole
         Icon(
             imageVector = if (coupon) Icons.Outlined.LocalOffer else Icons.Outlined.Groups,
             contentDescription = null,
-            tint = PrimaryGreen.copy(alpha = 0.8f),
+            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
             modifier = Modifier.size(40.dp)
         )
         Text(title, fontSize = 17.sp, lineHeight = 21.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary)
@@ -1767,7 +1767,7 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
                 EditorField(if (coupon) "Avantaj ve kullanım şartları" else "Açıklama", draft.description, saving, singleLine = false) { draft = draft.copy(description = it) }
             } else {
                 Text(draft.title, style = MaterialTheme.typography.titleLarge)
-                if (!coupon && AppEnvironment.firebaseBackend == FirebaseBackend.V2) Text(EventCategory.labelFor(draft.categoryId), color = PrimaryGreen)
+                if (!coupon && AppEnvironment.firebaseBackend == FirebaseBackend.V2) Text(EventCategory.labelFor(draft.categoryId), color = MaterialTheme.colorScheme.primary)
                 Text("${draft.date} ${draft.time}"); Text(draft.location); Text(draft.description)
                 if (!coupon) Text(if (draft.capacity > 0) "Kontenjan: ${draft.capacity} kişi" else "Kontenjan: Sınırsız")
                 if (coupon) {
@@ -1777,7 +1777,7 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
                             "fixed" -> "${draft.discountValue} TL indirim"
                             else -> "Ücretsiz ürün"
                         },
-                        color = PrimaryGreen,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.SemiBold
                     )
                 }

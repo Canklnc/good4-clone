@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawing
@@ -516,6 +518,7 @@ private fun HomeAdvertisementBanner(
             .aspectRatio(2.5f)
             .clip(RoundedCornerShape(18.dp))
             .background(SurfaceMuted)
+            .border(1.dp, BorderMuted.copy(alpha = 0.45f), RoundedCornerShape(18.dp))
             .then(if (!isPlaceholder && banner.targetUrl.isNotBlank()) Modifier.clickable {
                 uriHandler.openUri(banner.targetUrl)
             } else Modifier)
@@ -577,13 +580,13 @@ private fun HomeAdvertisementBanner(
             Surface(
                 modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
                 shape = CircleShape,
-                color = Color.White.copy(alpha = 0.94f)
+                color = Color.Black.copy(alpha = 0.58f)
             ) {
                 IconButton(onClick = { showAdInfo = true }, modifier = Modifier.size(40.dp)) {
                     Icon(
                         imageVector = Icons.Outlined.Info,
                         contentDescription = "Reklam hakkında ve reklamı bildir",
-                        tint = TextPrimary,
+                        tint = Color.White,
                         modifier = Modifier.size(21.dp)
                     )
                 }
@@ -695,7 +698,7 @@ private fun HomeQuickActions(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 2.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         shortcuts.forEach { shortcut ->
             val appearance = shortcut.appearance(communityManager)
@@ -731,23 +734,24 @@ private fun HomeQuickActionCard(
     accent: Color,
     onClick: (() -> Unit)?
 ) {
+    val iconAccent = if (accent == PrimaryGreen) MaterialTheme.colorScheme.primary else accent
     Surface(
         modifier = modifier
-            .height(84.dp)
+            .heightIn(min = 64.dp)
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
         shape = RoundedCornerShape(18.dp),
         color = SurfaceDefault,
         border = BorderStroke(1.dp, BorderMuted.copy(alpha = 0.55f)),
         shadowElevation = 1.dp
     ) {
-        Box(modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(18.dp))) {
+        Box(modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp).clip(RoundedCornerShape(18.dp))) {
             Text(
                 text = title,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(start = 16.dp, end = 62.dp),
-                fontSize = 17.sp,
-                lineHeight = 20.sp,
+                    .padding(start = 16.dp, end = 58.dp, top = 12.dp, bottom = 12.dp),
+                fontSize = 15.sp,
+                lineHeight = 18.sp,
                 fontWeight = FontWeight.Medium,
                 color = TextPrimary,
                 maxLines = 2,
@@ -756,36 +760,36 @@ private fun HomeQuickActionCard(
 
             Box(
                 modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(x = 8.dp, y = 8.dp)
-                    .size(58.dp)
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 10.dp)
+                    .size(36.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .offset(x = 3.dp, y = 3.dp)
-                        .size(48.dp)
+                        .offset(x = 2.dp, y = 2.dp)
+                        .size(36.dp)
                         .graphicsLayer(rotationZ = -5f)
                         .background(
                             color = TextPrimary.copy(alpha = 0.16f),
-                            shape = RoundedCornerShape(14.dp)
+                            shape = RoundedCornerShape(11.dp)
                         )
                 )
                 Surface(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .size(48.dp)
+                        .size(36.dp)
                         .graphicsLayer(rotationZ = -5f),
-                    shape = RoundedCornerShape(14.dp),
-                    color = accent.copy(alpha = 0.24f),
-                    border = BorderStroke(1.dp, accent.copy(alpha = 0.88f))
+                    shape = RoundedCornerShape(11.dp),
+                    color = iconAccent.copy(alpha = 0.24f),
+                    border = BorderStroke(1.dp, iconAccent.copy(alpha = 0.88f))
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             imageVector = icon,
                             contentDescription = null,
-                            tint = accent,
-                            modifier = Modifier.size(27.dp)
+                            tint = iconAccent,
+                            modifier = Modifier.size(20.dp)
                         )
                     }
                 }

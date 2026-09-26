@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.good4.core.presentation.PistachioGreen
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
@@ -132,7 +131,7 @@ fun DailyMenuWidget(
                     Icon(
                         content.icon,
                         contentDescription = null,
-                        tint = PrimaryGreen.copy(alpha = .13f),
+                        tint = MaterialTheme.colorScheme.primary.copy(alpha = .13f),
                         modifier = Modifier.align(Alignment.BottomEnd).offset(x = 12.dp, y = 12.dp).size(76.dp)
                     )
                     Column(
@@ -140,11 +139,11 @@ fun DailyMenuWidget(
                         verticalArrangement = Arrangement.spacedBy(0.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(content.icon, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(17.dp))
+                            Icon(content.icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(17.dp))
                             Spacer(Modifier.width(6.dp))
                             Text(content.title, fontSize = 14.sp, lineHeight = 17.sp, color = TextPrimary, fontWeight = FontWeight.Medium, maxLines = 1)
                         }
-                        Text(content.place, fontSize = 10.5.sp, lineHeight = 13.sp, color = PrimaryGreen, fontWeight = FontWeight.Medium, maxLines = 1)
+                        Text(content.place, fontSize = 10.5.sp, lineHeight = 13.sp, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium, maxLines = 1)
                         Spacer(Modifier.height(2.dp))
                         if (content.items.isEmpty()) {
                             Text(content.emptyText, fontSize = 11.sp, lineHeight = 14.sp, color = TextSecondary, maxLines = 2)
@@ -167,7 +166,7 @@ fun DailyMenuWidget(
                         Modifier
                             .size(5.dp)
                             .background(
-                                if (index == pagerState.currentPage) PrimaryGreen else TextSecondary.copy(alpha = .3f),
+                                if (index == pagerState.currentPage) MaterialTheme.colorScheme.primary else TextSecondary.copy(alpha = .3f),
                                 CircleShape
                             )
                     )
@@ -251,18 +250,18 @@ private fun MealSection(content: MealContent, onBalanceClick: (() -> Unit)?) {
         Column(Modifier.padding(18.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Surface(shape = RoundedCornerShape(12.dp), color = PistachioGreen) {
-                    Icon(content.icon, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.padding(8.dp).size(20.dp))
+                    Icon(content.icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(8.dp).size(20.dp))
                 }
                 Spacer(Modifier.width(12.dp))
                 Column {
                     Text(content.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = TextPrimary)
-                    Text(content.place, style = MaterialTheme.typography.bodySmall, color = PrimaryGreen)
+                    Text(content.place, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                 }
             }
             Spacer(Modifier.height(12.dp))
             if (content.items.isEmpty()) {
                 if (content.emptyText == "Yükleniyor…") {
-                    CircularProgressIndicator(color = PrimaryGreen, modifier = Modifier.size(22.dp))
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                 } else {
                     Text(content.emptyText, style = MaterialTheme.typography.bodyMedium, color = TextSecondary)
                 }
@@ -281,7 +280,7 @@ private fun MealSection(content: MealContent, onBalanceClick: (() -> Unit)?) {
                     onClick = onBalanceClick,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(14.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Icon(Icons.Outlined.AccountBalanceWallet, contentDescription = null, modifier = Modifier.size(19.dp))
                     Text("Yemekhane bakiyesi yükle", modifier = Modifier.padding(start = 8.dp))

@@ -55,6 +55,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
@@ -71,6 +72,7 @@ import com.good4.campus.domain.CampusPoints
 import com.good4.campus.domain.search
 import com.good4.core.presentation.BorderMuted
 import com.good4.core.presentation.PrimaryGreen
+import com.good4.core.presentation.LocalThemeController
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
@@ -465,7 +467,7 @@ private fun CampusSearchField(
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = SurfaceDefault,
             unfocusedContainerColor = SurfaceDefault,
-            focusedBorderColor = PrimaryGreen,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedBorderColor = BorderMuted.copy(alpha = 0.35f)
         )
     )
@@ -503,6 +505,11 @@ private fun CampusSearchResults(
     }
 }
 
+/** Lift category colors on dark UI surfaces without changing their map pins. */
+@Composable
+private fun Color.onMapSurface(): Color =
+    if (LocalThemeController.current.isDark) lerp(this, Color.White, 0.4f) else this
+
 @Composable
 private fun CampusPointRow(point: CampusPoint, onClick: () -> Unit) {
     val style = point.category.style()
@@ -514,7 +521,7 @@ private fun CampusPointRow(point: CampusPoint, onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Icon(style.icon, contentDescription = null, tint = style.color, modifier = Modifier.size(22.dp))
+        Icon(style.icon, contentDescription = null, tint = style.color.onMapSurface(), modifier = Modifier.size(22.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = point.name,
@@ -536,6 +543,7 @@ private fun CampusFilterChip(
     icon: ImageVector,
     color: Color
 ) {
+    val contentColor = color.onMapSurface()
     FilterChip(
         selected = selected,
         onClick = onClick,
@@ -545,16 +553,16 @@ private fun CampusFilterChip(
         colors = FilterChipDefaults.filterChipColors(
             containerColor = SurfaceDefault,
             labelColor = TextSecondary,
-            iconColor = color,
+            iconColor = contentColor,
             selectedContainerColor = color.copy(alpha = 0.14f),
-            selectedLabelColor = color,
-            selectedLeadingIconColor = color
+            selectedLabelColor = TextPrimary,
+            selectedLeadingIconColor = contentColor
         ),
         border = FilterChipDefaults.filterChipBorder(
             enabled = true,
             selected = selected,
             borderColor = BorderMuted.copy(alpha = 0.35f),
-            selectedBorderColor = color,
+            selectedBorderColor = contentColor,
             selectedBorderWidth = 1.5.dp
         )
     )
@@ -603,7 +611,7 @@ private fun CampusPointInfoCard(
             val style = point.category.style()
             Column(modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 8.dp, bottom = 16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                    Icon(imageVector = style.icon, contentDescription = null, tint = style.color)
+                    Icon(imageVector = style.icon, contentDescription = null, tint = style.color.onMapSurface())
                     Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                         Text(
                             text = point.name,
@@ -621,7 +629,7 @@ private fun CampusPointInfoCard(
                     onClick = { openWalkingDirections(point.latitude, point.longitude) },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp, end = 8.dp),
                     shape = RoundedCornerShape(14.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Icon(Icons.AutoMirrored.Outlined.DirectionsWalk, contentDescription = null, modifier = Modifier.size(20.dp))
                     Text("Yol tarifi al", modifier = Modifier.padding(start = 8.dp))

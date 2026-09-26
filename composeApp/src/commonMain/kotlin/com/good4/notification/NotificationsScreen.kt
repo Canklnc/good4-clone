@@ -139,14 +139,14 @@ private fun NotificationCard(
             Row(verticalAlignment = Alignment.Top) {
                 Surface(
                     modifier = Modifier.size(46.dp),
-                    color = PrimaryGreen.copy(alpha = 0.12f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             Icons.Outlined.Campaign,
                             contentDescription = null,
-                            tint = PrimaryGreen,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(25.dp)
                         )
                     }
@@ -168,7 +168,7 @@ private fun NotificationCard(
                         modifier = Modifier
                             .padding(top = 5.dp)
                             .size(9.dp)
-                            .background(PrimaryGreen, RoundedCornerShape(50))
+                            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(50))
                     )
                 }
             }

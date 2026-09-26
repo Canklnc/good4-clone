@@ -47,8 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceCanvasWarm
+import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
@@ -137,12 +137,12 @@ fun ClassScheduleScreen(
                 item {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        color = Color(0xFFFFF4D6),
+                        color = MaterialTheme.colorScheme.tertiaryContainer,
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Text(
                             text = warning,
-                            color = Color(0xFF765A10),
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
                             fontSize = 13.sp,
                             modifier = Modifier.padding(14.dp)
                         )
@@ -156,7 +156,7 @@ fun ClassScheduleScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickableWithoutRipple(openAcademicProfile),
-                        color = Color(0xFFFFF4D6),
+                        color = MaterialTheme.colorScheme.tertiaryContainer,
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Column(modifier = Modifier.padding(14.dp)) {
@@ -166,12 +166,12 @@ fun ClassScheduleScreen(
                                 } else {
                                     "Seçtiğin bölüm ve sınıf için henüz program eklenmedi; İşletme 1. sınıf programı gösteriliyor."
                                 },
-                                color = Color(0xFF765A10),
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
                                 fontSize = 13.sp
                             )
                             Text(
                                 text = "Bölümünü ve sınıfını seç",
-                                color = Color(0xFF765A10),
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.padding(top = 6.dp)
@@ -212,7 +212,7 @@ fun ClassScheduleScreen(
             if (state.isLoading) {
                 item {
                     Box(Modifier.fillMaxWidth().height(160.dp), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = PrimaryGreen)
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
                 }
             } else {
@@ -245,11 +245,11 @@ fun ClassScheduleScreen(
                         ) {
                             Text(
                                 text = "Resmî ders programını aç",
-                                color = PrimaryGreen,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.weight(1f)
                             )
-                            Icon(Icons.Outlined.OpenInNew, contentDescription = null, tint = PrimaryGreen)
+                            Icon(Icons.Outlined.OpenInNew, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }
@@ -279,12 +279,12 @@ private fun ScheduleSectionPicker(
             (listOf("Tümü") + sections).forEach { section ->
                 Surface(
                     modifier = Modifier.clickableWithoutRipple { onSectionSelected(section) },
-                    color = if (section == selectedSection) PrimaryGreen else PrimaryGreen.copy(alpha = .08f),
+                    color = if (section == selectedSection) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = .08f),
                     shape = RoundedCornerShape(50)
                 ) {
                     Text(
                         text = section,
-                        color = if (section == selectedSection) Color.White else TextPrimary,
+                        color = if (section == selectedSection) MaterialTheme.colorScheme.onPrimary else TextPrimary,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(horizontal = 13.dp, vertical = 8.dp)
@@ -346,7 +346,7 @@ private fun ScheduleWeekPicker(
                         modifier = Modifier
                             .weight(1f)
                             .clickableWithoutRipple { onDateSelected(date) },
-                        color = if (selected) PrimaryGreen else PrimaryGreen.copy(alpha = .07f),
+                        color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = .07f),
                         shape = RoundedCornerShape(13.dp)
                     ) {
                         Column(
@@ -355,13 +355,13 @@ private fun ScheduleWeekPicker(
                         ) {
                             Text(
                                 text = date.dayOfWeek.shortLabel(),
-                                color = if (selected) Color.White else TextSecondary,
+                                color = if (selected) MaterialTheme.colorScheme.onPrimary else TextSecondary,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 11.sp
                             )
                             Text(
                                 text = date.dayOfMonth.toString(),
-                                color = if (selected) Color.White else TextPrimary,
+                                color = if (selected) MaterialTheme.colorScheme.onPrimary else TextPrimary,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(top = 2.dp)
@@ -373,7 +373,7 @@ private fun ScheduleWeekPicker(
 
             Text(
                 text = "Bugün",
-                color = PrimaryGreen,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
@@ -435,7 +435,7 @@ private fun ScheduleEntryCard(entry: ScheduleEntry) {
                         periods.forEach { period ->
                             Text(
                                 text = "${period.start}–${period.end}",
-                                color = if (period == periods.first()) PrimaryGreen else TextSecondary,
+                                color = if (period == periods.first()) MaterialTheme.colorScheme.primary else TextSecondary,
                                 fontWeight = if (period == periods.first()) FontWeight.Bold else FontWeight.Normal,
                                 fontSize = 10.sp
                             )
@@ -444,7 +444,7 @@ private fun ScheduleEntryCard(entry: ScheduleEntry) {
                 } else {
                     Text(
                         text = "${entry.startTime}–${entry.endTime}",
-                        color = PrimaryGreen,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp
                     )
@@ -452,7 +452,7 @@ private fun ScheduleEntryCard(entry: ScheduleEntry) {
             }
             Column(modifier = Modifier.weight(1f)) {
                 if (entry.courseCode.isNotBlank()) {
-                    Text(entry.courseCode, color = PrimaryGreen, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text(entry.courseCode, color = MaterialTheme.colorScheme.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
                 Text(
                     entry.courseName,
@@ -553,8 +553,8 @@ private fun ScheduleEntry.periods(): List<StandardPeriod>? {
 
 @Composable
 private fun ScheduleTag(text: String) {
-    Surface(color = PrimaryGreen.copy(alpha = .1f), shape = RoundedCornerShape(50)) {
-        Text(text, color = PrimaryGreen, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+    Surface(color = MaterialTheme.colorScheme.primary.copy(alpha = .1f), shape = RoundedCornerShape(50)) {
+        Text(text, color = MaterialTheme.colorScheme.primary, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
     }
 }
 

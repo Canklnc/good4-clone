@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.campus.domain.CampusPoint
-import com.good4.core.presentation.ErrorRed
 import com.good4.core.presentation.TextSecondary
 import com.good4.feedback.FeedbackViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -90,7 +90,7 @@ internal fun CampusMapFeedbackDialog(
                         supportingText = {
                             Text(
                                 state.errorMessage ?: "En az 10 karakter",
-                                color = if (state.errorMessage != null) ErrorRed else TextSecondary
+                                color = if (state.errorMessage != null) MaterialTheme.colorScheme.error else TextSecondary
                             )
                         }
                     )

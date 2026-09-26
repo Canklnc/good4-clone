@@ -64,9 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.core.presentation.AppBackground
 import com.good4.core.presentation.BorderMuted
-import com.good4.core.presentation.ErrorRed
 import com.good4.core.presentation.PistachioGreen
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.LocalThemeController
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
@@ -403,12 +401,12 @@ fun AccountSettingsScreen(
                         if (academicSelectionPrompt) {
                             Surface(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = Color(0xFFFFF4D6),
+                                color = MaterialTheme.colorScheme.tertiaryContainer,
                                 shape = RoundedCornerShape(14.dp)
                             ) {
                                 Text(
                                     text = "Ders programını görmek için fakülte, bölüm ve sınıfını seçip kaydet.",
-                                    color = Color(0xFF765A10),
+                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                                     style = MaterialTheme.typography.bodySmall,
                                     modifier = Modifier.padding(12.dp)
                                 )
@@ -565,8 +563,8 @@ fun AccountSettingsScreen(
                     icon = Icons.Filled.DeleteOutline,
                     title = stringResource(Res.string.account_settings_account_management_title),
                     subtitle = "Hesabını kalıcı olarak kapat.",
-                    iconTint = ErrorRed,
-                    iconContainerColor = ErrorRed.copy(alpha = 0.08f)
+                    iconTint = MaterialTheme.colorScheme.error,
+                    iconContainerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.08f)
                 )
                 ProfileDeleteAccountButton(
                     modifier = Modifier.fillMaxWidth(),
@@ -582,7 +580,7 @@ private fun AccountSettingsSectionHeader(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    iconTint: Color = PrimaryGreen,
+    iconTint: Color = MaterialTheme.colorScheme.primary,
     iconContainerColor: Color = PistachioGreen.copy(alpha = 0.24f)
 ) {
     Row(
@@ -701,7 +699,7 @@ private fun EditableSelectionField(
                                     Icon(
                                         imageVector = Icons.Filled.Check,
                                         contentDescription = null,
-                                        tint = PrimaryGreen
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             },

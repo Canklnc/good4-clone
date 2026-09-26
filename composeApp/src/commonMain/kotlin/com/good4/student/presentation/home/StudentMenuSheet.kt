@@ -37,6 +37,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,9 +59,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.good4.core.presentation.BorderMuted
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceCanvasWarm
 import com.good4.core.presentation.SurfaceDefault
+import com.good4.core.presentation.PrimaryGreen as BrandGreen
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
 import com.good4.feedback.FeedbackUiState
@@ -98,12 +99,12 @@ internal fun StudentMenuSheet(
         StudentMenuItem(
             title = appearance.title,
             icon = appearance.icon,
-            accent = appearance.accent,
+            accent = if (appearance.accent == BrandGreen) MaterialTheme.colorScheme.primary else appearance.accent,
             url = shortcut.externalUrl,
             opensNumbers = shortcut == HomeShortcut.PHONE_NUMBERS,
             opensFeedback = shortcut == HomeShortcut.FEEDBACK
         )
-    } + StudentMenuItem("Sayfanı Düzenle", Icons.Outlined.Edit, PrimaryGreen, opensHomeEditor = true)
+    } + StudentMenuItem("Sayfanı Düzenle", Icons.Outlined.Edit, MaterialTheme.colorScheme.primary, opensHomeEditor = true)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -218,7 +219,7 @@ private fun FeedbackForm(
             Icon(
                 imageVector = Icons.Filled.CheckCircle,
                 contentDescription = null,
-                tint = PrimaryGreen,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.align(Alignment.CenterHorizontally).size(52.dp)
             )
             Text(
@@ -240,7 +241,7 @@ private fun FeedbackForm(
             Button(
                 onClick = onDone,
                 modifier = Modifier.fillMaxWidth().height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text("Tamam", fontWeight = FontWeight.SemiBold)
@@ -288,7 +289,7 @@ private fun FeedbackForm(
         state.errorMessage?.let { error ->
             Text(
                 text = error,
-                color = androidx.compose.material3.MaterialTheme.colorScheme.error,
+                color = MaterialTheme.colorScheme.error,
                 fontSize = 13.sp,
                 lineHeight = 18.sp
             )
@@ -298,15 +299,15 @@ private fun FeedbackForm(
             modifier = Modifier.fillMaxWidth().height(52.dp),
             enabled = state.canSubmit,
             colors = ButtonDefaults.buttonColors(
-                containerColor = PrimaryGreen,
-                disabledContainerColor = PrimaryGreen.copy(alpha = 0.42f)
+                containerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = if (state.isSubmitting) 0.85f else 0.42f)
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
             if (state.isSubmitting) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(22.dp),
-                    color = SurfaceDefault,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     strokeWidth = 2.dp
                 )
             } else {
@@ -325,9 +326,9 @@ private fun FeedbackForm(
 
 @Composable
 private fun feedbackFieldColors() = OutlinedTextFieldDefaults.colors(
-    focusedBorderColor = PrimaryGreen,
-    focusedLabelColor = PrimaryGreen,
-    cursorColor = PrimaryGreen,
+    focusedBorderColor = MaterialTheme.colorScheme.primary,
+    focusedLabelColor = MaterialTheme.colorScheme.primary,
+    cursorColor = MaterialTheme.colorScheme.primary,
     unfocusedBorderColor = BorderMuted
 )
 
@@ -478,14 +479,14 @@ private fun PhoneContactCard(
                 color = accent.copy(alpha = 0.2f)
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.Phone, contentDescription = null, tint = PrimaryGreen)
+                    Icon(Icons.Outlined.Phone, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 }
             }
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(title, fontSize = 15.sp, lineHeight = 19.sp, fontWeight = FontWeight.Medium, color = TextPrimary)
-                Text(number, fontSize = 19.sp, lineHeight = 23.sp, fontWeight = FontWeight.SemiBold, color = PrimaryGreen)
+                Text(number, fontSize = 19.sp, lineHeight = 23.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
             }
-            Text("Ara", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = PrimaryGreen)
+            Text("Ara", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary)
         }
     }
 }

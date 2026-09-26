@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.core.presentation.BorderMuted
 import com.good4.core.presentation.PistachioGreen
-import com.good4.core.presentation.PrimaryGreen
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
@@ -124,7 +123,7 @@ fun StudentProfileScreen(
                                 ?: stringResource(Res.string.unknown_initial),
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
-                            color = PrimaryGreen
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
 
@@ -165,7 +164,7 @@ fun StudentProfileScreen(
                                     Icons.Filled.School
                                 },
                                 contentDescription = null,
-                                tint = PrimaryGreen,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
@@ -176,7 +175,7 @@ fun StudentProfileScreen(
                                 },
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Medium,
-                                color = PrimaryGreen
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -267,7 +266,7 @@ fun StudentProfileScreen(
                         Icon(
                             imageVector = Icons.Filled.Person,
                             contentDescription = null,
-                            tint = PrimaryGreen
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                     Spacer(Modifier.width(14.dp))

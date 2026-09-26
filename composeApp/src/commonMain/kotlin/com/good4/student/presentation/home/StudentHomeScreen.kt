@@ -32,6 +32,9 @@ import com.good4.core.presentation.components.Good4NavigationBar
 import com.good4.core.presentation.components.Good4NestedScaffold
 import com.good4.campus.presentation.CampusMapScreen
 import com.good4.community.CommunityViewModel
+import com.good4.dining.domain.DailyMeal
+import com.good4.dining.presentation.AkdenizDiningMenuViewModel
+import com.good4.dining.presentation.DailyMenuScreen
 import com.good4.product.presentation.product_list.ProductListViewModel
 import com.good4.product.presentation.product_list.views.ProductListScreenRoot
 import com.good4.student.presentation.reservations.ReservationUiModel
@@ -72,6 +75,7 @@ fun StudentHomeScreenRoot(
     )
 
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+    var dailyMenuMeal by rememberSaveable { mutableStateOf(DailyMeal.CAFETERIA) }
     var menuOpen by rememberSaveable { mutableStateOf(false) }
     var reservationsScrollRequestKey by rememberSaveable { mutableIntStateOf(0) }
     var pendingReservationFromHome by remember { mutableStateOf<ReservationUiModel?>(null) }
@@ -185,6 +189,10 @@ fun StudentHomeScreenRoot(
                         onCalendarClick = onNavigateToCalendar,
                         onClassScheduleClick = onNavigateToClassSchedule,
                         onCampusMapClick = { selectedItemIndex = 3 },
+                        onDailyMenuClick = { meal ->
+                            dailyMenuMeal = meal
+                            selectedItemIndex = 4
+                        },
                         onReservationCardClick = {
                             showReservationsTab()
                         }
@@ -207,6 +215,17 @@ fun StudentHomeScreenRoot(
                 }
 
                 3 -> CampusMapScreen(onBackClick = { selectedItemIndex = 0 })
+                4 -> {
+                    // Same view model instance as the home widget, so the page opens without reloading.
+                    val diningMenuViewModel: AkdenizDiningMenuViewModel = koinViewModel()
+                    val diningMenuState by diningMenuViewModel.state.collectAsStateWithLifecycle()
+                    DailyMenuScreen(
+                        state = diningMenuState,
+                        initialMeal = dailyMenuMeal,
+                        onRefreshIfDayChanged = diningMenuViewModel::refreshIfDayChanged,
+                        onBackClick = { selectedItemIndex = 0 }
+                    )
+                }
             }
         }
     }

@@ -263,6 +263,19 @@ test('signed-in users can read the published dining menu but clients cannot writ
   }));
 });
 
+test('signed-in users can read a KYK menu day but clients cannot list or write them', async () => {
+  await seed('users/student-1', { role: 'student', status: 'active' });
+  await seed('users/admin-1', { role: 'good4Admin', status: 'active' });
+  await seed('kyk_menu_days/2026-10-01', { date: '2026-10-01', breakfast: ['Çay'], dinner: ['Pilav'] });
+  const studentDb = testEnv.authenticatedContext('student-1').firestore();
+  const adminDb = testEnv.authenticatedContext('admin-1').firestore();
+  const anonymousDb = testEnv.unauthenticatedContext().firestore();
+  await assertSucceeds(getDoc(doc(studentDb, 'kyk_menu_days/2026-10-01')));
+  await assertFails(getDoc(doc(anonymousDb, 'kyk_menu_days/2026-10-01')));
+  await assertFails(getDocs(collection(studentDb, 'kyk_menu_days')));
+  await assertFails(setDoc(doc(adminDb, 'kyk_menu_days/2026-10-02'), { date: '2026-10-02', breakfast: ['Çay'] }));
+});
+
 test('signed-in users can read the home banner but clients cannot write it', async () => {
   await seed('users/student-1', { role: 'student', status: 'active' });
   await seed('users/admin-1', { role: 'good4Admin', status: 'active' });

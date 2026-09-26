@@ -9,6 +9,7 @@ import {
 import { httpsCallable } from "firebase/functions";
 import { auth, functions, getFirestoreDb } from "./firebase";
 import { EVENT_CATEGORIES } from "../../functions/src/eventCategories";
+import { parseKykMenuText, type KykMenuDay } from "../../functions/src/kykMenuParser";
 
 const eventCategoryLabel = (id?: string) => EVENT_CATEGORIES.find((category) => category.id === id)?.label ?? "Kategori belirtilmemiş";
 import {
@@ -207,6 +208,7 @@ const saveDiningMenu = httpsCallable<{
   weekEnd: string;
   days: DiningMenuDay[];
 }, DiningMenu>(functions, "saveDiningMenu");
+const saveKykMenu = httpsCallable<{ days: KykMenuDay[] }, { savedDates: string[] }>(functions, "saveKykMenu");
 const saveHomeBanner = httpsCallable<{
   imageUrl: string;
   advertiserName: string;
@@ -1349,7 +1351,7 @@ function CommunityEntryCard({ entry, onEdit, onCancel, busy }: {
   );
 }
 
-type AdminTab = "coupons" | "menu" | "ads" | "calendar" | "feedback" | "businesses" | "communities" | "audit";
+type AdminTab = "coupons" | "menu" | "kyk" | "ads" | "calendar" | "feedback" | "businesses" | "communities" | "audit";
 type DiningMenuDayForm = { date: string; dayName: string; meals: string; calories: string };
 
 const diningDayNames = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"];
@@ -1410,6 +1412,7 @@ const auditLabels: Record<string, string> = {
   "legacyCoupon.redeemed": "Kupon kullanıldı",
   "campaignCode.redeemed": "Kampanya kodu kullanıldı",
   "diningMenu.updated": "Haftalık yemek menüsü güncellendi",
+  "kykMenu.updated": "KYK yemek menüsü güncellendi",
   "homeBanner.published": "Ana sayfa reklamı yayınlandı",
   "homeBanner.unpublished": "Ana sayfa reklamı yayından kaldırıldı",
   "academicCalendar.created": "Takvim kaydı oluşturuldu",
@@ -1484,6 +1487,9 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
   const [menuWeekStart, setMenuWeekStart] = useState("");
   const [menuWeekEnd, setMenuWeekEnd] = useState("");
   const [menuDays, setMenuDays] = useState<DiningMenuDayForm[]>(() => emptyDiningDays());
+  const [kykText, setKykText] = useState("");
+  const [savingKyk, setSavingKyk] = useState(false);
+  const kykPreview = parseKykMenuText(kykText);
   const [savingMenu, setSavingMenu] = useState(false);
   const [bannerFile, setBannerFile] = useState<File | null>(null);
   const [bannerPreviewUrl, setBannerPreviewUrl] = useState("");
@@ -1715,6 +1721,27 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
     }
   }
 
+  async function handleSaveKykMenu(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSavingKyk(true);
+    setError("");
+    setNotice("");
+    try {
+      if (kykPreview.errors.length > 0 || kykPreview.days.length === 0) {
+        throw new Error("Önizlemedeki hataları düzeltin.");
+      }
+      const response = await saveKykMenu({ days: kykPreview.days });
+      setNotice(`${response.data.savedDates.length} günlük KYK menüsü yayınlandı. Mobil uygulama hemen gösterecek.`);
+      setKykText("");
+    } catch (requestError) {
+      setError(requestError instanceof Error && !('code' in requestError)
+        ? requestError.message
+        : functionErrorMessage(requestError));
+    } finally {
+      setSavingKyk(false);
+    }
+  }
+
   async function handleSaveHomeBanner(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSavingBanner(true);
@@ -1866,6 +1893,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
             Bekleyen kuponlar {data && <span>{data.pendingCoupons.length}</span>}
           </button>
           <button className={tab === "menu" ? "active" : ""} onClick={() => setTab("menu")}>Yemek Menüsü</button>
+          <button className={tab === "kyk" ? "active" : ""} onClick={() => setTab("kyk")}>KYK Menüsü</button>
           <button className={tab === "ads" ? "active" : ""} onClick={() => setTab("ads")}>Ana Sayfa Reklamı</button>
           <button className={tab === "calendar" ? "active" : ""} onClick={() => setTab("calendar")}>Akademik Takvim</button>
           <button className={tab === "feedback" ? "active" : ""} onClick={() => setTab("feedback")}>
@@ -1972,6 +2000,47 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
                 <p>Kaydettiğinizde önceki haftalık menü bu içerikle değiştirilir.</p>
                 <button className="primary-button compact-button" disabled={savingMenu || !menuWeekStart || menuDays.some((day) => !day.meals.trim())}>
                   {savingMenu ? "Yayınlanıyor…" : "Menüyü yayınla"}
+                </button>
+              </div>
+            </form>
+          </section>
+        )}
+
+        {!loading && data && tab === "kyk" && (
+          <section className="admin-section" aria-labelledby="kyk-menu-title">
+            <div className="section-title-row">
+              <div>
+                <h2 id="kyk-menu-title">KYK yemek menüsü</h2>
+                <p>Aylık listeyi yapıştırın. Her gün ayrı kaydedilir; aynı tarih yeniden yayınlanırsa üzerine yazılır.</p>
+              </div>
+            </div>
+            <form className="admin-card dining-menu-form" onSubmit={handleSaveKykMenu}>
+              <label>
+                <span className="field-label">Menü metni</span>
+                <textarea rows={14} value={kykText} onChange={(event) => setKykText(event.target.value)} placeholder={"1 EKİM 2026\n\nKAHVALTI\n- Haşlanmış yumurta\n- Çay / bitki çayı\n\nAKŞAM YEMEĞİ\n- Mercimek çorbası\n- Tavuk sote"} />
+              </label>
+              {kykPreview.errors.length > 0 && (
+                <div className="inline-message inline-message--error" role="alert">
+                  {kykPreview.errors.map((message) => <div key={message}>{message}</div>)}
+                </div>
+              )}
+              {kykPreview.days.length > 0 && (
+                <div className="dining-days">
+                  {kykPreview.days.map((day) => (
+                    <fieldset className="dining-day-card" key={day.date}>
+                      <legend>{day.date.split("-").reverse().join(".")}</legend>
+                      <p><strong>Kahvaltı</strong></p>
+                      <ul>{day.breakfast.map((item) => <li key={item}>{item}</li>)}</ul>
+                      <p><strong>Akşam yemeği</strong></p>
+                      <ul>{day.dinner.map((item) => <li key={item}>{item}</li>)}</ul>
+                    </fieldset>
+                  ))}
+                </div>
+              )}
+              <div className="dining-menu-actions">
+                <p>{kykPreview.days.length} gün okundu.</p>
+                <button className="primary-button compact-button" disabled={savingKyk || kykPreview.days.length === 0 || kykPreview.errors.length > 0}>
+                  {savingKyk ? "Yayınlanıyor…" : "KYK menüsünü yayınla"}
                 </button>
               </div>
             </form>

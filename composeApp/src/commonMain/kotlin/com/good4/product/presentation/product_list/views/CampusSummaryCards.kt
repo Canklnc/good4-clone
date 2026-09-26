@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,7 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.good4.core.presentation.*
+import com.good4.dining.domain.DailyMeal
 import com.good4.dining.presentation.AkdenizDiningMenuState
+import com.good4.dining.presentation.DailyMenuWidget
 import com.good4.weather.CampusWeatherRepository
 import org.koin.compose.koinInject
 import androidx.compose.foundation.clickable
@@ -25,8 +25,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlin.math.roundToInt
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.akdeniz_campus_weather
@@ -69,7 +67,8 @@ private object CampusWeatherCache {
 
 @Composable
 internal fun CampusSummaryCards(
-    diningMenuState: AkdenizDiningMenuState
+    diningMenuState: AkdenizDiningMenuState,
+    onDailyMenuClick: (DailyMeal) -> Unit
 ) {
     val weatherRepository: CampusWeatherRepository = koinInject()
     val uriHandler = LocalUriHandler.current
@@ -85,8 +84,6 @@ internal fun CampusSummaryCards(
             weatherLabel = "Şu an alınamıyor"
         }
     }
-    val today = Clock.System.now().toLocalDateTime(TimeZone.of("Europe/Istanbul")).date.toString()
-    val menu = diningMenuState.menu?.days?.firstOrNull { it.date == today }
 
     Row(
         Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 18.dp),
@@ -120,22 +117,10 @@ internal fun CampusSummaryCards(
                 }
             }
         }
-        Surface(Modifier.weight(1f).height(116.dp), shape = RoundedCornerShape(16.dp), color = SurfaceDefault, shadowElevation = 1.dp) {
-            Box(Modifier.fillMaxSize()) {
-                Icon(Icons.Outlined.Restaurant, contentDescription = null, tint = PrimaryGreen.copy(alpha = .13f), modifier = Modifier.align(Alignment.BottomEnd).offset(x = 12.dp, y = 12.dp).size(76.dp))
-                Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Outlined.Restaurant, contentDescription = null, tint = PrimaryGreen, modifier = Modifier.size(17.dp))
-                        Spacer(Modifier.width(6.dp))
-                        Text("Günün Menüsü", fontSize = 14.sp, lineHeight = 17.sp, color = TextPrimary, fontWeight = FontWeight.Medium)
-                    }
-                if (menu != null) {
-                        menu.meals.take(3).forEach { Text(it, fontSize = 10.5.sp, lineHeight = 13.sp, color = TextSecondary, maxLines = 1) }
-                } else {
-                        Text(if (diningMenuState.isLoading) "Yükleniyor…" else "Bugün için menü yayınlanmadı", fontSize = 11.sp, lineHeight = 14.sp, color = TextSecondary)
-                }
-                }
-            }
-        }
+        DailyMenuWidget(
+            state = diningMenuState,
+            onMealClick = onDailyMenuClick,
+            modifier = Modifier.weight(1f).height(116.dp)
+        )
     }
 }

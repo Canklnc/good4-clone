@@ -69,6 +69,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.good4.config.domain.HomeBanner
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.good4.core.presentation.AppBackground
 import com.good4.core.presentation.BorderMuted
@@ -84,7 +85,7 @@ import com.good4.core.presentation.components.Good4NestedScaffold
 import com.good4.core.presentation.components.toDisplayAddressOrNull
 import com.good4.core.util.ReservationTimeCalculator
 import com.good4.core.util.openMaps
-import com.good4.dining.presentation.AkdenizDiningMenuCard
+import com.good4.dining.domain.DailyMeal
 import com.good4.dining.presentation.AkdenizDiningMenuState
 import com.good4.dining.presentation.AkdenizDiningMenuViewModel
 import com.good4.feedback.FeedbackViewModel
@@ -128,7 +129,8 @@ fun ProductListScreenRoot(
     onNotificationsClick: () -> Unit = {},
     onCalendarClick: () -> Unit = {},
     onCampusMapClick: () -> Unit = {},
-    onClassScheduleClick: () -> Unit = {}
+    onClassScheduleClick: () -> Unit = {},
+    onDailyMenuClick: (DailyMeal) -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val diningMenuViewModel: AkdenizDiningMenuViewModel = koinViewModel()
@@ -139,6 +141,11 @@ fun ProductListScreenRoot(
         viewModel.loadStudentInfo()
         viewModel.loadHomeBanner()
         diningMenuViewModel.loadMenu()
+    }
+    // Returning to the app on a new day must not keep yesterday's menu on the widget.
+    LifecycleResumeEffect(Unit) {
+        diningMenuViewModel.refreshIfDayChanged()
+        onPauseOrDispose { }
     }
 
     ProductListScreen(
@@ -153,6 +160,7 @@ fun ProductListScreenRoot(
         onCalendarClick = onCalendarClick,
         onCampusMapClick = onCampusMapClick,
         onClassScheduleClick = onClassScheduleClick,
+        onDailyMenuClick = onDailyMenuClick,
         onAction = { action ->
             viewModel.onAction(action)
         }
@@ -173,6 +181,7 @@ fun ProductListScreen(
     onCalendarClick: () -> Unit = {},
     onCampusMapClick: () -> Unit = {},
     onClassScheduleClick: () -> Unit = {},
+    onDailyMenuClick: (DailyMeal) -> Unit = {},
     onAction: (ProductListAction) -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -222,7 +231,8 @@ fun ProductListScreen(
 
                         item {
                             CampusSummaryCards(
-                                diningMenuState = diningMenuState
+                                diningMenuState = diningMenuState,
+                                onDailyMenuClick = onDailyMenuClick
                             )
                         }
 

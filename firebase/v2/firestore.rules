@@ -177,6 +177,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Monthly KYK dorm menu, one document per day; written only by the saveKykMenu function.
+    match /kyk_menu_days/{date} {
+      allow get: if signedIn();
+      allow list, create, update, delete: if false;
+    }
+
     match /app_config/{documentId} {
       allow get: if signedIn() && documentId in ['akdeniz_dining_menu', 'home_banner', 'campus_weather'];
       allow list, create, update, delete: if false;

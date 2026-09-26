@@ -33,6 +33,7 @@ import {
 import { recordEventAttendanceService, setEventRegistrationService } from "./events.js";
 import { getFollowingCommunityIdsService, setCommunityFollowingService } from "./communityFollowing.js";
 import { submitFeedbackService } from "./feedback.js";
+import { saveKykMenuService } from "./kykMenu.js";
 import { ensureStudentProfileService } from "./studentAuth.js";
 import { eraseAccountData } from "./accountDeletion.js";
 import { refreshCampusWeatherService } from "./weather.js";
@@ -170,6 +171,11 @@ export const moderateContentReport = onCall(callableOptions, async (request) => 
 export const saveDiningMenu = onCall(callableOptions, async (request) => {
   const uid = requireAuthenticatedUid(request.auth?.uid);
   return saveDiningMenuService(db, legacyTestDb, uid, request.data ?? {});
+});
+
+export const saveKykMenu = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return saveKykMenuService(db, uid, request.data ?? {});
 });
 
 export const saveHomeBanner = onCall(callableOptions, async (request) => {

@@ -40,20 +40,35 @@ function requireMenuDay(value: unknown): KykMenuDay {
   return { date, breakfast, dinner };
 }
 
-/** Good4 admins publish KYK days; each day is its own document so the app reads one small doc. */
+/** Good4 admins publish KYK days from the web panel. */
 export async function saveKykMenuService(
   database: Firestore,
   actorUid: string,
   input: { days?: unknown },
 ): Promise<{ savedDates: string[] }> {
   await requireGood4Admin(database, actorUid);
-  if (!Array.isArray(input.days) || input.days.length === 0 || input.days.length > MAX_DAYS) {
+  return writeKykMenuDays(database, input.days, actorUid);
+}
+
+/** Shared validation for the callable and the script's offline preview. */
+export function validateKykMenuDays(input: unknown): KykMenuDay[] {
+  if (!Array.isArray(input) || input.length === 0 || input.length > MAX_DAYS) {
     throw new HttpsError("invalid-argument", "KYK_MENU_DAYS_INVALID");
   }
-  const days = input.days.map(requireMenuDay);
+  const days = input.map(requireMenuDay);
   if (new Set(days.map((day) => day.date)).size !== days.length) {
     throw new HttpsError("invalid-argument", "KYK_MENU_DAY_DUPLICATE");
   }
+  return days;
+}
+
+/** Stores one document per day; callers must supply an authorized Firestore instance. */
+export async function writeKykMenuDays(
+  database: Firestore,
+  input: unknown,
+  actorUid: string,
+): Promise<{ savedDates: string[] }> {
+  const days = validateKykMenuDays(input);
   const batch = database.batch();
   for (const day of days) {
     batch.set(database.collection(KYK_MENU_COLLECTION).doc(day.date), {

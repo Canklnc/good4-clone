@@ -82,18 +82,26 @@ fun ClassScheduleScreen(
     val schedule = state.schedule
     val availableSections = schedule?.entries.orEmpty().mapNotNull { it.section }.distinct()
     var selectedSection by rememberSaveable { mutableStateOf("Tümü") }
-    var hasResumedOnce by remember { mutableStateOf(false) }
+    var awaitingProfileUpdate by rememberSaveable { mutableStateOf(false) }
+    val openAcademicProfile = {
+        awaitingProfileUpdate = true
+        onSelectAcademicProfile()
+    }
 
-    // Picks up a faculty, department or class year saved in account settings on return.
+    // Reloads only after the student visited the academic selection; returning from the source PDF,
+    // the app switcher or the lock screen keeps the schedule without another Firestore read.
     LifecycleResumeEffect(Unit) {
-        if (hasResumedOnce) viewModel.refresh() else hasResumedOnce = true
+        if (awaitingProfileUpdate) {
+            awaitingProfileUpdate = false
+            viewModel.refresh()
+        }
         onPauseOrDispose { }
     }
 
     LaunchedEffect(state.isLoading, state.isAcademicProfileMissing) {
         if (!state.isLoading && state.isAcademicProfileMissing && !viewModel.hasPromptedAcademicSelection) {
             viewModel.onAcademicSelectionPrompted()
-            onSelectAcademicProfile()
+            openAcademicProfile()
         }
     }
 
@@ -147,7 +155,7 @@ fun ClassScheduleScreen(
                     Surface(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickableWithoutRipple(onSelectAcademicProfile),
+                            .clickableWithoutRipple(openAcademicProfile),
                         color = Color(0xFFFFF4D6),
                         shape = RoundedCornerShape(16.dp)
                     ) {

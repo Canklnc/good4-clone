@@ -49,7 +49,9 @@ class ClassScheduleViewModel(
         }
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, errorMessage = null) }
+            // A loaded schedule stays on screen while it refreshes.
+            val hasLoadedUser = _state.value.user != null
+            _state.update { it.copy(isLoading = !hasLoadedUser, errorMessage = null) }
             when (val result = userRepository.getUser(userId)) {
                 is Result.Success -> {
                     val user = result.data
@@ -73,6 +75,11 @@ class ClassScheduleViewModel(
                 }
 
                 is Result.Error -> {
+                    // Never swap a student's own schedule for the fallback because a refresh failed.
+                    if (hasLoadedUser) {
+                        _state.update { it.copy(isLoading = false) }
+                        return@launch
+                    }
                     _state.update {
                         it.copy(
                             isLoading = false,

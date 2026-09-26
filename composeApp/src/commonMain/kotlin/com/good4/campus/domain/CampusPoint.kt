@@ -119,3 +119,17 @@ object CampusPoints {
     val all = listOf(library) + faculties + academicUnits + serviceBuildings + diningHalls + banks + atms +
         shoppingAreas + mosques + sportsAreas + dormitories
 }
+
+/** Case- and diacritic-insensitive Turkish matching, so "muhendislik" finds "Mühendislik". */
+private fun String.searchKey(): String = lowercase()
+    .replace("i̇", "i").replace('ı', 'i').replace('ş', 's').replace('ğ', 'g')
+    .replace('ü', 'u').replace('ö', 'o').replace('ç', 'c').replace('â', 'a').replace('î', 'i')
+
+/** Points whose name or category contains every word of [query]; names starting with it come first. */
+fun CampusPoints.search(query: String): List<CampusPoint> {
+    val terms = query.searchKey().split(' ').filter(String::isNotBlank)
+    if (terms.isEmpty()) return emptyList()
+    return all
+        .filter { point -> "${point.name} ${point.category.label}".searchKey().let { text -> terms.all { it in text } } }
+        .sortedBy { point -> if (point.name.searchKey().startsWith(terms.first())) 0 else 1 }
+}

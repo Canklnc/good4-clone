@@ -316,7 +316,6 @@ internal object LiteratureSchedules {
             block(monday, "10:30", "15:20", "YDE 307", "Latince Gramer III", "Hüseyin UZUNOĞLU", "D-101"),
             block(monday, "15:30", "17:20", "YDE 313", "Latin Edebiyatı Tarihi I", "Asuman COŞKUN ABUAGLA", "D-104"),
             block(tuesday, "08:30", "10:20", "YDE 319", "Klasik Filoloji Bilim Tarihi I", "Fatih ONUR", "D-103"),
-            block(tuesday, "10:30", "12:20", "YDE 403", "Eski Yunan Epigrafisi III", "Mustafa ADAK"),
             block(tuesday, "13:30", "15:20", "YDE 307", "Latince Gramer III", "Hüseyin UZUNOĞLU", "D-103"),
             block(tuesday, "15:30", "17:20", "YDE 303", "Eski Yunan Edebiyatı Tarihi III", "Nuray GÖKALP", "D-101"),
             block(wednesday, "13:30", "15:20", "YDE 305", "Eski Yunan Epigrafisi I", "Eda AKYÜREK ŞAHİN", "D-102"),

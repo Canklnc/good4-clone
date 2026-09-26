@@ -82,7 +82,7 @@ internal object FisheriesSchedules {
         CourseBlock(ScheduleDay.WEDNESDAY, 3, 7, 7, "SÜM 307", "Su Ürünleri İşleme Teknolojisi I Uygulaması", "Prof. Dr. Nalan Gökoğlu", "Öğrenci Laboratuvarı 1", "Uygulama"),
         CourseBlock(ScheduleDay.THURSDAY, 3, 3, 4, "SÜM 319", "Deniz Akvaryumları ve Yetiştiriciliği", "Doç. Dr. B. Ahmet Balcı", "Z-3"),
         CourseBlock(ScheduleDay.THURSDAY, 3, 5, 6, "SÜM 321", "Akuatik Farmakoloji", "Prof. Dr. Jale Korun", "Z-3"),
-        CourseBlock(ScheduleDay.FRIDAY, 3, 2, 2, "SÜM 377", "Yarıyıl Stajı", "", "Z-3", note = "Eski öğrenciler için"),
+        CourseBlock(ScheduleDay.FRIDAY, 3, 1, 2, "SÜM 377", "Yarıyıl Stajı", "", "Z-3", note = "Eski öğrenciler için"),
         CourseBlock(ScheduleDay.FRIDAY, 3, 3, 4, "SÜM 379", "Mesleki Uygulama", "", "Z-3", note = "Eski öğrenciler için"),
 
         // 4. sınıf

@@ -109,8 +109,8 @@ internal object LawSchedules {
             block(ScheduleDay.THURSDAY, "13:30", "16:20", "Hukuk Felsefesi ve Sosyolojisi", "Amfi 3"),
             block(ScheduleDay.FRIDAY, "08:30", "10:20", "Karşılaştırmalı Hukuk (B)", "Amfi 3"),
             block(ScheduleDay.FRIDAY, "10:30", "12:20", "İdari Yargılama Hukuku", "Amfi 3"),
-            block(ScheduleDay.FRIDAY, "14:30", "15:20", "Kriminoloji (G) / Bilişim Hukuku (B)", "Amfi 3 / Derslik 7"),
-            block(ScheduleDay.FRIDAY, "15:30", "16:20", "Kriminoloji (G) / Hukuk ve Etik (G) / Bilişim Hukuku (B)", "Amfi 3 / Derslik 7"),
+            block(ScheduleDay.FRIDAY, "13:30", "14:20", "Kriminoloji (G) / Bilişim Hukuku (B)", "Amfi 3 / Derslik 7"),
+            block(ScheduleDay.FRIDAY, "14:30", "16:20", "Kriminoloji (G) / Hukuk ve Etik (G) / Bilişim Hukuku (B)", "Amfi 3 / Derslik 7"),
             block(ScheduleDay.FRIDAY, "16:30", "17:20", "Hukuk ve Etik (G)", "Derslik 7")
         ),
         listOf(

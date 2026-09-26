@@ -125,7 +125,7 @@ internal object TheologySchedules {
         section(ScheduleDay.MONDAY, 2, 1, 2, "B", "Tefsir I", "Arş. Gör. Dr. Nazife Göksu"),
         section(ScheduleDay.MONDAY, 2, 1, 2, "C", "Kur'an Okuma ve Tecvid III", "Öğr. Gör. Dr. Fatma Dursun"),
         section(ScheduleDay.MONDAY, 2, 3, 4, "A", "Tefsir I", "Arş. Gör. Dr. Aziz Karabulut"),
-        section(ScheduleDay.MONDAY, 2, 3, 4, "B", "Kur'an Okuma ve Tecvid II", "Öğr. Gör. Dr. Hasan Alkan"),
+        section(ScheduleDay.MONDAY, 2, 3, 4, "B", "Kur'an Okuma ve Tecvid III", "Öğr. Gör. Dr. Hasan Alkan"),
         section(ScheduleDay.MONDAY, 2, 3, 4, "C", "İtikadî İslam Mezhepleri", "Prof. Dr. Ömer Faruk Teber"),
         shared(ScheduleDay.MONDAY, 2, 5, 6, "Eğitime Giriş", "Doç. Dr. Mustafa Fatih Ay", "Kaynak hücresinde ayrıca '=12:30' notu bulunuyor."),
         shared(ScheduleDay.MONDAY, 2, 7, 8, "Din Sosyolojisi", "Prof. Dr. Bahset Karslı"),
@@ -144,7 +144,7 @@ internal object TheologySchedules {
         section(ScheduleDay.WEDNESDAY, 2, 1, 2, "B", "İslam Hukuk Usulü", "Dr. Öğr. Ü. Zeki Yaka"),
         section(ScheduleDay.WEDNESDAY, 2, 3, 4, "A", "İslam Hukuk Usulü", "Dr. Öğr. Ü. Zeki Yaka"),
         section(ScheduleDay.WEDNESDAY, 2, 3, 4, "B", "Hadis I", "Prof. Dr. Zişan Türcan"),
-        shared(ScheduleDay.WEDNESDAY, 2, 5, 6, "Rehberlik ve Özel Eğitim", "Doç. Dr. Mehmet Çınar"),
+        shared(ScheduleDay.WEDNESDAY, 2, 5, 6, "Rehberlik ve Özel Eğitim", "Doç. Dr. Mehmet Çınar", "Kaynak hücresinde ayrıca '12:30-15:20' notu bulunuyor."),
         shared(ScheduleDay.WEDNESDAY, 2, 7, 8, "Arap Dili ve Belâgatı III", "Öğr. Gör. Dr. Kemal Şimşek"),
 
         // 2. sınıf — Perşembe

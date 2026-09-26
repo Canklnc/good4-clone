@@ -83,7 +83,7 @@ internal object FineArtsSchedules {
         "RANA İĞNECİ SÜZEN", "RANA IGNECI SÜZEN", "RANA İĞNECİ", "RANA İĞNECCI",
         "RANA SÜZEN", "ZİHNİ", "ZIHNI", "BİRTAN BOZLU", "EZGİ BİLGİN", "EZGI BILGIN",
         "BERNA GÜNDOĞDU", "BURCAK AKINCI", "MERAL BAYRAM", "ÖMER YÖNDEM", "OMER YONDEM",
-        "MİLLİ EĞİTİM"
+        "MİLLİ EĞİTİM", "ERTUNÇ UKSUL"
     )
 
     private val sourceByDepartment = mapOf(
@@ -154,7 +154,7 @@ MONDAY|4|17:30|18:20|HEYK 441 Anıt Heykel I\nDoç. Dr. Özcan Özkarakoç Z-10
 TUESDAY|3|08:30|14:20|HEYK 345 Heykel Atölye III\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,\nDr. Öğr. Ü. Selda Özturan, Dr. Öğr. Ü. Hülya Bozbıyık\nUysal, Öğr. Gör. Işık Aslıhan, Arş. Gör. Mukaddes\nYörük Kalaycıoğlu
 TUESDAY|3|14:30|17:20|HEYK 355 Fonksiyonel Heykel
 TUESDAY|4|08:30|14:20|HEYK431 Heykel Atölye V\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,\nDr. Öğr. Ü. Selda Özturan, Dr. Öğr. Ü. Hülya Bozbıyık\nUysal, Öğr. Gör. Işık Aslıhan
-TUESDAY|4|14:30|15:20|HEYK459 Heykel Tasarım Uygulamaları I\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,\nDr. Öğr. Ü. Selda Özturan, Dr. Öğr. Ü. Hülya Bozbıyık\nUysal, Öğr. Gör. Işık Aslıhan\nHEYK459 Heykel Tasarım Uygulamaları I\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,\nHEYK459 Heykel Tasarım Uygulamaları I\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,\nHEYK459 Heykel Tasarım Uygulamaları I\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,
+TUESDAY|4|14:30|18:20|HEYK459 Heykel Tasarım Uygulamaları I\nDoç. Dr. Özcan Özkarakoç, Doç. Hanife Neris Yüksel,\nDr. Öğr. Ü. Selda Özturan, Dr. Öğr. Ü. Hülya Bozbıyık\nUysal, Öğr. Gör. Işık Aslıhan
 WEDNESDAY|1|08:30|12:20|HEYK103 Desen I\nDr. Öğr. Ü. Selda Özturan Z-07
 WEDNESDAY|1|13:30|18:20|HEYK111 Modelaj I\nDoç. Hanife Neris Yüksel B05
 WEDNESDAY|2|08:30|10:20|HEYK 241 Sanat Tarihi III\nÖğr. Gör. Hayal Güleç- 302
@@ -248,19 +248,23 @@ WEDNESDAY|2|13:30|15:20|SER207 / SERAMİK CAM TEKNOLOJİSİ I\nDoç. K. Tizgöl 
 WEDNESDAY|2|15:30|18:20|SER243 / YÜZEY TAS. I\nDoç. Kamuran Özlem SARNIÇ / 207
 WEDNESDAY|3|09:30|12:20|SER345 / ÇAMUR TORNASINDA SERBEST TASARIM\nÖğr. Gör. E. Mülayim / Z-19
 WEDNESDAY|3|13:30|16:20|SER355/ SERAMİK\nHEDİYELİK EŞYA\nÖğr. Gör. E. Mülayim / Z19
+WEDNESDAY|3|13:30|16:20|SER 343/ ÇİNİ TASARIMI\nDoç. F. Işıktan / B-12
 WEDNESDAY|3|16:30|18:20|SER 321 / ERGONOMİ\n208 Dr.Öğr.Ü. E. Güner
 THURSDAY|1|10:30|12:20|SER187 / SANAT TARİHİ I\nÖğrt. Gör. H. Güleç 305 FOT113
 THURSDAY|1|12:30|15:20|SER107 / SERAMİĞE GİRİŞ I\nÖğr. Gör. E. Mülayim / Z-19
 THURSDAY|2|09:30|11:20|SER237 SERAMİK TARİHİ\nDoç. Özlem Sarnıç / z-12
 THURSDAY|2|15:30|18:20|SER249 SER. ASTAR VE BOYA UYG. I\nÖğr. Gör. E. Mülayim / B -14 b
 THURSDAY|3|08:30|14:20|SER307/ SER TAS. I END\nDr.Öğr.Ü. E. Güner / B11
+THURSDAY|3|08:30|14:20|SER305/ SER.TAS. I SAN.\nDoç. K.Tizgöl / Z-18
 THURSDAY|3|15:30|18:20|SER353/MİMARİDE\nSERAMİK Doç. F. Işıktan Z-\n18
+THURSDAY|3|15:30|18:20|SER 361 GÜZEL SANATLARDA BİLGİSAYAR DESTEKLİ TASARIM\nDoç. Dr. E. Çetintaş / 301
 THURSDAY|4|11:30|14:20|SER 463 PORTFOLYO\nDoç. Kamuran Özlem SARNIÇ AS 09
 THURSDAY|4|15:30|18:20|SER447 / ANİMASYON MODELLEME\nÖğr. Gör. Işık aslıhan / Z-19
 FRIDAY|1|08:30|13:20|SER101 / TEMEL SANAT EĞİTİMİ I\nDoç. K. Ö. Sarnıç / AS-08
 FRIDAY|1|14:30|16:20|SER105 / TEKNİK RESİM\nDoç. Dr. E. Çetintaş / AS-09
 FRIDAY|2|08:30|12:20|SER203/ ALÇI MODEL KALIP HAZIRLAMA YÖNT.\nDoç. Dr. E. Çetintaş / B-11
 FRIDAY|3|13:30|17:20|SER309/ DEKOR TASARIMI\nDoç. F. Işıktan / B-12
+FRIDAY|4|16:30|18:20|SER 471 / UYGULAMA BECERİSİ\nDoç. K. Ö. Sarnıç AS 06
             """.trimIndent()
         ),
         ClassSchedules.MUSIC_DEPARTMENT to ScheduleSource(
@@ -383,7 +387,8 @@ WEDNESDAY|3|09:30|10:20|FLM303 KURGU I\nZIHNI (Bilgisayar Lab. C BLOK Kat 5
 WEDNESDAY|3|10:30|11:20|FLM303 KURGU I\nZIHNI (Bilgisayar Lab. C BLOK Kat 6
 WEDNESDAY|3|11:30|12:20|FLM303 KURGU I\nZIHNI (Bilgisayar Lab. C BLOK Kat 7
 WEDNESDAY|3|13:30|15:20|FLM317 SINEMA ESTETIK FELSEFE\nOGUZHAN ERSUMER #305
-WEDNESDAY|4|13:30|17:20|FLM419 ULKE SINEMALARI\nRANA SUZEN #304
+WEDNESDAY|4|13:30|15:20|FLM419 ULKE SINEMALARI\nRANA SUZEN #304
+WEDNESDAY|4|15:30|17:20|FLM433 BILIMSEL ARASTIRMA I\nERTUNÇ UKSUL #305
 THURSDAY|1|08:30|10:20|FİLM117 Sanat Tarihi-I - Öğr.Gör. Hayal Güleç\nDerslik 304
 THURSDAY|1|10:30|12:20|FLM 123 Sinema Kültürü Ayşen Oluk Ersümer #304
 THURSDAY|2|10:30|12:20|FLM 233 SENARYO YAZIMI I\nRANA IGNECI SÜZEN #303

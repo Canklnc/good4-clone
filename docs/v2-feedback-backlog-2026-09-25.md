@@ -37,7 +37,7 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
 
 - [x] **Ders programı bazı bölümlerde çöküyor (düzeltildi).** Ziraat Fakültesi verisindeki Türkçe gün adları (`PAZARTESİ`…) `ScheduleDay.valueOf` ile ayrıştırılınca çöküyordu; ayrıca 5. sınıf seçiliyken başka fakülteye geçmek liste sınırı dışına çıkıyordu. 80 bölüm × tüm sınıflar (321 kombinasyon) çökmeden açılıyor.
 - [x] **Bilgisayar Mühendisliği ve Yapay Zeka ve Veri Mühendisliği programları (düzeltildi).** Google Sheets aktarımı sadece ilk saati almıştı; bazı dersler yanlış gün ve derslikteydi. Kaynaktan yeniden üretildi.
-- [ ] **Tüm ders programlarının kaynakla karşılaştırılması (sürüyor).** Görüntü tabanlı PDF'lerden yapılan aktarımda ders başlangıç ve bitişleri kayabiliyor (Turizm ve Gastronomi 1. sınıfta 5 ders düzeltildi). Turizm Fakültesi başta olmak üzere diğer kaynaklar tek tek kontrol edilecek. Codex'e devredildi: `docs/handoff-schedule-audit-2026-09-25.md`.
+- [x] **Tüm ders programlarının kaynakla karşılaştırılması (tamamlandı; 2 bölüm kaynak bekliyor).** Görüntü tabanlı PDF'lerden yapılan aktarımda ders başlangıç ve bitişleri kayabiliyor (Turizm ve Gastronomi 1. sınıfta 5 ders düzeltildi). 26.09 itibarıyla tablodaki bütün bölümler denetlendi ve düzeltmeler uygulandı (commit edilmedi). Jeoloji Mühendisliği de PNG kaynağıyla denetlendi. Sosyal Bilgiler Öğretmenliği ve Hemşirelik 3–4 için güncel kaynak yayımlanmadığından veri değiştirilmedi ve kullanıcı onayıyla beklemeye alındı; uygulamadaki kaynak uyarıları duruyor. Ayrıntı: `docs/handoff-schedule-audit-2026-09-25.md`.
 
 ## İyileştirmeler
 

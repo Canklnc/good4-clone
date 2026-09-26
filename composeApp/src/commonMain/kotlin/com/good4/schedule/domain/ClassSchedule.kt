@@ -174,7 +174,7 @@ object ClassSchedules {
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlSw5jj3NiDuC6epB3h-9iEOJarXkZrkpPyzTdVp_u9vCeBvAiXsXVZkWbkxS0w5vHEbuuWJzob_0r/pubhtml?gid=716482959&headers=false&single=true&widget=true"
 
     private const val ELECTRICAL_ELECTRONICS_ENGINEERING_SOURCE_URL =
-        "https://muhendislik.akdeniz.edu.tr/"
+        "https://webis.akdeniz.edu.tr/file/getfile?guid=eed9f8a7-27fc-4d8c-8065-6cfffe59d01e"
 
     private const val ENVIRONMENTAL_ENGINEERING_SOURCE_URL =
         "https://webis.akdeniz.edu.tr/uploads/1114/announcement/2026-27G_CevreMuh_DersProgrami_v4.pdf"
@@ -192,10 +192,10 @@ object ClassSchedules {
         "https://webis.akdeniz.edu.tr/uploads/1112/announcement/YeniKlasor%203/2026-2027_G%C3%BCz_D%C3%B6nemi_Makine_M%C3%BChendisli%C4%9Fi_B%C3%B6l%C3%BCm%C3%BC_Ders_Program_17.09.2026.pdf"
 
     private const val ARCHITECTURE_SOURCE_URL =
-        "https://mimarlik.akdeniz.edu.tr/"
+        "https://webis.akdeniz.edu.tr/uploads/1107/ders_programi/26-27%20g%C3%BCz%20ders%20programlar%C4%B1/M%C4%B0M-%2831401199%29Mimarlik%20-%202026-2027%20Guz%20Haftalik%20Ders%20Programi%202.pdf"
 
     private const val INTERIOR_ARCHITECTURE_SOURCE_URL =
-        "https://mimarlik.akdeniz.edu.tr/"
+        "https://webis.akdeniz.edu.tr/uploads/1107/ders_programi/26-27%20g%C3%BCz%20ders%20programlar%C4%B1/%C4%B0%C3%87T-%2831243622%29BKK%2022-1%20%28Haftalik%20Ders%20Programlari%29-1-3%20%281%29.pdf"
 
     private const val SCIENCE_EDUCATION_SOURCE_URL =
         "https://webis.akdeniz.edu.tr/uploads/1089/announcement/2026-2027%20G%C3%BCz/ders%20programlar%C4%B1/Fen%20Bilgisi%20Eg%CC%86itimi%20ABD%202026-2027%20Eg%CC%86itim-O%CC%88g%CC%86retim%20Y%C4%B1l%C4%B1%20Gu%CC%88z%20Do%CC%88nemi%20Haftal%C4%B1k%20Ders%20Program%C4%B1.pdf"
@@ -216,7 +216,7 @@ object ClassSchedules {
         "https://webis.akdeniz.edu.tr/uploads/1089/announcement/2026-2027%20G%C3%BCz/ders%20programlar%C4%B1/RPD%202026-27.%20%2831.08.26%29.pdf"
 
     private const val CLASSROOM_TEACHING_SOURCE_URL =
-        "https://webis.akdeniz.edu.tr/uploads/1089/announcement/2026-2027%20G%C3%BCz/ders%20programlar%C4%B1/SINIF%20E%C4%9E%C4%B0T%C4%B0M%C4%B0%20A.B.D.%202026-2027%20G%C3%9CZ%20YARIYILI%20DERS%20PROGRAMI.pdf"
+        "https://webis.akdeniz.edu.tr/uploads/1089/announcement/SINIF%20E%C4%9E%C4%B0T%C4%B0M%C4%B0%202026-2027%20G%C3%9CZ%20YARIYILI%20DERS%20PROGRAMI%20G%C3%BCncellendi..pdf"
 
     private const val SOCIAL_STUDIES_TEACHING_SOURCE_URL =
         "https://webis.akdeniz.edu.tr/uploads/1089/announcement/06-SB%C3%96%20SOSYAL%20B%C4%B0LG%C4%B0LER%20E%C4%9E%C4%B0T%C4%B0M%C4%B0%20A.B.D.%202026-2027%20G%C3%9CZ%20YARIYILI%20DERS%20PROGRAMI.pdf"
@@ -225,7 +225,7 @@ object ClassSchedules {
         "Prof. Dr. Yüksel KAŞTAN / Doç. Dr. Osman AKHAN / Prof. Dr. Ayhan AKIŞ / Prof. Dr. Nadire Emel AKHAN / Doç. Dr. Meltem Begüm SAATÇI ATA / Prof. Dr. Ahmet KÖÇ / Doç. Dr. Serpil DEMİREZEN / Arş. Gör. Saim TURAN / Arş. Gör. Tuğçe ÇAL PEKTAŞ"
 
     private const val TURKISH_TEACHING_SOURCE_URL =
-        "https://webis.akdeniz.edu.tr/uploads/1089/announcement/2026-2027%20G%C3%BCz/ders%20programlar%C4%B1/Ders%20Program%C4%B1%20%28T%C3%BCrk%C3%A7e%29%20G%C3%BCncel.pdf"
+        "https://webis.akdeniz.edu.tr/uploads/1089/announcement/Ders%20Program%C4%B1%20%28T%C3%BCrk%C3%A7e%29%20G%C3%BCncel%20%281%29.pdf"
 
     private const val NURSING_SOURCE_URL =
         "https://webis.akdeniz.edu.tr/uploads/1036/content/2026-2027%20G%C3%9CZ%20D%C3%96NEM%C4%B0%20DERS%20PROGRAMI%201.09.2026.docx"
@@ -258,7 +258,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "10:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "TDB 101",
                 courseName = "Türk Dili I",
                 instructor = "Öğr. Gör. Arzu TIRAK ASLAN",
@@ -268,7 +268,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "ENF 101",
                 courseName = "Bilgi Teknolojileri Kullanımı",
                 instructor = "Öğr. Gör. Ramazan UYAR",
@@ -278,7 +278,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 101",
                 courseName = "Matematik I",
                 instructor = "Doç. Dr. Neylan KAYA",
@@ -288,7 +288,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 103",
                 courseName = "İktisada Giriş I",
                 instructor = "Prof. Dr. Mehmet ZANBAK",
@@ -298,7 +298,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "08:30",
-                endTime = "10:30",
+                endTime = "10:20",
                 courseCode = "YDB 101",
                 courseName = "İngilizce I",
                 instructor = "Öğr. Gör. Demet TEKİNAY",
@@ -308,7 +308,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "10:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "ATA 101",
                 courseName = "Atatürk İlkeleri ve İnkılap Tarihi I",
                 instructor = "Öğr. Gör. Bengi KÜMBÜL UZUNSAKAL",
@@ -318,7 +318,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "12:30",
-                endTime = "13:30",
+                endTime = "13:20",
                 courseCode = "KPD 101",
                 courseName = "Kariyer Planlama",
                 instructor = "Prof. Dr. Burcu DEMİREL",
@@ -328,7 +328,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "13:30",
-                endTime = "15:30",
+                endTime = "15:20",
                 courseCode = "TDB 115",
                 courseName = "Akademik Türkçe I",
                 instructor = "Öğr. Gör. Dürüye KAYA",
@@ -339,10 +339,20 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "13:30",
-                endTime = "14:30",
+                endTime = "16:20",
                 courseCode = "İŞL 105",
                 courseName = "İşletme Yönetimine Giriş",
                 instructor = "Doç. Dr. Kemal KÖKSAL",
+                classroom = "Turkuaz Amfi",
+                courseType = "Zorunlu"
+            ),
+            ScheduleEntry(
+                day = ScheduleDay.FRIDAY,
+                startTime = "09:30",
+                endTime = "12:20",
+                courseCode = "İŞL 117",
+                courseName = "Genel Muhasebe I",
+                instructor = "Prof. Dr. Burcu DEMİREL",
                 classroom = "Turkuaz Amfi",
                 courseType = "Zorunlu"
             )
@@ -362,7 +372,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 221",
                 courseName = "Sürdürülebilirlik Yönetimi",
                 instructor = "Doç. Dr. A. Eren ÖZDEMİR",
@@ -372,7 +382,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 205",
                 courseName = "Yönetim ve Organizasyon",
                 instructor = "Doç. Dr. Janset Ö. AYTEMUR",
@@ -382,7 +392,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "ENF 125",
                 courseName = "Yapay Zeka Okuryazarlığı",
                 instructor = "Öğr. Gör. Dr. T. Fatih KASALAK",
@@ -392,7 +402,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 225",
                 courseName = "Şirketler Muhasebesi",
                 instructor = "Prof. Dr. Adnan DÖNMEZ",
@@ -402,7 +412,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 211",
                 courseName = "Pazarlama İlkeleri",
                 instructor = "Doç. Dr. Umut KUBAT DOKUMACI",
@@ -412,7 +422,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 213",
                 courseName = "Finansal Okuryazarlık",
                 instructor = "Doç. Dr. Eda ORUÇ ERDOĞAN",
@@ -422,7 +432,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "13:30",
-                endTime = "15:30",
+                endTime = "15:20",
                 courseCode = "İŞL 219",
                 courseName = "Hukuka Giriş",
                 instructor = "Dr. Öğr. Üyesi Ali ERDEM",
@@ -432,7 +442,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "15:30",
-                endTime = "18:30",
+                endTime = "18:20",
                 courseCode = "İŞL 287",
                 courseName = "İngilizce Okuma Konuşma",
                 instructor = "Öğr. Gör. Hülya ÇELİK",
@@ -442,7 +452,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 201",
                 courseName = "İstatistik I",
                 instructor = "Doç. Dr. Nesrin ALKAN",
@@ -452,7 +462,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 203",
                 courseName = "Mikro İktisat",
                 instructor = "Prof. Dr. Ahmet BAYANER",
@@ -475,7 +485,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 315",
                 courseName = "Üretim Yönetimi I",
                 instructor = "Prof. Dr. Gökhan AKYÜZ",
@@ -485,7 +495,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 305",
                 courseName = "Pazarlama Yönetimi",
                 instructor = "Prof. Dr. Eyyup YARAŞ",
@@ -495,7 +505,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 303",
                 courseName = "Algoritma ve Yazılım Dilleri",
                 instructor = "Prof. Dr. Can Deniz KÖKSAL",
@@ -504,28 +514,8 @@ object ClassSchedules {
             ),
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
-                startTime = "09:30",
-                endTime = "12:30",
-                courseCode = "İŞL 389",
-                courseName = "Farklı Kültürlerde Yönetim",
-                instructor = "Doç. Dr. F. Nuray ATSAN",
-                classroom = "A Blok 103",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
-                day = ScheduleDay.TUESDAY,
-                startTime = "09:30",
-                endTime = "12:30",
-                courseCode = "İŞL 397",
-                courseName = "Finansal Muhasebe Vak'a Çalışmaları",
-                instructor = "Doç. Dr. Güler Ferhan Ü. UYAR",
-                classroom = "A Blok 206",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
-                day = ScheduleDay.TUESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 301",
                 courseName = "Yöneylem Araştırması",
                 instructor = "Doç. Dr. Neylan KAYA",
@@ -535,7 +525,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 309",
                 courseName = "İşletme Finansı I",
                 instructor = "Prof. Dr. Mehmet ŞEN",
@@ -543,29 +533,9 @@ object ClassSchedules {
                 courseType = "Zorunlu"
             ),
             ScheduleEntry(
-                day = ScheduleDay.WEDNESDAY,
-                startTime = "13:30",
-                endTime = "16:30",
-                courseCode = "İŞL 391",
-                courseName = "Rekabet Hukuku",
-                instructor = "Öğr. Gör. Fahri DUTÇU",
-                classroom = "A Blok 203",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
-                day = ScheduleDay.WEDNESDAY,
-                startTime = "13:30",
-                endTime = "16:30",
-                courseCode = "İŞL 399",
-                courseName = "Örgütsel Davranışta Etik İkilemler",
-                instructor = "Doç. Dr. Nuray AKAR",
-                classroom = "A Blok 202",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 311",
                 courseName = "Ticaret Hukuku",
                 instructor = "Öğr. Gör. Dr. Duygu TURGUT ÖNEL",
@@ -575,17 +545,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "13:30",
-                endTime = "16:30",
-                courseCode = "İŞL 319",
-                courseName = "ERP Tabanlı İşletme Oyunu",
-                instructor = "Doç. Dr. Nisa EKŞİLİ",
-                classroom = "Bilgisayar Lab. A",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
-                day = ScheduleDay.THURSDAY,
-                startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 395",
                 courseName = "Pazarlama İletişimi",
                 instructor = "Arş. Gör. Dr. Yağmur ÖZ",
@@ -595,7 +555,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.FRIDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 307",
                 courseName = "Maliyet Muhasebesi",
                 instructor = "Prof. Dr. Adnan DÖNMEZ",
@@ -618,7 +578,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 459",
                 courseName = "İşletme Ekonomisi Uygulamaları",
                 instructor = "Doç. Dr. M. Koray ÇETİN",
@@ -628,7 +588,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 409",
                 courseName = "Pazarlama Araştırmaları",
                 instructor = "Prof. Dr. Serkan AKINCI",
@@ -638,7 +598,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.MONDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 467",
                 courseName = "Muhasebe Standartları",
                 instructor = "Prof. Dr. Adnan DÖNMEZ",
@@ -648,7 +608,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 401",
                 courseName = "Stratejik Yönetim",
                 instructor = "Doç. Dr. A. Eren ÖZDEMİR",
@@ -658,7 +618,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 411",
                 courseName = "Proje Analizi",
                 instructor = "Prof. Dr. Gökhan AKYÜZ",
@@ -668,7 +628,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.TUESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 441",
                 courseName = "Bilgisayar Destekli Muhasebe",
                 instructor = "Doç. Dr. Burçin TUTCU",
@@ -676,19 +636,9 @@ object ClassSchedules {
                 courseType = "Seçmeli"
             ),
             ScheduleEntry(
-                day = ScheduleDay.TUESDAY,
-                startTime = "13:30",
-                endTime = "16:30",
-                courseCode = "İŞL 473",
-                courseName = "İhtisas Muhasebeleri",
-                instructor = "Doç. Dr. Güler Ferhan Ü. UYAR",
-                classroom = "A Blok 104",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 461",
                 courseName = "Vergi Uygulamaları",
                 instructor = "Doç. Dr. Murat ERDOĞAN",
@@ -698,7 +648,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 423",
                 courseName = "Yeni Finans Teknikleri",
                 instructor = "Doç. Dr. Emel BACHA SİMOES",
@@ -708,7 +658,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 433",
                 courseName = "Yönetimde İstatistik Yöntemleri",
                 instructor = "Doç. Dr. Nesrin ALKAN",
@@ -718,7 +668,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.WEDNESDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 471",
                 courseName = "İşletme Yönetiminde Vaka Çalışmaları",
                 instructor = "Doç. Dr. Janset AYTEMUR",
@@ -728,7 +678,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 413",
                 courseName = "İnovasyon Yönetimi",
                 instructor = "Prof. Dr. Tuğba YENİDOĞAN",
@@ -738,7 +688,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 475",
                 courseName = "Yapay Zeka ve Makine Öğrenmesi",
                 instructor = "Prof. Dr. Ömür TOSUN",
@@ -748,7 +698,7 @@ object ClassSchedules {
             ScheduleEntry(
                 day = ScheduleDay.THURSDAY,
                 startTime = "13:30",
-                endTime = "16:30",
+                endTime = "16:20",
                 courseCode = "İŞL 403",
                 courseName = "İş Hukuku",
                 instructor = "Öğr. Gör. Fahri DUTÇU",
@@ -756,33 +706,13 @@ object ClassSchedules {
                 courseType = "Seçmeli"
             ),
             ScheduleEntry(
-                day = ScheduleDay.THURSDAY,
-                startTime = "13:30",
-                endTime = "16:30",
-                courseCode = "İŞL 421",
-                courseName = "Finansal Pazarlar",
-                instructor = "Prof. Dr. Mehmet ŞEN",
-                classroom = "A Blok 103",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
                 day = ScheduleDay.FRIDAY,
                 startTime = "09:30",
-                endTime = "12:30",
+                endTime = "12:20",
                 courseCode = "İŞL 407",
                 courseName = "Girişimcilik ve İş Kurma",
                 instructor = "Doç. Dr. F. Nuray ATSAN",
                 classroom = "A Blok 103",
-                courseType = "Seçmeli"
-            ),
-            ScheduleEntry(
-                day = ScheduleDay.FRIDAY,
-                startTime = "09:30",
-                endTime = "12:30",
-                courseCode = "İŞL 477",
-                courseName = "Çoklu Krizler ve Alternatif Örgütlenme Pratikleri",
-                instructor = "Arş. Gör. Dr. Sibel DOĞANAY",
-                classroom = "A Blok 102",
                 courseType = "Seçmeli"
             )
         )
@@ -817,16 +747,16 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = ECONOMICS_SOURCE_URL,
         entries = listOf(
-            economicsEntry(ScheduleDay.MONDAY, "09:30", "12:30", "IKT 105", "Matematik I", "Doç. Dr. Neylan KAYA", "A Blok Derslik 202"),
-            economicsEntry(ScheduleDay.MONDAY, "13:30", "16:30", "IKT 113", "Genel Muhasebe I", "Doç. Dr. Güler Ferhan ÜNAL UYAR", "A Blok Derslik 202"),
-            economicsEntry(ScheduleDay.TUESDAY, "13:30", "15:30", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Amfi 1"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "08:30", "10:30", "YBD 101", "İngilizce I", "Öğr. Gör. Demet TEKİNAY", "A Blok Turkuaz Amfi"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "10:30", "12:30", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Bengi KÜMBÜL UZUNSAKAL", "A Blok Turkuaz Amfi"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "12:30", "13:30", "KPD 101", "Kariyer Planlama", "Prof. Dr. Burcu DEMİREL", "B Blok Yavuz Tekelioğlu Konferans Salonu"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KAYA", "Uzaktan"),
-            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "IKT 103", "Hukuka Giriş", "Arş. Gör. Dr. Emel K. UÇAR", "A Blok Derslik 203"),
-            economicsEntry(ScheduleDay.FRIDAY, "09:30", "13:30", "IKT 101", "İktisada Giriş I", "Arş. Gör. Dr. Huriye ALKIN", "B Blok Mor Amfi"),
-            economicsEntry(ScheduleDay.FRIDAY, "14:30", "16:30", "IKT 107", "Sosyoloji", "Arş. Gör. Dr. Özgür BAL", "B Blok Amfi 6")
+            economicsEntry(ScheduleDay.MONDAY, "09:30", "13:20", "IKT 105", "Matematik I", "Doç. Dr. Neylan KAYA", "A Blok Derslik 202"),
+            economicsEntry(ScheduleDay.MONDAY, "13:30", "16:20", "IKT 113", "Genel Muhasebe I", "Doç. Dr. Güler Ferhan ÜNAL UYAR", "A Blok Derslik 202"),
+            economicsEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Amfi 1"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "YBD 101", "İngilizce I", "Öğr. Gör. Demet TEKİNAY", "A Blok Turkuaz Amfi"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Bengi KÜMBÜL UZUNSAKAL", "A Blok Turkuaz Amfi"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "12:30", "13:20", "KPD 101", "Kariyer Planlama", "Prof. Dr. Burcu DEMİREL", "B Blok Yavuz Tekelioğlu Konferans Salonu"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KAYA", "Uzaktan"),
+            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "IKT 103", "Hukuka Giriş", "Arş. Gör. Dr. Emel K. UÇAR", "A Blok Derslik 203"),
+            economicsEntry(ScheduleDay.FRIDAY, "09:30", "13:20", "IKT 101", "İktisada Giriş I", "Arş. Gör. Dr. Huriye ALKIN", "B Blok Mor Amfi"),
+            economicsEntry(ScheduleDay.FRIDAY, "14:30", "16:20", "IKT 107", "Sosyoloji", "Arş. Gör. Dr. Özgür BAL", "B Blok Amfi 6")
         )
     )
 
@@ -840,12 +770,12 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = ECONOMICS_SOURCE_URL,
         entries = listOf(
-            economicsEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "IKT 201", "Mikro İktisat I", "Prof. Dr. Gülden BÖLÜK", "B Blok Amfi 4"),
-            economicsEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "IKT 207", "İstatistik I", "Doç. Dr. Nesrin ALKAN", "A Blok Derslik 203"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "IKT 229", "İktisatçılar için Matematik I", "Doç. Dr. Zafer Barış GÜL", "B Blok Amfi 5"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "IKT 203", "Makro İktisat I", "Prof. Dr. Koray DUMAN", "B Blok Mor Amfi"),
-            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "IKT 205", "Avrupa İktisat Tarihi", "Dr. Öğr. Üyesi Damla DUMAN", "B Blok Amfi 2"),
-            economicsEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "IKT 233", "Siyaset Bilimine Giriş", "Dr. Öğr. Üyesi Barış AYDIN", "A Blok Derslik 105")
+            economicsEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "IKT 201", "Mikro İktisat I", "Prof. Dr. Gülden BÖLÜK", "B Blok Amfi 4"),
+            economicsEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "IKT 207", "İstatistik I", "Doç. Dr. Nesrin ALKAN", "A Blok Derslik 203"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "IKT 229", "İktisatçılar için Matematik I", "Doç. Dr. Zafer Barış GÜL", "B Blok Amfi 5"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "IKT 203", "Makro İktisat I", "Prof. Dr. Koray DUMAN", "B Blok Mor Amfi"),
+            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "IKT 205", "Avrupa İktisat Tarihi", "Dr. Öğr. Üyesi Damla DUMAN", "B Blok Amfi 2"),
+            economicsEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "IKT 233", "Siyaset Bilimine Giriş", "Dr. Öğr. Üyesi Barış AYDIN", "A Blok Derslik 105")
         )
     )
 
@@ -859,16 +789,16 @@ object ClassSchedules {
         sourcePage = 3,
         sourceUrl = ECONOMICS_SOURCE_URL,
         entries = listOf(
-            economicsEntry(ScheduleDay.MONDAY, "09:30", "12:30", "IKT 325", "Sosyal Bilimlerde Araştırma Yöntemleri", "Prof. Dr. Osman KARKACIER", "B Blok Amfi 2"),
-            economicsEntry(ScheduleDay.MONDAY, "13:30", "16:30", "IKT 321", "Proje Değerlendirme", "Prof. Dr. Osman KARKACIER", "B Blok Amfi 1"),
-            economicsEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "IKT 327", "Finansal Piyasalar ve Kurumlar", "Prof. Dr. Ayşegül ATEŞ", "B Blok Amfi 5"),
-            economicsEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "IKT 303", "Ekonometri I", "Doç. Dr. Ünal TÖNGÜR", "B Blok Mor Amfi"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "IKT 323", "Kamu Maliyesi", "Araş. Gör. Dr. İlyas ÖZKÖK", "A Blok Derslik 201"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "IKT 329", "Güncel Ekonomik Sorunlar", "Prof. Dr. Koray DUMAN", "B Blok Amfi 6"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "IKT 389", "Kent Ekonomisi", "Doç. Dr. Ümit SEYFETTİNOĞLU", "B Blok Amfi 3"),
-            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "IKT 301", "Para Teorisi", "Prof. Dr. Sayım IŞIK", "B Blok Amfi 5"),
-            economicsEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "IKT 307", "Uluslararası İktisat I", "Prof. Dr. Kemal TÜRKCAN", "B Blok Amfi 5"),
-            economicsEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "IKT 319", "Çevre ve Doğal Kaynaklar Ekonomisi", "Prof. Dr. Ali KOÇ", "B Blok Amfi 5")
+            economicsEntry(ScheduleDay.MONDAY, "09:30", "12:20", "IKT 325", "Sosyal Bilimlerde Araştırma Yöntemleri", "Prof. Dr. Osman KARKACIER", "B Blok Amfi 2"),
+            economicsEntry(ScheduleDay.MONDAY, "13:30", "16:20", "IKT 321", "Proje Değerlendirme", "Prof. Dr. Osman KARKACIER", "B Blok Amfi 1"),
+            economicsEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "IKT 327", "Finansal Piyasalar ve Kurumlar", "Prof. Dr. Ayşegül ATEŞ", "B Blok Amfi 5"),
+            economicsEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "IKT 303", "Ekonometri I", "Doç. Dr. Ünal TÖNGÜR", "B Blok Mor Amfi"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "IKT 323", "Kamu Maliyesi", "Araş. Gör. Dr. İlyas ÖZKÖK", "A Blok Derslik 201"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "IKT 329", "Güncel Ekonomik Sorunlar", "Prof. Dr. Koray DUMAN", "B Blok Amfi 6"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "IKT 389", "Kent Ekonomisi", "Doç. Dr. Ümit SEYFETTİNOĞLU", "B Blok Amfi 3"),
+            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "IKT 301", "Para Teorisi", "Prof. Dr. Sayım IŞIK", "B Blok Amfi 5"),
+            economicsEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "IKT 307", "Uluslararası İktisat I", "Prof. Dr. Kemal TÜRKCAN", "B Blok Amfi 5"),
+            economicsEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "IKT 319", "Çevre ve Doğal Kaynaklar Ekonomisi", "Prof. Dr. Ali KOÇ", "B Blok Amfi 5")
         )
     )
 
@@ -882,17 +812,17 @@ object ClassSchedules {
         sourcePage = 4,
         sourceUrl = ECONOMICS_SOURCE_URL,
         entries = listOf(
-            economicsEntry(ScheduleDay.MONDAY, "12:30", "13:30", "IKT 441", "Araştırma Projesi", "Tüm Öğretim Üyeleri", "Bölüm öğretim üyeleri"),
-            economicsEntry(ScheduleDay.MONDAY, "13:30", "16:30", "IKT 405", "Türkiye Ekonomisi I", "Doç. Dr. Şükrü ERDEM", "B Blok Amfi 4"),
-            economicsEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "IKT 411", "Büyüme Teorileri", "Doç. Dr. Zafer Barış GÜL", "A Blok Mavi Amfi"),
-            economicsEntry(ScheduleDay.TUESDAY, "12:30", "13:30", "IKT 441", "Araştırma Projesi", "Tüm Öğretim Üyeleri", "Bölüm öğretim üyeleri"),
-            economicsEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "IKT 459", "Döngüsel İktisat", "Prof. Dr. Selim ÇAĞATAY", "B Blok Amfi 4"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "IKT 425", "Dünya Ekonomisi", "Prof. Dr. Ayşegül ATEŞ", "B Blok Amfi 4"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "IKT 461", "Enerji Ekonomisi", "Prof. Dr. Gülden BÖLÜK", "B Blok Amfi 4"),
-            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "IKT 421", "Mali Tablolar Analizi", "Doç. Dr. Burçin TUTCU", "A Blok Derslik 104"),
-            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "IKT 435", "Bölgesel İktisat", "Doç. Dr. Ümit SEYFETTİNOĞLU", "B Blok Amfi 6"),
-            economicsEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "IKT 427", "İş Hukuku", "Öğr. Gör. Fahri DUTÇU", "A Blok Derslik 104"),
-            economicsEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "IKT 401", "İktisadi Düşünce Tarihi", "Dr. Öğr. Üyesi Damla DUMAN", "B Blok Amfi 2")
+            economicsEntry(ScheduleDay.MONDAY, "12:30", "13:20", "IKT 441", "Araştırma Projesi", "Tüm Öğretim Üyeleri", ""),
+            economicsEntry(ScheduleDay.MONDAY, "13:30", "16:20", "IKT 405", "Türkiye Ekonomisi I", "Doç. Dr. Şükrü ERDEM", "B Blok Amfi 4"),
+            economicsEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "IKT 411", "Büyüme Teorileri", "Doç. Dr. Zafer Barış GÜL", "A Blok Mavi Amfi"),
+            economicsEntry(ScheduleDay.TUESDAY, "12:30", "13:20", "IKT 441", "Araştırma Projesi", "Tüm Öğretim Üyeleri", ""),
+            economicsEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "IKT 459", "Döngüsel İktisat", "Prof. Dr. Selim ÇAĞATAY", "B Blok Amfi 4"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "IKT 425", "Dünya Ekonomisi", "Prof. Dr. Ayşegül ATEŞ", "B Blok Amfi 4"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "IKT 461", "Enerji Ekonomisi", "Prof. Dr. Gülden BÖLÜK", "B Blok Amfi 4"),
+            economicsEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "IKT 421", "Mali Tablolar Analizi", "Doç. Dr. Burçin TUTCU", "A Blok Derslik 104"),
+            economicsEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "IKT 435", "Bölgesel İktisat", "Doç. Dr. Ümit SEYFETTİNOĞLU", "B Blok Amfi 6"),
+            economicsEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "IKT 427", "İş Hukuku", "Öğr. Gör. Fahri DUTÇU", "A Blok Derslik 104"),
+            economicsEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "IKT 401", "İktisadi Düşünce Tarihi", "Dr. Öğr. Üyesi Damla DUMAN", "B Blok Amfi 2")
         )
     )
 
@@ -1032,16 +962,16 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = LABOR_ECONOMICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "CEK 103", "Siyaset Bilimine Giriş", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "B Blok Amfi 3", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "CEK 101", "İktisada Giriş I", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-3", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "10:30", "12:30", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Mor Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "CEK 105", "Hukuka Giriş", "Öğr. Gör. Aycan DEMİR", "C-4", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:30", "YBD 101", "İngilizce I", "Öğr. Gör. Aslı TAŞER", "A Blok Mavi Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:30", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Koray ERGİN", "B Blok Mor Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:30", "TDB 115", "Akademik Türkçe I", "Öğr. Gör. Duriye KARA", "Online", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "CEK 113", "Genel Muhasebe I", "Öğr. Gör. Dr. Mustafa TERZİOĞLU", "C-6", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "CEK 109", "Sosyoloji", "Doç. Dr. Beyhan AKSOY", "C-8", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "12:30", "14:30", "CEK 107", "Matematik I", "Öğr. Gör. Ahmet TEMİZEL", "C-6", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "CEK 103", "Siyaset Bilimine Giriş", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "B Blok Amfi 3", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "CEK 101", "İktisada Giriş I", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-3", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Mor Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "CEK 105", "Hukuka Giriş", "Öğr. Gör. Aycan DEMİR", "C-4", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "YBD 101", "İngilizce I", "Öğr. Gör. Aslı TAŞER", "A Blok Mavi Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Koray ERGİN", "B Blok Mor Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB 115", "Akademik Türkçe I", "Öğr. Gör. Duriye KARA", "Online", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "CEK 113", "Genel Muhasebe I", "Öğr. Gör. Dr. Mustafa TERZİOĞLU", "C-6", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "CEK 109", "Sosyoloji", "Doç. Dr. Beyhan AKSOY", "C-8", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "12:30", "15:20", "CEK 107", "Matematik I", "Öğr. Gör. Ahmet TEMİZEL", "C-6", "Zorunlu")
         )
     )
 
@@ -1052,16 +982,16 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = LABOR_ECONOMICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "CEK 205", "İstatistik (Fosil)", "Doç. Dr. Kemal KÖKSAL", "Belirtilmemiş", "Seçmeli"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "CEK 213", "İdare Hukuku", "Öğr. Gör. Dr. Gülden ATİLLA ÖZTÜRK", "C-9", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "CEK 211", "Çalışma Ekonomisi I", "Doç. Dr. Şerife DURMAZ", "C-3", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "CEK 209", "Sosyal Politika I", "Prof. Dr. Mete Kaan NAMAL", "C-6", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "CEK 219", "Psikolojiye Giriş", "Doç. Dr. Şerife DURMAZ", "C-5", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "CEK 207", "Yönetim ve Organizasyon", "Doç. Dr. Beyhan AKSOY", "C-3", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "CEK 201", "Mikro İktisat", "Prof. Dr. Muhammed KARATAŞ", "C-8", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "CEK 225", "Kariyer Yönetimi", "Doç. Dr. Şerife DURMAZ", "C-1", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "CEK 231", "Ticaret Hukuku", "Öğr. Gör. Dr. Duygu TURGUT GÜNEL", "A Blok 103", "Seçmeli"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:30", "CEK 217", "Sosyal Bilimlerde Araştırma Yöntemleri", "Dr. Cansu TEKİN", "C-3", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "CEK 205", "İstatistik (Fosil)", "Doç. Dr. Kemal KÖKSAL", "Belirtilmemiş", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "CEK 213", "İdare Hukuku", "Öğr. Gör. Dr. Gülden ATİLLA ÖZTÜRK", "C-9", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "CEK 211", "Çalışma Ekonomisi I", "Doç. Dr. Şerife DURMAZ", "C-3", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "CEK 209", "Sosyal Politika I", "Prof. Dr. Mete Kaan NAMAL", "C-6", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "CEK 219", "Psikolojiye Giriş", "Doç. Dr. Şerife DURMAZ", "C-5", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "CEK 207", "Yönetim ve Organizasyon", "Doç. Dr. Beyhan AKSOY", "C-3", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "CEK 201", "Mikro İktisat", "Prof. Dr. Muhammed KARATAŞ", "C-8", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "CEK 225", "Kariyer Yönetimi", "Doç. Dr. Şerife DURMAZ", "C-1", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "CEK 231", "Ticaret Hukuku", "Öğr. Gör. Dr. Duygu TURGUT GÜNEL", "A Blok 103", "Seçmeli"),
+            programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "CEK 217", "Sosyal Bilimlerde Araştırma Yöntemleri", "Dr. Cansu TEKİN", "C-3", "Zorunlu")
         )
     )
 
@@ -1072,17 +1002,17 @@ object ClassSchedules {
         sourcePage = 4,
         sourceUrl = LABOR_ECONOMICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "CEK 307", "Sosyal Psikoloji", "Prof. Dr. Rabia ÇİZEL", "C-1", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "CEK 321", "Banka ve Sermaye Piyasaları", "Prof. Dr. Muhammed KARATAŞ", "C-2", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "CEK 329", "Kamu Maliyesi I", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-1", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "CEK 319", "Örgüt Sosyolojisi", "Doç. Dr. Beyhan AKSOY", "C-2", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "12:30", "14:30", "TDP 303", "Toplumsal Duyarlılık ve Katkı", "Şube 5-6", "Belirtilmemiş", "Ders"),
-            programEntry(ScheduleDay.WEDNESDAY, "14:30", "17:30", "CEK 327", "Yönetim Psikolojisi", "Doç. Dr. Şerife DURMAZ", "C-1", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "CEK 303", "Bireysel İş Hukuku", "Öğr. Gör. Fahri DUTÇU", "C-1", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "CEK 313", "Sendikacılık", "Doç. Dr. Taner AKPINAR", "C-2", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "16:30", "19:30", "CEK 411", "Endüstri İlişkileri I (Fosil)", "Dr. Cansu TEKİN", "Belirtilmemiş", "Seçmeli"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "CEK 333", "Endüstri İlişkileri", "Dr. Cansu TEKİN", "C-1", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "12:30", "14:30", "TDP 303", "Toplumsal Duyarlılık ve Katkı", "Şubeler 1-4", "Belirtilmemiş", "Ders")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "CEK 307", "Sosyal Psikoloji", "Prof. Dr. Rabia ÇİZEL", "C-1", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "CEK 321", "Banka ve Sermaye Piyasaları", "Prof. Dr. Muhammed KARATAŞ", "C-2", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "CEK 329", "Kamu Maliyesi I", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-1", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "CEK 319", "Örgüt Sosyolojisi", "Doç. Dr. Beyhan AKSOY", "C-2", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "12:30", "14:20", "TDP 303", "Toplumsal Duyarlılık ve Katkı", "Şube 5-6", "Belirtilmemiş", "Ders"),
+            programEntry(ScheduleDay.WEDNESDAY, "14:30", "17:20", "CEK 327", "Yönetim Psikolojisi", "Doç. Dr. Şerife DURMAZ", "C-1", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "CEK 303", "Bireysel İş Hukuku", "Öğr. Gör. Fahri DUTÇU", "C-1", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "CEK 313", "Sendikacılık", "Doç. Dr. Taner AKPINAR", "C-2", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "16:30", "19:20", "CEK 411", "Endüstri İlişkileri I (Fosil)", "Dr. Cansu TEKİN", "Belirtilmemiş", "Seçmeli"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "CEK 333", "Endüstri İlişkileri", "Dr. Cansu TEKİN", "C-1", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "12:30", "14:20", "TDP 303", "Toplumsal Duyarlılık ve Katkı", "Şubeler 1-4", "Belirtilmemiş", "Ders")
         )
     )
 
@@ -1093,15 +1023,15 @@ object ClassSchedules {
         sourcePage = 6,
         sourceUrl = LABOR_ECONOMICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "CEK 425", "Sosyal Güvenlik", "Doç. Dr. Taner AKPINAR", "C-2", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "CEK 429", "Proje Döngüsü Yönetimi I", "Prof. Dr. Mete Kaan NAMAL", "C-1", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "CEK 433", "Toplu Pazarlık Ekonomisi", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-1", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "CEK 417", "Vergi Hukuku", "Doç. Dr. Derya YAYMAN", "C-5", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "CEK 427", "Ulusal ve Uluslararası Kuruluşlar", "Prof. Dr. Muhammed KARATAŞ", "C-1", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "CEK 405", "Türkiye Ekonomisi", "Prof. Dr. Abdulkadir KÖKOCAK", "C-2", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "CEK 431", "Yoksulluk Araştırmaları", "Doç. Dr. Şerife DURMAZ", "C-2", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "CEK 401", "İnsan Kaynakları Yönetimi", "Prof. Dr. Rabia ÇİZEL", "C-5", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "CEK 421", "Ekonomik Büyüme ve Kalkınma", "Prof. Dr. Abdulkadir KÖKOCAK", "C-2", "Seçmeli")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "CEK 425", "Sosyal Güvenlik", "Doç. Dr. Taner AKPINAR", "C-2", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "CEK 429", "Proje Döngüsü Yönetimi I", "Prof. Dr. Mete Kaan NAMAL", "C-1", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "CEK 433", "Toplu Pazarlık Ekonomisi", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-1", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "CEK 417", "Vergi Hukuku", "Doç. Dr. Derya YAYMAN", "C-5", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "CEK 427", "Ulusal ve Uluslararası Kuruluşlar", "Prof. Dr. Muhammed KARATAŞ", "C-1", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "CEK 405", "Türkiye Ekonomisi", "Prof. Dr. Abdulkadir KÖKOCAK", "C-2", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "CEK 431", "Yoksulluk Araştırmaları", "Doç. Dr. Şerife DURMAZ", "C-2", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "CEK 401", "İnsan Kaynakları Yönetimi", "Prof. Dr. Rabia ÇİZEL", "C-5", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "CEK 421", "Ekonomik Büyüme ve Kalkınma", "Prof. Dr. Abdulkadir KÖKOCAK", "C-2", "Seçmeli")
         )
     )
 
@@ -1112,15 +1042,15 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = POLITICAL_SCIENCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "KMY 111", "Kamu Yönetimine Giriş", "Doç. Dr. Serkan DORU", "Mor Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "KMY 105", "Toplum Bilimi I", "Dr. Öğr. Üyesi Barış AYDIN", "C6", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "17:30", "TDB 101", "Türk Dili", "Öğr. Gör. Arzu TIRAK ASLAN", "Turkuaz", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:30", "YBD 101", "İngilizce I", "Doç. Dr. Abdullah ARSLAN", "C3", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:30", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Doç. Dr. Mustafa MALHUT", "Mavi Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:30", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KARA", "Online", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "KMY 103", "Siyaset Bilimi I", "Doç. Dr. Yavuz Selim ALKAN", "Mor Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "KMY 107", "Hukuka Giriş", "Dr. Öğr. Üyesi Ali ERDEM", "205", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "KMY 113", "İktisada Giriş I", "Dr. Huriye ALKIN", "Amfi I", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "KMY 111", "Kamu Yönetimine Giriş", "Doç. Dr. Serkan DORU", "Mor Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "KMY 105", "Toplum Bilimi I", "Dr. Öğr. Üyesi Barış AYDIN", "C6", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "TDB 101", "Türk Dili", "Öğr. Gör. Arzu TIRAK ASLAN", "Turkuaz", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "YBD 101", "İngilizce I", "Doç. Dr. Abdullah ARSLAN", "C3", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Doç. Dr. Mustafa MALHUT", "Mavi Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KARA", "Online", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "KMY 103", "Siyaset Bilimi I", "Doç. Dr. Yavuz Selim ALKAN", "Mor Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "KMY 107", "Hukuka Giriş", "Dr. Öğr. Üyesi Ali ERDEM", "205", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "KMY 113", "İktisada Giriş I", "Dr. Huriye ALKIN", "Amfi I", "Zorunlu")
         )
     )
 
@@ -1131,13 +1061,13 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = POLITICAL_SCIENCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "KMY 207", "Siyasal Düşünceler Tarihi I", "Doç. Dr. Ceren KALFA", "C4", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "KMY 201", "Yönetim Bilimi I", "Doç. Dr. V. Alpay GÜNAL", "Amfi 5", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "KMY 223", "E-Devlet Teknolojileri ve Kullanımı", "Doç. Dr. Serkan DORU", "Amfi VI", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "KMY 213", "Türk Siyasal Yaşamı I", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "C4", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "KMY 221", "Türkiye’nin Toplumsal Yapısı", "Doç. Dr. Turan ŞENER", "Amfi I", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "KMY 211", "Kentleşme ve Konut Politikası", "Prof. Dr. Ferhunde HAYIRSEVER TOPÇU", "C4", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "KMY 219", "Medeni Hukuk", "Öğr. Gör. Aycan DEMİR", "C4", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "KMY 207", "Siyasal Düşünceler Tarihi I", "Doç. Dr. Ceren KALFA", "C4", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "KMY 201", "Yönetim Bilimi I", "Doç. Dr. V. Alpay GÜNAL", "Amfi 5", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "KMY 223", "E-Devlet Teknolojileri ve Kullanımı", "Doç. Dr. Serkan DORU", "Amfi VI", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "KMY 213", "Türk Siyasal Yaşamı I", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "C4", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "KMY 221", "Türkiye’nin Toplumsal Yapısı", "Doç. Dr. Turan ŞENER", "Amfi I", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "KMY 211", "Kentleşme ve Konut Politikası", "Prof. Dr. Ferhunde HAYIRSEVER TOPÇU", "C4", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "KMY 219", "Medeni Hukuk", "Öğr. Gör. Aycan DEMİR", "C4", "Zorunlu")
         )
     )
 
@@ -1148,17 +1078,20 @@ object ClassSchedules {
         sourcePage = 3,
         sourceUrl = POLITICAL_SCIENCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "KMY 313", "Yerel Yönetimler I", "Prof. Dr. Hakan ALTINTAŞ", "Amfi 5", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "KMY 387", "Mesleki İngilizce", "Dr. Ayşe KALAV", "Amfi 6", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "KMY 325", "Çağdaş Siyasal Akımlar", "Doç. Dr. Ceren KALFA", "Amfi II", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "KMY 317", "İleri Bilgi ve İletişim Teknolojileri", "Öğr. Gör. Dr. Turgut Fatih KASALAK", "Lab 07", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "KMY 307", "Örgüt Kuramları", "Dr. Öğr. Üyesi Bengi DEMİRCİ", "105", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "KMY 319", "Türkiye Ekonomisi", "Prof. Dr. Abdülkadir KÖKOCAK", "104", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "KMY 311", "Kamu Maliyesi", "Doç. Dr. Birsen NACAR KARABACAK", "102", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "KMY 341", "Genel Muhasebe", "Prof. Dr. Burcu DEMİREL", "103", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "KMY 301", "İdare Hukuku", "Dr. Öğr. Üyesi Ali ERDEM", "205", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "KMY 303", "Siyaset Sosyolojisi", "Prof. Dr. Faruk ATAAY", "Mor Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "KMY 305", "Uluslararası İlişkiler ve Dış Politika", "Doç. Dr. Yavuz Selim ALKAN", "Amfi IV", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "KMY 313", "Yerel Yönetimler I", "Prof. Dr. Hakan ALTINTAŞ", "Amfi 5", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "KMY 387", "Mesleki İngilizce", "Dr. Ayşe KALAV", "Amfi 6", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "KMY 325", "Çağdaş Siyasal Akımlar", "Doç. Dr. Ceren KALFA", "Amfi II", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "KMY 317", "İleri Bilgi ve İletişim Teknolojileri", "Öğr. Gör. Dr. Turgut Fatih KASALAK", "Lab 07", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "KMY 307", "Örgüt Kuramları", "Dr. Öğr. Üyesi Bengi DEMİRCİ", "105", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "KMY 319", "Türkiye Ekonomisi", "Prof. Dr. Abdülkadir KÖKOCAK", "104", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "KMY 311", "Kamu Maliyesi", "Doç. Dr. Birsen NACAR KARABACAK", "102", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "KMY 341", "Genel Muhasebe", "Prof. Dr. Burcu DEMİREL", "103", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "KMY 301", "İdare Hukuku", "Dr. Öğr. Üyesi Ali ERDEM", "205", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "KMY 303", "Siyaset Sosyolojisi", "Prof. Dr. Faruk ATAAY", "Mor Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "KMY 305", "Uluslararası İlişkiler ve Dış Politika", "Doç. Dr. Yavuz Selim ALKAN", "Amfi IV", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "KMY 355", "Mikro İktisat", "Prof. Dr. Muhammed KARATAŞ", "C5"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "KMY 391", "Yönetim Felsefesi", "Öğr. Gör. Dr. Beril ALEV", "Amfi VI"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "KMY 323", "Uluslararası Çevre Politikaları", "Prof. Dr. Ferhunde HAYIRSEVER TOPÇU", "Amfi II")
         )
     )
 
@@ -1169,20 +1102,20 @@ object ClassSchedules {
         sourcePage = 4,
         sourceUrl = POLITICAL_SCIENCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "KMY 435", "Kamu Politikaları Analizi", "Prof. Dr. Faruk ATAAY", "Mor Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "KMY 403", "Personel Yönetimi", "Prof. Dr. Erol ESEN", "Amfi III", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "KMY 443", "Kent Sosyolojisi", "Prof. Dr. Hakan ALTINTAŞ", "Amfi II", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "18:30", "KMY 485", "Mevzuat Okuma ve Çözümleme", "Doç. Dr. Ahmet ALPTEKİN DURU", "Amfi III", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "ENF 126", "Yapay Zeka Tabanlı Analitik Yaklaşımlar", "Öğr. Gör. Dr. Evren SEZGİN", "Lab 07", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "KMY 455", "Mesleki Uygulamalar", "Prof. Dr. Hakan ALTINTAŞ", "Amfi II", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "18:30", "KMY 405", "Siyaset Bilimi ve Kamu Yönetiminde Eleştirel Düşünce", "Dr. Öğr. Üyesi Barış AYDIN", "C4", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "KMY 413", "Türk Dış Politikası I", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "206", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "KMY 409", "Avrupa Birliği ve Kamu Yönetimi", "Prof. Dr. Erol ESEN", "Amfi I", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "KMY 411", "Ticaret Hukuku", "Öğr. Gör. Dr. Duygu TURGUT GÜNEL", "103", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "KMY 447", "Siyaset Psikolojisi", "Doç. Dr. Turan ŞENER", "Amfi 6", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "16:30", "19:30", "KMY 419", "Kamu Özel Ortaklığı Yönetimi", "Dr. Öğr. Üyesi Ali ERDEM", "Amfi III", "Seçmeli"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "KMY 407", "Karşılaştırmalı Yönetim Yapıları", "Doç. Dr. Serkan DORU", "Amfi VI", "Seçmeli"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:30", "KMY 401", "Türkiye’nin Yönetim Yapısı", "Doç. Dr. V. Alpay GÜNAL", "Mor Amfi", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "KMY 435", "Kamu Politikaları Analizi", "Prof. Dr. Faruk ATAAY", "Mor Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "KMY 403", "Personel Yönetimi", "Prof. Dr. Erol ESEN", "Amfi III", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "KMY 443", "Kent Sosyolojisi", "Prof. Dr. Hakan ALTINTAŞ", "Amfi II", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "18:20", "KMY 485", "Mevzuat Okuma ve Çözümleme", "Doç. Dr. Ahmet ALPTEKİN DURU", "Amfi III", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "ENF 126", "Yapay Zeka Tabanlı Analitik Yaklaşımlar", "Öğr. Gör. Dr. Evren SEZGİN", "Lab 07", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "KMY 455", "Mesleki Uygulamalar", "Prof. Dr. Hakan ALTINTAŞ", "Amfi II", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "18:20", "KMY 405", "Siyaset Bilimi ve Kamu Yönetiminde Eleştirel Düşünce", "Dr. Öğr. Üyesi Barış AYDIN", "C4", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "KMY 413", "Türk Dış Politikası I", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "206", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "KMY 409", "Avrupa Birliği ve Kamu Yönetimi", "Prof. Dr. Erol ESEN", "Amfi I", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "KMY 411", "Ticaret Hukuku", "Öğr. Gör. Dr. Duygu TURGUT GÜNEL", "103", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "KMY 447", "Siyaset Psikolojisi", "Doç. Dr. Turan ŞENER", "Amfi 6", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "16:30", "19:20", "KMY 419", "Kamu Özel Ortaklığı Yönetimi", "Dr. Öğr. Üyesi Ali ERDEM", "Amfi III", "Seçmeli"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "KMY 407", "Karşılaştırmalı Yönetim Yapıları", "Doç. Dr. Serkan DORU", "Amfi VI", "Seçmeli"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "KMY 401", "Türkiye’nin Yönetim Yapısı", "Doç. Dr. V. Alpay GÜNAL", "Mor Amfi", "Zorunlu")
         )
     )
 
@@ -1193,16 +1126,16 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = INTERNATIONAL_RELATIONS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "13:30", "ULS 101", "İktisada Giriş", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-3", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "14:30", "17:30", "ULS 103", "Siyaset Bilimine Giriş", "Doç. Dr. Fulya ÖZKAN", "C-5", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "09:30", "ULS 107", "Hukuka Giriş", "Öğr. Gör. Aycan DEMİR", "C-4", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "10:30", "12:30", "ULS 109", "Matematik I", "Prof. Dr. Gültekin TINAZTEPE", "C-5", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:30", "ULS 107", "Hukuka Giriş", "Öğr. Gör. Aycan DEMİR", "C-4", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "17:30", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "Turkuaz Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:30", "YBD 101", "İngilizce I", "Doç. Dr. Abdullah ARSLAN", "C-3", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:30", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Doç. Dr. Mustafa MALHUT", "Mavi Amfi", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:30", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Duriye KARA", "Uzaktan", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "ULS 105", "Sosyoloji", "Arş. Gör. Dr. Özgür BAL", "C-9", "Zorunlu")
+            programEntry(ScheduleDay.MONDAY, "10:30", "13:20", "ULS 101", "İktisada Giriş", "Dr. Öğr. Üyesi Ayten YAĞMUR", "C-3", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "14:30", "17:20", "ULS 103", "Siyaset Bilimine Giriş", "Doç. Dr. Fulya ÖZKAN", "C-5", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "09:20", "ULS 107", "Hukuka Giriş", "Öğr. Gör. Aycan DEMİR", "C-4", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "ULS 109", "Matematik I", "Prof. Dr. Gültekin TINAZTEPE", "C-5", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "ULS 107", "Hukuka Giriş", "Öğr. Gör. Aycan DEMİR", "C-4", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "Turkuaz Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "YBD 101", "İngilizce I", "Doç. Dr. Abdullah ARSLAN", "C-3", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Doç. Dr. Mustafa MALHUT", "Mavi Amfi", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Duriye KARA", "Uzaktan", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "ULS 105", "Sosyoloji", "Arş. Gör. Dr. Özgür BAL", "C-9", "Zorunlu")
         )
     )
 
@@ -1213,13 +1146,13 @@ object ClassSchedules {
         sourcePage = 3,
         sourceUrl = INTERNATIONAL_RELATIONS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "ULS 205", "Uluslararası Örgütler", "Arş. Gör. Dr. Taylan SEYİRCİ", "C-5", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "ULS 209", "İdare Hukuku", "Öğr. Gör. Dr. Gülden ATİLLA ÖZTÜRK", "C-9", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "ULS 217", "Medeni Hukuk", "Öğr. Gör. Aycan DEMİR", "C-4", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "ULS 213", "Siyasal Düşünceler Tarihi", "Doç. Dr. Ceren KALFA", "C-9", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "ULS 201", "Siyasi Tarih I", "Doç. Dr. Fulya ÖZKAN", "C-8", "Zorunlu"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "ULS 283", "İngilizce Okuma Konuşma", "Öğr. Gör. Burçak AKINCI", "A Blok 204", "Seçmeli"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "ULS 289", "Uluslararası Politika", "Arş. Gör. Dr. Yusuf Kenan POLAT", "C-1", "Seçmeli")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "ULS 205", "Uluslararası Örgütler", "Arş. Gör. Dr. Taylan SEYİRCİ", "C-5", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "ULS 209", "İdare Hukuku", "Öğr. Gör. Dr. Gülden ATİLLA ÖZTÜRK", "C-9", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "ULS 217", "Medeni Hukuk", "Öğr. Gör. Aycan DEMİR", "C-4", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "ULS 213", "Siyasal Düşünceler Tarihi", "Doç. Dr. Ceren KALFA", "C-9", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "ULS 201", "Siyasi Tarih I", "Doç. Dr. Fulya ÖZKAN", "C-8", "Zorunlu"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "ULS 283", "İngilizce Okuma Konuşma", "Öğr. Gör. Burçak AKINCI", "A Blok 204", "Seçmeli"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "ULS 289", "Uluslararası Politika", "Arş. Gör. Dr. Yusuf Kenan POLAT", "C-1", "Seçmeli")
         )
     )
 
@@ -1230,17 +1163,17 @@ object ClassSchedules {
         sourcePage = 5,
         sourceUrl = INTERNATIONAL_RELATIONS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "ULS 305", "Uluslararası İlişkiler Kuramları", "Arş. Gör. Dr. Mustafa ÇAKIR", "C-9", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "ULS 301", "Türk Dış Politikası", "Prof. Dr. Şenol KANTARCI", "C-8", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "ULS 309", "Devletler Özel Hukuku", "Öğr. Gör. Dr. Gülden ATİLLA ÖZTÜRK", "A-102", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "ULS 343", "Savaşlar ve Devrimler Tarihi", "Arş. Gör. Dr. Arda DİLMAÇ", "C-9", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "ULS 321", "Bölgesel Politikalar: Ortadoğu", "Doç. Dr. Fulya ÖZKAN", "C-8", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "ULS 319", "Uluslararası İktisat", "Doç. Dr. Atiye Beyhan AKAY", "C-6", "Zorunlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "ULS 341", "Dış Ticaret", "Doç. Dr. Zeynep ÇİMEN", "C-5", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "ULS 327", "Bölgesel Politikalar: Balkanlar", "Dr. Öğr. Üyesi Durmuş Ali KOLTUK", "C-6", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "ULS 335", "Avrupa Çalışmaları", "Doç. Dr. Ramazan İZOL", "C-5", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "ULS 303", "Türk Siyasal Yaşamı", "Doç. Dr. Ramazan İZOL", "C-6", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:30", "ULS 381", "Mesleki İngilizce I", "Öğr. Gör. Hülya ÇELİK", "C-2", "Seçmeli")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "ULS 305", "Uluslararası İlişkiler Kuramları", "Arş. Gör. Dr. Mustafa ÇAKIR", "C-9", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "ULS 301", "Türk Dış Politikası", "Prof. Dr. Şenol KANTARCI", "C-8", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "ULS 309", "Devletler Özel Hukuku", "Öğr. Gör. Dr. Gülden ATİLLA ÖZTÜRK", "A-102", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "ULS 343", "Savaşlar ve Devrimler Tarihi", "Arş. Gör. Dr. Arda DİLMAÇ", "C-9", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "ULS 321", "Bölgesel Politikalar: Ortadoğu", "Doç. Dr. Fulya ÖZKAN", "C-8", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "ULS 319", "Uluslararası İktisat", "Doç. Dr. Atiye Beyhan AKAY", "C-6", "Zorunlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "ULS 341", "Dış Ticaret", "Doç. Dr. Zeynep ÇİMEN", "C-5", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "ULS 327", "Bölgesel Politikalar: Balkanlar", "Dr. Öğr. Üyesi Durmuş Ali KOLTUK", "C-6", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "ULS 335", "Avrupa Çalışmaları", "Doç. Dr. Ramazan İZOL", "C-5", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "ULS 303", "Türk Siyasal Yaşamı", "Doç. Dr. Ramazan İZOL", "C-6", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "ULS 381", "Mesleki İngilizce I", "Öğr. Gör. Hülya ÇELİK", "C-2", "Seçmeli")
         )
     )
 
@@ -1251,15 +1184,15 @@ object ClassSchedules {
         sourcePage = 7,
         sourceUrl = INTERNATIONAL_RELATIONS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "ULS 401", "Uluslararası İlişkilerde Güncel Sorunlar", "Doç. Dr. Mustafa ÖZTÜRK", "C-8", "Zorunlu"),
-            programEntry(ScheduleDay.MONDAY, "14:30", "17:30", "ULS 475", "Sosyal Bilimlerde Araştırma Yöntemleri", "Arş. Gör. Dr. Pınar ARIKAN SİNKAYA", "C-6", "Zorunlu"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "ULS 409", "Bölgesel Politikalar: Kafkasya", "Prof. Dr. Hayati AKTAŞ", "C-8", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "ULS 427", "Akdeniz’de Bölgesel Güvenlik", "Dr. Öğr. Üyesi Durmuş Ali KOLTUK", "C-2", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "14:30", "17:30", "ULS 431", "Uluslararası Göç Politikaları", "Doç. Dr. Sanem ÖZER", "C-3", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "ULS 419", "Rusya Çalışmaları", "Doç. Dr. Mustafa ÖZTÜRK", "C-8", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "14:30", "17:30", "ULS 429", "Bölgesel Politikalar: Latin Amerika", "Doç. Dr. Ceren UYSAL OĞUZ", "C-9", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "14:30", "17:30", "ULS 407", "Uluslararası Hukuk I", "Arş. Gör. Dr. Selin ERKUL", "C-3", "Zorunlu"),
-            programEntry(ScheduleDay.FRIDAY, "15:30", "18:30", "ULS 471", "Diplomatik İngilizce", "Öğr. Gör. Seda AKSUNGUR", "C-8", "Seçmeli")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "ULS 401", "Uluslararası İlişkilerde Güncel Sorunlar", "Doç. Dr. Mustafa ÖZTÜRK", "C-8", "Zorunlu"),
+            programEntry(ScheduleDay.MONDAY, "14:30", "17:20", "ULS 475", "Sosyal Bilimlerde Araştırma Yöntemleri", "Arş. Gör. Dr. Pınar ARIKAN SİNKAYA", "C-6", "Zorunlu"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "ULS 409", "Bölgesel Politikalar: Kafkasya", "Prof. Dr. Hayati AKTAŞ", "C-8", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "ULS 427", "Akdeniz’de Bölgesel Güvenlik", "Dr. Öğr. Üyesi Durmuş Ali KOLTUK", "C-2", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "14:30", "17:20", "ULS 431", "Uluslararası Göç Politikaları", "Doç. Dr. Sanem ÖZER", "C-3", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "ULS 419", "Rusya Çalışmaları", "Doç. Dr. Mustafa ÖZTÜRK", "C-8", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "14:30", "17:20", "ULS 429", "Bölgesel Politikalar: Latin Amerika", "Doç. Dr. Ceren UYSAL OĞUZ", "C-9", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "14:30", "17:20", "ULS 407", "Uluslararası Hukuk I", "Arş. Gör. Dr. Selin ERKUL", "C-3", "Zorunlu"),
+            programEntry(ScheduleDay.FRIDAY, "15:30", "18:20", "ULS 471", "Diplomatik İngilizce", "Öğr. Gör. Seda AKSUNGUR", "C-8", "Seçmeli")
         )
     )
 
@@ -1447,14 +1380,14 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "ATA101", "Atatürk İlkeleri ve İnkılap Tarihi I", "", "Amfi 3"),
             programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "KPD101", "Kariyer Planlama", "", "D202"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EEE1005", "Ayrık Matematik ve Algoritmalar", "", "Amfi 3 ve Yazılım Lab. 1"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "MAT151", "Mathematics-I", "", "D201"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "EEM1001", "Elektrik-Elektronik Mühendisliğine Giriş - Şube 1", "", "D201"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "EEM1001", "Elektrik-Elektronik Mühendisliğine Giriş - Şube 2", "", "D202"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "14:20", "TDB101", "Türk Dili-I", "", "Amfi 1"),
-            programEntry(ScheduleDay.WEDNESDAY, "14:30", "16:20", "MAT151", "Mathematics-I", "", "D201"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "KIM175", "Fundamentals of Chemistry", "", "D201"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "FIZ175", "Physics Laboratory", "", "Fen Fakültesi"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "FIZ173", "Physics-I", "", "D201")
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "MAT151", "Mathematics-I", "", "Dz01"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "EEM1001", "Elektrik-Elektronik Mühendisliğine Giriş - Şube 1", "", "Dz01"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "EEM1001", "Elektrik-Elektronik Mühendisliğine Giriş - Şube 2", "", "D202"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB101", "Türk Dili-I", "", "Amfi 1"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "MAT151", "Mathematics-I", "", "Dz01"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "KIM175", "Fundamentals of Chemistry", "", "Dz01"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "FIZ175", "Physics Laboratory", "", "Fen Fakültesi"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "FIZ173", "Physics-I", "", "Dz01")
         )
     )
 
@@ -1464,16 +1397,16 @@ object ClassSchedules {
         sourceUrl = ELECTRICAL_ELECTRONICS_ENGINEERING_SOURCE_URL,
         sourcePage = 1,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "EEM201", "Mühendislik Matematiği", "", "D201"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "EEM213", "Mantıksal Devreler", "", "D201"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EEM203", "Devre Teorisi-I - Şube 1", "", "D202"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EEM203", "Devre Teorisi-I - Şube 2", "", "D202"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "EEM209", "Probability Theory & Statistical Analysis", "", "D205"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "EEM207", "Elektromanyetik Alan Teorisi - Şube 1", "", "BB01"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "EEM207", "Elektromanyetik Alan Teorisi - Şube 2", "", "Amfi 3"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "EEM201", "Mühendislik Matematiği", "", "Dz01"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "EEM213", "Mantıksal Devreler", "", "Dz01"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "EEM203", "Devre Teorisi-I - Şube 1", "", "D202"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "EEM203", "Devre Teorisi-I - Şube 2", "", "D202"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "EEM209", "Probability Theory & Statistical Analysis", "", "D205"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "EEM207", "Elektromanyetik Alan Teorisi - Şube 1", "", "BB01"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "EEM207", "Elektromanyetik Alan Teorisi - Şube 2", "", "Amfi 3"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "EEM201", "Mühendislik Matematiği", "", "D202"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "EEM217", "Devre Laboratuvarı I", "", "Ölçme Lab. - 1. kat"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "EEM215", "Mantıksal Devreler Laboratuvarı", "", "Ölçme Lab. - 1. kat")
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "EEM215", "Mantıksal Devreler Laboratuvarı", "", "Ölçme Lab. - 1. kat")
         )
     )
 
@@ -1483,10 +1416,10 @@ object ClassSchedules {
         sourceUrl = ELECTRICAL_ELECTRONICS_ENGINEERING_SOURCE_URL,
         sourcePage = 1,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "EEM322", "Electronics-II - Şube 1", "", "D202"),
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "EEM322", "Electronics-II - Şube 2", "", "D205"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "12:20", "EEM322", "Electronics-II - Şube 1", "", "D202"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "12:20", "EEM322", "Electronics-II - Şube 2", "", "D205"),
             programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "EEM309", "Electrical Machines Laboratory", "", "Güç Elektroniği Lab. - Zemin kat"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EEM341", "Elektrik Kumanda Devreleri ve PLC Programlama", "", "D201"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "EEM341", "Elektrik Kumanda Devreleri ve PLC Programlama", "", "Dz01"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EEM313", "İleri Bilgisayar Programlama", "", "Yazılım Lab. 2"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "EEM307", "Electrical Machines", "", "D203"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "EEM391", "Introduction to Economics", "", "D203"),
@@ -1495,7 +1428,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EEM381", "Introduction to Microwave Theory", "", "C205"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "EEM307", "Electrical Machines", "", "D203"),
             programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "EEM325", "Electronics Laboratory II", "", "Ölçme Lab. - 1. kat"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "EEM315", "Mühendislikte Hesaplamalı Yöntemler", "", "Yazılım Lab. 2")
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "EEM315", "Mühendislikte Hesaplamalı Yöntemler", "", "Yazılım Lab. 2")
         )
     )
 
@@ -1505,24 +1438,24 @@ object ClassSchedules {
         sourceUrl = ELECTRICAL_ELECTRONICS_ENGINEERING_SOURCE_URL,
         sourcePage = 1,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "EEE487", "Fundamentals of Antenna Theory", "", "D203"),
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "EEE451", "PLC Uygulamaları ve SCADA Sistemleri", "", "BZ01"),
-            programEntry(ScheduleDay.MONDAY, "12:30", "14:20", "EEM401", "Mezuniyet Projesi-I", "", ""),
-            programEntry(ScheduleDay.MONDAY, "14:30", "16:20", "EEE473", "Cellular Communication", "", "D202"),
-            programEntry(ScheduleDay.MONDAY, "14:30", "16:20", "EEE417", "Deep Learning", "", "D203"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "11:20", "EEE487", "Fundamentals of Antenna Theory", "", "D203"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "11:20", "EEE451", "PLC Uygulamaları ve SCADA Sistemleri", "", "Bz01"),
+            programEntry(ScheduleDay.MONDAY, "12:30", "13:20", "EEM401", "Mezuniyet Projesi-I", "", ""),
+            programEntry(ScheduleDay.MONDAY, "14:30", "17:20", "EEE473", "Cellular Communication", "", "D202"),
+            programEntry(ScheduleDay.MONDAY, "14:30", "17:20", "EEE417", "Deep Learning", "", "D203"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EEE425", "Sayısal Sinyal İşleme", "", "D203"),
-            programEntry(ScheduleDay.TUESDAY, "12:30", "14:20", "EEM401", "Mezuniyet Projesi-I", "", ""),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EEM443", "Bilim Tarihi", "", "D203"),
+            programEntry(ScheduleDay.TUESDAY, "12:30", "13:20", "EEM401", "Mezuniyet Projesi-I", "", ""),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "EEM443", "Bilim Tarihi", "", "D203"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "EEE477", "Digital Communication Laboratory", "", "Sayısal Elektronik Lab."),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "EEE447", "Otomatik Kontrol Laboratuvarı", "", "Tesis Lab."),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "EEE431", "Image Processing", "", "D203"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "EEE459", "Power System Analysis", "", "C210"),
+            programEntry(ScheduleDay.WEDNESDAY, "14:30", "17:20", "EEE431", "Image Processing", "", "D203"),
+            programEntry(ScheduleDay.WEDNESDAY, "14:30", "17:20", "EEE459", "Power System Analysis", "", "C210"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EEE411", "İleri Mantık Devre Tasarımı", "", "C210"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EEE499", "Yenilenebilir Enerji Kaynakları", "", "BZ01"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "EEE483", "Elektromanyetik Uyumluluğa Giriş", "", "D202"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "EEE427", "Biyomedikal Mühendislik Uygulamalı Çözümler", "", "D201"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "EEE441", "İş Sağlığı ve Güvenliği", "", "D202"),
-            programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "EEE457", "High Voltage Techniques", "", "D202")
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EEE499", "Yenilenebilir Enerji Kaynakları", "", "Bz01"),
+            programEntry(ScheduleDay.THURSDAY, "14:30", "17:20", "EEE483", "Elektromanyetik Uyumluluğa Giriş", "", "D202"),
+            programEntry(ScheduleDay.THURSDAY, "14:30", "17:20", "EEE427", "Biyomedikal Mühendislik Uygulamalı Çözümler", "", "Dz01"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "11:20", "EEE441", "İş Sağlığı ve Güvenliği", "", "D202"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "EEE457", "High Voltage Techniques", "", "D202")
         )
     )
 
@@ -1533,15 +1466,15 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "", "Introduction to Environmental Engineering", "", "C202"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "", "Basic Computer Algorithms", "", "CAD1"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "18:20", "", "Basic Computer Algorithms", "", "CAD1"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Physics I", "", "C202"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Physics I Lab.", "", "Fen Fakültesi"),
             programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "", "Mathematics I", "", "C202"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Mathematics I", "", "C202"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "", "Genel Kimya I", "", "C202"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "Türk Dili I", "", "Amfi 1"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Technical English II", "", "C202"),
-            programEntry(ScheduleDay.THURSDAY, "16:30", "17:20", "", "Kariyer Planlama", "", "C202")
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Technical English II", "", "C202"),
+            programEntry(ScheduleDay.THURSDAY, "16:30", "18:20", "", "Kariyer Planlama", "", "C202")
         )
     )
 
@@ -1552,13 +1485,13 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Atatürk İlkeleri ve İnkılap Tarihi I", "", "BB04"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Akışkanlar Mekaniği", "", "C202"),
-            programEntry(ScheduleDay.MONDAY, "16:30", "17:20", "", "Diferansiyel Denklemler", "", "C202"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Akışkanlar Mekaniği", "", "C202"),
+            programEntry(ScheduleDay.MONDAY, "16:30", "18:20", "", "Diferansiyel Denklemler", "", "C202"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Çevre Mikrobiyolojisi", "", "C204"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Çevre Mikrobiyolojisi Laboratuvarı", "", "Laboratuvar"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Diferansiyel Denklemler", "", "C206"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Fundamentals of Environmental Engineering", "", "C204"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Environmental Chemistry", "", "C204"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Environmental Chemistry", "", "C204"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "12:20", "", "Teknik Resim", "", "TRS"),
             programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "", "Ölçme Bilgisi", "", "C202")
         )
@@ -1574,9 +1507,9 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Su Temini Mühendisliği - Uygulama", "", "TRS/CAD1"),
             programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "", "Bilgisayar Okuma ve Yazma Becerileri", "", "C204"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Toprak ve Yeraltı Suyu Kirliliği", "", "BTO"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Physical Unit Operations", "", "C204"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Physical Unit Operations", "", "C204"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Su Kalitesi Kontrolü", "", "C201"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Kimyasal Prosesler", "", "C201"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Kimyasal Prosesler", "", "C201"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "12:20", "", "Katı Atık Yönetimi", "", "C202")
         )
     )
@@ -1587,14 +1520,15 @@ object ClassSchedules {
         sourceUrl = ENVIRONMENTAL_ENGINEERING_SOURCE_URL,
         sourcePage = 1,
         entries = listOf(
-            programEntry(ScheduleDay.TUESDAY, "10:30", "15:20", "", "Atıksuların Arıtılması", "", "C201"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "16:20", "", "Çevre Hukuku", "", "C201"),
+            programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "", "Atıksuların Arıtılması", "", "C201"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Atıksuların Arıtılması", "", "C201"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "", "Çevre Hukuku", "", "C201"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Microbiology of WW", "", "C204"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Çevresel Modelleme - Teorik", "", "C205"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "16:20", "", "Çevresel Modelleme - Uygulama", "", "CAD1"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Air Pollution Modelling", "", "C201"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "", "Çevresel Modelleme - Uygulama", "", "CAD1"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Air Pollution Modelling", "", "C201"),
             programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "", "Air Pollution Control", "", "C202"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "15:20", "", "Yeşil Dönüşüm Uygulamaları", "", "Uzaktan Eğitim")
+            programEntry(ScheduleDay.FRIDAY, "14:30", "16:20", "", "Yeşil Dönüşüm Uygulamaları", "", "Uzaktan Eğitim")
         )
     )
 
@@ -1729,7 +1663,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Yapı Elemanları", "", "C213"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Malzeme Bilimi", "", "C213"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Dinamik", "", "C213"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Diferansiyel Denklemler", "", "C213"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "17:20", "", "Diferansiyel Denklemler", "", "C213"),
             programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "", "Sayısal Analiz", "", "C209")
         )
     )
@@ -1747,7 +1681,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Hidroloji", "", "C209"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Yapı Statiği II", "", "C209"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "11:20", "", "Karayolları Mühendisliği", "", "Amfi 2"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "", "Zemin Mekaniği I", "", "C213")
+            programEntry(ScheduleDay.FRIDAY, "14:30", "18:20", "", "Zemin Mekaniği I", "", "C213")
         )
     )
 
@@ -1784,13 +1718,13 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Atatürk İlkeleri ve İnkılap Tarihi I", "", "Amfi 1"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "İngilizce I", "", "Amfi 2"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "", "Fizik I", "", "C211"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Matematik I", "", "C211"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "", "Matematik I", "", "C211"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Jeoloji Mühendisliğine Giriş", "", "C208"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Genel Kimya I", "", "C202"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Temel Bilgisayar ve Algoritma", "", "CAD-I"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "", "Kariyer Planlama", "", "B102"),
-            programEntry(ScheduleDay.THURSDAY, "14:30", "16:20", "", "Türk Dili I", "", "Amfi 1"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "10:20", "", "Fizik I (Laboratuvar)", "", "Fen Fakültesi A Blok")
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "", "Genel Kimya I", "", "C202"),
+            programEntry(ScheduleDay.THURSDAY, "08:30", "12:20", "", "Temel Bilgisayar ve Algoritma", "", "CAD-I"),
+            programEntry(ScheduleDay.THURSDAY, "14:30", "15:20", "", "Kariyer Planlama", "", "B102"),
+            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "", "Türk Dili I", "", "Amfi 1"),
+            programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "", "Fizik I (Laboratuvar)", "", "Fen Fakültesi A Blok Fizik Bölümü Laboratuvarı")
         )
     )
 
@@ -1801,12 +1735,12 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Optik Mineraloji", "", "C208"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Yapısal Jeoloji", "", "C210"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "", "Yapısal Jeoloji", "", "C210"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Mühendislikte İstatistik", "", "CAD-I"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Kristalografi", "", "C208"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Kristalografi", "", "C208"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Sedimantoloji", "", "C208"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Diferansiyel Denklemler", "", "C213"),
-            programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "", "Statik ve Mukavemet", "", "C211")
+            programEntry(ScheduleDay.THURSDAY, "13:30", "17:20", "", "Diferansiyel Denklemler", "", "C213"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "", "Statik ve Mukavemet", "", "C211")
         )
     )
 
@@ -1817,13 +1751,13 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Tünel Jeolojisi", "", "C210"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Jeokimya", "", "C208"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "", "Jeokimya", "", "C208"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Sedimanter Petrografi", "", "C211"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Maden Yatakları", "", "C211"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "", "Maden Yatakları", "", "C211"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Madencilik Bilgisi", "", "C211"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Kıyı ve Deniz Jeolojisi", "", "C211"),
             programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "", "Toplumsal Duyarlılık ve Katkı", "", "D201"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "", "Kaya Mekaniği", "", "C211")
+            programEntry(ScheduleDay.FRIDAY, "14:30", "18:20", "", "Kaya Mekaniği", "", "C211")
         )
     )
 
@@ -1834,8 +1768,8 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "", "Uzaktan Algılama", "", "C208"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Mühendislik Jeolojisi", "", "C208"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Petrol Jeolojisi", "", "B102")
+            programEntry(ScheduleDay.MONDAY, "13:30", "17:20", "", "Mühendislik Jeolojisi", "", "C208"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "", "Petrol Jeolojisi", "", "B102")
         )
     )
 
@@ -1845,17 +1779,18 @@ object ClassSchedules {
         sourceUrl = MECHANICAL_ENGINEERING_SOURCE_URL,
         sourcePage = 1,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "08:30", "09:20", "", "İngilizce I", "B. AKINCI", "Amfi 3"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "", "İngilizce I", "B. AKINCI", "Amfi 3"),
             programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "", "Kariyer Planlama", "İ. F. YAKA", "D201"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "", "Makine Mühendisliğine Giriş", "G. ALTAN", "C212"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "16:20", "", "Almanca I", "A. AYDEMİR ÜMİT", "BB04"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "10:20", "", "Matematik I", "Ç. SEKİN", "Amfi 4"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Genel Kimya", "C. ASLAN", "BB04"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "", "Temel Bilgisayar ve Algoritma - Şube 1", "O. ORAL", "Enformatik Lab. 3 (İletişim Fakültesi)"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Temel Bilgisayar ve Algoritma - Şube 2", "O. ORAL", "Enformatik Lab. 3 (İletişim Fakültesi)"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Makine Mühendisliğine Giriş", "G. ALTAN", "C212"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "", "Almanca I", "A. AYDEMİR ÜMİT", "BB04"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "", "Matematik I", "Ç. SEKİN", "Amfi 4"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Genel Kimya", "C. ASLAN", "BB04"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "", "Temel Bilgisayar ve Algoritma - Şube 1", "O. ORAL", "Enformatik Lab. 3 (İletişim Fakültesi)"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "", "Temel Bilgisayar ve Algoritma - Şube 2", "O. ORAL", "Enformatik Lab. 3 (İletişim Fakültesi)"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Teknik Resim - Şube 1", "V. KOVAN", "Teknik Resim Salonu"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "Türk Dili I", "S. ORUÇOĞLU", "Amfi 2"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Teknik Resim - Şube 2", "T. TEZEL", "Teknik Resim Salonu"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "10:20", "", "Fizik I", "N. TUNÇEL", "Amfi 3"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "", "Fizik I", "N. TUNÇEL", "Amfi 3"),
             programEntry(ScheduleDay.FRIDAY, "14:30", "15:20", "", "Hobi Dersleri", "", "")
         )
     )
@@ -1867,12 +1802,11 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Atatürk İlkeleri ve İnkılap Tarihi I", "M. MALHUT", "C203"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Malzeme Bilimi", "H. E. ÇAMURLU", "D201"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "11:20", "", "Mukavemet I", "G. ALTAN", "D201"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Ölçme Tekniği ve Değerlendirme", "A. ÇAĞLAR", "Amfi 2"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "11:20", "", "Termodinamik I", "A. DOĞAN", "Amfi 4"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Teknik Resim - Şube 1", "V. KOVAN", "Teknik Resim Salonu"),
-            programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "", "Diferansiyel Denklemler", "E. ŞÜKRÜOĞLU", "Amfi 3"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Malzeme Bilimi", "H. E. ÇAMURLU", "D201"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Mukavemet I", "G. ALTAN", "D201"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Ölçme Tekniği ve Değerlendirme", "A. ÇAĞLAR", "Amfi 2"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Termodinamik I", "A. DOĞAN", "Amfi 4"),
+            programEntry(ScheduleDay.THURSDAY, "08:30", "12:20", "", "Diferansiyel Denklemler", "E. ŞÜKRÜOĞLU", "Amfi 3"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Sayısal Analiz", "O. ÖZBALCI", "Amfi 3")
         )
     )
@@ -1884,10 +1818,11 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Teknik İngilizce I", "H. E. ÇAMURLU", "D204"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Makine Elemanları I", "V. KOVAN", "Amfi 4"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Otomatik Kontrol", "H. ERSOY", "D201"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Akışkanlar Mekaniği", "İ. ATMACA", "Amfi 4"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "11:20", "", "İmal Yöntemleri I", "T. TEZEL", "D201"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "İş Hukuku", "B. F. İŞÇİ", "C212"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Makine Elemanları I", "V. KOVAN", "Amfi 4"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Otomatik Kontrol", "H. ERSOY", "D201"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "", "Akışkanlar Mekaniği", "İ. ATMACA", "Amfi 4"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "İmal Yöntemleri I", "T. TEZEL", "D201"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Mekanizma Tekniği", "D. E. ŞAHİN", "D201"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "", "Girişimcilik ve İş Kurma", "M. YAYKAŞLI", "D204"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "", "İletişim", "F. KAYAN", "D201"),
@@ -1902,7 +1837,6 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "", "Makine Proje", "", ""),
-            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "İş Hukuku", "B. F. İŞÇİ", "C212"),
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Bilgisayar Destekli Modelleme I", "V. KOVAN", "Yazılım Lab. 2"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Isı Değiştiricileri", "İ. ATMACA", "D204"),
             programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "", "Kompozit Malzeme Mekaniği", "G. ALTAN", "C212"),
@@ -1911,7 +1845,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Kalite Güvenliği", "A. GÜNGÖR", "D204"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Toz Metalurjisine Giriş", "H. E. ÇAMURLU", "C212"),
             programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "", "Dış Akışlar", "B. DEDA ALTAN", "D204"),
-            programEntry(ScheduleDay.TUESDAY, "17:30", "18:20", "", "Eklemeli İmalat", "R. E. ECE", "Uzaktan (TUSAŞ)"),
+            programEntry(ScheduleDay.TUESDAY, "17:30", "19:20", "", "Eklemeli İmalat", "R. E. ECE", "Uzaktan (TUSAŞ)"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "", "Hidrolik Pnömatik", "A. ÇAĞLAR", "D201"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Buhar Kazanları", "A. ÇAĞLAR", "D201"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Makine Konstrüksiyonu", "V. KOVAN", "D204"),
@@ -1924,9 +1858,9 @@ object ClassSchedules {
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Soğutma Tekniği", "A. ÇOŞGUN", "D204"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Esnek İmalat Sistemleri", "E. S. TOPAL", "C212"),
             programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "", "İklimlendirme Esasları", "A. ÇOŞGUN", "D204"),
-            programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "", "Makine Laboratuvarı", "", "Amfi 1"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "15:20", "", "Robot Tekniğine Giriş", "E. YILDIZ", "C212"),
-            programEntry(ScheduleDay.FRIDAY, "16:30", "17:20", "", "Bitirme Çalışması", "", "")
+            programEntry(ScheduleDay.FRIDAY, "08:30", "12:20", "", "Makine Laboratuvarı", "", "Amfi 1"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "16:20", "", "Robot Tekniğine Giriş", "E. YILDIZ", "C212"),
+            programEntry(ScheduleDay.FRIDAY, "16:30", "18:20", "", "Bitirme Çalışması", "", "")
         )
     )
 
@@ -1937,15 +1871,15 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 123", "Mimarlıkta Bilgisayar Uygulamaları I", "Öğr. Gör. Sadık Gökhan EKİNCİ", "Enformatik LAB 03"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MİM 141", "Matematik", "Öğr. Gör. Ahmet TEMİZEL", "Mim Stü 1"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "14:20", "MİM 141", "Matematik", "Görevlendirme (Öğr. Gör. Ahmet TEMİZEL)", "Mim Stü 1"),
             programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "MİM 131", "Mimarlığa Giriş", "Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "Mim Stü 1"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "MİM 111", "Mimari Tasarım I ve İfade Teknikleri", "Ş1: Öğr. Üyesi Evren ÜLKER YILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEN · Ş3: Arş. Gör. Dr. Şeren BAŞAK ÖZÜNUR ŞAHİN · Ş4: Öğr. Gör. Dr. Sema BALCIK", "Mim Stü 1 / Mim Stü 3"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "MİM 111", "Mimari Tasarım I ve İfade Teknikleri", "Ş1: Öğr. Üyesi Evren ÜLKER YILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEN · Ş3: Arş. Gör. Dr. Şeren BAŞAK ÖZÜNUR ŞAHİN · Ş4: Öğr. Gör. Dr. Sema BALCIK", "Mim Stü 1 / Mim Stü 3"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "MİM 113", "Temel Tasarım", "Ş1: Öğr. Üyesi Evren ÜLKER YILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEN · Ş3: Arş. Gör. Dr. Şeren BAŞAK ÖZÜNUR ŞAHİN · Ş4: Öğr. Gör. Dr. Sema BALCIK", "Mim Stü 1"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "MİM 113", "Temel Tasarım", "Ş1: Öğr. Üyesi Evren ÜLKER YILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEN · Ş3: Arş. Gör. Dr. Şeren BAŞAK ÖZÜNUR ŞAHİN · Ş4: Öğr. Gör. Dr. Sema BALCIK", "Mim Stü 1"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "MİM 111", "Mimari Tasarım I ve İfade Teknikleri", "Ş1: Dr. Öğr. Üyesi Evren ÜLKERYILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEMİR · Ş3: Arş. Gör. Dr. Sezen Başak ÖZÜNUR ŞAHİN", "Mim Stü 1 / Mim Stü 3"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "MİM 111", "Mimari Tasarım I ve İfade Teknikleri", "Ş1: Dr. Öğr. Üyesi Evren ÜLKERYILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEMİR · Ş3: Arş. Gör. Dr. Sezen Başak ÖZÜNUR ŞAHİN · Ş4: Öğr. Gör. Dr. Sema BALÇIK", "Mim Stü 1 / Mim Stü 3"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "MİM 113", "Temel Tasarım", "Ş1: Dr. Öğr. Üyesi Evren ÜLKERYILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEMİR · Ş3: Arş. Gör. Dr. Sezen Başak ÖZÜNUR ŞAHİN · Ş4: Öğr. Gör. Dr. Sema BALÇIK", "Mim Stü 1"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "MİM 113", "Temel Tasarım", "Ş1: Dr. Öğr. Üyesi Evren ÜLKERYILDIZ KALE · Ş2: Arş. Gör. Dr. Şerife İNCEDEMİR · Ş3: Arş. Gör. Dr. Sezen Başak ÖZÜNUR ŞAHİN", "Mim Stü 1"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Murat BOZ", "PMB Stüdyo II"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "YBD 101", "İngilizce I", "Öğr. Gör. Ahmet KÜTÜK", "PMB Stüdyo II"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "TDB 101", "Türk Dili I", "Öğr. Gör. S. ORUÇOĞLU", "PMB Stüdyo II")
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "TDB 101", "Türk Dili I", "Öğr. Gör. Sinan ORUÇOĞLU", "PMB Stüdyo II")
         )
     )
 
@@ -1958,17 +1892,17 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 243", "Mimarlık ve Strüktürel Sistemler I", "Dr. Öğr. Üy. Arzu ER", "Mim Stü 2"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MİM 280", "İş Sağlığı ve Güvenliği II", "Dr. Öğr. Üy. Arzu ER", "Mim Stü 2"),
             programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "MİM 241", "Mimarlıkta Yapı ve Yapım Yöntemleri I", "Dr. Öğr. Üy. Arzu ER", "Mim Stü 2"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "MİM 211", "Mimari Tasarım III", "Ş1: Prof. Dr. H. Tuğba ÖRMECİOĞLU · Ş2: Prof. Dr. İkbal ERBAŞ · Ş3: Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Mim Stü 2 / Mim Stü 3"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "MİM 211", "Mimari Tasarım III", "Ş1: Prof. Dr. H. Tuğba ÖRMECİOĞLU · Ş2: Prof. Dr. İkbal ERBAŞ · Ş3: Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Mim Stü 2 / Mim Stü 3"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "MİM 211", "Mimari Tasarım III", "Ş1: Prof. Dr. H. Tuğba ÖRMECİOĞLU · Ş2: Prof. Dr. İkbal ERBAŞ · Ş3: Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Ş1, Ş2: Mim Stü 2 · Ş3: Mim Stü 3"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "MİM 211", "Mimari Tasarım III", "Ş1: Prof. Dr. H. Tuğba ÖRMECİOĞLU · Ş2: Prof. Dr. İkbal ERBAŞ · Ş3: Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Ş1, Ş2: Mim Stü 2 · Ş3: Mim Stü 3"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "MİM 213", "Mimari Alan Araştırma Stajı", "Doç. Dr. Serkan KILIÇ", "Mim Stü 2"),
-            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 047", "Mimarlıkta Ekolojik Tasarım", "Prof. Dr. Hacer MUTLU DİNÇ", "Mim Stü 2"),
-            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 501", "Mimari Tasarımda Yer ve Bağlam", "Prof. Dr. Kemal Reha KAVAS", "Mim Stü 4", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "MİM 503", "Çağdaş Mimarlıkta Ekoloji", "Prof. Dr. Hacer MUTLU DİNÇ", "Mim Stü 2"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "MİM 014", "Serbest El Çizim ve Mimari İfade Teknikleri", "Prof. Dr. Kemal Reha KAVAS", "Mim Stü 4"),
-            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "MİM 502", "Konutların Kültürel ve Mekansal Analizi", "Arş. Gör. Dr. Şerife İNCEDEN", "Mim Stü 3"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 047", "Mimarlıkta Ekolojik Tasarım", "Prof. Dr. Hacer MUTLU DANACI", "Mim Stü 2"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 501", "Mimari Tasarımda Yer ve Bağlam", "Arş. Gör. Dr. Sezen Başak ÖZÜNUR ŞAHİN", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "MİM 503", "Çağdaş Mimarlıkta Ekoloji", "Prof. Dr. Hacer MUTLU DANACI", "Mim Stü 2"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "MİM 014", "Serbest El Mimari İfade Teknikleri", "Prof. Dr. Kemal Reha KAVAS", "Mim Stü 3"),
+            programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "MİM 502", "Konutun Kültürel ve Mekansal Analizi", "Arş. Gör. Dr. Şerife İNCEDEMİR", "Mim Stü 3"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "MİM 233", "Mimarlık Tarihi I", "Doç. Dr. Serkan KILIÇ", "Mim Stü 2"),
             programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "MİM 245", "Yapı Malzemeleri", "Prof. Dr. İlknur AKINER", "Mim Stü 2"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "16:20", "MİM 028", "Malzeme ve Yapım Sistemleri", "Prof. Dr. İlknur AKINER", "Mim Stü 2", "Seçmeli"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "16:20", "MİM 028", "Malzeme ve Taşıyıcı Sistemler", "Prof. Dr. İlknur AKINER", "Mim Stü 2", "Seçmeli"),
             programEntry(ScheduleDay.FRIDAY, "14:30", "16:20", "MİM 091", "Çocuk Mekanları Tasarımı", "Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Mim Stü 1", "Seçmeli"),
             programEntry(ScheduleDay.FRIDAY, "16:30", "18:20", "MİM 004", "Mimari Tasarımda Ergonomi", "Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Mim Stü 2", "Seçmeli")
         )
@@ -1980,15 +1914,15 @@ object ClassSchedules {
         sourceUrl = ARCHITECTURE_SOURCE_URL,
         sourcePage = 1,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "MİM 508", "Yapı İşlerinde İş Sağlığı ve Güvenliği I", "Dr. Öğr. Üy. Arzu ER", "Mim Stü 1", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "MİM 508", "Yapı İşlerinde İş Sağlığı ve Güvenliği I", "Dr. Öğr. Üy. Arzu ER", "Mim Stü 2", "Seçmeli"),
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 507", "Yapay Zeka Destekli Dijital Stüdyo", "Prof. Dr. H. Tuğba ÖRMECİOĞLU", "Mim Stü 1", "Seçmeli"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MİM 082", "Asma-Germe Strüktürler", "Prof. Dr. H. Tuğba ÖRMECİOĞLU", "Mim Stü 3", "Seçmeli"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MİM 032", "Şantiye Yönetimi ve Organizasyon", "Prof. Dr. İkbal ERBAŞ", "AZ-16", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MİM 032", "Şantiye Yönetim ve Organizasyonu", "Prof. Dr. İkbal ERBAŞ", "AZ-16", "Seçmeli"),
             programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "MİM 313", "Kentsel Planlama", "Dr. Öğr. Üy. Çağdaş SAYDAM", "Mim Stü 3"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "12:20", "MİM 311", "Mimari Tasarım V", "Ş1: Prof. Dr. İlknur AKINER · Ş2: Doç. Dr. Mehmet İNCEOĞLU · Ş3: Dr. Öğr. Üy. Çağdaş SAYDAM · Ş4: Dr. Öğr. Üy. İbrahim BAKIR · Ş5: Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "Ş1, Ş2, Ş5: Mim Stü 4 · Ş3, Ş4: AZ-16"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "17:20", "MİM 311", "Mimari Tasarım V", "Ş1: Prof. Dr. İlknur AKINER · Ş2: Doç. Dr. Mehmet İNCEOĞLU · Ş3: Dr. Öğr. Üy. Çağdaş SAYDAM · Ş4: Dr. Öğr. Üy. İbrahim BAKIR · Ş5: Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "Ş1, Ş2, Ş5: Mim Stü 4 · Ş3, Ş4: AZ-16"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "MİM 343", "Mekanik Sistemler", "Görevlendirme - Öğr. Gör. Mehmet KEMER", "Mim Stü 3"),
-            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 333", "Mimarlık Tarihi III", "Prof. Dr. Mehmet R. KAVAS", "Mim Stü 1"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 333", "Mimarlık Tarihi III", "Prof. Dr. Kemal Reha KAVAS", "Mim Stü 1"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "MİM 341", "Mimari Uygulama Projesi I (Şube 1-3)", "Ş1: Dr. Öğr. Üy. Arzu ER · Ş2: Dr. Öğr. Üy. İbrahim BAKIR · Ş3: Öğr. Gör. Dr. Sema BALCIK", "Ş1: Mim Stü 1 · Ş2-3: AZ-16"),
             programEntry(ScheduleDay.THURSDAY, "16:30", "19:15", "MİM 341", "Mimari Uygulama Projesi I (Şube 4-6)", "Ş4: Dr. Öğr. Üy. Arzu ER · Ş5: Dr. Öğr. Üy. İbrahim BAKIR · Ş6: Öğr. Gör. Dr. Sema BALCIK", "Ş4: Mim Stü 1 · Ş5-6: AZ-16"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "MİM 315", "Toplumsal Duyarlılık ve Katkı", "Arş. Gör. Dr. Ayşe YILDIRIM ATEŞ", "Mim Stü 3"),
@@ -2003,16 +1937,17 @@ object ClassSchedules {
         sourcePage = 1,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "MİM 048", "Anadolu Selçuklu Mimarisi I", "Doç. Dr. Serkan KILIÇ", "Mim Stü 3", "Seçmeli"),
-            programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "MİM 036", "Yapılarda Yangın Korunumu", "", "Mim Stü 4", "Seçmeli"),
-            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 067", "Mimarlık ve Sanat I", "Öğr. Gör. Sadık Gökhan EKİNCİ", "Mim Stü 4", "Seçmeli"),
-            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 060", "Likya Kentleri ve Mimari", "Doç. Dr. Serkan KILIÇ", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "MİM 036", "Yapılarda Yangın Korunumu", "Görevlendirme (Öğr. Gör. Dr. A. Nihat AKÇAL)", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 067", "Mimarlık ve Sanat I", "Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 060", "Likya Kentleri ve Mimarisi", "Doç. Dr. Serkan KILIÇ", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MİM 063", "Mimari Portfolyo Tasarımı I", "Dr. Öğr. Üy. Sıdıka Benan ÇELİKEL", "Mim Stü 3", "Seçmeli"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MİM 451", "İmar Mevzuatı", "Öğr. Gör. Sadık Gökhan EKİNCİ", "Mim Stü 4"),
-            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "MİM 088", "İşletme Ekonomisi ve Mimarlık", "Doç. Dr. Koray ÇETİN", "Mim Stü 4", "Seçmeli"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "MİM 411", "Mimari Tasarım VII", "Ş1: Prof. Dr. Kemal Reha KAVAS · Ş2: Prof. Dr. Hacer MUTLU DİNÇ · Ş3: Doç. Dr. Mehmet İNCEOĞLU · Ş4: Dr. Öğr. Üy. İbrahim BAKIR · Ş5: Dr. Öğr. Üy. Çağdaş SAYDAM · Ş6: Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "AZ-16 / AZ-12 / Mim Stü 2 / Mim Stü 4"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "MİM 411", "Mimari Tasarım VII", "Ş1: Prof. Dr. Kemal Reha KAVAS · Ş2: Prof. Dr. Hacer MUTLU DİNÇ · Ş3: Doç. Dr. Mehmet İNCEOĞLU · Ş4: Dr. Öğr. Üy. İbrahim BAKIR · Ş5: Dr. Öğr. Üy. Çağdaş SAYDAM · Ş6: Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "AZ-16 / AZ-12 / Mim Stü 2 / Mim Stü 4"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "MİM 088", "İşletme Ekonomisi ve Mimarlık", "Görevlendirme (Doç. Dr. Koray ÇETİN)", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "12:20", "MİM 411", "Mimari Tasarım VII", "Ş1: Prof. Dr. Kemal Reha KAVAS · Ş2: Prof. Dr. Hacer MUTLU DANACI · Ş3: Doç. Dr. Mehmet İNCEOĞLU · Ş4: Dr. Öğr. Üy. İbrahim BAKIR · Ş5: Dr. Öğr. Üy. Çağdaş SAYDAM · Ş6: Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "Ş1: AZ-16 · Ş2, Ş6: AZ-12 · Ş3: Mim Stü 2 · Ş4, Ş5: Mim Stü 4"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "MİM 411", "Mimari Tasarım VII", "Ş1: Prof. Dr. Kemal Reha KAVAS · Ş2: Prof. Dr. Hacer MUTLU DANACI · Ş3: Doç. Dr. Mehmet İNCEOĞLU · Ş4: Dr. Öğr. Üy. İbrahim BAKIR · Ş5: Dr. Öğr. Üy. Çağdaş SAYDAM · Ş6: Öğr. Gör. Dr. Sadık Gökhan EKİNCİ", "Ş1: AZ-16 · Ş2, Ş6: AZ-12 · Ş3: Mim Stü 2 · Ş4, Ş5: Mim Stü 4"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "MİM 414", "Mimari Uygulama (Ofis) Stajı-II", "Öğr. Gör. Dr. Sema BALCIK", "Mim Stü 4"),
-            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 046", "Kent Sosyolojisi", "Dr. Öğr. Üy. Evren ÜLKER YILDIZ", "Mim Stü 3", "Seçmeli"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "MİM 043", "Anıtsal Mimarlık Restorasyon", "Doç. Dr. Serkan KILIÇ", "Mim Stü 4", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MİM 046", "Kent Sosyolojisi", "Dr. Öğr. Üy. Evren ÜLKERYILDIZ KALE", "Mim Stü 3", "Seçmeli"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "MİM 043", "Anıtsal Mimarlıkta Restorasyon", "Doç. Dr. Serkan KILIÇ", "Mim Stü 4", "Seçmeli"),
             programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "MİM 076", "Mimarlık Tarihinde Fotoğraf", "Doç. Dr. Serkan KILIÇ", "Mim Stü 4", "Seçmeli"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "MİM 414", "Mimari Uygulama (Ofis) Stajı-II", "Öğr. Gör. Dr. Sema BALCIK", "Mim Stü 4")
         )
@@ -2093,10 +2028,10 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "08:30", "14:20", "İÇT 411", "Tasarım Stüdyosu V - Şube 1", "Doç. Dr. Özgü ÖZTURAN", "İÇM4"),
             programEntry(ScheduleDay.TUESDAY, "08:30", "14:20", "İÇT 411", "Tasarım Stüdyosu V - Şube 2", "Öğr. Gör. Aydın UÇAR", "İÇM2"),
             programEntry(ScheduleDay.TUESDAY, "08:30", "14:20", "İÇT 411", "Tasarım Stüdyosu V - Şube 3", "Arş. Gör. M. AÇIKEL", "İÇM3"),
-            programEntry(ScheduleDay.TUESDAY, "14:30", "17:20", "İÇT 417", "İç Mekanda Koruma ve Yeniden Kullanım", "Prof. Dr. Şebnem ERTAŞ BEŞİR", "İÇM1"),
+            programEntry(ScheduleDay.TUESDAY, "14:30", "17:20", "İÇT 417", "İç Mekanda Koruma ve Yeniden Kullanım - Şube 1", "Prof. Dr. Şebnem ERTAŞ BEŞİR", "İÇM1"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "11:20", "İÇT 495", "İç Kent Mobilyaları Tasarımı", "Öğr. Gör. A. Hikmet BAŞAYTAÇ", "AZ12"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "13:20", "İÇT 439", "Biçim Tasarım İlişkisi", "Dr. Öğr. Ü. Enver GÜNER", "AZ15"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "İÇT 417", "İç Mekanda Koruma ve Yeniden Kullanım", "Prof. Dr. Şebnem ERTAŞ BEŞİR", "İÇM1"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "İÇT 417", "İç Mekanda Koruma ve Yeniden Kullanım - Şube 2", "Prof. Dr. Şebnem ERTAŞ BEŞİR", "İÇM1"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "İÇT 437", "Binalarda Bitkilendirme", "Öğr. Gör. Nihat KARAKUŞ", "AZ12"),
             programEntry(ScheduleDay.THURSDAY, "14:30", "17:20", "İÇT 433", "Kurum Kimliği ve Kurumsal Tasarım I", "Dr. Öğr. Üye. Esra ORHAN YILMAZ", "İÇM1")
         )
@@ -2112,16 +2047,16 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = ECONOMETRICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "EKN 101", "Matematik I", "Arş. Gör. Dr. Buse Eda AKYÜZ ULUCAN", "B Blok Amfi 4"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "EKN 103", "Genel Muhasebe I", "Prof. Dr. Burcu DEMİREL", "A Blok 102"),
-            programEntry(ScheduleDay.TUESDAY, "10:30", "12:30", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Mor Amfi"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "EKN 109", "İşletme Yönetimine Giriş", "Doç. Dr. Janset AYTEMUR", "A Blok 204"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:30", "YBD 101", "İngilizce I", "Öğr. Gör. Aslı TAŞER", "A Blok Mavi Amfi"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:30", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Dr. Koray ERGİN", "B Blok Mor Amfi"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:30", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KARA", "Uzaktan (Online)"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "EKN 105", "İktisada Giriş I", "Prof. Dr. Ahmet BAYANER", "A Blok 202"),
-            programEntry(ScheduleDay.THURSDAY, "12:30", "13:30", "KPD 101", "Kariyer Planlama Dersi", "Dr. Öğr. Üyesi M. Serhan SEKRETER", "B Blok Amfi 2"),
-            programEntry(ScheduleDay.THURSDAY, "15:30", "18:30", "EKN 107", "Hukuka Giriş", "Öğr. Üyesi Aycan DEMİR", "Hukuk Fak. Derslik I")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "EKN 101", "Matematik I", "Arş. Gör. Dr. Buse Eda AKYÜZ ULUCAN", "B Blok Amfi 4"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "EKN 103", "Genel Muhasebe I", "Prof. Dr. Burcu DEMİREL", "A Blok 102"),
+            programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Mor Amfi"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EKN 109", "İşletme Yönetimine Giriş", "Doç. Dr. Janset AYTEMUR", "A Blok 204"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "YBD 101", "İngilizce I", "Öğr. Gör. Aslı TAŞER", "A Blok Mavi Amfi"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "Öğr. Gör. Dr. Koray ERGİN", "B Blok Mor Amfi"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KARA", "Uzaktan (Online)"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EKN 105", "İktisada Giriş I", "Prof. Dr. Ahmet BAYANER", "A Blok 202"),
+            programEntry(ScheduleDay.THURSDAY, "12:30", "13:20", "KPD 101", "Kariyer Planlama Dersi", "Dr. Öğr. Üyesi M. Serhan SEKRETER", "B Blok Amfi 2"),
+            programEntry(ScheduleDay.THURSDAY, "15:30", "18:20", "EKN 107", "Hukuka Giriş", "Öğr. Üyesi Aycan DEMİR", "Hukuk Fak. Derslik I")
         )
     )
 
@@ -2135,13 +2070,13 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = ECONOMETRICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "EKN 205", "Mikro İktisat", "Prof. Dr. Mehmet ZANBAK", "A Blok 205"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "EKN 201", "İstatistiksel Analiz I", "Prof. Dr. Mehmet MERT", "B Blok Amfi 6"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "EKN 207", "Kamu Maliyesi", "Arş. Gör. Dr. İlyas ÖZKÖK", "A Blok 201"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "18:30", "EKN 211", "İngilizce Okuma ve Konuşma", "Öğr. Gör. Hülya ÇELİK", "A Blok Mavi Amfi"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "EKN 219", "Bilgisayar Programlama I", "Öğr. Gör. Dr. Evren SEZGİN", "Enformatik LAB 07"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "EKN 203", "İleri Matematik", "Prof. Dr. Pınar KAYA SAMUT", "B Blok Amfi 1"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "EKN 209", "Borçlar Hukuku", "Öğr. Gör. Fahri DUTÇU", "B Blok Amfi 4")
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EKN 205", "Mikro İktisat", "Prof. Dr. Mehmet ZANBAK", "A Blok 205"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EKN 201", "İstatistiksel Analiz I", "Prof. Dr. Mehmet MERT", "B Blok Amfi 6"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "EKN 207", "Kamu Maliyesi", "Arş. Gör. Dr. İlyas ÖZKÖK", "A Blok 201"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "18:20", "EKN 211", "İngilizce Okuma ve Konuşma", "Öğr. Gör. Hülya ÇELİK", "A Blok Mavi Amfi"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EKN 219", "Bilgisayar Programlama I", "Öğr. Gör. Dr. Evren SEZGİN", "Enformatik LAB 07"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "EKN 203", "İleri Matematik", "Prof. Dr. Pınar KAYA SAMUT", "B Blok Amfi 1"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "EKN 209", "Borçlar Hukuku", "Öğr. Gör. Fahri DUTÇU", "B Blok Amfi 4")
         )
     )
 
@@ -2155,14 +2090,14 @@ object ClassSchedules {
         sourcePage = 3,
         sourceUrl = ECONOMETRICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "EKN 331", "Yapay Zeka Algoritmaları", "Doç. Dr. Mehmet KAYAKUŞ", "B Blok Amfi 2"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "EKN 323", "Regresyon Analizi", "Arş. Gör. Dr. Buse Eda AKYÜZ ULUCAN", "A Blok 204"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "EKN 310", "Finansal Analiz", "Prof. Dr. Aslıhan BOZCUK", "A Blok 205"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "EKN 301", "Ekonometri I", "Doç. Dr. Çiğdem DEMİR TOKER", "B Blok Amfi 6"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "EKN 321", "Matematiksel İstatistik", "Dr. Öğr. Üyesi Ayça BÜYÜKYILMAZ ERCAN", "B Blok Amfi 4"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "EKN 303", "Yöneylem Araştırması I", "Prof. Dr. Emre İPEKÇİ ÇETİN", "B Blok Amfi 4"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "EKN 307", "Türkiye Ekonomisi", "Öğr. Gör. Nermin BİLEK", "B Blok Amfi 3"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "EKN 325", "Mesleki İngilizce I", "Öğr. Gör. Recep KAZANCI", "B Blok Amfi 3")
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "EKN 331", "Yapay Zeka Algoritmaları", "Doç. Dr. Mehmet KAYAKUŞ", "B Blok Amfi 2"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EKN 323", "Regresyon Analizi", "Arş. Gör. Dr. Buse Eda AKYÜZ ULUCAN", "A Blok 204"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EKN 310", "Finansal Analiz", "Prof. Dr. Aslıhan BOZCUK", "A Blok 205"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "EKN 301", "Ekonometri I", "Doç. Dr. Çiğdem DEMİR TOKER", "B Blok Amfi 6"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EKN 321", "Matematiksel İstatistik", "Dr. Öğr. Üyesi Ayça BÜYÜKYILMAZ ERCAN", "B Blok Amfi 4"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "EKN 303", "Yöneylem Araştırması I", "Prof. Dr. Emre İPEKÇİ ÇETİN", "B Blok Amfi 4"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "EKN 307", "Türkiye Ekonomisi", "Öğr. Gör. Nermin BİLEK", "B Blok Amfi 3"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "EKN 325", "Mesleki İngilizce I", "Öğr. Gör. Recep KAZANCI", "B Blok Amfi 3")
         )
     )
 
@@ -2176,13 +2111,13 @@ object ClassSchedules {
         sourcePage = 4,
         sourceUrl = ECONOMETRICS_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "EKN 407", "Yönetim Bilgi Sistemleri", "Doç. Dr. Mehmet KAYAKUŞ", "B Blok Amfi 6"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "EKN 403", "Zaman Serileri Analizi", "Prof. Dr. Mehmet MERT", "B Blok Amfi 3"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "EKN 405", "Çok Değişkenli İstatistiksel Analiz", "Dr. Öğr. Üyesi Ayça BÜYÜKYILMAZ ERCAN", "B Blok Amfi 1"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "EKN 421", "Çok Kriterli Karar Verme", "Prof. Dr. Emre İPEKÇİ ÇETİN", "B Blok Amfi 5"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "EKN 429", "İstatistiksel Kalite Kontrol", "Dr. Öğr. Üyesi M. Serhan SEKRETER", "B Blok Amfi 5"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "EKN 409", "Karar Verme ve Oyun Teorisi", "Prof. Dr. Pınar KAYA SAMUT", "B Blok Amfi 3"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "EKN 401", "Uygulamalı Ekonometri", "Doç. Dr. Çiğdem DEMİR TOKER", "B Blok Amfi 3")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "EKN 407", "Yönetim Bilgi Sistemleri", "Doç. Dr. Mehmet KAYAKUŞ", "B Blok Amfi 6"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "EKN 403", "Zaman Serileri Analizi", "Prof. Dr. Mehmet MERT", "B Blok Amfi 3"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "EKN 405", "Çok Değişkenli İstatistiksel Analiz", "Dr. Öğr. Üyesi Ayça BÜYÜKYILMAZ ERCAN", "B Blok Amfi 1"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "EKN 421", "Çok Kriterli Karar Verme", "Prof. Dr. Emre İPEKÇİ ÇETİN", "B Blok Amfi 5"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "EKN 429", "İstatistiksel Kalite Kontrol", "Dr. Öğr. Üyesi M. Serhan SEKRETER", "B Blok Amfi 5"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "EKN 409", "Karar Verme ve Oyun Teorisi", "Prof. Dr. Pınar KAYA SAMUT", "B Blok Amfi 3"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "EKN 401", "Uygulamalı Ekonometri", "Doç. Dr. Çiğdem DEMİR TOKER", "B Blok Amfi 3")
         )
     )
 
@@ -2196,17 +2131,17 @@ object ClassSchedules {
         sourcePage = 1,
         sourceUrl = PUBLIC_FINANCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "MLY 115", "Genel Muhasebe I", "Prof. Dr. Mustafa YILDIRAN", "A Blok Mavi"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:30", "MLY 103", "Matematik I", "Doç. Dr. Neylan KAYA", "A Blok Mavi"),
-            programEntry(ScheduleDay.TUESDAY, "10:30", "12:30", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Mor"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "MLY 101", "İktisada Giriş", "Doç. Dr. Servet AKYOL", "A Blok Mavi"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:30", "YBD 101", "İngilizce I", "Öğr. Gör. Aslı TAŞER", "A Blok Mavi"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:30", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi", "Öğr. Gör. Dr. Koray ERGİN", "B Blok Mor"),
-            programEntry(ScheduleDay.WEDNESDAY, "12:30", "13:30", "KPD 101", "Kariyer Planlama", "Prof. Dr. Burcu DEMİREL", "B Blok Yavuz Tekelioğlu"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:30", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KARA", "Uzaktan/Online"),
-            programEntry(ScheduleDay.THURSDAY, "10:30", "12:30", "MLY 107", "İşletme Yönetimine Giriş", "Doç. Dr. Janset AYTEMUR", "A Blok Mavi"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "MLY 105", "Hukuka Giriş", "Doç. Dr. Ahmet Alptekin DURU", "A Blok Mavi"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "MLY 119", "Siyaset Bilimine Giriş", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "A Blok Mavi")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "MLY 115", "Genel Muhasebe I", "Prof. Dr. Mustafa YILDIRAN", "A Blok Mavi"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "MLY 103", "Matematik I", "Doç. Dr. Neylan KAYA", "A Blok Mavi"),
+            programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "TDB 101", "Türk Dili I", "Öğr. Gör. Arzu TIRAK ASLAN", "B Blok Mor"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "MLY 101", "İktisada Giriş", "Doç. Dr. Servet AKYOL", "A Blok Mavi"),
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "YBD 101", "İngilizce I", "Öğr. Gör. Aslı TAŞER", "A Blok Mavi"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi", "Öğr. Gör. Dr. Koray ERGİN", "B Blok Mor"),
+            programEntry(ScheduleDay.WEDNESDAY, "12:30", "13:20", "KPD 101", "Kariyer Planlama", "Prof. Dr. Burcu DEMİREL", "B Blok Yavuz Tekelioğlu"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB 115", "Akademik Türkçe", "Öğr. Gör. Dürüye KARA", "Uzaktan/Online"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MLY 107", "İşletme Yönetimine Giriş", "Doç. Dr. Janset AYTEMUR", "A Blok Mavi"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "MLY 105", "Hukuka Giriş", "Doç. Dr. Ahmet Alptekin DURU", "A Blok Mavi"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "MLY 119", "Siyaset Bilimine Giriş", "Dr. Öğr. Üyesi Kadriye OKUDAN DERNEK", "A Blok Mavi")
         )
     )
 
@@ -2220,14 +2155,14 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = PUBLIC_FINANCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "MLY 215", "İdare Hukuku", "Öğr. Gör. Dr. Gülden AGÖKTÜRK", "Hukuk Fak. Derslik-3"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "MLY 229", "Medeni Hukuk", "Öğr. Gör. Aycan DEMİR", "Hukuk Fak. Derslik-3"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "MLY 201", "Mikro İktisat", "Prof. Dr. Zeliha GÖKER", "A Blok 202"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "MLY 209", "Kamu Maliyesi I", "Prof. Dr. Hale BALSEVEN", "A Blok 202"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "MLY 235", "Kamu Yönetimi", "Dr. Öğr. Üyesi Bengi DEMİRCİ", "A Blok 204"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "18:30", "MLY 287", "İngilizce Okuma ve Konuşma", "Öğr. Gör. Hülya ÇELİK", "A Blok Mavi"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:30", "MLY 231", "İktisat Tarihi", "Dr. İlyas ÖZKÖK", "A Blok 201"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "MLY 217", "Şirketler Muhasebesi", "Öğr. Gör. Dr. Mustafa TERZİOĞLU", "A Blok 203")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "MLY 215", "İdare Hukuku", "Öğr. Gör. Dr. Gülden AGÖKTÜRK", "Hukuk Fak. Derslik-3"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "MLY 229", "Medeni Hukuk", "Öğr. Gör. Aycan DEMİR", "Hukuk Fak. Derslik-3"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "MLY 201", "Mikro İktisat", "Prof. Dr. Zeliha GÖKER", "A Blok 202"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "MLY 209", "Kamu Maliyesi I", "Prof. Dr. Hale BALSEVEN", "A Blok 202"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "MLY 235", "Kamu Yönetimi", "Dr. Öğr. Üyesi Bengi DEMİRCİ", "A Blok 204"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "18:20", "MLY 287", "İngilizce Okuma ve Konuşma", "Öğr. Gör. Hülya ÇELİK", "A Blok Mavi"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "MLY 231", "İktisat Tarihi", "Dr. İlyas ÖZKÖK", "A Blok 201"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "MLY 217", "Şirketler Muhasebesi", "Öğr. Gör. Dr. Mustafa TERZİOĞLU", "A Blok 203")
         )
     )
 
@@ -2241,13 +2176,13 @@ object ClassSchedules {
         sourcePage = 3,
         sourceUrl = PUBLIC_FINANCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "MLY 337", "Vergi Hukuku", "Doç. Dr. Derya YAYMAN", "A Blok 201"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "MLY 345", "Menkul ve Gayrimenkul Değ. Yöntemleri", "Prof. Dr. Mustafa YILDIRAN", "A Blok 201"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "MLY 329", "Ekonometri", "Prof. Dr. Can Tansel TUĞCU", "A Blok 201"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "MLY 301", "Kamu Ekonomisi I", "Prof. Dr. Zeliha GÖKER", "A Blok 202"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "MLY 319", "Teoride ve Uygulamada Hazine", "Doç. Dr. Birsen NACAR KARABACAK", "A Blok 202"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "12:30", "MLY 333", "İktisadi Düşünceler Tarihi", "Dr. İlyas ÖZKÖK", "A Blok 201"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "MLY 339", "Kamu Bütçesi I", "Prof. Dr. Yakup KARABACAK", "A Blok 201")
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "MLY 337", "Vergi Hukuku", "Doç. Dr. Derya YAYMAN", "A Blok 201"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "MLY 345", "Menkul ve Gayrimenkul Değ. Yöntemleri", "Prof. Dr. Mustafa YILDIRAN", "A Blok 201"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "MLY 329", "Ekonometri", "Prof. Dr. Can Tansel TUĞCU", "A Blok 201"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "MLY 301", "Kamu Ekonomisi I", "Prof. Dr. Zeliha GÖKER", "A Blok 202"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "MLY 319", "Teoride ve Uygulamada Hazine", "Doç. Dr. Birsen NACAR KARABACAK", "A Blok 202"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "12:20", "MLY 333", "İktisadi Düşünceler Tarihi", "Dr. İlyas ÖZKÖK", "A Blok 201"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "MLY 339", "Kamu Bütçesi I", "Prof. Dr. Yakup KARABACAK", "A Blok 201")
         )
     )
 
@@ -2261,14 +2196,14 @@ object ClassSchedules {
         sourcePage = 4,
         sourceUrl = PUBLIC_FINANCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "09:30", "12:30", "MLY 439", "Mali Yargılama Hukuku", "Doç. Dr. Derya YAYMAN", "A Blok 201"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:30", "MLY 401", "Maliye Politikası I", "Doç. Dr. Servet AKYOL", "A Blok 203"),
-            programEntry(ScheduleDay.TUESDAY, "09:30", "12:30", "MLY 433", "Türk Vergi Sistemi II", "Doç. Dr. Derya YAYMAN", "A Blok 203"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "16:30", "MLY 415", "Bilgisayar Uygulamalı Muhasebe", "Doç. Dr. Burçin TUTCU", "A Blok Lab"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:30", "MLY 431", "Devlet ve Ekonomi", "Prof. Dr. Mustafa YILDIRAN", "A Blok 203"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:30", "MLY 445", "Sağlık Ekonomisi", "Doç. Dr. Servet AKYOL", "A Blok 201"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "16:30", "MLY 451", "Para Teorisi ve Politikası", "Prof. Dr. Can Tansel TUĞCU", "A Blok 201"),
-            programEntry(ScheduleDay.FRIDAY, "14:30", "17:30", "MLY 405", "Yerel Yönetimler Maliyesi", "Doç. Dr. Birsen NACAR KARABACAK", "A Blok 203")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "MLY 439", "Mali Yargılama Hukuku", "Doç. Dr. Derya YAYMAN", "A Blok 201"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "MLY 401", "Maliye Politikası I", "Doç. Dr. Servet AKYOL", "A Blok 203"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "MLY 433", "Türk Vergi Sistemi II", "Doç. Dr. Derya YAYMAN", "A Blok 203"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "MLY 415", "Bilgisayar Uygulamalı Muhasebe", "Doç. Dr. Burçin TUTCU", "A Blok Lab"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "MLY 431", "Devlet ve Ekonomi", "Prof. Dr. Mustafa YILDIRAN", "A Blok 203"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "MLY 445", "Sağlık Ekonomisi", "Doç. Dr. Servet AKYOL", "A Blok 201"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "MLY 451", "Para Teorisi ve Politikası", "Prof. Dr. Can Tansel TUĞCU", "A Blok 201"),
+            programEntry(ScheduleDay.FRIDAY, "14:30", "17:20", "MLY 405", "Yerel Yönetimler Maliyesi", "Doç. Dr. Birsen NACAR KARABACAK", "A Blok 203")
         )
     )
 
@@ -2375,12 +2310,12 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = MARKETING_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "08:30", "11:20", "", "Uygulamalı Girişimcilik", "M. YAYKAŞLI", "İletişim B Blok D8"),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "11:20", "", "Pazarlamada Güncel Konular", "İ. DÖRTYOL", "İletişim B Blok D8"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "11:20", "", "Dijital Pazarlama", "N. BATU", "İletişim B Blok D5"),
-            programEntry(ScheduleDay.WEDNESDAY, "12:30", "15:20", "", "Halkla İlişkiler", "N. BATU", "İletişim B Blok D5"),
-            programEntry(ScheduleDay.THURSDAY, "12:30", "15:20", "", "Kurumsal Yönetim ve Sosyal Sorumluluk", "N. BÜYÜKDAĞ", "D7"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "11:20", "", "Müşteri İlişkileri Yönetimi", "A. KANGAL", "D6")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "", "Uygulamalı Girişimcilik", "M. YAYKAŞLI", "İletişim B Blok D8"),
+            programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Pazarlamada Güncel Konular", "İ. DÖRTYOL", "İletişim B Blok D8"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Dijital Pazarlama", "N. BATU", "İletişim B Blok D5"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Halkla İlişkiler", "N. BATU", "İletişim B Blok D5"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Kurumsal Yönetim ve Sosyal Sorumluluk", "N. BÜYÜKDAĞ", "D7"),
+            programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "", "Müşteri İlişkileri Yönetimi", "A. KANGAL", "D6")
         )
     )
 
@@ -2414,13 +2349,13 @@ object ClassSchedules {
         sourcePage = 2,
         sourceUrl = INSURANCE_SOURCE_URL,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "08:30", "11:20", "", "Risk Yönetimi I", "F. YETİZ", "İletişim B Blok D7"),
-            programEntry(ScheduleDay.MONDAY, "12:30", "15:20", "", "Müşteri İlişkileri Yönetimi", "A. TÜRKMEN", "İletişim B Blok D8"),
-            programEntry(ScheduleDay.TUESDAY, "12:30", "15:20", "", "Reasürans", "H. YALAZ", "D8"),
-            programEntry(ScheduleDay.WEDNESDAY, "08:30", "11:20", "", "Tarım Sigortaları", "H. YALAZ", "D8"),
-            programEntry(ScheduleDay.WEDNESDAY, "12:30", "15:20", "", "Taşınmaz Sigortaları", "D. TURGUT GÜNEL", "İletişim B Blok D9"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "11:20", "", "Toplumsal Duyarlılık ve Katkı", "N. EKŞİLİ", "D1"),
-            programEntry(ScheduleDay.THURSDAY, "12:30", "15:20", "", "Finansal Okuryazarlık", "Y. KILIÇ", "D2")
+            programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "", "Risk Yönetimi I", "F. YETİZ", "İletişim B Blok D7"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Müşteri İlişkileri Yönetimi", "A. TÜRKMEN", "İletişim B Blok D8"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Reasürans", "H. YALAZ", "D8"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Tarım Sigortaları", "H. YALAZ", "D8"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Taşınmaz Sigortaları", "D. TURGUT GÜNEL", "İletişim B Blok D9"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "Toplumsal Duyarlılık ve Katkı", "N. EKŞİLİ", "D1"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Finansal Okuryazarlık", "Y. KILIÇ", "D2")
         )
     )
 
@@ -2451,7 +2386,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "11:30", "12:20", "", "Kariyer Planlama", "H. TOPUZ", "İletişim B Blok D5"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Türk Dili I", "N. KILINÇ İNEVİ", "İletişim B Blok D10"),
             programEntry(ScheduleDay.WEDNESDAY, "14:30", "16:20", "", "Hukukun Temel Kavramları", "Ş. YİRMİBEŞOĞLU", "D5"),
-            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "İngilizce I", "B. AKINCI", "İletişim B Blok D10"),
+            programEntry(ScheduleDay.FRIDAY, "10:30", "12:20", "", "İngilizce I", "B. AKINCI", "İletişim B Blok D10"),
             programEntry(ScheduleDay.FRIDAY, "08:30", "10:20", "", "Atatürk İlkeleri ve İnkılap Tarihi I", "B. KÜMBÜL UZUNSAKAL", "İletişim B Blok D10"),
             programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "", "İşletme Yönetimine Giriş", "I. HATİPOĞLU", "D5")
         )
@@ -2467,7 +2402,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "", "Dış Ticaretin Finansmanı", "H. ÖZEKİCİOĞLU", "İletişim B Blok D6"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Mikro İktisat", "A. AKAY", "D5"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "13:20", "", "Ticaret Hukuku", "Ş. YİRMİBEŞOĞLU", "D5"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "", "Depolama ve Dağıtım", "İ. KARAYÜN", "İletişim B Blok D5"),
+            programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "", "Depolama ve Dağıtım", "İ. KARAYÜN", "İletişim B Blok D5"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "", "Uluslararası İşletmecilik", "A. COŞKUN", "İletişim B Blok D5"),
             programEntry(ScheduleDay.FRIDAY, "13:30", "16:20", "", "Lojistik Bilgi Sistemleri", "O. YAKIT", "D2")
         )
@@ -2612,6 +2547,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "13:30", "16:20", "", "Fizik 3", "Doç. Dr. Canel EKE", "Sınıf Z24"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "", "Eğitim Hukuku", "Doç. Dr. Gamze KASALAK", "Sınıf Z22", "Seçmeli"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Fen ve Teknoloji Kaynaklı Sorunlar", "Doç. Dr. Fatih Serdar YILDIRIM", "Sınıf Z23", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Türkiye'nin Biyolojik Zenginlikleri", "Prof. Dr. İsmail Gökhan DENİZ", "Sınıf Z22", "Seçmeli"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Eğitimde Araştırma Yöntemleri", "Prof. Dr. Bayram BIÇAK", "Sınıf Z24"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "", "Beslenme ve Sağlık", "Dr. Öğr. Üyesi Nesrin EMRE", "Sınıf Z23", "Seçmeli"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "Fen Öğrenme ve Öğretim Yaklaşımları", "Prof. Dr. Esme HACIEMİNOĞLU", "Sınıf Z23"),
@@ -2625,17 +2561,17 @@ object ClassSchedules {
         sourcePage = 3,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Eğitimde Proje Hazırlama", "Prof. Dr. Memduh Sami TANER", "Sınıf Z24", "Seçmeli"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Eğitimde Program Dışı Etkinlikler", "Prof. Dr. İsmail Gökhan DENİZ", "Sınıf Z21"),
             programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Fen Öğretimi 1", "Doç. Dr. Mustafa DOĞRU", "A Blok Kat 5 Fen Bilgisi Lab."),
-            programEntry(ScheduleDay.TUESDAY, "08:30", "10:20", "", "Fen Öğretimi Laboratuvar Uygulamaları 1", "Dr. Öğr. Üyesi Nesrin EMRE", "Sınıf Z21"),
+            programEntry(ScheduleDay.TUESDAY, "08:30", "11:20", "", "Fen Öğretimi Laboratuvar Uygulamaları 1", "Dr. Öğr. Üyesi Nesrin EMRE", "Sınıf Z21"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "", "Öğretim İlke ve Yöntemleri", "Doç. Dr. Miray DAĞYAR", "Sınıf Z24"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Biyokimya", "Doç. Dr. Ayşe Gül NASIRCILAR", "Sınıf Z23", "Seçmeli"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "", "İlk Yardım Eğitimi", "Dr. Öğr. Üyesi Nesrin EMRE", "Sınıf Z23", "Seçmeli"),
-            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Türkiye'nin Biyolojik Zenginlikleri", "Prof. Dr. İsmail Gökhan DENİZ", "Sınıf Z22", "Seçmeli"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Türk Eğitim Sistemi ve Okul Yönetimi", "Doç. Dr. Gamze KASALAK", "Sınıf Z25"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Medya Okuryazarlığı", "Doç. Dr. Fatih Serdar YILDIRIM", "Sınıf Z22", "Seçmeli"),
             programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "", "İnsan Anatomisi ve Fizyolojisi", "Doç. Dr. Nilüfer GÜLMEN", "Sınıf Z24", "Seçmeli"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "10:20", "", "Eğitimde Ölçme ve Değerlendirme", "Doç. Dr. Esin KOĞAR YILMAZ", "Sınıf Z24"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "Astronomi", "Prof. Dr. Fatma GÖK", "Sınıf Z24"),
-            programEntry(ScheduleDay.THURSDAY, "13:30", "14:20", "", "Mikro Öğretim", "Prof. Dr. Esme HACIEMİNOĞLU", "Sınıf Z23", "Seçmeli")
         )
     )
 
@@ -2643,7 +2579,6 @@ object ClassSchedules {
         classYear = FOURTH_YEAR,
         sourcePage = 4,
         entries = listOf(
-            programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Eğitimde Program Dışı Etkinlikler", "Prof. Dr. İsmail Gökhan DENİZ", "Sınıf Z21"),
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Okullarda Rehberlik", "Öğr. Gör. Fazilet BARÇIN KARA", "Sınıf Z23"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "", "Çevre Eğitimi", "Doç. Dr. Ayşe Gül NASIRCILAR", "Sınıf Z23"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Öğretmenlik Uygulaması I", "Doç. Dr. Mustafa DOĞRU / Doç. Dr. Furkan ÖZEN / Dr. Öğr. Üyesi Nesrin EMRE", "İlgili Öğretim Üyesi Ofisi"),
@@ -2664,13 +2599,15 @@ object ClassSchedules {
         department = ENGLISH_TEACHING_DEPARTMENT,
         classYear = FIRST_YEAR,
         sourcePage = 1,
+        sourceUrl = ENGLISH_TEACHING_SOURCE_URL,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "AZİÖ105", "Dinleme ve Sesletim 1", "Hüseyin KAFES", "320 - Dinleme Dersliği"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "GKİÖ103", "Yabancı Dil I (Rusça)", "Elena GROMOVA", "220"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "ENF105", "Bilişim Teknolojileri", "Evren SEZGİN", "Sanal01"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "AZİÖ107", "Sözlü İletişim Becerileri 1", "Simla COURSE", "220"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "AZİÖ107", "Sözlü İletişim Becerileri 1", "Simla COURSE", "220", section = "1. Şube"),
             programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "MBZ105", "Eğitim Sosyolojisi", "Mimar TÜRKKAHRAMAN", "147-C"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "GKİÖ101", "Yabancı Dil I (Almanca)", "Arzu AYDEMİR ÜMİT", "220"),
+            programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "AZİÖ107", "Sözlü İletişim Becerileri 1", "Simla COURSE", "220", section = "2. Şube"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "AZİÖ103", "Yazma Becerileri 1", "Başak Eda AZİZOĞLU", "218"),
             programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "MBZ101", "Eğitime Giriş", "Ali SABANCI", "147-C"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "09:20", "MBZ305", "Eğitimde Ahlak ve Etik", "Ramazan GÖK", "147-C"),
@@ -2685,6 +2622,7 @@ object ClassSchedules {
         department = ENGLISH_TEACHING_DEPARTMENT,
         classYear = SECOND_YEAR,
         sourcePage = 2,
+        sourceUrl = ENGLISH_TEACHING_SOURCE_URL,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "MBS207", "Eğitim Hukuku", "Kemal KAYIKÇI", "219"),
             programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "AZİÖ207", "Eleştirel Okuma ve Yazma", "Ersen VURAL", "222"),
@@ -2704,12 +2642,15 @@ object ClassSchedules {
         department = ENGLISH_TEACHING_DEPARTMENT,
         classYear = THIRD_YEAR,
         sourcePage = 3,
+        sourceUrl = ENGLISH_TEACHING_SOURCE_URL,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "GKS301", "Medya Okuryazarlığı", "Evren CAPPELLARO", "218"),
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "GKS305", "Sanat ve Estetik", "Zeynep Çiğdem ÇENGEL", "220"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "GKZ301", "Toplumsal Duyarlılık ve Katkı Projeleri", "Hüseyin KAFES", "218"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "GKZ301", "Toplumsal Duyarlılık ve Katkı Projeleri", "Hüseyin KAFES", "218", section = "1. Şube"),
+            programEntry(ScheduleDay.MONDAY, "15:30", "17:20", "GKZ301", "Toplumsal Duyarlılık ve Katkı Projeleri", "Hüseyin KAFES", "218", section = "2. Şube"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "12:20", "AZİÖ305", "Dil ve Edebiyat Öğretimi 1", "F. Özlem SAKA", "219"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "AZİÖ301", "Çocuklara Yabancı Dil Öğretimi 1", "Binnur GENÇ İLTER", "221"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "AZİÖ301", "Çocuklara Yabancı Dil Öğretimi 1", "Binnur GENÇ İLTER", "221", section = "1. Şube"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "AZİÖ305", "Dil ve Edebiyat Öğretimi 1", "F. Özlem SAKA", "219", section = "2. Şube"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "ASİÖ305", "Uygulamalı Dilbilim", "Hüseyin KAFES", "320 - Dinleme Dersliği"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "ASİÖ303", "Söylem Çözümlemesi ve Dil Öğretimi", "Simla COURSE", "220"),
             programEntry(ScheduleDay.THURSDAY, "15:30", "17:20", "MBS303", "Eğitimde Program Geliştirme", "Harun ŞAHİN", "220"),
@@ -2723,11 +2664,13 @@ object ClassSchedules {
         department = ENGLISH_TEACHING_DEPARTMENT,
         classYear = FOURTH_YEAR,
         sourcePage = 4,
+        sourceUrl = ENGLISH_TEACHING_SOURCE_URL,
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "08:30", "09:20", "GKZ401", "Toplumsal Duyarlılık ve Katkı Projeleri (Uygulama)", "Binnur GENÇ İLTER / F. Özlem SAKA / Başak Eda AZİZOĞLU / Simla COURSE / Ersen VURAL / Funda ÖLMEZ ÇAĞLAR / Şeyma KOÇ", "Çeşitli sınıflar"),
-            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "AZİÖ401", "İngilizce Öğretiminde Ders İçeriği Geliştirme", "F. Özlem SAKA", "219"),
+            programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "AZİÖ401", "İngilizce Öğretiminde Ders İçeriği Geliştirme", "F. Özlem SAKA", "219", section = "1. Şube"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "MBS403", "Mikro Öğretim", "Şirin KÜÇÜKAVCI", "221"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "MBZ405", "Özel Eğitim ve Kaynaştırma", "Abdullah ÇİFTÇİ", "147-C"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "16:20", "AZİÖ401", "İngilizce Öğretiminde Ders İçeriği Geliştirme", "F. Özlem SAKA", "219", section = "2. Şube"),
             programEntry(ScheduleDay.WEDNESDAY, "16:30", "17:20", "GKZ401", "Toplumsal Duyarlılık ve Katkı Projeleri (Teori)", "Binnur GENÇ İLTER / F. Özlem SAKA / Başak Eda AZİZOĞLU / Simla COURSE / Ersen VURAL / Funda ÖLMEZ ÇAĞLAR / Şeyma KOÇ", "Çeşitli sınıflar"),
             programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "MBS401", "Karşılaştırmalı Eğitim", "Harun ŞAHİN", "221"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "MBS405", "Müze Eğitimi", "Tülin TÜMTÜRK", "Z-27"),
@@ -2771,7 +2714,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.MONDAY, "09:30", "12:20", "", "Geometri ve Ölçme Eğitimi", "A. ÖZKAYA", "318"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Geometri ve Ölçme Eğitimi", "A. ÖZKAYA", "318"),
             programEntry(ScheduleDay.TUESDAY, "09:30", "10:20", "", "Analiz 1", "S.S. EVCAN", "232"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Eğitimde Proje Hazırlama", "G. KARAMIK", "233"),
+            programEntry(ScheduleDay.TUESDAY, "12:30", "15:20", "", "Eğitimde Proje Hazırlama", "G. KARAMIK", "233"),
             programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "", "Matematik Öğretiminde Kavram Yanılgıları", "Z. EKEN", "234"),
             programEntry(ScheduleDay.WEDNESDAY, "09:30", "12:20", "", "Lineer Cebir I", "S. SEZER", "232"),
             programEntry(ScheduleDay.WEDNESDAY, "12:30", "15:20", "", "Eğitimde Drama", "G. KARAMIK", "Z28"),
@@ -2908,9 +2851,9 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "", "Aile Eğitimi ve Katılımı", "Doç. Dr. Yakup YILDIRIM", "147-B"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Öğretmenlik Uygulaması I", "Prof. Dr. Zeliha YAZICI / Prof. Dr. Nihat BAYAT", "Uygulama"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "", "Türk Sanatı Tarihi", "Öğr. Gör. Dr. Serkan ERTÜRK", "321", "Seçmeli", note = "IV. Grup · Genel Kültür"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Okul Öncesi Eğitim Kurumlarında Yönetim ve Liderlik", "Doç. Dr. Ramazan GÖK", "324", "Seçmeli", note = "IV. Grup · Alan Eğitimi"),
-            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Öğretmenlik Uygulaması I", "Doç. Dr. Begümhan YÜKSEL", "Uygulama"),
-            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "", "Okula Uyum ve Erken Okuryazarlık Eğitimi", "Doç. Dr. Begümhan YÜKSEL", "324"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Toplumsal Cinsiyet Eğitimi", "Prof. Dr. Zeliha YAZICI", "324", "Seçmeli", note = "IV. Grup · Alan Eğitimi"),
+            programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "", "Erken Çocukluk Dönemi Çevre Eğitimi", "Doç. Dr. Emine Ela ŞİMŞEK", "321", "Seçmeli", note = "IV. Grup · Alan Eğitimi"),
+            programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "", "Öğretmenlik Uygulaması I", "Doç. Dr. Yunus PINAR / Doç. Dr. Hale KOÇER / Doç. Dr. Emine Ela ŞİMŞEK / Doç. Dr. Yakup YILDIRIM / Öğr. Gör. Dr. Serkan ERTÜRK", "Uygulama"),
             programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "", "Kaynaştırma Eğitimi", "Doç. Dr. Begümhan YÜKSEL", "322"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Okul Öncesi Eğitim Kurumlarında Yönetim ve Liderlik", "Doç. Dr. Ramazan GÖK", "324", "Seçmeli", note = "IV. Grup · Alan Eğitimi"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "15:20", "", "Öğretmenlik Uygulaması I", "Doç. Dr. Begümhan YÜKSEL", "Uygulama"),
@@ -2982,6 +2925,7 @@ object ClassSchedules {
         sourcePage = 4,
         sourceUrl = SPECIAL_EDUCATION_SOURCE_URL,
         entries = listOf(
+            programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "MSÖE 407", "Mikro Öğretim", "Doç. Dr. Nesrin SÖNMEZ", "328"),
             programEntry(ScheduleDay.TUESDAY, "08:30", "10:20", "AZÖE 401", "Özel Eğitimde Materyal Tasarımı", "Doç. Dr. Adile Emel SARDOHAN YILDIRIM", "326"),
             programEntry(ScheduleDay.TUESDAY, "12:30", "13:20", "AZÖE 401", "Özel Eğitimde Materyal Tasarımı", "Doç. Dr. Adile Emel SARDOHAN YILDIRIM", "326"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "ASÖE 407", "Zihin Yetersizliğinde Öğretim Uyarlamaları", "Öğr. Gör. Dr. Abdullah ÇİFTÇİ", "328"),
@@ -3123,8 +3067,8 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "08:30", "10:20", "SAE 317", "Matematik Öğretimi I", "Ramazan KARATAŞ", "B119", note = "Teorik", section = "2. Şube"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "SAE 317", "Matematik Öğretimi I", "Ramazan KARATAŞ", "B119", note = "Uygulama", section = "2. Şube"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "17:20", "SAE 317", "Matematik Öğretimi I", "Ramazan KARATAŞ", "B119", note = "Teorik", section = "1. Şube"),
-            programEntry(ScheduleDay.WEDNESDAY, "09:30", "11:20", "SAE 313", "İlkokulda Yabancı Dil Öğretimi", "Seda AKSUNGUR", "B118", note = "Teorik"),
-            programEntry(ScheduleDay.WEDNESDAY, "11:30", "12:20", "SAE 313", "İlkokulda Yabancı Dil Öğretimi", "Seda AKSUNGUR", "B118", note = "Uygulama"),
+            programEntry(ScheduleDay.WEDNESDAY, "09:30", "11:20", "SAE 313", "İlkokulda Yabancı Dil Öğretimi", "Seda AKSUNGUR", "B123", note = "Teorik"),
+            programEntry(ScheduleDay.WEDNESDAY, "11:30", "12:20", "SAE 313", "İlkokulda Yabancı Dil Öğretimi", "Seda AKSUNGUR", "B123", note = "Uygulama"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "SAE 311", "İlk Okuma ve Yazma Öğretimi", "Yasin ÖZKARA", "B122", note = "Teorik"),
             programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "SAE 311", "İlk Okuma ve Yazma Öğretimi", "Yasin ÖZKARA", "B122", note = "Uygulama"),
             programEntry(ScheduleDay.THURSDAY, "08:30", "12:20", "SAE 315", "Hayat Bilgisi Öğretimi", "Nursel KÖKSAL", "B121"),
@@ -3241,7 +3185,7 @@ object ClassSchedules {
         classYear = FIRST_YEAR,
         sourcePage = 1,
         sourceUrl = TURKISH_TEACHING_SOURCE_URL,
-        updatedAt = "18.09.2026",
+        updatedAt = "25.09.2026",
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "", "Osmanlı Türkçesi", "Mevlüt GÜLMEZ", "217", section = "A Şubesi"),
             programEntry(ScheduleDay.MONDAY, "11:30", "12:20", "", "Osmanlı Türkçesi", "Mevlüt GÜLMEZ", "217", section = "B Şubesi"),
@@ -3264,7 +3208,7 @@ object ClassSchedules {
         classYear = SECOND_YEAR,
         sourcePage = 1,
         sourceUrl = TURKISH_TEACHING_SOURCE_URL,
-        updatedAt = "18.09.2026",
+        updatedAt = "25.09.2026",
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Öğretim Teknolojileri", "Burak ASMA", "223"),
             programEntry(ScheduleDay.MONDAY, "13:30", "15:20", "", "Karakter ve Değerler Eğitimi", "İmran Nazike AVCI", "117"),
@@ -3289,10 +3233,11 @@ object ClassSchedules {
         classYear = THIRD_YEAR,
         sourcePage = 1,
         sourceUrl = TURKISH_TEACHING_SOURCE_URL,
-        updatedAt = "18.09.2026",
+        updatedAt = "25.09.2026",
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "08:30", "09:20", "", "Toplumsal Duyarlılık ve Katkı Projeleri", "Burak ASMA", "İlgili öğretim üyesi ofisi"),
-            programEntry(ScheduleDay.MONDAY, "09:30", "11:20", "", "Toplumsal Duyarlılık ve Katkı Projeleri", "Adile YILMAZ / Mehmet CANBULAT / Ümit YILDIZ", "İlgili öğretim üyesi ofisi"),
+            programEntry(ScheduleDay.MONDAY, "09:30", "10:20", "", "Toplumsal Duyarlılık ve Katkı Projeleri", "Adile YILMAZ / Burak ASMA / Mehmet CANBULAT / Ümit YILDIZ", "İlgili öğretim üyesi ofisi"),
+            programEntry(ScheduleDay.MONDAY, "10:30", "11:20", "", "Toplumsal Duyarlılık ve Katkı Projeleri", "Adile YILMAZ / Mehmet CANBULAT / Ümit YILDIZ", "İlgili öğretim üyesi ofisi"),
             programEntry(ScheduleDay.MONDAY, "11:30", "13:20", "", "Sınıf Yönetimi", "İlhan GÜNBAYI", "117"),
             programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Dinleme Eğitimi", "Berker KURT", "Dinleme Dersliği", section = "A Şubesi"),
             programEntry(ScheduleDay.MONDAY, "13:30", "16:20", "", "Dinleme Eğitimi", "Ümit YILDIZ", "325", section = "B Şubesi"),
@@ -3318,7 +3263,7 @@ object ClassSchedules {
         classYear = FOURTH_YEAR,
         sourcePage = 1,
         sourceUrl = TURKISH_TEACHING_SOURCE_URL,
-        updatedAt = "18.09.2026",
+        updatedAt = "25.09.2026",
         entries = listOf(
             programEntry(ScheduleDay.MONDAY, "08:30", "10:20", "", "Türkçe Ders Kitabı İncelemeleri", "Berker KURT", "325"),
             programEntry(ScheduleDay.MONDAY, "10:30", "12:20", "", "Dünya Edebiyatı Okumaları", "Berker KURT", "125"),
@@ -3328,7 +3273,7 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "08:30", "10:20", "", "Öğretmenlik Uygulaması I", "Berker KURT", "İlgili öğretim üyesi ofisi"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "", "Öğretmenlik Uygulaması I", "Betül KOPARAN / Pınar ŞİMŞEK / Ümit YILDIZ", "İlgili öğretim üyesi ofisi"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Tiyatro ve Drama Uygulamaları", "Ahmet Zeki GÜVEN", "325"),
-            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Tiyatro ve Drama Uygulamaları", "İmran Nazike AVCI", "Z-27 Drama Dersliği"),
+            programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "", "Tiyatro ve Drama Uygulamaları", "İmran Nazike AVCI", "B Blok 320"),
             programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "", "Özel Eğitim ve Kaynaştırma", "Abdullah ÇİFTÇİ", "117"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "", "Türkçenin Yazım Sorunları", "Mevlüt GÜLMEZ", "222"),
             programEntry(ScheduleDay.WEDNESDAY, "08:30", "10:20", "", "Eski Türkçe Metin İncelemeleri", "Yusuf TEPELİ", "124"),
@@ -3489,14 +3434,14 @@ object ClassSchedules {
             programEntry(ScheduleDay.TUESDAY, "09:30", "10:20", "KPD 101", "Kariyer Planlama", "", "D6"),
             programEntry(ScheduleDay.TUESDAY, "10:30", "12:20", "BES 123", "Dünya Mutfakları", "", "D6"),
             programEntry(ScheduleDay.TUESDAY, "13:30", "15:20", "BES 109", "Temel Matematik", "", "D6"),
-            programEntry(ScheduleDay.TUESDAY, "15:30", "16:20", "BES 131", "Beslenme ve Medya", "", "D6"),
+            programEntry(ScheduleDay.TUESDAY, "15:30", "17:20", "BES 131", "Beslenme ve Medya", "", "D6"),
             programEntry(ScheduleDay.WEDNESDAY, "10:30", "12:20", "ATA 101", "Atatürk İlkeleri ve İnkılap Tarihi I", "", "Merkezi Derslik Amfi-2"),
             programEntry(ScheduleDay.WEDNESDAY, "13:30", "15:20", "TDB 101", "Türk Dili I", "", "Merkezi Derslik Amfi-2"),
             programEntry(ScheduleDay.WEDNESDAY, "15:30", "17:20", "YBD 101", "Yabancı Dil-I (İngilizce-I)", "", "Merkezi Derslik Amfi-2"),
-            programEntry(ScheduleDay.THURSDAY, "09:30", "12:20", "BES 107", "Temel Kimya ve Laboratuvar Uygulaması-I", "", "D6"),
+            programEntry(ScheduleDay.THURSDAY, "09:30", "10:20", "BES 121", "Dünyadaki Besin Kaynakları", "", "D6"),
+            programEntry(ScheduleDay.THURSDAY, "10:30", "12:20", "BES 107", "Temel Kimya ve Laboratuvar Uygulaması-I", "", "D6"),
             programEntry(ScheduleDay.THURSDAY, "13:30", "16:20", "BES 113", "Beslenme İlkeleri Uygulaması-I", "", "D6"),
-            programEntry(ScheduleDay.FRIDAY, "09:30", "10:20", "BES 121", "Dünyadaki Besin Kaynakları", "", "D6"),
-            programEntry(ScheduleDay.FRIDAY, "10:30", "11:20", "BES 105", "Demografik Yapı ve Sağlık", "", "D6"),
+            programEntry(ScheduleDay.FRIDAY, "09:30", "11:20", "BES 105", "Demografik Yapı ve Sağlık", "", "D6"),
             programEntry(ScheduleDay.FRIDAY, "11:30", "12:20", "BES 103", "Mesleki Oryantasyon", "", "D7")
         )
     )

@@ -28,7 +28,9 @@ internal object ScienceSchedules {
             if (parts.size < 8) return@mapNotNull null
             val name = parts[5].trim()
             val room = parts[7].trim()
-            val isLab = name.contains("lab", ignoreCase = true) ||
+            val isApplication = name.contains("uygulama", ignoreCase = true)
+            val isLab = Regex("""\bLab\b""", RegexOption.IGNORE_CASE).containsMatchIn(name) ||
+                Regex("""\bLab\b""", RegexOption.IGNORE_CASE).containsMatchIn(room) ||
                 room.contains("laboratuvar", ignoreCase = true) ||
                 room.contains("bilgisayar lab", ignoreCase = true)
             Row(
@@ -41,7 +43,11 @@ internal object ScienceSchedules {
                     courseName = name,
                     instructor = parts[6].trim(),
                     classroom = room,
-                    courseType = if (isLab) "Laboratuvar" else "Ders",
+                    courseType = when {
+                        isApplication -> "Uygulama"
+                        isLab -> "Laboratuvar"
+                        else -> "Ders"
+                    },
                     note = parts.getOrNull(8)?.trim()?.takeIf(String::isNotEmpty)
                 )
             )
@@ -142,7 +148,7 @@ THURSDAY|4|13:30|15:20|BİY 469|Deniz Biyolojisi|Doç. Dr. N. KAYMAK|D-4|
 THURSDAY|4|15:30|17:20|BİY 491|Girişimcilik|Öğr. Gör. M. YAYKAŞLI|D-4|Sosyal Bilimler MYO
 THURSDAY|4|15:30|17:20|BİY 495|İklim Değişimi Biyolojisi|Arş. Gör. Dr. O. ULUAR|D-3|
 FRIDAY|1|10:30|12:20|FİZ 185|Genel Fizik Lab.|Arş. Gör. Dr. Kübra BAYRAK|Fizik Lab 1|
-FRIDAY|1|14:30|17:20|BİY 119|Mesleki Etik ve Laboratuvar Güvenliği|Dr. Öğr. Üyesi T. YILDIRIM|Amfi-B|
+FRIDAY|1|13:30|17:20|BİY 119|Mesleki Etik ve Laboratuvar Güvenliği|Dr. Öğr. Üyesi T. YILDIRIM|Amfi-B|
 FRIDAY|2|08:30|10:20|BİY 257|Omurgasızlar Biyolojisi Lab. 1.Grup|Araş. Gör. Dr. O. ULUAR|Lab-1|
 FRIDAY|2|10:30|12:20|BİY 257|Omurgasızlar Biyolojisi Lab. 2.Grup|Prof. Dr. B. ÇIPLAK|Lab-1|
 FRIDAY|3|10:30|12:20|BİY 341|Mesleki Yabancı Dil I|Dr. Öğr. Üyesi T. YILDIRIM|D-4|
@@ -199,7 +205,7 @@ THURSDAY|4|13:30|14:20|FİZ 465|Teorik Mekanik II|Prof. Dr. Yusuf SUCU|D7|
 THURSDAY|4|14:30|17:20|FİZ 467|Görelilik Kuramı I|Doç. Dr. Yusuf KÜÇÜKAKÇA|Seminer Salonu|
 FRIDAY|1|08:30|10:20|MAT 161|Genel Matematik I|Doç. Dr. Levent KARGIN|D6|
 FRIDAY|1|10:30|12:20|FİZ 107|Fizik I (Mekanik)|Doç. Dr. Yusuf KÜÇÜKAKÇA|D6|
-FRIDAY|2|14:30|17:20|FİZ 225|Fizikte Bilgisayar Uygulamaları|Prof. Dr. Mesut KARAKOÇ|B Blok Bilgisayar Lab.|
+FRIDAY|2|14:30|16:20|FİZ 225|Fizikte Bilgisayar Uygulamaları|Prof. Dr. Mesut KARAKOÇ|B Blok Bilgisayar Lab.|
 FRIDAY|3|08:30|10:20|FİZ 327|Fizikte Özel Fonksiyonlar|Prof. Dr. Orhan BAYRAK|D5|
 FRIDAY|3|10:30|12:20|FİZ 323|Elektromanyetik Teori I|Prof. Dr. Yusuf SUCU|D5|
 FRIDAY|4|08:30|12:20|FİZ 485|Mesleki İngilizce I|Prof. Dr. Yasemin KÜÇÜK|D7|
@@ -260,7 +266,7 @@ FRIDAY|1|10:30|12:20||Fizik I|Öğr. Gör. Dr. M. Dernek|D-9|
 FRIDAY|1|13:30|15:20||Fizik I (Fizik Bölümü Lab)|Öğr. Gör. Dr. M. Dernek|Fizik Bölümü Laboratuvarı|
 FRIDAY|3|08:30|12:20||Anorganik Kimya Lab.|Dr. Öğr. Üyesi N. Kiraz|Lab 243-244|
 FRIDAY|4|08:30|09:20||Bitirme Çalışması I|||
-FRIDAY|4|09:30|12:20||Staj Çalışması|Prof. Dr. E. Bayram|Seminer Salonu|
+FRIDAY|4|09:30|11:20||Staj Çalışması|Prof. Dr. E. Bayram|Seminer Salonu|
 FRIDAY|4|11:30|12:20||Bitirme Çalışması I|||
 FRIDAY|4|13:30|17:20||Biyokimya Lab.|Doç. Dr. S. Aksu|Lab 244|
         """.trimIndent()
@@ -273,7 +279,7 @@ FRIDAY|4|13:30|17:20||Biyokimya Lab.|Doç. Dr. S. Aksu|Lab 244|
 MONDAY|1|08:30|10:20|ATA 101|Atatürk İlkeleri ve İnkılap Tarihi I|Koray ERGİN|Amfi A|
 MONDAY|1|10:30|12:20|MAT 109|Analitik Geometri I|Ayşe Yılmaz CEYLAN|Amfi A|
 MONDAY|1|13:30|15:20|YBD 101|İngilizce I|Aslı TAŞER|Amfi A|
-MONDAY|1|15:30|17:20|FİZ 163|Fizik I|Yusuf KÜÇÜKAKÇA|D7|Ders kapatılmıştır; eski müfredat kapsamında yalnızca alttan alan öğrenciler içindir.
+FRIDAY|1|08:30|10:20|FİZ 163|Fizik I|Yusuf KÜÇÜKAKÇA|D7|Ders kapatılmıştır; eski müfredat kapsamında yalnızca alttan alan öğrenciler içindir.
 TUESDAY|1|10:30|12:20|TDB 101|Türk Dili I|Mehmet KÖYYAR|Amfi A|
 TUESDAY|1|13:30|15:20|MAT 111|Analiz I|M. Cihat DAĞLI|Amfi A|
 TUESDAY|1|15:30|17:20|MAT 109|Analitik Geometri I|Ayşe Yılmaz CEYLAN|Amfi A|
@@ -340,20 +346,21 @@ FRIDAY|4|15:30|17:20|MAT 413|Bitirme Çalışması I|Öğretim Üyeleri|D10|
 MONDAY|1|08:30|10:20||Atatürk İlkeleri ve İnkılap Tarihi I|Öğr. Gör. Dr. Koray ERGİN|Amfi A|
 MONDAY|1|10:30|12:20|UBT 101|Uzay Bilimleri ve Teknolojilerine Giriş|Prof. Dr. Volkan BAKIŞ|D2|
 MONDAY|1|13:30|15:20||İngilizce I|Öğr. Gör. Aslı TAŞER|Amfi A|
+MONDAY|1|15:30|17:20|MAT 171|Genel Matematik I|Doç. Dr. Melih ERYİĞİT|D1|
 MONDAY|2|09:30|12:20|UBT 205|Hava Fotoğrafları ve Görsel Yorumlama|Prof. Dr. Namık Kemal SÖNMEZ|D1|
 MONDAY|2|13:30|17:20|FİZ 217|Optik Laboratuvarı|Prof. Dr. Melike B. YÜCEL|Fizik Laboratuvarı I|
 MONDAY|3|09:30|12:20|UBT 319|Yörünge Dinamiği|Dr. Öğr. Üyesi Burçin DÖNMEZ|D3|
 MONDAY|3|13:30|15:20|UBT 331|Foton Algılayıcıları I|Dr. Öğr. Üyesi Burçin DÖNMEZ|D2|
 MONDAY|3|15:30|17:20|FİZ 323|Elektromanyetik Teori I|Prof. Dr. Yusuf SUCU|A Blok D6|
-MONDAY|4|08:30|12:20|UBT 401|Tayfbilim|Prof. Dr. Timur ŞAHİN|Bilgisayar Laboratuvarı|
+MONDAY|4|09:30|12:20|UBT 401|Tayfbilim|Prof. Dr. Timur ŞAHİN|Bilgisayar Laboratuvarı|
 TUESDAY|1|08:30|10:20|FİZ 107|Fizik I (Mekanik)|Doç. Dr. Yusuf KÜÇÜKAKÇA|A Blok D6|
 TUESDAY|1|10:30|12:20|TDB 101|Türk Dili I|Öğr. Gör. Dr. Mehmet KÖYYAR|Amfi A|
-TUESDAY|1|13:30|15:20|MAT 171|Genel Matematik I|Prof. Dr. Mümün CAN|D1|
+TUESDAY|1|13:30|15:20|MAT 171|Genel Matematik I|Doç. Dr. Melih ERYİĞİT|D1|
 TUESDAY|1|15:30|17:20|MAT 109|Analitik Geometri I|Prof. Dr. Mustafa ÖZDEMİR|D2|
 TUESDAY|2|08:30|10:20|UBT 211|Yörünge Mekaniği|Doç. Dr. Murat KAPLAN|D4|
 TUESDAY|2|10:30|12:20|FİZ 213|Optik|Prof. Dr. Melike B. YÜCEL|A Blok D6|
 TUESDAY|2|13:30|17:20|UBT 207|Bilgisayar Destekli Tasarım|Prof. Dr. Serdar SELİM|Bilgisayar Laboratuvarı|
-TUESDAY|3|09:30|12:20|UBT 315|Değişen Yıldızlar|Prof. Dr. Hicran BAKIŞ|D2|
+TUESDAY|3|09:30|10:20|UBT 315|Değişen Yıldızlar|Prof. Dr. Hicran BAKIŞ|D2|
 TUESDAY|3|10:30|12:20|UBT 305|Yakın Uzay ve Parçacıklar|Prof. Dr. Ali KILÇIK|D3|
 TUESDAY|3|13:30|15:20|UBT 303|Astrofizik I|Prof. Dr. Hicran BAKIŞ|D2|
 TUESDAY|3|15:30|17:20|UBT 331|Foton Algılayıcıları I|Dr. Öğr. Üyesi Burçin DÖNMEZ|D4|
@@ -367,25 +374,25 @@ WEDNESDAY|2|13:30|15:20|MAT 265|Sayısal Analiz I|Arş. Gör. Dr. Murat KARAÇAY
 WEDNESDAY|2|15:30|17:20|MAT 263|Diferansiyel Denklemler|Doç. Dr. Melih ERYİĞİT|D4|
 WEDNESDAY|3|09:30|10:20|UBT 323|Astrometri|Doç. Dr. Murat KAPLAN|D2|
 WEDNESDAY|3|10:30|12:20|UBT 323|Astrometri|Doç. Dr. Murat KAPLAN|Bilgisayar Laboratuvarı|Laboratuvar uygulaması
-WEDNESDAY|3|09:30|12:20|UBT 327|Digital Terrain Modelling|Doç. Dr. Nusret DEMİR|D1|
+WEDNESDAY|3|10:30|12:20|UBT 327|Digital Terrain Modelling|Doç. Dr. Nusret DEMİR|D1|
 WEDNESDAY|3|13:30|15:20|UBT 303|Astrofizik I|Prof. Dr. Hicran BAKIŞ|D3|
 WEDNESDAY|3|15:30|17:20|FİZ 323|Elektromanyetik Teori I|Prof. Dr. Yusuf SUCU|A Blok D7|
 WEDNESDAY|4|09:30|12:20|UBT 413|Uzay İtki Sistemleri|Dr. Öğr. Üyesi Burçin DÖNMEZ|D4|
 WEDNESDAY|4|13:30|16:20|UBT 405|Dijital Görüntü İşleme Teknikleri|Doç. Dr. Nusret DEMİR|D1|
 THURSDAY|1|10:30|12:20|KİM 167|Genel Kimya|Dr. Öğr. Üyesi İlknur BİRSEN|D1|
-THURSDAY|1|13:30|15:20|MAT 171|Genel Matematik I|Prof. Dr. Mümün CAN|D1|
+THURSDAY|1|13:30|15:20|MAT 171|Genel Matematik I|Doç. Dr. Melih ERYİĞİT|D1|
 THURSDAY|2|10:30|12:20|MAT 265|Sayısal Analiz I|Arş. Gör. Dr. Murat KARAÇAYIR|D4|
 THURSDAY|2|13:30|15:20|UBT 213|Bilimsel Araştırma için İngilizce I|Prof. Dr. Timur ŞAHİN|D2|
-THURSDAY|2|15:30|17:20|UBT 211|Yörünge Mekaniği|Doç. Dr. Murat KAPLAN|D4|
+THURSDAY|2|08:30|10:20|UBT 211|Yörünge Mekaniği|Doç. Dr. Murat KAPLAN|D4|
 THURSDAY|3|09:30|12:20|UBT 301|Coğrafi Bilgi Sistemlerine Giriş|Araş. Gör. Dr. Nagihan ASLAN|D3|
 THURSDAY|3|14:30|17:20|FİZ 341|Termodinamik|Prof. Dr. Rıza ERDEM|A Blok D7|
 THURSDAY|4|10:30|12:20|UBT 419|Uzay Fiziğinde Seçilmiş Konular|Arş. Gör. Dr. Efecan TUNÇ|D2|
-THURSDAY|4|13:30|17:20|UBT 423|İnsansız Hava Araçları ve Uygulamaları|Arş. Gör. Dr. Nagihan ASLAN|D3|
+THURSDAY|4|13:30|16:20|UBT 423|İnsansız Hava Araçları ve Uygulamaları|Arş. Gör. Dr. Nagihan ASLAN|D3|
 FRIDAY|1|10:30|12:20|FİZ 107|Fizik I (Mekanik)|Doç. Dr. Yusuf KÜÇÜKAKÇA|A Blok D6|
 FRIDAY|2|10:30|12:20|MAT 263|Diferansiyel Denklemler|Doç. Dr. Melih ERYİĞİT|D4|
 FRIDAY|3|10:30|12:20|FİZ 323|Elektromanyetik Teori I|Prof. Dr. Yusuf SUCU|A Blok D5|
 FRIDAY|4|09:30|12:20|UBT 403|Optik Tasarım ve Kaplamalar|Dr. Öğr. Üyesi Burçin DÖNMEZ|D3|
-FRIDAY|4|14:30|17:20|UBT 407|Bitirme Çalışması|Tüm Öğretim Üyeleri||
+FRIDAY|4|14:30|16:20|UBT 407|Bitirme Çalışması|Tüm Öğretim Üyeleri||
         """.trimIndent()
     )
 

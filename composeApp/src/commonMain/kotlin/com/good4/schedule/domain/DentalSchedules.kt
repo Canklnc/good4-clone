@@ -127,13 +127,13 @@ internal object DentalSchedules {
         course(ScheduleDay.WEDNESDAY, 4, 5, 6, "Ağız Diş Çene Hastalıkları"),
         course(ScheduleDay.WEDNESDAY, 4, 7, 8, "Protetik Diş Tedavisi"),
         clinic(ScheduleDay.THURSDAY, 4, 1, 4),
-        course(ScheduleDay.THURSDAY, 4, 6, 6, "Ortodonti"),
+        course(ScheduleDay.THURSDAY, 4, 5, 6, "Ortodonti"),
         course(ScheduleDay.THURSDAY, 4, 7, 7, "Endodonti"),
         clinic(ScheduleDay.FRIDAY, 4, 1, 4),
         course(ScheduleDay.FRIDAY, 4, 6, 7, "Ağız Diş ve Çene Cerrahisi"),
 
         // 5. sınıf
-        course(ScheduleDay.MONDAY, 5, 1, 1, "İmplantüstü Protez ve Çene-Yüz Protezi"),
+        course(ScheduleDay.MONDAY, 5, 1, 1, "İmplantüstü Protezler ve Çene-Yüz Protezi"),
         clinic(ScheduleDay.MONDAY, 5, 2, 8),
         course(ScheduleDay.TUESDAY, 5, 1, 1, "Çene-Yüz Cerrahisi"),
         clinic(ScheduleDay.TUESDAY, 5, 2, 8),

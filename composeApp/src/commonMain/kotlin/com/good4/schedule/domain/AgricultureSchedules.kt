@@ -51,7 +51,9 @@ internal object AgricultureSchedules {
             val sourceText = parts[4].split('^').joinToString(" ")
                 .replace(Regex("""\s+"""), " ")
                 .trim()
-            val instructorMatch = instructorPattern.find(sourceText)
+            // Instructor-like text can also be part of a classroom name (e.g. "Doç. Dr. Hakan FİDAN LAB.").
+            // The actual instructor is the last title/name occurrence in these cells.
+            val instructorMatch = instructorPattern.findAll(sourceText).lastOrNull()
             val staffMatch = if (instructorMatch == null) departmentStaffPattern.find(sourceText) else null
             val teacherStart = instructorMatch?.range?.first ?: staffMatch?.range?.first
             var coursePrefix = teacherStart?.let { sourceText.substring(0, it) } ?: sourceText
@@ -200,6 +202,9 @@ SALI|4|12:30|13:20|BİTİRME ÇALIŞMASI-II^(Bölüm öğretim üyeleri)
 PAZARTESİ|4|13:30|15:20|SEBZE ISLAHI^(3-A)^Prof. Dr. Ahmet Naci ONUS^(Seçmeli Ders)
 SALI|4|13:30|15:20|SERT VE YUMUŞAK^ÇEKİRDEKLİ MEYVELER^(1-B)^Prof. Dr. Şadiye GÖZLEKCİ
 PERŞEMBE|4|13:30|15:20|GÜBRELER VE^GÜBRELEME^(Başak Amfi)^Prof. Dr. Mustafa KAPLAN^(Seçmeli Ders)
+PAZARTESİ|4|15:30|17:20|TURUNÇGİLLER^UYG.^(3-A)^Dr. Öğr. Üyesi İlhami^TOZLU
+ÇARŞAMBA|4|15:30|17:20|SERT VE YUMUŞAK^ÇEKİRDEKLİ MEYVELER^UYG. (Yonca Amfi)^Prof. Dr. Şadiye^GÖZLEKÇİ
+PERŞEMBE|4|15:30|17:20|GÜBRELER VE^GÜBRELEME^UYG. (Başak Amfi)^Prof. Dr. Mustafa KAPLAN^(Seçmeli Ders)
         """.trimIndent())),
         Dataset(ClassSchedules.PLANT_PROTECTION_DEPARTMENT, 6, rows("""
 PAZARTESİ|1|08:30|10:20|MATEMATİK-I^(3-B)^Arş. Gör. Dr. Mehmet^CİCİMEN
@@ -270,6 +275,10 @@ PERŞEMBE|4|13:30|14:20|BİTKİ FUNGAL^HASTALIKLARI^UYG. (Mikroskop Lab.)^Prof. 
 SALI|4|14:30|15:20|TAHIL BAKLAGİL VE YEM^BİTKİLERİ HASTALIKLARI^UYG.(2-C)^Prof. Dr. Özer ÇALIŞ^(Seçmeli Ders)
 ÇARŞAMBA|4|14:30|15:20|BİTKİ VİRÜS HASTALIKLARI^UYG. (Doç. Dr. Hakan FİDAN^LAB.)^Doç. Dr. Hakan FİDAN
 PERŞEMBE|4|14:30|15:20|TARLA BİTKİLERİ ZARARLILARI^UYG. (Mik. Lab.)^Doç. Dr. Utku YÜKSELBABA
+PAZARTESİ|4|15:30|17:20|BİTKİ BAKTERİ^HASTALIKLARI^(2-D)^Prof. Dr. Hüseyin BASIM
+SALI|4|15:30|17:20|TARLA BİTKİLERİ^ZARARLILARI^(2-A)^Doç. Dr. Utku YÜKSELBABA
+ÇARŞAMBA|4|15:30|17:20|BİTKİ VİRÜS HASTALIKLARI^(3-A)^Doç. Dr. Hakan FİDAN
+PERŞEMBE|4|15:30|17:20|MEYVE VE BAĞ^ZARARLILARI^(2-D)^Prof. Dr. Fedai ERLER^(Seçmeli Ders)
         """.trimIndent())),
         Dataset(ClassSchedules.AGRICULTURAL_ECONOMICS_DEPARTMENT, 10, rows("""
 PAZARTESİ|1|08:30|10:20|BOTANİK^(Başak Amfi)^Doç. Dr. Orhan ÜNAL
@@ -305,6 +314,11 @@ PAZARTESİ|3|13:30|15:20|TARIM EKONOMİSİ^İSTATİSTİĞİ-II^(4-B)^Prof. Dr. S
 SALI|3|13:30|15:20|ULUSLARARASI İKTİSAT^(Tasarım-I)^Doç. Dr. Rahmiye Figen^CEYLAN HOZER^(Seçmeli Ders)
 ÇARŞAMBA|3|13:30|15:20|TARIMSAL PAZARLAMA^(Tasarım-I)^Prof. Dr. Metin Göksel^AKPINAR
 PERŞEMBE|3|13:30|15:20|TARIMSAL MUHASEBE^(Yonca Amfi)^Prof. Dr. Handan AKÇAÖZ
+PAZARTESİ|3|15:30|17:20|KALKINMA EKONOMİSİ^(Tasarım II)^Doç. Dr. Makbule Nisa^MENCET YELBOĞA^(Seçmeli Ders)
+SALI|3|15:30|17:20|ARAŞTIRMA YAZIM^VE SUNUM^TEKNİKLERİ^(3-B)^Prof. Dr. Orhan^ÖZÇATALBAŞ^(Seçmeli Ders)
+ÇARŞAMBA|3|15:30|17:20|BAHÇE BİTKİLERİNDE^TOPRAKSIZ^YETİŞTİRİCİLİK^(4-D)^Prof. Dr. Nafiye ÜNAL^(Seçmeli Ders)
+PERŞEMBE|3|15:30|17:20|TARIMSAL MUHASEBE^UYG. (Yonca Amfi)^Prof. Dr. Handan AKÇAÖZ
+CUMA|3|15:30|17:20|TARIM EKONOMİSİ^UYGULAMALARI^(Uygulamaların yerleri bölüm^öğretim üyeleri tarafından^belirlenecektir)
 ÇARŞAMBA|4|08:30|10:20|İŞLETME YÖNETİMİ^(4-B)^Prof. Dr. İbrahim YILMAZ
 CUMA|4|08:30|10:20|KIRSAL KALKINMA^(4-E)^Doç. Dr. Yavuz TAŞCIOĞLU
 SALI|4|10:30|12:20|TARIMDA RİSK^YÖNETİMİ VE SİGORTA^(Portakal Amfi)^Prof. Dr. Handan AKÇAÖZ^(Seçmeli Ders)
@@ -359,6 +373,10 @@ PERŞEMBE|3|11:30|12:20|MAKİNA İMALAT^YÖNTEMLERİ^UYG.(4-E)^Prof. Dr. Hüseyi
 PAZARTESİ|3|13:30|15:20|AKADEMİK YAZIM VE^SUNUM TEKNİKLERİ^(2-C)^Dr. Öğr. Üyesi Sefai BİLGİN^(Seçmeli Ders)
 SALI|3|13:30|15:20|BİLGİSAYAR DESTEKLİ^ÇİZİM^(Enf. Böl. Lab. 5)^Prof. Dr. Mehmet TOPAKCI
 CUMA|3|13:30|15:20|TARIM MAKİNALARI^UYGULAMALARI–I^(Uygulamaların yerleri bölüm^öğretim üyeleri tarafından^belirlenecektir)
+PAZARTESİ|3|15:30|17:20|TOPRAKSIZ TARIM VE^BİTKİ BESLEME^(4-B)^Doç. Dr. İlker SÖNMEZ^(Seçmeli Ders)
+SALI|3|15:30|17:20|BİLGİSAYAR DESTEKLİ^ÇİZİM^UYG. (Enf. Böl. Lab. 5)^Prof. Dr. Mehmet TOPAKCI
+ÇARŞAMBA|3|14:30|17:20|TERMODİNAMİK VE^ISI TRANSFERİ^(2-D)^Prof. Dr. Can ERTEKİN
+CUMA|3|15:30|17:20|TARIM MÜHENDİSLİĞİ^UYGULAMALARI–I^(Uygulamaların yerleri bölüm^öğretim üyeleri tarafından^belirlenecektir)
 PAZARTESİ|4|08:30|10:20|ÜRÜN İŞLEME TEKNİĞİ^(2-C)^Prof. Dr. Can ERTEKİN^(Seçmeli Ders)
 PERŞEMBE|4|08:30|10:20|HASAT HARMAN^MEKANİZASYONU^(4-A)^Prof. Dr. Can ERTEKİN
 PAZARTESİ|4|10:30|12:20|TARIMSAL^İKLİMLENDİRME^TEKNİĞİ^(4-E)^Prof. Dr. Ahmet KÜRKLÜ
@@ -532,6 +550,12 @@ SALI|3|15:30|17:20|ÇEŞİT GELİŞTİRME^(2-C)^Prof. Dr. Mehmet ARSLAN^(Seçmel
 ÇARŞAMBA|3|15:30|17:20|MOLEKÜLER BİYOLOJİ^(Başak Amfi)^Prof. Dr. Mehmet KARACA
 PERŞEMBE|3|15:30|17:20|TOHUMLUK BİLİMİ VE^TEKNOLOJİSİ^(1-A)^Prof. Dr. Mehmet ARSLAN
 CUMA|3|15:30|17:20|LABORATUVAR^UYGULAMALARI^(Uygulamaların yerleri bölüm^öğretim üyeleri tarafından^belirlenecektir)^(Seçmeli Ders)
+PAZARTESİ|4|08:30|10:20|TARLA BİTKİLERİ^HASTALIKLARI^UYG. (Mikroskop Lab.)^Prof. Dr. Özer ÇALIŞ^(Seçmeli Ders)
+PAZARTESİ|4|08:30|10:20|GENETİK MÜHENDİSLİĞİ^(1-C)^Prof. Dr. Mehmet^KARACA^(Seçmeli Ders)
+SALI|4|08:30|10:20|YEM BİTKİLERİ VE^ISLAHI^(2-B)^Doç. Dr. Bilal AYDINOĞLU
+ÇARŞAMBA|4|08:30|10:20|TIBBİ VE AROMATİK^BİTKİLER^(1-A)^Prof. Dr. Kenan TURGUT
+PERŞEMBE|4|08:30|10:20|YEMEKLİK BAKLAGİLLER^VE ISLAHI^(3-A)^Prof. Dr. Hüseyin ÇANCI
+CUMA|4|08:30|10:20|BİTKİ DOKU^KÜLTÜRLERİ^(3-A)^Prof. Dr. Kenan TURGUT
 PAZARTESİ|4|10:30|12:20|TARLA BİTKİLERİ^HASTALIKLARI^(1-A)^Prof. Dr. Özer ÇALIŞ^(Seçmeli Ders)
 PAZARTESİ|4|10:30|12:20|GENETİK^MÜHENDİSLİĞİ^UYG.(1-C)^Prof. Dr. Mehmet^KARACA^(Seçmeli Ders)
 SALI|4|10:30|12:20|YEM BİTKİLERİ VE^ISLAHI^UYG. (2-B)^Doç. Dr. Bilal AYDINOĞLU

@@ -45,7 +45,8 @@ Telefonda yapılan testten çıkan notlar. Durum: hepsi açık.
 
 - [ ] **Apple/Google girişinde bekleme geri bildirimi (düzeltildi, test bekliyor).** Apple sayfası kapandıktan sonra Firebase girişi ve profil kontrolü sürerken buton yalnızca griye dönüyordu. Artık butonda dönen gösterge ve "Giriş yapılıyor…" yazısı çıkıyor (`LoginState.federatedSignIn`).
 
-- [ ] **Bildirim ringindeki sarı nokta.** Öğrenci bildirimi görüldükten sonra ringin üstündeki sarı nokta kaybolmalı. Görüldü (okundu) durumu kaydedilmeli.
+- [x] **Bildirim ringindeki sarı nokta.** Öğrenci bildirimi görüldükten sonra ringin üstündeki sarı nokta kaybolmalı. Görüldü (okundu) durumu kaydedilmeli.
+  - Düzeltildi (26.09, simülatörde doğrulandı): Zildeki nokta koşulsuz çiziliyordu. Bildirimler artık sabit kimlikli bir listede (`notification/NotificationInbox.kt`). Görülen kimlikler cihazda saklanıyor (iOS `NSUserDefaults`, Android `SharedPreferences`). Bildirimler ekranı açılınca hepsi görüldü sayılıyor, nokta kayboluyor ve uygulama yeniden açılınca geri gelmiyor. Yeni bildirim eklerken yeni bir `id` vermek yeterli.
 - [ ] **Topluluk etkinliklerine filtre.**
   - Kategori filtresi eklenecek.
   - "Takip ettiğim topluluklar" filtresi eklenecek. Seçilince yalnızca takip edilen toplulukların etkinlikleri listelenecek.

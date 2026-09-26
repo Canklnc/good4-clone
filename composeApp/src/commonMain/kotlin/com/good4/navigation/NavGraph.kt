@@ -28,6 +28,7 @@ import com.good4.core.presentation.splash.SplashViewModel
 import com.good4.core.util.AppEnvironment
 import com.good4.core.util.FirebaseBackend
 import com.good4.student.presentation.home.StudentHomeScreenRoot
+import com.good4.student.presentation.home.EditHomeScreen
 import com.good4.notification.NotificationsScreen
 import com.good4.student.presentation.profile.StudentProfileScreen
 import com.good4.schedule.presentation.ClassScheduleScreen
@@ -182,7 +183,18 @@ fun Good4NavGraph(
                 },
                 onNavigateToClassSchedule = {
                     navController.navigate(Route.ClassSchedule)
+                },
+                onNavigateToEditHome = { communityManager ->
+                    navController.navigate(Route.EditHome(communityManager))
                 }
+            )
+        }
+
+        composable<Route.EditHome> { backStackEntry ->
+            val route = backStackEntry.toRoute<Route.EditHome>()
+            EditHomeScreen(
+                onBack = { navController.popBackStack() },
+                communityManager = route.communityManager
             )
         }
 

@@ -33,14 +33,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Store
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.CalendarMonth
-import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Map
-import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
@@ -94,6 +90,8 @@ import com.good4.dining.presentation.AkdenizDiningMenuState
 import com.good4.dining.presentation.AkdenizDiningMenuViewModel
 import com.good4.feedback.FeedbackViewModel
 import com.good4.notification.NotificationInbox
+import com.good4.student.home.HomeShortcut
+import com.good4.student.presentation.home.appearance
 import com.good4.product.Product
 import com.good4.product.presentation.product_list.ProductListAction
 import com.good4.product.presentation.product_list.ProductListState
@@ -134,7 +132,10 @@ fun ProductListScreenRoot(
     onCalendarClick: () -> Unit = {},
     onCampusMapClick: () -> Unit = {},
     onClassScheduleClick: () -> Unit = {},
-    onDailyMenuClick: (DailyMeal) -> Unit = {}
+    onDailyMenuClick: (DailyMeal) -> Unit = {},
+    homeShortcuts: List<HomeShortcut> = HomeShortcut.entries.filter { it.defaultVisible && (it != HomeShortcut.SUSPENDED_MEALS || config.ReleaseFeatures.suspendedMeals) },
+    onMenuShortcutClick: (HomeShortcut) -> Unit = {},
+    onEditHomeClick: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val diningMenuViewModel: AkdenizDiningMenuViewModel = koinViewModel()
@@ -165,6 +166,9 @@ fun ProductListScreenRoot(
         onCampusMapClick = onCampusMapClick,
         onClassScheduleClick = onClassScheduleClick,
         onDailyMenuClick = onDailyMenuClick,
+        homeShortcuts = homeShortcuts,
+        onMenuShortcutClick = onMenuShortcutClick,
+        onEditHomeClick = onEditHomeClick,
         onAction = { action ->
             viewModel.onAction(action)
         }
@@ -186,6 +190,9 @@ fun ProductListScreen(
     onCampusMapClick: () -> Unit = {},
     onClassScheduleClick: () -> Unit = {},
     onDailyMenuClick: (DailyMeal) -> Unit = {},
+    homeShortcuts: List<HomeShortcut> = HomeShortcut.entries.filter { it.defaultVisible && (it != HomeShortcut.SUSPENDED_MEALS || config.ReleaseFeatures.suspendedMeals) },
+    onMenuShortcutClick: (HomeShortcut) -> Unit = {},
+    onEditHomeClick: () -> Unit = {},
     onAction: (ProductListAction) -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -251,7 +258,10 @@ fun ProductListScreen(
                                 onCommunitiesClick = onCommunitiesClick,
                                 onCalendarClick = onCalendarClick,
                                 onCampusMapClick = onCampusMapClick,
-                                onClassScheduleClick = onClassScheduleClick
+                                onClassScheduleClick = onClassScheduleClick,
+                                shortcuts = homeShortcuts,
+                                onMenuShortcutClick = onMenuShortcutClick,
+                                onEditHomeClick = onEditHomeClick
                             )
                         }
 
@@ -676,65 +686,42 @@ private fun HomeQuickActions(
     onCommunitiesClick: () -> Unit,
     onCalendarClick: () -> Unit,
     onCampusMapClick: () -> Unit,
-    onClassScheduleClick: () -> Unit
+    onClassScheduleClick: () -> Unit,
+    shortcuts: List<HomeShortcut>,
+    onMenuShortcutClick: (HomeShortcut) -> Unit,
+    onEditHomeClick: () -> Unit
 ) {
-    val actions = listOf(
-        HomeQuickAction(
-            title = if (communityManager) "Topluluğu Yönet" else "Topluluklar",
-            icon = Icons.Outlined.Groups,
-            accent = Color(0xFF75D9BE),
-            onClick = onCommunitiesClick
-        ),
-        HomeQuickAction(
-            title = "Ders Programı",
-            icon = Icons.Outlined.MenuBook,
-            accent = Color(0xFF4B9FD1),
-            onClick = onClassScheduleClick
-        ),
-        HomeQuickAction(
-            title = "Kampüs Haritası",
-            icon = Icons.Outlined.Map,
-            accent = PrimaryGreen,
-            onClick = onCampusMapClick
-        ),
-        HomeQuickAction(
-            title = "Akademik Takvim",
-            icon = Icons.Outlined.CalendarMonth,
-            accent = Color(0xFFA58DEB),
-            onClick = onCalendarClick
-        ),
-        HomeQuickAction(
-            title = stringResource(Res.string.student_reservations),
-            icon = Icons.Outlined.ShoppingCart,
-            accent = Color(0xFF8CB7ED),
-            onClick = onReservationsClick
-        ).takeIf { config.ReleaseFeatures.suspendedMeals }
-    ).filterNotNull()
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 2.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        actions.forEach { action ->
+        shortcuts.forEach { shortcut ->
+            val appearance = shortcut.appearance(communityManager)
+            val onClick = when (shortcut) {
+                HomeShortcut.COMMUNITIES -> onCommunitiesClick
+                HomeShortcut.CLASS_SCHEDULE -> onClassScheduleClick
+                HomeShortcut.CAMPUS_MAP -> onCampusMapClick
+                HomeShortcut.ACADEMIC_CALENDAR -> onCalendarClick
+                HomeShortcut.SUSPENDED_MEALS -> onReservationsClick
+                else -> ({ onMenuShortcutClick(shortcut) })
+            }
             HomeQuickActionCard(
                 modifier = Modifier.fillMaxWidth(),
-                title = action.title,
-                icon = action.icon,
-                accent = action.accent,
-                onClick = action.onClick
+                title = appearance.title,
+                icon = appearance.icon,
+                accent = appearance.accent,
+                onClick = onClick
             )
+        }
+        TextButton(onClick = onEditHomeClick, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            Icon(Icons.Outlined.Edit, null, tint = TextSecondary, modifier = Modifier.size(16.dp))
+            Spacer(Modifier.width(6.dp))
+            Text("Sayfanı Düzenle", color = TextSecondary, fontSize = 13.sp)
         }
     }
 }
-
-private data class HomeQuickAction(
-    val title: String,
-    val icon: ImageVector,
-    val accent: Color,
-    val onClick: (() -> Unit)? = null
-)
 
 @Composable
 private fun HomeQuickActionCard(

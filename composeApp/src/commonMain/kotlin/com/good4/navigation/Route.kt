@@ -32,6 +32,9 @@ sealed class Route {
     data object StudentHome : Route()
 
     @Serializable
+    data class EditHome(val communityManager: Boolean = false) : Route()
+
+    @Serializable
     data object AcademicCalendar : Route()
 
     @Serializable

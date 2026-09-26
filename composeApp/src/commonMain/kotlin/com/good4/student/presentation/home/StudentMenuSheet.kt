@@ -22,10 +22,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.outlined.AccountBalanceWallet
-import androidx.compose.material.icons.outlined.Feedback
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.runtime.LaunchedEffect
+import com.good4.student.home.HomeShortcut
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.SportsTennis
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -63,7 +63,6 @@ import com.good4.core.presentation.SurfaceCanvasWarm
 import com.good4.core.presentation.SurfaceDefault
 import com.good4.core.presentation.TextPrimary
 import com.good4.core.presentation.TextSecondary
-import com.good4.dining.presentation.AKDENIZ_BALANCE_URL
 import com.good4.feedback.FeedbackUiState
 import com.good4.feedback.FeedbackViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -73,49 +72,38 @@ private data class StudentMenuItem(
     val title: String,
     val icon: ImageVector,
     val accent: Color,
+    val opensHomeEditor: Boolean = false,
     val opensNumbers: Boolean = false,
     val opensFeedback: Boolean = false,
     val url: String? = null
 )
 
-private const val TENNIS_COURT_RESERVATION_URL =
-    "https://sporalanlari.akdeniz.edu.tr/Takvim/Haftalik/3"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun StudentMenuSheet(
     onDismiss: () -> Unit,
+    onEditHome: () -> Unit = {},
+    initialShortcut: HomeShortcut? = null,
     feedbackViewModel: FeedbackViewModel = koinViewModel()
 ) {
-    var numbersOpen by rememberSaveable { mutableStateOf(false) }
-    var feedbackOpen by rememberSaveable { mutableStateOf(false) }
+    var numbersOpen by rememberSaveable(initialShortcut) { mutableStateOf(initialShortcut == HomeShortcut.PHONE_NUMBERS) }
+    var feedbackOpen by rememberSaveable(initialShortcut) { mutableStateOf(initialShortcut == HomeShortcut.FEEDBACK) }
+    LaunchedEffect(initialShortcut) {
+        if (initialShortcut == HomeShortcut.FEEDBACK) feedbackViewModel.startNew()
+    }
     val feedbackState by feedbackViewModel.state.collectAsStateWithLifecycle()
     val uriHandler = LocalUriHandler.current
-    val menuItems = listOf(
+    val menuItems = listOf(HomeShortcut.TOP_UP, HomeShortcut.TENNIS, HomeShortcut.PHONE_NUMBERS, HomeShortcut.FEEDBACK).map { shortcut ->
+        val appearance = shortcut.appearance()
         StudentMenuItem(
-            title = "TL Yükle",
-            icon = Icons.Outlined.AccountBalanceWallet,
-            accent = Color(0xFFF2A66F),
-            url = AKDENIZ_BALANCE_URL
-        ),
-        StudentMenuItem(
-            title = "Tenis Kortu Rezervasyonu",
-            icon = Icons.Outlined.SportsTennis,
-            accent = Color(0xFFF2A66F),
-            url = TENNIS_COURT_RESERVATION_URL
-        ),
-        StudentMenuItem(
-            title = "Numaralar",
-            icon = Icons.Outlined.Phone,
-            accent = Color(0xFF68CCDC),
-            opensNumbers = true
-        ),
-        StudentMenuItem(
-            title = "Geri Bildirim",
-            icon = Icons.Outlined.Feedback,
-            accent = PrimaryGreen,
-            opensFeedback = true
+            title = appearance.title,
+            icon = appearance.icon,
+            accent = appearance.accent,
+            url = shortcut.externalUrl,
+            opensNumbers = shortcut == HomeShortcut.PHONE_NUMBERS,
+            opensFeedback = shortcut == HomeShortcut.FEEDBACK
         )
-    )
+    } + StudentMenuItem("Sayfanı Düzenle", Icons.Outlined.Edit, PrimaryGreen, opensHomeEditor = true)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -178,11 +166,13 @@ internal fun StudentMenuSheet(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     menuItems.forEach { item ->
                         val onItemClick: (() -> Unit)? = when {
+                            item.opensHomeEditor -> ({ onDismiss(); onEditHome() })
                             item.opensNumbers -> ({ numbersOpen = true })
                             item.opensFeedback -> ({
                                 feedbackViewModel.startNew()

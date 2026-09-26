@@ -45,6 +45,8 @@ import org.koin.dsl.module
 expect val platformModule: org.koin.core.module.Module
 
 val commonModule = module {
+    single { com.good4.student.home.HomeLayoutStore(com.good4.student.home.DeviceHomeLayoutStorage()) }
+    viewModel { com.good4.student.home.HomeLayoutViewModel(get(), get()) }
     single { com.good4.community.CommunityRepository(get(), get(), get()) }
     viewModel { com.good4.community.CommunityViewModel(get()) }
     single<FirestoreRepository> { FirestoreRepositoryImpl() }

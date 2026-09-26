@@ -22,6 +22,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
+import androidx.compose.ui.platform.LocalUriHandler
+import com.good4.student.home.HomeLayoutViewModel
+import com.good4.student.home.HomeShortcut
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -62,7 +66,8 @@ fun StudentHomeScreenRoot(
     onNavigateToProfile: () -> Unit,
     onNavigateToNotifications: () -> Unit = {},
     onNavigateToCalendar: () -> Unit = {},
-    onNavigateToClassSchedule: () -> Unit = {}
+    onNavigateToClassSchedule: () -> Unit = {},
+    onNavigateToEditHome: (Boolean) -> Unit = {}
 ) {
     val navItems = listOf(
         BottomNavItem(
@@ -80,6 +85,11 @@ fun StudentHomeScreenRoot(
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
     var dailyMenuMeal by rememberSaveable { mutableStateOf(DailyMeal.CAFETERIA) }
     var menuOpen by rememberSaveable { mutableStateOf(false) }
+    var menuInitialShortcutId by rememberSaveable { mutableStateOf<String?>(null) }
+    var editHomeRequested by remember { mutableStateOf(false) }
+    val layoutViewModel: HomeLayoutViewModel = koinViewModel()
+    val layoutState by layoutViewModel.state.collectAsStateWithLifecycle()
+    val uriHandler = LocalUriHandler.current
     var reservationsScrollRequestKey by rememberSaveable { mutableIntStateOf(0) }
     var pendingReservationFromHome by remember { mutableStateOf<ReservationUiModel?>(null) }
     var managerEntryHandled by rememberSaveable { mutableStateOf(false) }
@@ -88,6 +98,21 @@ fun StudentHomeScreenRoot(
     val communityViewModel: CommunityViewModel = koinViewModel()
     val reservationsState by reservationsViewModel.state.collectAsStateWithLifecycle()
     val communityState by communityViewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(editHomeRequested) {
+        if (editHomeRequested) {
+            // Let rememberSaveable capture the closed sheet before this route leaves composition.
+            // Otherwise popping the editor can restore the menu over the home screen.
+            withFrameNanos { }
+            editHomeRequested = false
+            onNavigateToEditHome(communityState.access.active && communityState.access.communityIds.isNotEmpty())
+        }
+    }
+
+    fun editHome() {
+        menuOpen = false
+        editHomeRequested = true
+    }
 
     LaunchedEffect(communityState.loading, communityState.access, communityState.communities) {
         if (!managerEntryHandled && !communityState.loading && communityState.access.active) {
@@ -135,6 +160,7 @@ fun StudentHomeScreenRoot(
                         selected = if (index == 1) menuOpen else selectedItemIndex == 0 && !menuOpen,
                         onClick = {
                             if (index == 1) {
+                                menuInitialShortcutId = null
                                 menuOpen = true
                             } else {
                                 selectedItemIndex = index
@@ -182,6 +208,16 @@ fun StudentHomeScreenRoot(
                     ProductListScreenRoot(
                         communityManager = communityState.access.active && communityState.access.communityIds.isNotEmpty(),
                         viewModel = productListViewModel,
+                        homeShortcuts = layoutState.layout.visible.mapNotNull { id -> layoutState.shortcuts.firstOrNull { it.id == id } },
+                        onEditHomeClick = ::editHome,
+                        onMenuShortcutClick = { shortcut ->
+                            val url = shortcut.externalUrl
+                            if (url != null) uriHandler.openUri(url)
+                            else {
+                                menuInitialShortcutId = shortcut.id
+                                menuOpen = true
+                            }
+                        },
                         onCommunitiesClick = {
                             val managed = communityState.communities.filter { communityState.access.active && it.id in communityState.access.communityIds }
                             if (managed.size == 1) communityViewModel.select(managed.first()) else communityViewModel.back()
@@ -237,7 +273,9 @@ fun StudentHomeScreenRoot(
     }
     if (menuOpen) {
         StudentMenuSheet(
-            onDismiss = { menuOpen = false }
+            onDismiss = { menuOpen = false },
+            initialShortcut = HomeShortcut.entries.firstOrNull { it.id == menuInitialShortcutId },
+            onEditHome = ::editHome
         )
     }
 }

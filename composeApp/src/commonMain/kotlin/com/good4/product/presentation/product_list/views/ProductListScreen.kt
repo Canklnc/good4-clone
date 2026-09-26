@@ -460,7 +460,8 @@ private fun HomeAdvertisementBanner(
     feedbackViewModel: FeedbackViewModel = koinViewModel()
 ) {
     val uriHandler = LocalUriHandler.current
-    val isGood4Placeholder = banner.advertiserName.trim().equals("Good4", ignoreCase = true)
+    // An uploaded image is always shown, Good4's own promotions included; the "Reklam alanı" card only fills in without one.
+    val isPlaceholder = banner.imageUrl.isBlank()
     val feedbackState by feedbackViewModel.state.collectAsStateWithLifecycle()
     var showAdInfo by remember { mutableStateOf(false) }
     var showAdReport by remember { mutableStateOf(false) }
@@ -471,11 +472,11 @@ private fun HomeAdvertisementBanner(
             .padding(horizontal = 12.dp, vertical = 14.dp)
             .aspectRatio(12f / 5f)
             .clip(RoundedCornerShape(18.dp))
-            .then(if (!isGood4Placeholder && banner.targetUrl.isNotBlank()) Modifier.clickable {
+            .then(if (!isPlaceholder && banner.targetUrl.isNotBlank()) Modifier.clickable {
                 uriHandler.openUri(banner.targetUrl)
             } else Modifier)
     ) {
-        if (isGood4Placeholder) {
+        if (isPlaceholder) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 shape = RoundedCornerShape(18.dp),

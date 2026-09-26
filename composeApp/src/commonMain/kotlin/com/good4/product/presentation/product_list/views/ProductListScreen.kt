@@ -220,10 +220,16 @@ fun ProductListScreen(
                     )
                 }
 
-                else -> {
+                else -> Column(Modifier.fillMaxSize()) {
+                    // The greeting stays outside the list so iOS bounce never drags it under the status bar.
+                    ProductListGreetingHeader(
+                        userName = state.userName.orEmpty(),
+                        onProfileClick = onProfileClick,
+                        onNotificationsClick = onNotificationsClick
+                    )
                     LazyColumn(
                         state = listState,
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxWidth().weight(1f),
                         contentPadding = PaddingValues(
                             top = if (onProfileClick == null) {
                                 WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
@@ -233,14 +239,6 @@ fun ProductListScreen(
                             bottom = 16.dp
                         )
                     ) {
-                        stickyHeader {
-                            ProductListGreetingHeader(
-                                userName = state.userName.orEmpty(),
-                                onProfileClick = onProfileClick,
-                                onNotificationsClick = onNotificationsClick
-                            )
-                        }
-
                         item {
                             CampusSummaryCards(
                                 diningMenuState = diningMenuState,

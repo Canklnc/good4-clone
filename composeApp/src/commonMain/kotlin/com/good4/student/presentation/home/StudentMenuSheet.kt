@@ -112,7 +112,7 @@ internal fun StudentMenuSheet(
         StudentMenuItem(
             title = "Geri Bildirim",
             icon = Icons.Outlined.Feedback,
-            accent = Color(0xFFB997EB),
+            accent = PrimaryGreen,
             opensFeedback = true
         )
     )

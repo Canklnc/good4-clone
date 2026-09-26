@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -152,15 +153,13 @@ fun CommunitiesScreen(
         ) {
             if (community == null) {
                 if (isV2) item(key = "community-event-filters") {
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        EventCategorySelector(state.selectedCategoryId, true, !state.loading, viewModel::selectCategory)
-                        FilterChip(
-                            selected = state.followedOnly,
-                            onClick = { viewModel.setFollowedOnly(!state.followedOnly) },
-                            label = { Text("Takip ettiğim topluluklar") },
-                            leadingIcon = { Icon(Icons.Outlined.Groups, null, modifier = Modifier.size(18.dp)) },
-                        )
-                    }
+                    CommunityEventFilterRow(
+                        selectedId = state.selectedCategoryId,
+                        enabled = !state.loading,
+                        onSelect = viewModel::selectCategory,
+                        followedOnly = state.followedOnly,
+                        onFollowedOnlyChange = viewModel::setFollowedOnly,
+                    )
                 }
                 item(key = "featured-community-events") {
                     if (state.followedOnly && (state.followingLoading || state.followingError != null || !state.followingLoaded)) {
@@ -326,8 +325,8 @@ fun CommunitiesScreen(
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         if (isV2) EventCategorySelector(state.selectedCategoryId, true, !state.loading, viewModel::selectCategory)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FilterChip(!registeredOnly, { registeredOnly = false }, label = { Text("Tüm etkinlikler") })
-                            FilterChip(registeredOnly, { registeredOnly = true }, label = { Text("Etkinlik kayıtlarım") })
+                            CommunityEventFilterChip(!registeredOnly, true, "Tüm etkinlikler", onClick = { registeredOnly = false })
+                            CommunityEventFilterChip(registeredOnly, true, "Etkinlik kayıtlarım", onClick = { registeredOnly = true })
                         }
                     }
                 }
@@ -558,7 +557,7 @@ private data class DemoCommunitySlide(
 private val demoCommunitySlides = listOf(
     DemoCommunitySlide("Kampüs Buluşması", "Tanışma ve sohbet", Color(0xFF006C4C), Color(0xFF17A579)),
     DemoCommunitySlide("Tasarım Atölyesi", "Birlikte üretelim", Color(0xFF184B83), Color(0xFF4A8DCF)),
-    DemoCommunitySlide("Sahne Gecesi", "Kampüste sanat", Color(0xFF674090), Color(0xFFB06DC7))
+    DemoCommunitySlide("Sahne Gecesi", "Kampüste sanat", Color(0xFF4B6400), Color(0xFF8DAA37))
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -1847,9 +1846,13 @@ private fun EntryEditor(initial: CommunityEntryDto, businesses: List<CommunityBu
 
 @Composable
 internal fun EventCategorySelector(selectedId: String, filter: Boolean, enabled: Boolean, onSelect: (String) -> Unit) {
+    if (filter) {
+        CommunityEventFilterRow(selectedId, enabled, onSelect)
+        return
+    }
     var expanded by remember { mutableStateOf(false) }
     val label = when {
-        selectedId.isEmpty() -> if (filter) "Tümü" else "Seç"
+        selectedId.isEmpty() -> "Seç"
         else -> EventCategory.labelFor(selectedId)
     }
     Box(Modifier.fillMaxWidth()) {
@@ -1862,13 +1865,97 @@ internal fun EventCategorySelector(selectedId: String, filter: Boolean, enabled:
             Text("Kategori: $label")
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            if (filter) DropdownMenuItem(text = { Text("Tümü") }, onClick = { onSelect(""); expanded = false })
             EventCategory.entries.forEach { category ->
                 DropdownMenuItem(text = { Text(category.label) }, onClick = { onSelect(category.id); expanded = false })
             }
-            if (filter) DropdownMenuItem(text = { Text("Kategori belirtilmemiş") }, onClick = { onSelect(EventCategory.UNCATEGORIZED); expanded = false })
         }
     }
+}
+
+@Composable
+private fun CommunityEventFilterRow(
+    selectedId: String,
+    enabled: Boolean,
+    onSelect: (String) -> Unit,
+    followedOnly: Boolean = false,
+    onFollowedOnlyChange: ((Boolean) -> Unit)? = null,
+) {
+    val categories = remember {
+        listOf("" to "Tümü") + EventCategory.entries.map { it.id to it.label } +
+            (EventCategory.UNCATEGORIZED to "Kategori belirtilmemiş")
+    }
+    val listState = rememberLazyListState()
+    var previousCategory by remember { mutableStateOf<String?>(null) }
+    var previousFollowedOnly by remember { mutableStateOf(followedOnly) }
+    val hasFollowFilter = onFollowedOnlyChange != null
+
+    LaunchedEffect(selectedId, followedOnly, hasFollowFilter) {
+        val categoryChanged = previousCategory != selectedId
+        val followChanged = previousFollowedOnly != followedOnly
+        val initialDefault = previousCategory == null && selectedId.isEmpty()
+        previousCategory = selectedId
+        previousFollowedOnly = followedOnly
+        val index = if (hasFollowFilter && ((followChanged && !categoryChanged) || initialDefault)) {
+            0
+        } else {
+            categories.indexOfFirst { it.first == selectedId }.coerceAtLeast(0) + if (hasFollowFilter) 1 else 0
+        }
+        listState.animateScrollToItem(index)
+    }
+
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        state = listState,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(vertical = 4.dp),
+    ) {
+        if (onFollowedOnlyChange != null) item(key = "followed") {
+            CommunityEventFilterChip(
+                selected = followedOnly,
+                enabled = true,
+                label = "Takip ettiklerim",
+                onClick = { onFollowedOnlyChange(!followedOnly) },
+                leadingIcon = { Icon(Icons.Outlined.Groups, null, Modifier.size(18.dp)) },
+            )
+        }
+        items(categories, key = { "category-${it.first}" }) { (id, label) ->
+            CommunityEventFilterChip(selectedId == id, enabled, label, onClick = { onSelect(id) })
+        }
+    }
+}
+
+@Composable
+private fun CommunityEventFilterChip(
+    selected: Boolean,
+    enabled: Boolean,
+    label: String,
+    onClick: () -> Unit,
+    leadingIcon: (@Composable () -> Unit)? = null,
+) {
+    val colors = MaterialTheme.colorScheme
+    FilterChip(
+        selected = selected,
+        onClick = onClick,
+        enabled = enabled,
+        label = { Text(label, maxLines = 1) },
+        leadingIcon = leadingIcon,
+        shape = RoundedCornerShape(16.dp),
+        colors = FilterChipDefaults.filterChipColors(
+            containerColor = SurfaceDefault,
+            labelColor = TextSecondary,
+            iconColor = TextSecondary,
+            selectedContainerColor = colors.primary,
+            selectedLabelColor = colors.onPrimary,
+            selectedLeadingIconColor = colors.onPrimary,
+        ),
+        border = FilterChipDefaults.filterChipBorder(
+            enabled = enabled,
+            selected = selected,
+            borderColor = BorderMuted,
+            selectedBorderColor = colors.primary,
+            selectedBorderWidth = 1.dp,
+        ),
+    )
 }
 
 @Composable

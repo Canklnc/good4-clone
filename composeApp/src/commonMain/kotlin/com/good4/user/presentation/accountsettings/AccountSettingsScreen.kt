@@ -472,8 +472,8 @@ fun AccountSettingsScreen(
                     enabled = !state.isSaving && !state.isLoading,
                     onClick = { viewModel.saveChanges(mode) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryGreen,
-                        contentColor = SurfaceDefault
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -481,7 +481,7 @@ fun AccountSettingsScreen(
                         CircularProgressIndicator(
                             modifier = Modifier.size(StandardButtonLoadingIndicatorSize),
                             strokeWidth = 2.dp,
-                            color = SurfaceDefault
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     } else {
                         Icon(
@@ -512,8 +512,8 @@ fun AccountSettingsScreen(
                             !state.isLoading,
                     onClick = viewModel::sendPasswordResetEmail,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryGreen,
-                        contentColor = SurfaceDefault
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -521,7 +521,7 @@ fun AccountSettingsScreen(
                         CircularProgressIndicator(
                             modifier = Modifier.size(StandardButtonLoadingIndicatorSize),
                             strokeWidth = 2.dp,
-                            color = SurfaceDefault
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     } else {
                         Icon(

@@ -21,6 +21,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.DirectionsWalk
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.AccountBalance
+import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocalAtm
 import androidx.compose.material.icons.outlined.LocalLibrary
@@ -173,6 +174,7 @@ fun CampusMapScreen(
     var query by rememberSaveable { mutableStateOf("") }
     var selectedPoints by remember { mutableStateOf(listOf(CampusPoints.library)) }
     var bottomCardHeight by remember { mutableStateOf(0) }
+    var showFeedback by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
@@ -235,10 +237,24 @@ fun CampusMapScreen(
                             contentDescription = "Geri"
                         )
                     }
+                },
+                actions = {
+                    IconButton(onClick = { showFeedback = true }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Feedback,
+                            contentDescription = "Harita hakkında geri bildirim"
+                        )
+                    }
                 }
             )
         }
     ) { paddingValues ->
+        if (showFeedback) {
+            CampusMapFeedbackDialog(
+                selectedPoint = selectedPoints.singleOrNull(),
+                onDismiss = { showFeedback = false }
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()

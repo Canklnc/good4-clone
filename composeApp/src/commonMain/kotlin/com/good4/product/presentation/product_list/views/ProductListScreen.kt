@@ -466,24 +466,32 @@ private fun HomeAdvertisementSlider(banners: List<HomeBanner>) {
     }
     val pagerState = rememberPagerState { banners.size }
     val dragged by pagerState.interactionSource.collectIsDraggedAsState()
-    LaunchedEffect(pagerState.currentPage, dragged) {
+    // settledPage only changes once a slide finishes; keying on currentPage cancelled the slide halfway.
+    LaunchedEffect(pagerState.settledPage, dragged) {
         if (dragged) return@LaunchedEffect
-        delay(5_000)
-        pagerState.animateScrollToPage((pagerState.currentPage + 1) % banners.size)
+        delay(4_000)
+        pagerState.animateScrollToPage((pagerState.settledPage + 1) % banners.size)
     }
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Box {
         HorizontalPager(state = pagerState) { page ->
             HomeAdvertisementBanner(banners[page])
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(bottom = 4.dp)) {
+        // Dots sit on the banner itself so the slider takes no extra row.
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(5.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 22.dp, bottom = 14.dp)
+                .background(Color.Black.copy(alpha = 0.35f), CircleShape)
+                .padding(horizontal = 7.dp, vertical = 5.dp)
+        ) {
             repeat(banners.size) { index ->
+                val selected = index == pagerState.currentPage
                 Box(
                     Modifier
-                        .size(if (index == pagerState.currentPage) 8.dp else 6.dp)
-                        .background(
-                            if (index == pagerState.currentPage) PrimaryGreen else TextSecondary.copy(alpha = 0.3f),
-                            CircleShape
-                        )
+                        .size(if (selected) 7.dp else 5.dp)
+                        .background(Color.White.copy(alpha = if (selected) 1f else 0.55f), CircleShape)
                 )
             }
         }
@@ -505,9 +513,10 @@ private fun HomeAdvertisementBanner(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 14.dp)
-            .aspectRatio(12f / 5f)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
+            .aspectRatio(3f)
             .clip(RoundedCornerShape(18.dp))
+            .background(SurfaceMuted)
             .then(if (!isPlaceholder && banner.targetUrl.isNotBlank()) Modifier.clickable {
                 uriHandler.openUri(banner.targetUrl)
             } else Modifier)

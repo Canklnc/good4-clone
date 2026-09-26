@@ -5,6 +5,7 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 import {
   assignOrganizationMemberService,
   createCampaignService,
+  endCampaignService,
   createOrganizationService,
 } from "./admin.js";
 import {
@@ -126,6 +127,11 @@ export const assignOrganizationMemberByEmail = onCall(callableOptions, async (re
 export const createCampaign = onCall(callableOptions, async (request) => {
   const uid = requireAuthenticatedUid(request.auth?.uid);
   return createCampaignService(db, uid, request.data);
+});
+
+export const endCampaign = onCall(callableOptions, async (request) => {
+  const uid = requireAuthenticatedUid(request.auth?.uid);
+  return endCampaignService(db, uid, request.data ?? {});
 });
 
 export const issueCampaignCode = onCall(callableOptions, async (request) => {

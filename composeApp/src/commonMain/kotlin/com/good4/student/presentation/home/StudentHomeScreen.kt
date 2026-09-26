@@ -32,6 +32,8 @@ import com.good4.core.presentation.components.Good4NavigationBar
 import com.good4.core.presentation.components.Good4NestedScaffold
 import com.good4.campus.presentation.CampusMapScreen
 import com.good4.community.CommunityViewModel
+import com.good4.core.util.AppEnvironment
+import com.good4.core.util.FirebaseBackend
 import com.good4.dining.domain.DailyMeal
 import com.good4.dining.presentation.AkdenizDiningMenuViewModel
 import com.good4.dining.presentation.DailyMenuScreen
@@ -40,6 +42,7 @@ import com.good4.product.presentation.product_list.views.ProductListScreenRoot
 import com.good4.student.presentation.reservations.ReservationUiModel
 import com.good4.student.presentation.reservations.StudentReservationsScreen
 import com.good4.student.presentation.reservations.StudentReservationsViewModel
+import com.good4.suspendedmeal.SuspendedMealsScreen
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.student_home
 import good4.composeapp.generated.resources.student_reservations
@@ -194,7 +197,9 @@ fun StudentHomeScreenRoot(
                             selectedItemIndex = 4
                         },
                         onReservationCardClick = {
-                            showReservationsTab()
+                            // V2 has its own campaign-based flow; the V1 reservation tab reads collections V2 denies.
+                            if (AppEnvironment.firebaseBackend == FirebaseBackend.V2) selectedItemIndex = 5
+                            else showReservationsTab()
                         }
                     )
                 }
@@ -215,6 +220,7 @@ fun StudentHomeScreenRoot(
                 }
 
                 3 -> CampusMapScreen(onBackClick = { selectedItemIndex = 0 })
+                5 -> SuspendedMealsScreen(onBackClick = { selectedItemIndex = 0 })
                 4 -> {
                     // Same view model instance as the home widget, so the page opens without reloading.
                     val diningMenuViewModel: AkdenizDiningMenuViewModel = koinViewModel()

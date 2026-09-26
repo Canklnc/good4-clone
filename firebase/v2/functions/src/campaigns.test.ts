@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
+import { endCampaignService } from "./admin.js";
 import {
   issueCampaignCodeService,
   redeemCampaignCodeService,
@@ -165,4 +166,28 @@ test("students without a verified .edu.tr address cannot issue suspended-meal co
   );
   const claims = await db.collection("campaignClaims").get();
   assert.equal(claims.size, 0);
+});
+
+test("no code is issued once the campaign limit is used up", async () => {
+  await seedBase();
+  await db.doc("campaigns/campaign-1").update({ totalLimit: 1, redemptionCount: 1 });
+  await assert.rejects(
+    () => issueCampaignCodeService(db, "student-1", { campaignId: "campaign-1" }),
+    (error: unknown) => error instanceof Error && error.message === "CAMPAIGN_LIMIT_REACHED",
+  );
+});
+
+test("only a Good4 admin can end a campaign, and ended campaigns issue no codes", async () => {
+  await seedBase();
+  await db.doc("users/admin-1").set({ role: "good4Admin", status: "active" });
+  await assert.rejects(
+    () => endCampaignService(db, "student-1", { campaignId: "campaign-1" }),
+    (error: unknown) => error instanceof Error && error.message === "ROLE_NOT_ALLOWED",
+  );
+  await endCampaignService(db, "admin-1", { campaignId: "campaign-1" });
+  assert.equal((await db.doc("campaigns/campaign-1").get()).get("status"), "ended");
+  await assert.rejects(
+    () => issueCampaignCodeService(db, "student-1", { campaignId: "campaign-1" }),
+    (error: unknown) => error instanceof Error && error.message === "CAMPAIGN_NOT_PUBLISHED",
+  );
 });

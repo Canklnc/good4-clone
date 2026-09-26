@@ -176,6 +176,31 @@ function parseTimestamp(value: unknown, fieldName: string): Timestamp {
   return Timestamp.fromDate(date);
 }
 
+/** Good4 admins stop a published campaign early; no new codes are issued or redeemed after this. */
+export async function endCampaignService(
+  database: Firestore,
+  actorUid: string,
+  input: { campaignId?: unknown },
+): Promise<{ campaignId: string; status: "ended" }> {
+  const campaignId = requireNonEmptyString(input.campaignId, "campaignId", 128);
+  const campaignRef = database.doc(`campaigns/${campaignId}`);
+  await database.runTransaction(async (transaction) => {
+    await requireActiveActor(database, transaction, actorUid, ["good4Admin"]);
+    const campaign = await transaction.get(campaignRef);
+    if (!campaign.exists) throw new HttpsError("not-found", "CAMPAIGN_NOT_FOUND");
+    transaction.update(campaignRef, { status: "ended", updatedAt: FieldValue.serverTimestamp() });
+    transaction.create(database.collection("auditLogs").doc(), {
+      action: "campaign.ended",
+      actorUid,
+      targetType: "campaign",
+      targetId: campaignId,
+      metadata: { previousStatus: campaign.get("status") ?? null },
+      createdAt: FieldValue.serverTimestamp(),
+    });
+  });
+  return { campaignId, status: "ended" };
+}
+
 export async function createCampaignService(
   database: Firestore,
   actorUid: string,

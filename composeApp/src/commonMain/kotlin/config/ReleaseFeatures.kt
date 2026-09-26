@@ -10,8 +10,8 @@ import com.good4.core.util.FirebaseBackend
 object ReleaseFeatures {
     private val isV2 get() = AppEnvironment.firebaseBackend == FirebaseBackend.V2
 
-    /** Askıda Yemek still reads V1 products/codes; the V2 campaign flow has no app screen yet. */
-    val suspendedMeals: Boolean get() = !isV2
+    /** Askıda Yemek: V1 builds use products/codes, V2 builds the campaign screen (SuspendedMealsScreen). */
+    val suspendedMeals: Boolean get() = true
 
     /** The in-app business and admin panels use V1 collections; V2 staff use the web panel. */
     val inAppStaffPanels: Boolean get() = !isV2

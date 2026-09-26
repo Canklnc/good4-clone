@@ -113,6 +113,11 @@ export async function issueCampaignCodeService(
         if (now.toMillis() < startsAt.toMillis() || now.toMillis() >= endsAt.toMillis()) {
           throw new HttpsError("failed-precondition", "CAMPAIGN_NOT_ACTIVE");
         }
+        const totalLimit = campaignSnapshot.get("totalLimit");
+        if (typeof totalLimit === "number" && (campaignSnapshot.get("redemptionCount") ?? 0) >= totalLimit) {
+          // Do not send a student to the business for a meal that is already gone.
+          throw new HttpsError("failed-precondition", "CAMPAIGN_LIMIT_REACHED");
+        }
         const shortExpiry = Timestamp.fromMillis(
           now.toMillis() + CODE_VALIDITY_MINUTES * 60 * 1000,
         );

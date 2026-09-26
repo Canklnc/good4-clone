@@ -561,6 +561,15 @@ class FirestoreRepositoryIOSImpl : FirestoreRepository {
             "V2MembershipDto" -> decodeV2MembershipDto(document) as T
             "V2UserRoleDto" -> com.good4.community.V2UserRoleDto(role = document.getOrNull("role") ?: "") as T
             "V2EventDto" -> decodeV2EventDto(document) as T
+            "V2CampaignDto" -> com.good4.suspendedmeal.V2CampaignDto(
+                organizationId = document.getOrNull("organizationId") ?: "", title = document.getOrNull("title") ?: "",
+                description = document.getOrNull("description") ?: "", startsAt = document.getEpochSeconds("startsAt") ?: 0,
+                endsAt = document.getEpochSeconds("endsAt") ?: 0, status = document.getOrNull("status") ?: "",
+                totalLimit = document.getAsInt("totalLimit"), redemptionCount = document.getAsInt("redemptionCount") ?: 0
+            ) as T
+            "V2CampaignCodeDto" -> com.good4.suspendedmeal.V2CampaignCodeDto(
+                status = document.getOrNull("status") ?: "", expiresAt = document.getEpochSeconds("expiresAt") ?: 0
+            ) as T
             "V2EventRegistrationDto" -> decodeV2EventRegistrationDto(document) as T
             "CommunityFollowDto" -> com.good4.community.CommunityFollowDto(
                 userId = document.getOrNull("userId") ?: "",

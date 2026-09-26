@@ -208,6 +208,15 @@ const saveDiningMenu = httpsCallable<{
   weekEnd: string;
   days: DiningMenuDay[];
 }, DiningMenu>(functions, "saveDiningMenu");
+const createCampaign = httpsCallable<{
+  organizationId: string; title: string; description: string; startsAt: string; endsAt: string;
+  status: "published"; totalLimit: number | null;
+}, { campaignId: string }>(functions, "createCampaign");
+const endCampaign = httpsCallable<{ campaignId: string }, { status: "ended" }>(functions, "endCampaign");
+type AdminCampaign = {
+  id: string; title: string; description: string; organizationId: string; status: string;
+  startsAt: number; endsAt: number; totalLimit: number | null; redemptionCount: number;
+};
 const saveKykMenu = httpsCallable<{ days: KykMenuDay[] }, { savedDates: string[] }>(functions, "saveKykMenu");
 const saveHomeBanner = httpsCallable<{
   imageUrl: string;
@@ -1351,7 +1360,7 @@ function CommunityEntryCard({ entry, onEdit, onCancel, busy }: {
   );
 }
 
-type AdminTab = "coupons" | "menu" | "kyk" | "ads" | "calendar" | "feedback" | "businesses" | "communities" | "audit";
+type AdminTab = "coupons" | "menu" | "kyk" | "suspended" | "ads" | "calendar" | "feedback" | "businesses" | "communities" | "audit";
 type DiningMenuDayForm = { date: string; dayName: string; meals: string; calories: string };
 
 const diningDayNames = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"];
@@ -1413,6 +1422,8 @@ const auditLabels: Record<string, string> = {
   "campaignCode.redeemed": "Kampanya kodu kullanıldı",
   "diningMenu.updated": "Haftalık yemek menüsü güncellendi",
   "kykMenu.updated": "KYK yemek menüsü güncellendi",
+  "campaign.created": "Askıda yemek kampanyası oluşturuldu",
+  "campaign.ended": "Askıda yemek kampanyası bitirildi",
   "homeBanner.published": "Ana sayfa reklamı yayınlandı",
   "homeBanner.unpublished": "Ana sayfa reklamı yayından kaldırıldı",
   "academicCalendar.created": "Takvim kaydı oluşturuldu",
@@ -1487,6 +1498,14 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
   const [menuWeekStart, setMenuWeekStart] = useState("");
   const [menuWeekEnd, setMenuWeekEnd] = useState("");
   const [menuDays, setMenuDays] = useState<DiningMenuDayForm[]>(() => emptyDiningDays());
+  const [campaigns, setCampaigns] = useState<AdminCampaign[]>([]);
+  const [campaignBusinessId, setCampaignBusinessId] = useState("");
+  const [campaignTitle, setCampaignTitle] = useState("");
+  const [campaignDescription, setCampaignDescription] = useState("");
+  const [campaignStartsAt, setCampaignStartsAt] = useState("");
+  const [campaignEndsAt, setCampaignEndsAt] = useState("");
+  const [campaignLimit, setCampaignLimit] = useState("");
+  const [savingCampaign, setSavingCampaign] = useState(false);
   const [kykText, setKykText] = useState("");
   const [savingKyk, setSavingKyk] = useState(false);
   const kykPreview = parseKykMenuText(kykText);
@@ -1535,6 +1554,11 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
   }
 
   useEffect(() => { void refresh(); }, []);
+  useEffect(() => {
+    if (tab !== "suspended") return;
+    setCampaignBusinessId((current) => current || data?.businesses[0]?.id || "");
+    loadCampaigns().catch(() => setError("Kampanyalar yüklenemedi."));
+  }, [tab, data]);
 
   async function handleReview(coupon: PendingCoupon, decision: "approve" | "reject") {
     if (decision === "reject" && !window.confirm(`“${coupon.title}” kuponunu reddetmek istiyor musunuz?`)) return;
@@ -1721,6 +1745,80 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
     }
   }
 
+  async function loadCampaigns() {
+    const [{ collection, getDocs }, database] = await Promise.all([
+      import("firebase/firestore/lite"),
+      getFirestoreDb(),
+    ]);
+    const snapshot = await getDocs(collection(database, "campaigns"));
+    const millis = (value: unknown) => (value as { toMillis?: () => number } | null)?.toMillis?.() ?? 0;
+    setCampaigns(snapshot.docs.map((document) => {
+      const item = document.data();
+      return {
+        id: document.id,
+        title: String(item.title ?? ""),
+        description: String(item.description ?? ""),
+        organizationId: String(item.organizationId ?? ""),
+        status: String(item.status ?? ""),
+        startsAt: millis(item.startsAt),
+        endsAt: millis(item.endsAt),
+        totalLimit: typeof item.totalLimit === "number" ? item.totalLimit : null,
+        redemptionCount: typeof item.redemptionCount === "number" ? item.redemptionCount : 0,
+      };
+    }).sort((left, right) => right.startsAt - left.startsAt));
+  }
+
+  async function handleCreateCampaign(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSavingCampaign(true);
+    setError("");
+    setNotice("");
+    try {
+      const startsAt = new Date(campaignStartsAt);
+      const endsAt = new Date(campaignEndsAt);
+      if (Number.isNaN(startsAt.getTime()) || Number.isNaN(endsAt.getTime()) || endsAt <= startsAt) {
+        throw new Error("Bitiş zamanı başlangıçtan sonra olmalı.");
+      }
+      const limit = campaignLimit.trim() ? Number.parseInt(campaignLimit, 10) : null;
+      if (limit !== null && (!Number.isInteger(limit) || limit <= 0)) {
+        throw new Error("Adet boş bırakılabilir ya da pozitif bir sayı olmalı.");
+      }
+      await createCampaign({
+        organizationId: campaignBusinessId,
+        title: campaignTitle.trim(),
+        description: campaignDescription.trim(),
+        startsAt: startsAt.toISOString(),
+        endsAt: endsAt.toISOString(),
+        status: "published",
+        totalLimit: limit,
+      });
+      setCampaignTitle("");
+      setCampaignDescription("");
+      setCampaignLimit("");
+      setNotice("Askıda yemek yayınlandı. Öğrenciler uygulamada hemen görecek.");
+      await loadCampaigns();
+    } catch (requestError) {
+      setError(requestError instanceof Error && !('code' in requestError)
+        ? requestError.message
+        : functionErrorMessage(requestError));
+    } finally {
+      setSavingCampaign(false);
+    }
+  }
+
+  async function handleEndCampaign(campaign: AdminCampaign) {
+    if (!window.confirm(`"${campaign.title}" bitirilsin mi? Öğrenciler artık kod alamaz.`)) return;
+    setError("");
+    setNotice("");
+    try {
+      await endCampaign({ campaignId: campaign.id });
+      setNotice("Kampanya bitirildi.");
+      await loadCampaigns();
+    } catch (requestError) {
+      setError(functionErrorMessage(requestError));
+    }
+  }
+
   async function handleSaveKykMenu(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSavingKyk(true);
@@ -1894,6 +1992,7 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
           </button>
           <button className={tab === "menu" ? "active" : ""} onClick={() => setTab("menu")}>Yemek Menüsü</button>
           <button className={tab === "kyk" ? "active" : ""} onClick={() => setTab("kyk")}>KYK Menüsü</button>
+          <button className={tab === "suspended" ? "active" : ""} onClick={() => setTab("suspended")}>Askıda Yemek</button>
           <button className={tab === "ads" ? "active" : ""} onClick={() => setTab("ads")}>Ana Sayfa Reklamı</button>
           <button className={tab === "calendar" ? "active" : ""} onClick={() => setTab("calendar")}>Akademik Takvim</button>
           <button className={tab === "feedback" ? "active" : ""} onClick={() => setTab("feedback")}>
@@ -2003,6 +2102,72 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
                 </button>
               </div>
             </form>
+          </section>
+        )}
+
+        {!loading && data && tab === "suspended" && (
+          <section className="admin-section" aria-labelledby="suspended-title">
+            <div className="section-title-row">
+              <div>
+                <h2 id="suspended-title">Askıda yemek</h2>
+                <p>Yayınlanan kampanyayı edu doğrulaması yapmış öğrenciler uygulamada görür, 10 dakikalık kod alır ve işletmede gösterir.</p>
+              </div>
+            </div>
+            <form className="admin-card dining-menu-form" onSubmit={handleCreateCampaign}>
+              <label className="field-label" htmlFor="campaign-business">İşletme</label>
+              <select id="campaign-business" value={campaignBusinessId} onChange={(event) => setCampaignBusinessId(event.target.value)} required>
+                <option value="" disabled>İşletme seçin</option>
+                {data.businesses.map((business) => <option key={business.id} value={business.id}>{business.name}</option>)}
+              </select>
+              <label className="field-label field-label-spaced" htmlFor="campaign-title">Başlık</label>
+              <input id="campaign-title" value={campaignTitle} onChange={(event) => setCampaignTitle(event.target.value)} maxLength={160} placeholder="Örn. Askıda öğle yemeği" required />
+              <label className="field-label field-label-spaced" htmlFor="campaign-description">Açıklama</label>
+              <textarea id="campaign-description" rows={3} value={campaignDescription} onChange={(event) => setCampaignDescription(event.target.value)} maxLength={2000} placeholder="Ne veriliyor, nasıl alınır?" />
+              <div className="dining-week-fields">
+                <div>
+                  <label className="field-label" htmlFor="campaign-starts">Başlangıç</label>
+                  <input id="campaign-starts" type="datetime-local" value={campaignStartsAt} onChange={(event) => setCampaignStartsAt(event.target.value)} required />
+                </div>
+                <div>
+                  <label className="field-label" htmlFor="campaign-ends">Bitiş</label>
+                  <input id="campaign-ends" type="datetime-local" value={campaignEndsAt} onChange={(event) => setCampaignEndsAt(event.target.value)} required />
+                </div>
+                <div>
+                  <label className="field-label" htmlFor="campaign-limit">Toplam adet</label>
+                  <input id="campaign-limit" type="number" min="1" value={campaignLimit} onChange={(event) => setCampaignLimit(event.target.value)} placeholder="Sınırsız" />
+                </div>
+              </div>
+              <div className="dining-menu-actions">
+                <p>Kampanya hemen yayınlanır.</p>
+                <button className="primary-button compact-button" disabled={savingCampaign || !campaignBusinessId || !campaignTitle.trim()}>
+                  {savingCampaign ? "Yayınlanıyor…" : "Askıda yemeği yayınla"}
+                </button>
+              </div>
+            </form>
+            <div className="admin-card">
+              <h3>Kampanyalar</h3>
+              {campaigns.length === 0 ? <p>Henüz kampanya yok.</p> : (
+                <ul className="admin-list">
+                  {campaigns.map((campaign) => {
+                    const business = data.businesses.find((item) => item.id === campaign.organizationId)?.name ?? campaign.organizationId;
+                    const live = campaign.status === "published" && Date.now() < campaign.endsAt;
+                    return (
+                      <li key={campaign.id}>
+                        <div>
+                          <strong>{campaign.title}</strong> · {business}
+                          <div><small>
+                            {new Date(campaign.startsAt).toLocaleString("tr-TR")} – {new Date(campaign.endsAt).toLocaleString("tr-TR")}
+                            {" · "}{campaign.redemptionCount}{campaign.totalLimit ? ` / ${campaign.totalLimit}` : ""} kullanıldı
+                            {" · "}{live ? "Yayında" : campaign.status === "ended" ? "Bitirildi" : "Süresi doldu"}
+                          </small></div>
+                        </div>
+                        {live && <button className="secondary-button compact-button" type="button" onClick={() => void handleEndCampaign(campaign)}>Bitir</button>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
           </section>
         )}
 

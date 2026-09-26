@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -16,6 +16,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.good4.auth.presentation.components.AuthBackdrop
+import com.good4.core.util.keyboardPadding
 
 @Composable
 internal fun RegisterScreenContentContainer(
@@ -28,7 +29,8 @@ internal fun RegisterScreenContentContainer(
     AuthBackdrop(
         modifier = modifier
             .padding(paddingValues)
-            .imePadding()
+            .consumeWindowInsets(paddingValues)
+            .keyboardPadding()
             .pointerInput(Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus(force = true) })
             },

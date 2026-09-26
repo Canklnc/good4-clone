@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -83,6 +83,7 @@ import com.good4.core.presentation.TextSecondary
 import com.good4.core.presentation.components.Good4Scaffold
 import com.good4.core.util.AppEnvironment
 import com.good4.core.util.FirebaseBackend
+import com.good4.core.util.keyboardPadding
 import com.good4.core.util.singleClick
 import com.good4.user.domain.UserRole
 import good4.composeapp.generated.resources.Res
@@ -174,7 +175,9 @@ fun LoginScreen(
         // The backdrop is drawn edge to edge so the gradient continues under the status bar.
         AuthBackdrop(
             modifier = Modifier
-                .imePadding()
+                // Scaffold padding is applied inside; consume it so the keyboard gap is not added twice.
+                .consumeWindowInsets(paddingValues)
+                .keyboardPadding()
                 .pointerInput(Unit) {
                     detectTapGestures(onTap = { focusManager.clearFocus(force = true) })
                 }

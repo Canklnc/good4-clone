@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -12,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,12 +23,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.good4.core.presentation.SurfaceDefault
-import com.good4.core.presentation.TextPrimary
+import com.good4.core.presentation.PrimaryGreen
+import com.good4.core.presentation.TextSecondary
 import com.good4.core.presentation.components.Good4NavigationBar
 import com.good4.core.presentation.components.Good4NestedScaffold
+import com.good4.campus.presentation.CampusMapScreen
+import com.good4.community.CommunityViewModel
 import com.good4.product.presentation.product_list.ProductListViewModel
 import com.good4.product.presentation.product_list.views.ProductListScreenRoot
 import com.good4.student.presentation.reservations.ReservationUiModel
@@ -48,7 +53,10 @@ data class BottomNavItem(
 @Composable
 fun StudentHomeScreenRoot(
     modifier: Modifier = Modifier,
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    onNavigateToNotifications: () -> Unit = {},
+    onNavigateToCalendar: () -> Unit = {},
+    onNavigateToClassSchedule: () -> Unit = {}
 ) {
     val navItems = listOf(
         BottomNavItem(
@@ -57,18 +65,35 @@ fun StudentHomeScreenRoot(
             unselectedIcon = Icons.Outlined.Home
         ),
         BottomNavItem(
-            title = stringResource(Res.string.student_reservations),
-            selectedIcon = Icons.Filled.ShoppingCart,
-            unselectedIcon = Icons.Outlined.ShoppingCart
+            title = "Menü",
+            selectedIcon = Icons.Filled.Menu,
+            unselectedIcon = Icons.Filled.Menu
         )
     )
 
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+    var menuOpen by rememberSaveable { mutableStateOf(false) }
     var reservationsScrollRequestKey by rememberSaveable { mutableIntStateOf(0) }
     var pendingReservationFromHome by remember { mutableStateOf<ReservationUiModel?>(null) }
+    var managerEntryHandled by rememberSaveable { mutableStateOf(false) }
     val productListViewModel: ProductListViewModel = koinViewModel()
     val reservationsViewModel: StudentReservationsViewModel = koinViewModel()
+    val communityViewModel: CommunityViewModel = koinViewModel()
     val reservationsState by reservationsViewModel.state.collectAsStateWithLifecycle()
+    val communityState by communityViewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(communityState.loading, communityState.access, communityState.communities) {
+        if (!managerEntryHandled && !communityState.loading && communityState.access.active) {
+            val managedCommunity = communityState.communities.firstOrNull {
+                it.id in communityState.access.communityIds
+            }
+            managerEntryHandled = true
+            if (managedCommunity != null) {
+                communityViewModel.select(managedCommunity)
+                selectedItemIndex = 2
+            }
+        }
+    }
 
     fun showReservationsTab() {
         val productState = productListViewModel.state.value
@@ -100,10 +125,10 @@ fun StudentHomeScreenRoot(
             Good4NavigationBar {
                 navItems.forEachIndexed { index, item ->
                     NavigationBarItem(
-                        selected = selectedItemIndex == index,
+                        selected = if (index == 1) menuOpen else selectedItemIndex == 0 && !menuOpen,
                         onClick = {
                             if (index == 1) {
-                                showReservationsTab()
+                                menuOpen = true
                             } else {
                                 selectedItemIndex = index
                             }
@@ -118,13 +143,16 @@ fun StudentHomeScreenRoot(
                                 contentDescription = item.title
                             )
                         },
-                        alwaysShowLabel = false,
+                        label = {
+                            Text(item.title)
+                        },
+                        alwaysShowLabel = true,
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = TextPrimary,
-                            selectedTextColor = TextPrimary,
-                            unselectedIconColor = TextPrimary,
-                            unselectedTextColor = TextPrimary,
-                            indicatorColor = SurfaceDefault.copy(alpha = 0.95f)
+                            selectedIconColor = PrimaryGreen,
+                            selectedTextColor = PrimaryGreen,
+                            unselectedIconColor = TextSecondary,
+                            unselectedTextColor = TextSecondary,
+                            indicatorColor = Color.Transparent
                         )
                     )
                 }
@@ -137,10 +165,26 @@ fun StudentHomeScreenRoot(
                 .padding(paddingValues)
         ) {
             when (selectedItemIndex) {
+                2 -> com.good4.community.CommunitiesScreen(
+                    onBack = { selectedItemIndex = 0 },
+                    managerEntryMode = communityState.access.active && managerEntryHandled,
+                    onSwitchToStudent = { selectedItemIndex = 0 },
+                    viewModel = communityViewModel
+                )
                 0 -> {
                     ProductListScreenRoot(
+                        communityManager = communityState.access.active && communityState.access.communityIds.isNotEmpty(),
                         viewModel = productListViewModel,
+                        onCommunitiesClick = {
+                            val managed = communityState.communities.filter { communityState.access.active && it.id in communityState.access.communityIds }
+                            if (managed.size == 1) communityViewModel.select(managed.first()) else communityViewModel.back()
+                            selectedItemIndex = 2
+                        },
                         onProfileClick = onNavigateToProfile,
+                        onNotificationsClick = onNavigateToNotifications,
+                        onCalendarClick = onNavigateToCalendar,
+                        onClassScheduleClick = onNavigateToClassSchedule,
+                        onCampusMapClick = { selectedItemIndex = 3 },
                         onReservationCardClick = {
                             showReservationsTab()
                         }
@@ -161,8 +205,15 @@ fun StudentHomeScreenRoot(
                         }
                     )
                 }
+
+                3 -> CampusMapScreen(onBackClick = { selectedItemIndex = 0 })
             }
         }
+    }
+    if (menuOpen) {
+        StudentMenuSheet(
+            onDismiss = { menuOpen = false }
+        )
     }
 }
 

@@ -28,7 +28,16 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode_ui" />
+        <meta-data
             android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
             android:value="false" />
         <activity
             android:name="com.good4.MainActivity"

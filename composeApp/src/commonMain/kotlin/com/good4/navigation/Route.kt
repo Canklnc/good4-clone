@@ -24,15 +24,27 @@ sealed class Route {
 
     @Serializable
     data object SessionRestore : Route()
+
+    @Serializable
+    data object WebPanelNotice : Route()
     
     @Serializable
     data object StudentHome : Route()
 
     @Serializable
+    data object AcademicCalendar : Route()
+
+    @Serializable
+    data object ClassSchedule : Route()
+
+    @Serializable
     data object StudentProfile : Route()
 
     @Serializable
-    data object StudentAccountSettings : Route()
+    data class StudentAccountSettings(val academicSelectionPrompt: Boolean = false) : Route()
+
+    @Serializable
+    data object Notifications : Route()
     
     @Serializable
     data class ProductDetail(val productId: String) : Route()
@@ -54,19 +66,4 @@ sealed class Route {
 
     @Serializable
     data object AdminAccountSettings : Route()
-
-    @Serializable
-    data object SupporterRegister : Route()
-
-    @Serializable
-    data object SupporterHome : Route()
-
-    @Serializable
-    data object SupporterProfile : Route()
-
-    @Serializable
-    data object SupporterAccountSettings : Route()
-
-    @Serializable
-    data class SupporterOrderCode(val orderId: String) : Route()
 }

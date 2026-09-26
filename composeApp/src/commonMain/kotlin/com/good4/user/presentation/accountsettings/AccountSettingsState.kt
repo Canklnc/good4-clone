@@ -11,9 +11,13 @@ data class AccountSettingsState(
     val isAccountDeleted: Boolean = false,
     val isLoggedOut: Boolean = false,
     val fullName: String = "",
+    val communityName: String = "",
+    val isCommunityManager: Boolean = false,
     val phoneNumber: String = "",
     val university: String = "",
+    val faculty: String = "",
     val major: String = "",
+    val classYear: String = "",
     val educationLevel: String = "",
     val businessName: String = "",
     val businessPhone: String = "",
@@ -23,6 +27,7 @@ data class AccountSettingsState(
     val canResendPasswordReset: Boolean = true,
     val passwordResetCooldownSeconds: Int = 0,
     val showPhoneField: Boolean = false,
+    val profileSaveCount: Int = 0,
     val errorMessage: UiText? = null,
     val infoMessage: UiText? = null
 )
@@ -30,6 +35,5 @@ data class AccountSettingsState(
 enum class AccountSettingsMode {
     STUDENT,
     BUSINESS,
-    SUPPORTER,
     ADMIN
 }

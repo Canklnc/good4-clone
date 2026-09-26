@@ -200,12 +200,12 @@ fun ProfileSectionCard(
             color = TextSecondary.copy(alpha = 0.2f)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(18.dp),
             verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(verticalSpacing),
             content = content
         )

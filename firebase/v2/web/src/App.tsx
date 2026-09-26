@@ -1876,8 +1876,8 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
           throw new Error("Yalnızca JPG, PNG veya WebP yükleyin.");
         }
         const size = await readImageSize(bannerFile);
-        if (size.width < 960 || size.height < 320 || Math.abs(size.width / size.height - 3) > 0.03) {
-          throw new Error("Görsel 3:1 oranında olmalı. Önerilen ölçü 1200×400 px, minimum 960×320 px.");
+        if (size.width < 960 || size.height < 384 || Math.abs(size.width / size.height - 2.5) > 0.03) {
+          throw new Error("Görsel 5:2 oranında olmalı. Önerilen ölçü 1200×480 px, minimum 960×384 px.");
         }
         const uploaded = await uploadHomeBannerImage({
           base64: await readFileBase64(bannerFile),
@@ -2266,11 +2266,11 @@ function AdminPanel({ user, context }: { user: User; context: Extract<PortalCont
                 {(bannerPreviewUrl || bannerForSlot(data, bannerSlot)?.imageUrl) ? (
                   <img src={bannerPreviewUrl || bannerForSlot(data, bannerSlot)?.imageUrl} alt="Ana sayfa reklam önizlemesi" />
                 ) : (
-                  <div><strong>1200 × 400 px</strong><span>Reklam önizlemesi burada görünecek</span></div>
+                  <div><strong>1200 × 480 px</strong><span>Reklam önizlemesi burada görünecek</span></div>
                 )}
                 <small>Reklam</small>
               </div>
-              <p className="field-help">3:1 oran · Önerilen 1200×400 px · Minimum 960×320 px · JPG, PNG veya WebP · En fazla 5 MB</p>
+              <p className="field-help">5:2 oran · Önerilen 1200×480 px · Minimum 960×384 px · JPG, PNG veya WebP · En fazla 5 MB</p>
               <div className="home-banner-fields">
                 <label>
                   <span>Reklam görseli</span>

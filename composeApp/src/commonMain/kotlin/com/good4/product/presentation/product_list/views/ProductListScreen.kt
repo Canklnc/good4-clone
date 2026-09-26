@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -457,11 +458,14 @@ private fun HomeSummaryCards(
     }
 }
 
-/** Up to four banners that slide horizontally and advance on their own until the user drags them. */
+/**
+ * Up to four banners in a horizontal strip. Each card takes about three quarters of the width so
+ * the next one peeks in, which shows the strip can be swiped without extra indicators.
+ */
 @Composable
 private fun HomeAdvertisementSlider(banners: List<HomeBanner>) {
     if (banners.size == 1) {
-        HomeAdvertisementBanner(banners.single())
+        HomeAdvertisementBanner(banners.single(), Modifier.padding(horizontal = 12.dp, vertical = 6.dp))
         return
     }
     val pagerState = rememberPagerState { banners.size }
@@ -469,31 +473,16 @@ private fun HomeAdvertisementSlider(banners: List<HomeBanner>) {
     // settledPage only changes once a slide finishes; keying on currentPage cancelled the slide halfway.
     LaunchedEffect(pagerState.settledPage, dragged) {
         if (dragged) return@LaunchedEffect
-        delay(4_000)
+        delay(5_000)
         pagerState.animateScrollToPage((pagerState.settledPage + 1) % banners.size)
     }
-    Box {
-        HorizontalPager(state = pagerState) { page ->
+    BoxWithConstraints(Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
+        HorizontalPager(
+            state = pagerState,
+            contentPadding = PaddingValues(start = 12.dp, end = maxWidth * 0.25f),
+            pageSpacing = 10.dp
+        ) { page ->
             HomeAdvertisementBanner(banners[page])
-        }
-        // Dots sit on the banner itself so the slider takes no extra row.
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(5.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 22.dp, bottom = 14.dp)
-                .background(Color.Black.copy(alpha = 0.35f), CircleShape)
-                .padding(horizontal = 7.dp, vertical = 5.dp)
-        ) {
-            repeat(banners.size) { index ->
-                val selected = index == pagerState.currentPage
-                Box(
-                    Modifier
-                        .size(if (selected) 7.dp else 5.dp)
-                        .background(Color.White.copy(alpha = if (selected) 1f else 0.55f), CircleShape)
-                )
-            }
         }
     }
 }
@@ -501,6 +490,7 @@ private fun HomeAdvertisementSlider(banners: List<HomeBanner>) {
 @Composable
 private fun HomeAdvertisementBanner(
     banner: HomeBanner,
+    modifier: Modifier = Modifier,
     feedbackViewModel: FeedbackViewModel = koinViewModel()
 ) {
     val uriHandler = LocalUriHandler.current
@@ -511,10 +501,9 @@ private fun HomeAdvertisementBanner(
     var showAdReport by remember { mutableStateOf(false) }
     var reportReason by remember { mutableStateOf("") }
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 6.dp)
-            .aspectRatio(3f)
+            .aspectRatio(2.5f)
             .clip(RoundedCornerShape(18.dp))
             .background(SurfaceMuted)
             .then(if (!isPlaceholder && banner.targetUrl.isNotBlank()) Modifier.clickable {

@@ -289,7 +289,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
 .calendar-admin-row h3 { margin: 5px 0 4px; }
 .calendar-admin-row p { margin: 0; color: var(--muted); }
 .calendar-admin-row.is-cancelled { opacity: .68; }
-.home-banner-preview { position: relative; width: min(100%, 720px); aspect-ratio: 3 / 1; overflow: hidden; display: grid; place-items: center; background: var(--subtle); border: 1px solid var(--border); border-radius: 12px; }
+.home-banner-preview { position: relative; width: min(100%, 720px); aspect-ratio: 5 / 2; overflow: hidden; display: grid; place-items: center; background: var(--subtle); border: 1px solid var(--border); border-radius: 12px; }
 .home-banner-preview img { width: 100%; height: 100%; object-fit: cover; }
 .home-banner-preview > div { display: grid; justify-items: center; gap: 6px; color: var(--text-secondary); }
 .home-banner-preview > div strong { color: var(--text); font-size: 20px; }

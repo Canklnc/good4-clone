@@ -48,6 +48,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -87,6 +88,7 @@ import com.good4.dining.presentation.AkdenizDiningMenuCard
 import com.good4.dining.presentation.AkdenizDiningMenuState
 import com.good4.dining.presentation.AkdenizDiningMenuViewModel
 import com.good4.feedback.FeedbackViewModel
+import com.good4.notification.NotificationInbox
 import com.good4.product.Product
 import com.good4.product.presentation.product_list.ProductListAction
 import com.good4.product.presentation.product_list.ProductListState
@@ -276,6 +278,7 @@ private fun ProductListGreetingHeader(
     onNotificationsClick: () -> Unit = {}
 ) {
     val topInset = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
+    val hasUnseenNotifications by NotificationInbox.hasUnseen.collectAsState()
 
     Row(
         modifier = modifier
@@ -332,13 +335,15 @@ private fun ProductListGreetingHeader(
                             modifier = Modifier.size(20.dp)
                         )
                     }
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .offset(x = (-7).dp, y = 7.dp)
-                            .size(7.dp)
-                            .background(Color(0xFFFFD54F), CircleShape)
-                    )
+                    if (hasUnseenNotifications) {
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .offset(x = (-7).dp, y = 7.dp)
+                                .size(7.dp)
+                                .background(Color(0xFFFFD54F), CircleShape)
+                        )
+                    }
                 }
                 if (onProfileClick != null) {
                     Box(

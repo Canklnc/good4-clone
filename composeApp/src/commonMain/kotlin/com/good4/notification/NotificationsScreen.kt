@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -30,6 +31,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,7 +53,10 @@ import com.good4.core.presentation.TextSecondary
 
 @Composable
 fun NotificationsScreen(onBack: () -> Unit) {
-    var unread by remember { mutableStateOf(true) }
+    // Highlight what was new when the screen opened; opening it counts as seeing everything,
+    // which clears the dot on the home bell.
+    var unreadIds by remember { mutableStateOf(NotificationInbox.unseenIds()) }
+    LaunchedEffect(Unit) { NotificationInbox.markAllSeen() }
     val theme = LocalThemeController.current
 
     Column(
@@ -85,7 +90,7 @@ fun NotificationsScreen(onBack: () -> Unit) {
                 IconButton(onClick = { theme.setDark(!theme.isDark) }) {
                     Icon(Icons.Outlined.DarkMode, "Gece modunu değiştir", tint = Color.White)
                 }
-                IconButton(onClick = { unread = false }) {
+                IconButton(onClick = { unreadIds = emptySet() }) {
                     Icon(Icons.Filled.DoneAll, "Tümünü okundu işaretle", tint = Color.White)
                 }
             }
@@ -96,14 +101,14 @@ fun NotificationsScreen(onBack: () -> Unit) {
             contentPadding = PaddingValues(18.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            item {
+            items(studentNotifications, key = { it.id }) { notification ->
                 NotificationCard(
-                    title = "Topluluk günleri yaklaşıyor!",
-                    source = "Good4 Topluluklar",
-                    date = "11 Eyl 2026, 12:00",
-                    body = "Kampüsteki topluluklarla tanışmaya hazır mısın? Topluluk günleri çok yakında. Etkinlikleri keşfetmek ve favori topluluklarını takip etmek için Topluluklar sayfasına göz at.",
-                    unread = unread,
-                    onClick = { unread = false }
+                    title = notification.title,
+                    source = notification.source,
+                    date = notification.date,
+                    body = notification.body,
+                    unread = notification.id in unreadIds,
+                    onClick = { unreadIds = unreadIds - notification.id }
                 )
             }
         }

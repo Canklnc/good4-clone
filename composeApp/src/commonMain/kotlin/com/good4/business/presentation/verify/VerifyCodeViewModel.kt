@@ -5,20 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.good4.auth.data.repository.AuthRepository
 import com.good4.business.data.dto.FirestoreBusinessRepository
 import com.good4.code.data.repository.CodeRepository
+import com.good4.community.CommunityRepository
 import com.good4.core.domain.Result
-import com.good4.order.data.repository.OrderRepository
-import com.good4.order.domain.OrderStatus
-import com.good4.order.domain.isExpired
 import com.good4.product.data.repository.FirestoreProductRepository
-import com.good4.user.data.repository.UserRepository
 import good4.composeapp.generated.resources.Res
 import good4.composeapp.generated.resources.error_business_not_found
 import good4.composeapp.generated.resources.verify_code_error_failed
 import good4.composeapp.generated.resources.verify_code_error_invalid
-import good4.composeapp.generated.resources.verify_code_order_cancelled
-import good4.composeapp.generated.resources.verify_code_order_error_cancel
-import good4.composeapp.generated.resources.verify_code_order_error_confirm
-import good4.composeapp.generated.resources.verify_code_order_not_found
+import good4.composeapp.generated.resources.verify_code_not_found
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -30,8 +24,7 @@ class VerifyCodeViewModel(
     private val businessRepository: FirestoreBusinessRepository,
     private val codeRepository: CodeRepository,
     private val productRepository: FirestoreProductRepository,
-    private val orderRepository: OrderRepository,
-    private val userRepository: UserRepository
+    private val communityRepository: CommunityRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(VerifyCodeState())
@@ -94,10 +87,7 @@ class VerifyCodeViewModel(
                 it.copy(
                     codeInput = code,
                     errorMessage = null,
-                    verificationSuccess = false,
-                    orderConfirmedSuccess = false,
-                    orderCancelledSuccess = false,
-                    pendingOrder = null
+                    verificationSuccess = false
                 )
             }
         }
@@ -133,10 +123,7 @@ class VerifyCodeViewModel(
                 it.copy(
                     isLoading = true,
                     errorMessage = null,
-                    verificationSuccess = false,
-                    orderConfirmedSuccess = false,
-                    orderCancelledSuccess = false,
-                    pendingOrder = null
+                    verificationSuccess = false
                 )
             }
 
@@ -179,125 +166,29 @@ class VerifyCodeViewModel(
                 }
 
                 is Result.Error -> {
-                    tryVerifyAsOrder(code, bid)
+                    tryVerifyAsCommunityCoupon(code, bid)
                 }
             }
         }
     }
 
-    private suspend fun tryVerifyAsOrder(code: String, bid: String) {
-        when (val orderResult = orderRepository.getOrderByCodeAndBusiness(code, bid)) {
-            is Result.Success -> {
-                val order = orderResult.data
-                if (order != null && !order.isExpired()) {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            pendingOrder = order,
-                            orderConfirmedSuccess = false,
-                            orderCancelledSuccess = false
-                        )
-                    }
-                } else {
-                    if (order != null) {
-                        orderRepository.updateOrderStatus(order.id, OrderStatus.EXPIRED)
-                    }
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            errorMessage = getString(Res.string.verify_code_order_not_found)
-                        )
-                    }
-                }
-            }
-
-            is Result.Error -> {
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        errorMessage = getString(Res.string.verify_code_order_not_found)
-                    )
-                }
-            }
-        }
-    }
-
-    fun confirmOrder() {
-        val order = _state.value.pendingOrder ?: return
-        if (_state.value.isConfirmingOrder || _state.value.isCancellingOrder) return
-
-        viewModelScope.launch {
-            _state.update { it.copy(isConfirmingOrder = true, errorMessage = null) }
-
-            when (orderRepository.updateOrderStatus(order.id, OrderStatus.CONFIRMED)) {
-                is Result.Error -> {
-                    _state.update {
-                        it.copy(
-                            isConfirmingOrder = false,
-                            errorMessage = getString(Res.string.verify_code_order_error_confirm)
-                        )
-                    }
-                    return@launch
-                }
-
-                is Result.Success -> Unit
-            }
-
-            order.items.forEach { item ->
-                productRepository.incrementProductPendingCount(item.productId, item.quantity)
-            }
-
-            val totalMeals = order.items.sumOf { it.quantity }
-            userRepository.incrementUserDonations(order.supporterId, totalMeals)
-
+    private suspend fun tryVerifyAsCommunityCoupon(code: String, bid: String) {
+        val coupon = communityRepository.verifyCouponCode(code, bid)
+        if (coupon != null) {
             _state.update {
                 it.copy(
-                    isConfirmingOrder = false,
-                    isCancellingOrder = false,
-                    orderConfirmedSuccess = true,
-                    orderCancelledSuccess = false,
-                    pendingOrder = null,
-                    codeInput = ""
+                    isLoading = false,
+                    verificationSuccess = true,
+                    verifiedProductName = coupon.title,
+                    codeInput = "",
+                    errorMessage = null
                 )
             }
-        }
-    }
-
-    fun cancelOrder() {
-        val order = _state.value.pendingOrder ?: return
-        if (_state.value.isCancellingOrder || _state.value.isConfirmingOrder) return
-
-        viewModelScope.launch {
-            _state.update { it.copy(isCancellingOrder = true, errorMessage = null) }
-
-            when (orderRepository.updateOrderStatus(order.id, OrderStatus.CANCELLED)) {
-                is Result.Error -> {
-                    _state.update {
-                        it.copy(
-                            isCancellingOrder = false,
-                            errorMessage = getString(Res.string.verify_code_order_error_cancel)
-                        )
-                    }
-                    return@launch
-                }
-
-                is Result.Success -> Unit
-            }
-
-            order.items.forEach { item ->
-                productRepository.incrementProductSuspendedCount(item.productId, item.quantity)
-            }
-
+        } else {
             _state.update {
                 it.copy(
-                    isConfirmingOrder = false,
-                    isCancellingOrder = false,
-                    orderConfirmedSuccess = false,
-                    orderCancelledSuccess = true,
-                    verifiedProductName = null,
-                    pendingOrder = null,
-                    codeInput = "",
-                    errorMessage = getString(Res.string.verify_code_order_cancelled)
+                    isLoading = false,
+                    errorMessage = getString(Res.string.verify_code_not_found)
                 )
             }
         }
@@ -310,11 +201,6 @@ class VerifyCodeViewModel(
                 isLoading = false,
                 verificationSuccess = false,
                 verifiedProductName = null,
-                pendingOrder = null,
-                isConfirmingOrder = false,
-                isCancellingOrder = false,
-                orderConfirmedSuccess = false,
-                orderCancelledSuccess = false,
                 errorMessage = null
             )
         }
